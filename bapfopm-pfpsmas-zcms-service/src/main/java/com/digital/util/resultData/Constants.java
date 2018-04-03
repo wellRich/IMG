@@ -33,5 +33,18 @@ public class Constants {
      * 上传失败的错误信息
      * */
     public final static String RTN_MESSAGE_UPLOAD = "上传过程中文本校验未通过";
+    /*
+    * 文件不可被删除
+    * */
+    public final static String RTN_MESSAGE_DELETE = "文件不可被删除";
+    /*
+    * 删除文件失败
+    * */
+    public final static String RTN_DELETE_FAIL = "文件删除失败";
+    /*
+    * 查询集中变更临时数据为空
+    * */
+
+
 
 }

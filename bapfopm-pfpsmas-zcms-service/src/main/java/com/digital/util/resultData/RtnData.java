@@ -31,7 +31,14 @@ public class RtnData {
         this.responseData = responseData;
     }
 
+
+
     public RtnData(Object responseData) {
+        this.responseData = responseData;
+    }
+
+    public RtnData(String rtnMessage, Object responseData) {
+        this.rtnMessage = rtnMessage;
         this.responseData = responseData;
     }
 

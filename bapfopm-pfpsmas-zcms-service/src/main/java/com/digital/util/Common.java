@@ -151,6 +151,21 @@ public class Common {
         return jbdm;
     }
 
+    /**
+     * 检测原区划代码是否与现区划代码相同
+     * @param originZoningCode 原区划代码
+     * @param currentZoningCode 现区划代码
+     * @return
+     */
+    public static boolean hasSameZoningCode(String originZoningCode, String currentZoningCode){
+        boolean flag=false;
+        if(!originZoningCode.equals("")&&!currentZoningCode.equals("")){
+            if(originZoningCode.equals(currentZoningCode)){
+                flag=true;
+            }
+        }
+        return flag;
+    }
 
     /**
      *  获取区划代码中的级别代码

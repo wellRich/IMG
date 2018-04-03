@@ -26,7 +26,7 @@ import java.util.List;
  * @Deprecated
  */
 @Service
-@Transactional()
+@Transactional
 public class ZoningDataUploadApiImpl implements ZoningDataUploadApi {
 
 
@@ -129,16 +129,18 @@ public class ZoningDataUploadApiImpl implements ZoningDataUploadApi {
         String filePath = fileInfo.getFilePath();
         File fileDir = new File(filePath);
         //删除文件
-        boolean checked = FileUtil.deleteDir(fileDir);
-        if (!checked){
-            logger.info("删除文件失败");
+        if (fileDir.exists()){
+            boolean checked = FileUtil.deleteDir(fileDir);
+            if (!checked){
+                logger.info("删除文件失败");
+            }
         }
         //删除省级数据
         importTemporaryMapper.deleteZoningDatas(fileSquence);
         //删除对照表数据
         importTemporaryMapper.deleteChangeDatas(fileSquence);
-
-
+        //删除文件信息
+        zoningDataUploadMapper.deleteFocusChangeInfo(fileSquence);
         return true;
     }
 

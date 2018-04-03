@@ -18,8 +18,8 @@ public class ChangeInfo implements Cloneable{
 
     private Integer requestSeq;//申请表序号（申请表主键）
     private Integer groupSeq;//变更组序号（变更表主键）
-    private String originZoningCode;//原区划代码
-    private String originZoningName;//原区划名称
+    private String originalZoningCode;//原区划代码
+    private String originalZoningName;//原区划名称
     private String targetZoningCode;//目标区划代码
     private String targetZoningName;//目标区划名称
     private String changeType;//变更类型代码
@@ -38,9 +38,9 @@ public class ChangeInfo implements Cloneable{
         this.changeType = param.get("changeType");
         this.creatorCode = param.get("creatorCode");
         this.groupSeq = Integer.valueOf(param.get("groupSeq"));
-        this.organizationCode = param.get("setOrganizationCode");
-        this.originZoningCode = param.get("originZoningCode");
-        this.originZoningName = param.get("originZoningName");
+        this.organizationCode = param.get("organizationCode");
+        this.originalZoningCode = param.get("originalZoningCode");
+        this.originalZoningName = param.get("originalZoningName");
         this.targetZoningCode = param.get("targetZoningCode");
         this.targetZoningName = param.get("targetZoningName");
         this.assigningCode = param.get("assigningCode");
@@ -54,8 +54,8 @@ public class ChangeInfo implements Cloneable{
         this.creatorCode = param.get("creatorCode");
         this.groupSeq = Integer.valueOf(param.get("groupSeq"));
         this.organizationCode = param.get("organizationCode");
-        this.originZoningCode = param.get("originZoningCode");
-        this.originZoningName = param.get("originZoningName");
+        this.originalZoningCode = param.get("originalZoningCode");
+        this.originalZoningName = param.get("originalZoningName");
         this.targetZoningCode = param.get("targetZoningCode");
         this.targetZoningName = param.get("targetZoningName");
         this.assigningCode = param.get("assigningCode");
@@ -74,15 +74,15 @@ public class ChangeInfo implements Cloneable{
         if(changeType.equals(Common.ADD)){
             return targetZoningCode.equals(that.targetZoningCode);
         }else {
-            return originZoningCode.equals(that.originZoningCode) && targetZoningCode.equals(that.targetZoningCode);
+            return originalZoningCode.equals(that.originalZoningCode) && targetZoningCode.equals(that.targetZoningCode);
         }
     }
 
     public ZCCDetail toDetail(){
         ZCCDetail detail = new ZCCDetail();
         detail.setChangeType(this.changeType);
-        detail.setOriginZoningCode(this.originZoningCode);
-        detail.setOriginZoningName(this.getOriginZoningName());
+        detail.setOriginZoningCode(this.originalZoningCode);
+        detail.setOriginZoningName(this.getOriginalZoningName());
         detail.setCurrentZoningCode(this.targetZoningCode);
         detail.setCurrentZoningName(this.targetZoningName);
         detail.setGroupSeq(this.groupSeq);
@@ -106,12 +106,12 @@ public class ChangeInfo implements Cloneable{
     public ChangeInfo clone() throws CloneNotSupportedException {
         return (ChangeInfo) super.clone();
     }
-
+/*
     @Override
     public String toString() {
-        return " originZoningCode is " + originZoningCode
+        return " originalZoningCode is " + originalZoningCode
                 + ", targetZoningCode is " + targetZoningCode + ", hashCode = " + this.hashCode();
-    }
+    }*/
 
 
 
@@ -139,20 +139,20 @@ public class ChangeInfo implements Cloneable{
         this.groupSeq = groupSeq;
     }
 
-    public String getOriginZoningCode() {
-        return originZoningCode;
+    public String getOriginalZoningCode() {
+        return originalZoningCode;
     }
 
-    public void setOriginZoningCode(String originZoningCode) {
-        this.originZoningCode = originZoningCode;
+    public void setOriginalZoningCode(String originalZoningCode) {
+        this.originalZoningCode = originalZoningCode;
     }
 
-    public String getOriginZoningName() {
-        return originZoningName;
+    public String getOriginalZoningName() {
+        return originalZoningName;
     }
 
-    public void setOriginZoningName(String originZoningName) {
-        this.originZoningName = originZoningName;
+    public void setOriginalZoningName(String originalZoningName) {
+        this.originalZoningName = originalZoningName;
     }
 
     public String getTargetZoningCode() {

@@ -82,6 +82,11 @@ public interface ZoningDataUploadMapper {
     @Update("update xzqh_jzbgzip set SQDXH=#{applicationNum},JZBGZT_DM=#{instructionCode} where ZIPXH=#{fileSquence}")
     int updateFocusApplicationNum(@Param("fileSquence") Integer fileSquence,@Param("applicationNum") Integer applicationNum,@Param("instructionCode")String instructionCode);
 
+    /*
+    * 删除文件信息
+    * */
+    @Delete("delete from xzqh_jzbgzip where ZIPXH=#{fileSquence}")
+    int deleteFocusChangeInfo(@Param("fileSquence") Integer fileSquence);
 
 
 

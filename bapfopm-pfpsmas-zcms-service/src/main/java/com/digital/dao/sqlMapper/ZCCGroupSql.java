@@ -22,15 +22,15 @@ public class ZCCGroupSql extends EntitySql<ZCCGroup> {
 
     /**
      * 获取变更组的最大编号
-     * @param zoingCode 区划代码
+     * @param zoningCode 区划代码
      */
-    public String getMaxSerialNumber(String zoingCode){
-        log.info("getMaxSerialNumber.zoingCode---------> " + zoingCode);
+    public String getMaxSerialNumber(String zoningCode){
+        log.info("getMaxSerialNumber.zoningCode---------> " + zoningCode);
         String sql = new SQL(){{
             String columnName = getColumnByField("serialNumber");
             FROM(getTableName());
             SELECT("MAX(" + columnName + ")");
-            WHERE( columnName + " like '"+ zoingCode + "%'");
+            WHERE( columnName + " like '"+ zoningCode + "%'");
         }}.toString();
         log.info("getMaxSerialNumber.sql---------> " + sql);
         return sql;

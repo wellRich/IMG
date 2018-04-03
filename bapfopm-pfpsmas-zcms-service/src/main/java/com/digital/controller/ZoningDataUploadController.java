@@ -156,7 +156,7 @@ public class ZoningDataUploadController extends BaseController {
         if (fileInfoList.isEmpty()) {
             //没有查到数据
         }
-        String result = StringUtil.objToJson(new RtnData(fileInfoList));
+        String result = new RtnData(String.valueOf(count),fileInfoList).toString();
         return result;
     }
 
@@ -172,7 +172,7 @@ public class ZoningDataUploadController extends BaseController {
     public String checkFileExist(@RequestParam("fileName")String fileName,@RequestParam("zoningCode")String zoningCode){
 
         if (StringUtil.isEmpty(fileName) || StringUtil.isEmpty(zoningCode)){
-            return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_MESSAGE_ERROR).toString();
+            return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_DELETE_FAIL).toString();
         }
         boolean checked = zoningDataUploadApi.checkFileExist(fileName,zoningCode);
         return new RtnData(checked).toString();
@@ -186,11 +186,14 @@ public class ZoningDataUploadController extends BaseController {
      * @return java.lang.String
      * @exception
      */
-    @RequestMapping(value = "/delete/zipFile",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/zipFile",method = RequestMethod.GET)
     @ResponseBody
     public String deleteFileInfo(@RequestParam("fileSquence")Integer fileSquence){
-        boolean ckecked =  zoningDataUploadApi.deleteFileInfo(fileSquence);
-        return  new RtnData(StringUtil.objToJson(ckecked)).toString();
+        boolean checked =  zoningDataUploadApi.deleteFileInfo(fileSquence);
+        if (checked){
+           return new RtnData().toString();
+        }
+        return  new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_DELETE_FAIL).toString();
 
     }
 
@@ -206,8 +209,11 @@ public class ZoningDataUploadController extends BaseController {
     @ResponseBody
     public String checkFileStatus(@RequestParam("fileSquence") Integer fileSquence){
 
-        boolean ckecked = zoningDataUploadApi.checkFileStatus(fileSquence);
-        return  new RtnData(StringUtil.objToJson(ckecked)).toString();
+        boolean checked = zoningDataUploadApi.checkFileStatus(fileSquence);
+        if (checked){
+            return  new RtnData(checked).toString();
+        }
+        return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_MESSAGE_DELETE).toString();
 
     }
 

@@ -5,7 +5,10 @@ import com.digital.dao.PreviewDataInfoMapper;
 import com.digital.entity.ChangeInfo;
 import com.digital.entity.PreviewDataInfo;
 import com.digital.util.Common;
+import com.digital.util.JSONHelper;
 import com.digital.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ import java.util.List;
  */
 @Service
 public class CommonService {
+    private static final Logger log = LoggerFactory.getLogger(CommonService.class);
+
     @Autowired
     LogicCheckMapper logicCheckMapper;
 
@@ -34,10 +39,16 @@ public class CommonService {
 
         //现区划代码
         String currentZoningCode = info.getTargetZoningCode();
+
+        //现区划名称
         String currentZoningName = info.getTargetZoningName();
 
         //原区划代码
-        String originalZoningCode = info.getOriginZoningCode();
+        String originalZoningCode = info.getOriginalZoningCode();
+
+        //原区划名称
+        String originalZoningName = info.getOriginalZoningName();
+
         if(changeType.equals(Common.ADD)){
             String superZoningCode = Common.getSuperiorZoningCode(currentZoningCode);
             if(isExitsZoningCode(superZoningCode)){
@@ -54,17 +65,30 @@ public class CommonService {
             }
         }else if(changeType.equals(Common.CHANGE)){
             if(isExitsZoningCode(originalZoningCode)){
-                if(isExitsZoningCode(currentZoningCode)){
-                    throw new RuntimeException("变更的现区划代码[" + currentZoningCode + "]已存在！");
-                }else {
-                    if(!Common.getAssigningCode(originalZoningCode).equals(info.getAssigningCode())){
-                        throw new RuntimeException("变更的原区划代码[" + originalZoningCode + "] 和现区划代码[" + currentZoningCode + "]不是一个级次！");
+
+                //判断是否是名称变更,名称变更：仅仅是改变区划的名称，区划代码不变
+                if(Common.hasSameZoningCode(originalZoningCode, currentZoningCode)){
+                    if(currentZoningName.equals(originalZoningName)){
+                        throw new RuntimeException("原区划代码、原区划名称与现区划代码、现区划名称相同，不存在变更！");
                     }else {
                         if(isUsedZoningName(currentZoningCode, currentZoningName)){
                             throw new RuntimeException("变更的现区划名称[" + currentZoningName + "]已存在！");
                         }
                     }
+                }else {
+                    if(isExitsZoningCode(currentZoningCode)){
+                        throw new RuntimeException("变更的现区划代码[" + currentZoningCode + "]已存在！");
+                    }else {
+                        if(!Common.getAssigningCode(originalZoningCode).equals(info.getAssigningCode())){
+                            throw new RuntimeException("变更的原区划代码[" + originalZoningCode + "] 和现区划代码[" + currentZoningCode + "]不是一个级次！");
+                        }else {
+                            if(isUsedZoningName(currentZoningCode, currentZoningName)){
+                                throw new RuntimeException("变更的现区划名称[" + currentZoningName + "]已存在！");
+                            }
+                        }
+                    }
                 }
+
             }else {
                 throw new RuntimeException("变更的原区划代码[" + originalZoningCode + "]不存在！");
             }
@@ -77,7 +101,7 @@ public class CommonService {
                         if(Common.getAssigningCode(originalZoningCode).equals(info.getAssigningCode())){
 
                             //是否有下级区划
-                            if(isExitsSublevel(originalZoningCode)){
+                            if(isExitsSubZoning(originalZoningCode)){
                                 throw new RuntimeException("并入的原区划代码[" + originalZoningCode
                                         + "]有下级区划不能并入，请先将下级区划进行迁移！");
                             }
@@ -146,7 +170,7 @@ public class CommonService {
      * @param zoningCode 区划代码
      * @return
      */
-    public boolean isExitsSublevel(String zoningCode){
+    public boolean isExitsSubZoning(String zoningCode){
         return logicCheckMapper.logicCheck(null, null, zoningCode) > 0;
     }
 
@@ -157,11 +181,13 @@ public class CommonService {
     public void savePreviewData(ChangeInfo info){
         String changeType = info.getChangeType();
         String currentZoningCode = info.getTargetZoningCode();
+
         if(changeType.equals(Common.ADD)){
             String superCode = Common.getSuperiorZoningCode(currentZoningCode);
             PreviewDataInfo previewDataInfo = previewDataInfoMapper.findOneByZoningCode(superCode);
+            log.info("savePreviewData.previewDataInfo-----> " + JSONHelper.toJSON(previewDataInfo, PreviewDataInfo.class));
             if(previewDataInfo == null){
-                throw new RuntimeException("上级区划代码：" + superCode + "不存在！");
+                throw new RuntimeException("区划代码[" + currentZoningCode + "]的上级区划代码：" + superCode + "不存在！");
             }else {
                 addPreviewData(info, previewDataInfo.getSubordinateRelations(), previewDataInfo.getAssigningCode(), previewDataInfo.getDivisionFullName(), new Date());
             }
@@ -179,13 +205,13 @@ public class CommonService {
                 ChangeInfo changeInfo = changeInfoList.get(size - 1);
                 String sjDestXzqhdm = changeInfo.getTargetZoningCode();
                 String sjDestXzqhmc = changeInfo.getTargetZoningName();
-                String sjSrcXzqhdm = changeInfo.getOriginZoningCode();
-                String sjSrcXzqhmc = changeInfo.getOriginZoningName();
+                String sjSrcXzqhdm = changeInfo.getOriginalZoningCode();
+                String sjSrcXzqhmc = changeInfo.getOriginalZoningName();
                 if(changeType.equals(Common.MOVE)){
                     //
                     sjDestXzqhmc = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getTargetZoningCode())).getDivisionName();
                     //
-                    sjSrcXzqhmc = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getOriginZoningCode())).getDivisionName();
+                    sjSrcXzqhmc = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getOriginalZoningCode())).getDivisionName();
                 }
 
                 for (int m = 0; m < size; m++) {
@@ -204,18 +230,19 @@ public class CommonService {
      * @param superTargetName 目标行政区划上级名称
      */
     public void updatePreviewData(ChangeInfo info, String superOriginName, String superTargetName){
-        String originZoningCode = info.getOriginZoningCode();
+        String originZoningCode = info.getOriginalZoningCode();
         String targetZoningCode = info.getTargetZoningCode();
         String targetZoningName = info.getTargetZoningName();
         String newDate = StringUtil.formatDateTime(new Date());
         PreviewDataInfo previewDataInfo = previewDataInfoMapper.findValidOneByZoningCode(originZoningCode);
+        System.out.println("updatePreviewData.previewDataInfo--> " + JSONHelper.toJSON(previewDataInfo));
         if(previewDataInfo == null){
             throw new RuntimeException("原始行政区划代码：" + originZoningCode + "不存在！");
         }else {
             String fullName = previewDataInfo.getDivisionFullName();
 
             //仅仅是名称变更
-            if(isJustChangeName(originZoningCode, targetZoningCode)){
+            if(Common.hasSameZoningCode(originZoningCode, targetZoningCode)){
                 previewDataInfo.setDivisionName(targetZoningName);
                 previewDataInfo.setDivisionAbbreviation(targetZoningName);
                 previewDataInfo.setDivisionFullName(fullName.replace(superOriginName, superTargetName));
@@ -233,7 +260,7 @@ public class CommonService {
                 //添加新的数据
                 PreviewDataInfo pf = new PreviewDataInfo();
                 //取得最新的级别代码
-                String oldLevelCode = pf.getLevelCode();
+                String oldLevelCode = previewDataInfo.getLevelCode();
                 String newLevelCode = targetZoningCode.substring(0, oldLevelCode.length());
 
                 //区划代码
@@ -273,7 +300,7 @@ public class CommonService {
                 pf.setEnterOneCode(info.getCreatorCode());
 
                 //创建时间
-                pf.setCreatorDate(newDate);
+                pf.setCreateDate(newDate);
 
                 //修改人代码
                 pf.setUpdaterCode(info.getCreatorCode());
@@ -300,19 +327,26 @@ public class CommonService {
      * @param info 变更信息
      * @param level 级次代码
      * @param relation 单位隶属信息             
-     * @param fullName 区划全称
+     * @param superiorFullName 上级区划全称
      * @param createDate 创建时间
      * @return
      */
-    public String addPreviewData(ChangeInfo info, String relation, String level, String fullName, Date createDate){
+    public Integer addPreviewData(ChangeInfo info, String relation, String level, String superiorFullName, Date createDate){
         String date = StringUtil.formatDateTime(createDate);
         String zoningCode = info.getTargetZoningCode();
         PreviewDataInfo previewDataInfo = new PreviewDataInfo();
         previewDataInfo.setZoningCode(zoningCode);
+
+        //区划全称
+        previewDataInfo.setDivisionFullName(superiorFullName.concat(info.getTargetZoningName()));
+
+        //区划名称
         previewDataInfo.setDivisionName(info.getTargetZoningName());
+
+        //区划简称
         previewDataInfo.setDivisionAbbreviation(info.getTargetZoningName());
+
         previewDataInfo.setAssigningCode(gainLevel(level));
-        previewDataInfo.setDivisionFullName(fullName);
         previewDataInfo.setLevelCode(Common.getLevelCode(zoningCode));
         previewDataInfo.setSuperiorZoningCode(Common.getSuperiorZoningCode(zoningCode));
         previewDataInfo.setChooseSign("Y");
@@ -320,7 +354,7 @@ public class CommonService {
         previewDataInfo.setValidityStart(date);
         previewDataInfo.setAccessCode(info.getOrganizationCode());
         previewDataInfo.setEnterOneCode(info.getCreatorCode());
-        previewDataInfo.setCreatorDate(date);
+        previewDataInfo.setCreateDate(date);
         previewDataInfo.setUpdaterCode(info.getCreatorCode());
         previewDataInfo.setLastUpdate(date);
         previewDataInfo.setSubordinateRelations(gainUnitRelationShip(relation));
@@ -379,8 +413,8 @@ public class CommonService {
      * @param level 区划级别代码
      * @return List
      */
-    public List<PreviewDataInfo> findChildrenZoning(String level){
-        return previewDataInfoMapper.findChildrenZoning(level, "XZQH_DM,XZQH_MC,JCDM");
+    public List<PreviewDataInfo> findFamilyZoning(String level){
+        return previewDataInfoMapper.findFamilyZoning(level, "XZQH_DM,XZQH_MC,JCDM");
     }
 
     /**
@@ -399,20 +433,24 @@ public class CommonService {
 
         // 变更与迁移
         else {
-            String originZoningCode = info.getOriginZoningCode();
+            String originalZoningCode = info.getOriginalZoningCode();
 
             //原区划级别代码
-            String  originLevelCode= Common.getLevelCode(originZoningCode);
+            String originalLevelCode = Common.getLevelCode(originalZoningCode);
 
             //现区化级别代码
             String currentLevelCode = info.getLevelCode();
 
-            List<PreviewDataInfo> previewDataInfos = findChildrenZoning(originLevelCode);
+            List<PreviewDataInfo> previewDataInfos = findFamilyZoning(originalLevelCode);
+            log.info("accountChangeOrders.previewDataInfos.size----> " + previewDataInfos.size());
             for (int i = 0; i < previewDataInfos.size(); i++) {
                 ChangeInfo changeInfo = new ChangeInfo();
                 PreviewDataInfo previewDataInfo =  previewDataInfos.get(i);
+
                 //获取区划代码
                 String zoningCode = previewDataInfo.getZoningCode();
+
+                log.info("accountChangeOrders.previewDataInfo.zoningCode------> " + zoningCode);
 
                 //目标区划代码
                 if(i == 0){
@@ -433,16 +471,16 @@ public class CommonService {
                 changeInfo.setRequestSeq(info.getRequestSeq());
 
                 //目标区划代码
-                changeInfo.setTargetZoningCode(zoningCode.replaceFirst(originLevelCode, currentLevelCode));
+                changeInfo.setTargetZoningCode(zoningCode.replaceFirst(originalLevelCode, currentLevelCode));
 
                 //权限机构代码
                 changeInfo.setOrganizationCode(info.getOrganizationCode());
 
                 //原区划名称
-                changeInfo.setOriginZoningName(previewDataInfo.getDivisionName());
+                changeInfo.setOriginalZoningName(previewDataInfo.getDivisionName());
 
                 //原区划代码
-                changeInfo.setOrganizationCode(previewDataInfo.getZoningCode());
+                changeInfo.setOriginalZoningCode(previewDataInfo.getZoningCode());
 
                 //录入人代码
                 changeInfo.setCreatorCode(info.getCreatorCode());
@@ -458,21 +496,7 @@ public class CommonService {
 
 
 
-    /**
-     * 检测是否为名称变更
-     * @param originZoningCode 原区划代码
-     * @param currentZoningCode 现区划代码
-     * @return
-     */
-    public  boolean isJustChangeName(String originZoningCode, String currentZoningCode){
-        boolean flag=false;
-        if(!originZoningCode.equals("")&&!currentZoningCode.equals("")){
-            if(originZoningCode.equals(currentZoningCode)){
-                flag=true;
-            }
-        }
-        return flag;
-    }
+
 
 
 }

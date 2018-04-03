@@ -24,14 +24,14 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
      * @param levelCode
      * @return String
      */
-    public String findChildrenZoning(String levelCode, String columns){
+    public String findFamilyZoning(String levelCode, String columns){
         String sql = new SQL(){{
             FROM(getTableName());
             SELECT(columns);
             WHERE(getColumnByField("levelCode") + " LIKE '" + levelCode.trim() + "%'");
             ORDER_BY();
         }}.toString();
-        log.info("findChildrenZoning.sql -------------->" + sql);
+        log.info("findFamilyZoning.sql -------------->" + sql);
         return sql;
     }
 
@@ -134,6 +134,18 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
             WHERE(getColumnByField("superiorZoningCode") + "=#{zoningCode}");
         }}.toString();
         log.info("findSubordinateZoning.sql--------> " + sql);
+        return sql;
+    }
+
+
+    //根据区划代码查找有效的区划预览数据
+    public String findValidOneByZoningCode(String zoningCode){
+        String sql = new SQL(){{
+            FROM(getTableName());
+            SELECT(getColumns());
+            WHERE("XYBZ = 'Y' AND YXBZ = 'Y' AND XZQH_DM =" + zoningCode);
+        }}.toString();
+        log.info("findValidOneByZoningCode.sql-------------> " + sql);
         return sql;
     }
 }

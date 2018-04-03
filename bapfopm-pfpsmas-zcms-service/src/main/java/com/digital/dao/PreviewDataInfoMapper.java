@@ -25,8 +25,7 @@ public interface PreviewDataInfoMapper {
 
     @ResultType(Integer.class)
     @InsertProvider(type = PreviewDataInfoSql.class, method = "insert")
-    @SelectKey(before = false, resultType = String.class, keyColumn = "XZQH_DM", keyProperty = "zoningCode", statement = "SELECT LAST_INSERT_ID()")
-    String insert(Object previewDataInfo);
+    Integer insert(Object previewDataInfo);
 
     @SelectProvider(type = PreviewDataInfoSql.class, method = "get")
     @ResultMap(value = "findAll")
@@ -38,8 +37,9 @@ public interface PreviewDataInfoMapper {
             @Result(column = "XZQH_DM", property = "zoningCode", javaType = String.class),
             @Result(column = "XZQH_MC", property = "divisionName", javaType = String.class),
             @Result(column = "XZQH_JC", property = "divisionAbbreviation", javaType = String.class),
+            @Result(column = "XZQH_QC", property = "divisionFullName", javaType = String.class),
             @Result(column = "JCDM", property = "assigningCode", javaType = String.class),
-            @Result(column = "JBDM", property = "zoningCode", javaType = String.class),
+            @Result(column = "JBDM", property = "levelCode", javaType = String.class),
             @Result(column = "SJ_XZQH_DM", property = "superiorZoningCode", javaType = String.class),
             @Result(column = "XYBZ", property = "chooseSign", javaType = String.class),
             @Result(column = "YXBZ", property = "usefulSign", javaType = String.class),
@@ -49,17 +49,21 @@ public interface PreviewDataInfoMapper {
             @Result(column = "XNJD_BZ", property = "virtualNode", javaType = String.class),
             @Result(column = "OLD_XZQH_DM", property = "oldZoningCode", javaType = String.class),
             @Result(column = "QX_JGDM", property = "accessCode", javaType = String.class),
+            @Result(column = "LRSJ", property = "createDate", javaType = String.class),
+            @Result(column = "XGR_DM", property = "updaterCode", javaType = String.class),
+            @Result(column = "XGSJ", property = "lastUpdate", javaType = String.class),
+            @Result(column = "XZQHLX_DM", property = "type", javaType = String.class),
             @Result(column = "LRR_DM", property = "enterOneCode", javaType = String.class)
     })
     List<PreviewDataInfo> findAllByZoningCode(String zoningCode);
 
-    @SelectProvider(type = PreviewDataInfoSql.class, method = "findChildrenZoning")
+    @SelectProvider(type = PreviewDataInfoSql.class, method = "findFamilyZoning")
     @Results({
             @Result(column = "XZQH_DM", property = "zoningCode", javaType = String.class),
             @Result(column = "XZQH_JC", property = "divisionAbbreviation", javaType = String.class),
             @Result(column = "XZQH_MC", property = "divisionName", javaType = String.class)
     })
-    List<PreviewDataInfo> findChildrenZoning(String levelCode, String columns);
+    List<PreviewDataInfo> findFamilyZoning(String levelCode, String columns);
 
     /**
      * 查找同一父级区划下的，指定名称的区划数量
@@ -82,14 +86,15 @@ public interface PreviewDataInfoMapper {
      * @param zoningCode 区划代码
      * @return PreviewDataInfo 单条区划预览数据
      */
-    @Select("SELECT XZQH_MC,XZQH_QC,JCDM,DWLSGX_DM FROM DM_XZQH_YLSJ WHERE XZQH_DM =#{zoningCode}")
-    @Results({
+    @Select("SELECT * FROM DM_XZQH_YLSJ WHERE XZQH_DM =#{zoningCode}")
+   /* @Results({
             @Result(column = "XZQH_DM", property = "zoningCode", javaType = String.class),
             @Result(column = "XZQH_MC", property = "divisionName", javaType = String.class),
             @Result(column = "XZQH_JC", property = "divisionAbbreviation", javaType = String.class),
             @Result(column = "JCDM", property = "assigningCode", javaType = String.class),
             @Result(column = "DWLSGX_DM", property = "subordinateRelations", javaType = String.class)
-    })
+    })*/
+    @ResultMap(value = "findAll")
     PreviewDataInfo findOneByZoningCode(@Param(value = "zoningCode") String zoningCode);
 
 
@@ -100,8 +105,8 @@ public interface PreviewDataInfoMapper {
      * @param zoningCode 区划代码
      * @return PreviewDataInfo 单条区划预览数据
      */
-    @Select("SELECT XZQH_MC,XZQH_QC,JCDM,DWLSGX_DM FROM DM_XZQH_YLSJ WHERE XYBZ = 'Y' AND YXBZ = 'Y' AND XZQH_DM =#{zoningCode, jdbcType=CHAR}")
-    @Results({
+    //@Select("SELECT XZQH_MC,XZQH_QC,JCDM,DWLSGX_DM FROM DM_XZQH_YLSJ WHERE XYBZ = 'Y' AND YXBZ = 'Y' AND XZQH_DM =#{zoningCode, jdbcType=VARCHAR}")
+    /*@Results({
             @Result(column = "XZQH_DM", property = "zoningCode", javaType = String.class),
             @Result(column = "XZQH_MC", property = "divisionName", javaType = String.class),
             @Result(column = "XZQH_JC", property = "divisionAbbreviation", javaType = String.class),
@@ -109,6 +114,10 @@ public interface PreviewDataInfoMapper {
             @Result(column = "DWLSGX_DM", property = "subordinateRelations", javaType = String.class)
     })
     PreviewDataInfo findValidOneByZoningCode(@Param(value = "zoningCode") String zoningCode);
+    */
+    @SelectProvider(type = PreviewDataInfoSql.class, method = "findValidOneByZoningCode")
+    @ResultMap(value = "findAll")
+    PreviewDataInfo findValidOneByZoningCode(String zoningCode);
 
 
     @SelectProvider(type = PreviewDataInfoSql.class, method = "findSubordinateZoning")
@@ -125,7 +134,7 @@ public interface PreviewDataInfoMapper {
     //插入历史数据
     @Insert("INSERT INTO XZQH_BGMXLSJL (MXBXH,GROUPXH,YSXZQH_DM,YSXZQH_MC,BGLX_DM,MBXZQH_DM,MBXZQH_MC,LRR_DM,LRSJ)" +
             " VALUES(#{requestReq, jdbcType = INTEGER}," +
-            " #{groupReq, jdbcType = INTEGER}, #{originCode, jdbcType = CHAR}, #{originName, jdbcType = VARCHAR}," +
+            " #{groupSeq, jdbcType = INTEGER}, #{originCode, jdbcType = CHAR}, #{originName, jdbcType = VARCHAR}," +
             " #{changeType, jdbcType = CHAR}, #{currentCode, jdbcType = CHAR}, #{currentName, jdbcType = CHAR}, #{creatorCode, jdbcType = CHAR}, #{createDate, jdbcType = VARCHAR})")
     Integer insertHistoryData(Map info);
 }

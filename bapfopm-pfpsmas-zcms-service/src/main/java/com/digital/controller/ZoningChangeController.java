@@ -158,7 +158,6 @@ public class ZoningChangeController {
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, result).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
-            ex.printStackTrace();
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
     }
@@ -191,10 +190,12 @@ public class ZoningChangeController {
     @ResponseBody
     public Object saveDetails(@Param(value = "group")String group, @Param(value = "details")String details, @Param(value = "zoningCode")String zoningCode){
         try {
+            log.info("saveDetails.zoningCode---------> " + zoningCode);
             zoningCodeChangeApi.addDetails(group, details, zoningCode);
-            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, "变更明细对照数据保存成功！").toString();
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
+            ex.printStackTrace();
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
     }

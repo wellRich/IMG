@@ -48,7 +48,7 @@ public class ZoningDataUploadSql {
 
         return new SQL(){
             {
-                SELECT("ZIPXH","RQ","WJM","JZBGZT_DM","LRSJ","WJLJ","LRR_DM","LRJG_DM");
+                SELECT("ZIPXH","XZQH_DM","RQ","WJM","JZBGZT_DM","LRSJ","WJLJ","LRR_DM","LRJG_DM");
                 FROM("xzqh_jzbgzip");
                 if (!"000000".equals(zoningCode)){
                     WHERE("XZQH_DM="+zoningCode);

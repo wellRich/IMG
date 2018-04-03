@@ -9,9 +9,6 @@ import com.digital.util.Common;
 import com.digital.util.JSONHelper;
 import com.digital.util.StringUtil;
 import com.digital.util.search.QueryResp;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInterceptor;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -213,26 +210,28 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     @Override
     public void addDetails(String group, String details, String zoningCode) {
-
+        log.info("addDetails.zoningCode ---> " + zoningCode);
         // 1 添加变更对照组
         Map groupInfo = JSONHelper.toMap(group, new Class[]{String.class, Object.class});
-        Integer groupSeq = addZCCGroup(zoningCode, groupInfo);//zccGroupMapper.insert(groupInfo);
+        Integer groupSeq = addZCCGroup(zoningCode.substring(0,6), groupInfo);//zccGroupMapper.insert(groupInfo);
         log.info("addDetails.groupSeq-------------> " + groupSeq);
 
         // 2 添加变更对照明细数据
         List<ChangeInfo> ringChangesInfo = new LinkedList();
-        List<ChangeInfo> changesInfo = JSONHelper.fromJsonArray(details, ChangeInfo.class);
-        int size = changesInfo.size();
+        List<ChangeInfo> changeInfoList = JSONHelper.fromJsonArray(details, ChangeInfo.class);
+        int size = changeInfoList.size();
         ChangeInfo info;
         for(int i = 0; i < size; i ++){
-            System.out.println("c--------> " + changesInfo.get(i));
-            // info = new ChangeInfo(changesInfo.get(i));
-            info = changesInfo.get(i);
+            info = changeInfoList.get(i);
+            System.out.println("addDetails.info---------> " + info);
+            info.setCreatorDate(new Date());
             info.setGroupSeq(groupSeq);
+
             //2.1 名称变更，直接插入变更对照明细表、区划预览表以及变更明细历史记录
-            if(info.getOriginZoningCode().equals(info.getTargetZoningCode())){
+            if(Common.hasSameZoningCode(info.getOriginalZoningCode(), info.getTargetZoningCode())){
                 saveDetail(info);
             }
+
             //2.2 代码变更
             else {
 
@@ -270,8 +269,8 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         Map<String, Object> param = new HashMap<>();
         param.put("requestReq", info.getRequestSeq());
         param.put("groupSeq", info.getGroupSeq());
-        param.put("originCode", info.getOriginZoningCode());
-        param.put("originName", info.getOriginZoningName());
+        param.put("originCode", info.getOriginalZoningCode());
+        param.put("originName", info.getOriginalZoningName());
         param.put("changeType", info.getChangeType());
         param.put("currentCode", info.getTargetZoningCode());
         param.put("currentName", info.getTargetZoningName());
@@ -309,7 +308,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                 ChangeInfo end = changes[size - 1];
 
                 //首元素的原区划等于尾元素的目标区划，则这是一个环
-                if (end.getTargetZoningCode().equals(start.getOriginZoningCode())) {
+                if (end.getTargetZoningCode().equals(start.getOriginalZoningCode())) {
                     count = count + 1;//记录第几个环
                     String tempZoningCode = "";
                     for(int j = 0; j < size; j ++){
@@ -377,7 +376,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                     String targetCode = end.getTargetZoningCode();
                     // 如果最后一个节点的目标代码已存在，则此链不符合业务要求
                     if (commonService.isExitsZoningCode(targetCode)) {
-                        throw new RuntimeException("原行政区划代码由:" + end.getOriginZoningCode() + "变更为："
+                        throw new RuntimeException("原行政区划代码由:" + end.getOriginalZoningCode() + "变更为："
                                 + targetCode + "时出错，目标代码已存在！");
                     } else {
                         cell.forEach(result::add);
@@ -388,15 +387,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             //单个元素
             else {
                 ChangeInfo changeInfo = changes[0];
-                boolean isExits = commonService.isExitsZoningCode(changeInfo.getOriginZoningCode());
+                boolean isExits = commonService.isExitsZoningCode(changeInfo.getOriginalZoningCode());
                 if(changeInfo.getChangeType().equals(Common.MERGE)){
                     if(!isExits){
-                        throw new RuntimeException("原行政区划代码由:" + changeInfo.getOriginZoningCode() + "变更为："
+                        throw new RuntimeException("原行政区划代码由:" + changeInfo.getOriginalZoningCode() + "变更为："
                                 + changeInfo.getTargetZoningCode() + "时出错，目标代码不存在！");
                     }
                 }else {
                     if(isExits){
-                        throw new RuntimeException("原行政区划代码由:" + changeInfo.getOriginZoningCode() + "变更为："
+                        throw new RuntimeException("原行政区划代码由:" + changeInfo.getOriginalZoningCode() + "变更为："
                                 + changeInfo.getTargetZoningCode() + "时出错，目标代码已存在！");
                     }
                 }
@@ -421,7 +420,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         String targetZoningCode = info.getTargetZoningCode();
 
         for (ChangeInfo changeInfo : infoList) {
-            if (targetZoningCode.equals(changeInfo.getOriginZoningCode())) {
+            if (targetZoningCode.equals(changeInfo.getOriginalZoningCode())) {
                 target = changeInfo;
             }
         }
@@ -448,7 +447,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     public Set<ChangeInfo> findBackward(ChangeInfo info, List<ChangeInfo> infoList, Set<ChangeInfo> changeInfos) {
         ChangeInfo origin = null;
-        String originZoningCode = info.getOriginZoningCode();
+        String originZoningCode = info.getOriginalZoningCode();
         for (ChangeInfo changeInfo : infoList) {
             if (changeInfo.getTargetZoningCode().equals(originZoningCode)) {
                 origin = changeInfo;
@@ -557,6 +556,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         }
         Long maxOrderNum = getMaxOrderNum(ZCCGroup.tableName);
         group.put("orderNum", maxOrderNum);
+        group.put("createDate", StringUtil.getTime());
         return zccGroupMapper.insert(group);
     }
 

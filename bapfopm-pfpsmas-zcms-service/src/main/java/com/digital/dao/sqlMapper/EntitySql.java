@@ -4,6 +4,8 @@ package com.digital.dao.sqlMapper;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +34,10 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     private String tableName;
 
     /**
-     * 实体主键属性名称
+     * 表格主键对应的实体属性名称
      */
-    private String primary;
+    private String primaryField;
+
 
 
     /**
@@ -64,7 +67,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         clazz = init();
         Table table = clazz.getAnnotation(Table.class);
         this.tableName = table.name();
-        this.primary = table.primaryKey();
+        this.primaryField = table.primaryKey();
         Field[] fields = clazz.getDeclaredFields();
         int size = fields.length;
         Field field;
@@ -76,7 +79,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
             fieldName = field.getName();
             if(fields[i].isAnnotationPresent(Column.class)){
                 colName = field.getAnnotation(Column.class).name();
-                if(!this.primary.equals(field.getName())){//过滤有问题
+                if(!this.primaryField.equals(field.getName())){//过滤有问题
                     this.fiesAndColsExcPrimary.put(fieldName, colName);
                 }
                 this.fieldsAndCols.put(fieldName, colName);
@@ -84,15 +87,19 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
             }
         }
         this.columns = sb.toString();
-        this.columnsExcPrimary = this.columns.replace(getColumnByField(getPrimary()) + ",", "");
+        //fieldsAndCols.forEach((k, v) -> System.out.println("fieldsAndCols===== k--------> " + k + ", v ----> " + v));
+        //this.columnsExcPrimary = this.columns.replace(getColumnByField(getPrimaryField()) + ",", "");
+        this.columnsExcPrimary = StringUtils.join(fiesAndColsExcPrimary.keySet(), ",");
     }
 
     protected abstract Class<T> init();
 
+    //需要修改
     public String insert(final Object entity){
         String sql = new SQL(){{
             INSERT_INTO(tableName);
-            getFiesAndColsExcPrimary().forEach((k, v) -> VALUES(v, "#{" + k + "}"));
+           // getFiesAndColsExcPrimary().forEach((k, v) -> VALUES(v, "#{" + k + "}"));
+            getFieldsAndCols().forEach((k, v) -> VALUES(v, "#{" + k + "}"));
         }}.toString();
         log.info("insert.sql----> " + sql);
         return sql;
@@ -114,19 +121,17 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
                 sql = new SQL(){{
                     UPDATE(tableName);
                     getFiesAndColsExcPrimary().forEach((k, v) -> SET(v + "=#{" + k + "}"));
-                    WHERE(getColumnByField(primary) + "=#{" + primary + "}");
+                    WHERE(getColumnByField(primaryField) + "=#{" + primaryField + "}");
                 }}.toString();
             }else if(group instanceof Map){
                 Map temp = (Map)group;
-                if(temp.containsKey(primary)){
+                if(temp.containsKey(primaryField)){
                     sql = new SQL(){{
                         UPDATE(tableName);
                         temp.forEach((k, v) ->{
-                            if(!k.equals(primary)){
-                                SET(getColumnByField(k.toString()) + "=#{" + v + "}");
-                            }
+                            SET(getColumnByField(k.toString()) + "=#{" + v + "}");
                         });
-                        WHERE(getColumnByField(primary) + "=#{" + primary + "}");
+                        WHERE(getColumnByField(primaryField) + "=#{" + primaryField + "}");
                     }}.toString();
                 }else {
                     throw new RuntimeException("未传入主键值！");
@@ -144,7 +149,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         String sql = new SQL() {{
             FROM(tableName);
             SELECT(columns);
-            WHERE(getColumnByField(getPrimary()) + "=" + primaryKey);
+            WHERE(getColumnByField(getPrimaryField()) + "=" + primaryKey);
         }}.toString();
         log.info("getByPrimaryKey.sql------------> " + sql);
         return sql;
@@ -176,12 +181,12 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
             if(isEntity(primaryKey)){
                 sql =  new SQL(){{
                     DELETE_FROM(getTableName());
-                    WHERE(getColumnByField(getPrimary()) + "=#{" + getPrimary() + "}");
+                    WHERE(getColumnByField(getPrimaryField()) + "=#{" + getPrimaryField() + "}");
                 }}.toString();
             }else {
                 sql = new SQL(){{
                     DELETE_FROM(getTableName());
-                    WHERE(getColumnByField(getPrimary()) + "=" + primaryKey);
+                    WHERE(getColumnByField(getPrimaryField()) + "=" + primaryKey);
                 }}.toString();
             }
             log.info("deleteRequest.sql--------------> " + sql);
@@ -214,8 +219,8 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         return fiesAndColsExcPrimary;
     }
 
-    public String getPrimary() {
-        return primary;
+    public String getPrimaryField() {
+        return primaryField;
     }
 
     public Class<T> getClazz() {

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @Since
  * @Deprecated
  */
-@Table(name = "DM_XZQH_YLSJ", primaryKey = "XZQH_DM")
+@Table(name = "DM_XZQH_YLSJ", primaryKey = "zoningCode")
 public class PreviewDataInfo implements Serializable {
 
     /*
@@ -116,7 +116,7 @@ public class PreviewDataInfo implements Serializable {
      * 录入时间
      * */
     @Column(name = "LRSJ")
-    private String creatorDate;
+    private String createDate;
 
 
 
@@ -269,12 +269,12 @@ public class PreviewDataInfo implements Serializable {
         this.enterOneCode = enterOneCode;
     }
 
-    public String getCreatorDate() {
-        return creatorDate;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatorDate(String creatorDate) {
-        this.creatorDate = creatorDate;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     public String getUpdaterCode() {
@@ -300,4 +300,5 @@ public class PreviewDataInfo implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
+
 }
