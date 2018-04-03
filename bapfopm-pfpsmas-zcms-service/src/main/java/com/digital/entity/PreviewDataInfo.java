@@ -4,7 +4,6 @@ import com.digital.util.search.Column;
 import com.digital.util.search.Table;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @Description: TODO 区划数据预览数据
@@ -18,98 +17,98 @@ import java.util.Date;
 public class PreviewDataInfo implements Serializable {
 
     /*
-    * 行政区划代码
-    * */
+     * 行政区划代码
+     * */
     @Column(name = "XZQH_DM")
     public String zoningCode;
 
     /*
-    * 行政区划名称
-    * */
+     * 行政区划名称
+     * */
     @Column(name = "XZQH_MC")
     public String divisionName;
 
     /*
-    * 行政区划简称
-    * */
+     * 行政区划简称
+     * */
     @Column(name = "XZQH_JC")
     public String divisionAbbreviation;
 
     /*
-    * 行政区划全称
-    * */
+     * 行政区划全称
+     * */
     @Column(name = "XZQH_QC")
     public String divisionFullName;
 
     /*
-    * 级次代码
-    * */
+     * 级次代码
+     * */
     @Column(name = "JCDM")
     public String  assigningCode;
 
     /*
-    * 级别代码
-    * */
+     * 级别代码
+     * */
     @Column(name = "JBDM")
     public String levelCode;
 
     /*
-    * 上级行政区划代码
-    * */
+     * 上级行政区划代码
+     * */
     @Column(name = "SJ_XZQH_DM")
     public String superiorZoningCode;
 
     /*
-    * 选用标志
-    * */
+     * 选用标志
+     * */
     @Column(name = "XYBZ")
     public String chooseSign;
 
     /*
-    * 有效标志
-    * */
+     * 有效标志
+     * */
     @Column(name = "YXBZ")
     public String usefulSign;
 
     /*
-    * 单位隶属关系
-    * */
+     * 单位隶属关系
+     * */
     @Column(name = "DWLSGX_DM")
     public String subordinateRelations;
 
     /*
-    *有效期起
-    * */
+     *有效期起
+     * */
     @Column(name = "YXQ_Q")
     public String validityStart;
 
     /*
-    * 有效期止
-    * */
+     * 有效期止
+     * */
     @Column(name = "YXQ_Z")
     public String validityStup;
 
     /*
-    *虚拟节点标志
-    * */
+     *虚拟节点标志
+     * */
     @Column(name = "XNJD_BZ")
     public String virtualNode;
 
     /*
-    * 旧行政区划代码
-    * */
+     * 旧行政区划代码
+     * */
     @Column(name = "OLD_XZQH_DM")
     public String oldZoningCode;
 
     /*
-    * 权限机构代码
-    * */
+     * 权限机构代码
+     * */
     @Column(name = "QX_JGDM")
     public String accessCode;
 
     /*
-    * 录入人代码
-    * */
+     * 录入人代码
+     * */
     @Column(name = "LRR_DM")
     public String enterOneCode;
 

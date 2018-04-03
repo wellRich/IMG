@@ -4,7 +4,6 @@ import com.digital.dao.sqlMapper.ZCCGroupSql;
 import org.apache.ibatis.annotations.*;
 import com.digital.entity.ZCCGroup;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -52,12 +51,12 @@ public interface ZCCGroupMapper {
 
     /**
      *  根据区划代码查找该区划相关的变更组中最大的编号
-     * @param zoingCode 区划代码
+     * @param zoningCode 区划代码
      * @return
      */
     @SelectProvider(type = ZCCGroupSql.class, method = "getMaxSerialNumber")
-    @ResultType(value = BigInteger.class)
-    BigInteger getMaxSerialNumber(String zoingCode);
+    @ResultType(value = Long.class)
+    Long getMaxSerialNumber(String zoningCode);
 
 
     /**

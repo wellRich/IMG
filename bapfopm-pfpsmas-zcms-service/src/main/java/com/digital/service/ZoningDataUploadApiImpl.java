@@ -4,6 +4,7 @@ import com.digital.api.ZoningDataUploadApi;
 import com.digital.dao.TemporaryDataMapper;
 import com.digital.dao.ZoningDataUploadMapper;
 import com.digital.entity.province.FocusChangeFileInfo;
+import com.digital.util.Common;
 import com.digital.util.FileUtil;
 import com.digital.util.StringUtil;
 import org.slf4j.Logger;
@@ -104,9 +105,9 @@ public class ZoningDataUploadApiImpl implements ZoningDataUploadApi {
         FocusChangeFileInfo fileInfo = new FocusChangeFileInfo();
         fileInfo = zoningDataUploadMapper.queryFocusChangeFileInfo(fileSquence);
         String status = fileInfo.getStatusCode();
-        if (StringUtil.isEmpty(status)){
+        if (!StringUtil.isEmpty(status)){
             /*判断变更状态、如果是40表示 已经申请单生成成功；不可被删除*/
-            if (status.equals("40")){
+            if (Common.XZQH_JZBGZT_SQDSQCG.equals(status)){
                 return false;
             }
         }
@@ -142,7 +143,7 @@ public class ZoningDataUploadApiImpl implements ZoningDataUploadApi {
     }
 
     @Override
-    public List<FocusChangeFileInfo> queryFocusChangeFileInfo(String zoningCode, String date) {
+    public List<Object> queryFocusChangeFileInfo(String zoningCode, String date) {
         return zoningDataUploadMapper.queryFocusChangeFileInfoByCode(zoningCode,date);
     }
 

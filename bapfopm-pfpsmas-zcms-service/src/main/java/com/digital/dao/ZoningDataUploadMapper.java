@@ -1,11 +1,8 @@
 package com.digital.dao;
 
 import com.digital.dao.sqlMapper.ZoningDataUploadSql;
-import com.digital.entity.province.ContrastTemporary;
 import com.digital.entity.province.FocusChangeFileInfo;
-import com.digital.entity.province.ProvinceSectionalData;
 import org.apache.ibatis.annotations.*;
-import org.bouncycastle.asn1.x509.V2TBSCertListGenerator;
 
 import java.util.List;
 
@@ -69,7 +66,7 @@ public interface ZoningDataUploadMapper {
      * */
     @SelectProvider(type = ZoningDataUploadSql.class,method = "queryFocusChangeFileInfoByCode")
     @ResultMap("fileInfo")
-    List<FocusChangeFileInfo> queryFocusChangeFileInfoByCode( String zoningCode, String date);
+    List<Object> queryFocusChangeFileInfoByCode( String zoningCode, String date);
 
 
 
@@ -82,8 +79,8 @@ public interface ZoningDataUploadMapper {
     /*
     * 添加申请单序号
     * */
-    @Update("update xzqh_jzbgzip set SQDXH=#{applicationNum} where ZIPXH=#{fileSquence}")
-    int updateFocusApplicationNum(@Param("fileSquence") Integer fileSquence,@Param("applicationNum") Integer applicationNum);
+    @Update("update xzqh_jzbgzip set SQDXH=#{applicationNum},JZBGZT_DM=#{instructionCode} where ZIPXH=#{fileSquence}")
+    int updateFocusApplicationNum(@Param("fileSquence") Integer fileSquence,@Param("applicationNum") Integer applicationNum,@Param("instructionCode")String instructionCode);
 
 
 

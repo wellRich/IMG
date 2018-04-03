@@ -1,5 +1,7 @@
 package com.digital.util.resultData;
 
+import com.digital.util.JSONHelper;
+
 /**
  * @Description: TODO 返回数据
  * @Author: zhanghpj
@@ -35,11 +37,7 @@ public class RtnData {
 
     @Override
     public String toString() {
-        return "RtnData{" +
-                "rtnCode='" + rtnCode + '\'' +
-                ", rtnMessage='" + rtnMessage + '\'' +
-                ", responseData=" + responseData +
-                '}';
+        return JSONHelper.toJSON( this);
     }
 
 

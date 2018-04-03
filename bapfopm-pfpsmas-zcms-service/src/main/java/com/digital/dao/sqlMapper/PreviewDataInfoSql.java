@@ -36,12 +36,34 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
     }
 
     /**
+     * 根据区划代码查找同一父级下的同级区划
+     * @param zoningCode
+     * @return
+     */
+    public String findBrothersByCode(String zoningCode){
+        String superZoningCode = Common.getSuperiorZoningCode(zoningCode);
+        String assignCode = Common.getAssigningCode(zoningCode);
+
+        String sql = new SQL(){{
+            FROM(getTableName());
+            SELECT(getColumns());
+            WHERE(getColumnByField("superiorZoningCode") + "=" + superZoningCode );
+            AND();
+            WHERE(getColumnByField("assigningCode") + "=" + assignCode);
+            AND();
+            WHERE(getColumnByField("zoningCode") + "!=" + zoningCode);
+        }}.toString();
+        log.info("findBrothersByCode.sql---------> " + sql);
+        return sql;
+    }
+
+    /**
      * 查找同一父级区划下的指定名称的区划数据
      * @param zoningCode 区划代码
      * @param zoningName 区划名称
      * @return sql
      */
-    public String findBrothersByCode(String zoningCode, String zoningName){
+    public String findBrothersByCodeAndName(String zoningCode, String zoningName){
 
         //取得上级区划的级别代码
         String superAssignCode = Common.getSuperAssignCode(zoningCode);
@@ -52,7 +74,7 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
             AND();
             WHERE(getColumnByField("divisionName") + "='" + zoningName + "'");
         }}.toString();
-        log.info("findBrothersByCode.sql---------> " + sql);
+        log.info("findBrothersByCodeAndName.sql---------> " + sql);
         return sql;
     }
 
@@ -105,5 +127,13 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
 
 
     //获取下一级区划预览数据
-
+    public String findSubordinateZoning(String zoningCode){
+        String sql = new SQL(){{
+            FROM(getTableName());
+            SELECT(getColumns());
+            WHERE(getColumnByField("superiorZoningCode") + "=#{zoningCode}");
+        }}.toString();
+        log.info("findSubordinateZoning.sql--------> " + sql);
+        return sql;
+    }
 }

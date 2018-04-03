@@ -36,5 +36,5 @@ public interface ZoningDataUploadApi {
     /*
      * 根据6位区划代码、日期  查询文件信息
      * */
-    List<FocusChangeFileInfo> queryFocusChangeFileInfo(String zoningCode,String date);
+    List<Object> queryFocusChangeFileInfo(String zoningCode, String date);
 }

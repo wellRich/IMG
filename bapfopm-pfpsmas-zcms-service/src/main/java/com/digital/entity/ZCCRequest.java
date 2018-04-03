@@ -25,78 +25,78 @@ import java.util.stream.Collectors;
 public class ZCCRequest implements Serializable {
 
     /*
-    * 申请单序号
-    * */
+     * 申请单序号
+     * */
     @Column(name = "SQDXH")
     private Integer seq;
 
     /*
-    * 申请单名称
-    * */
+     * 申请单名称
+     * */
     @Column(name = "SQDMC")
     private String name;
 
     /*
-    * 申请单状态
-    * */
+     * 申请单状态
+     * */
     @Column(name = "SQDZT_DM")
     private String status;
 
     /*
-    * 上报区划的区划代码
-    * */
+     * 上报区划的区划代码
+     * */
     @Column(name = "SBXZQH_DM")
     private String ownZoningCode;
 
 
 
     /*
-    * 录入人代码
-    * */
+     * 录入人代码
+     * */
     @Column(name = "LRR_DM")
     private String creatorCode;
 
     /*
-    * 录入时间
-    * */
+     * 录入时间
+     * */
     @Column(name = "LRSJ")
     private String createDate;
 
     /*
-    * 录入机构代码
-    * */
+     * 录入机构代码
+     * */
     @Column(name = "LRJG_DM")
     private String creatorDeptCode;
 
     /*
-    * 修改人代码
-    * */
+     * 修改人代码
+     * */
     @Column(name = "XGR_DM")
     private String updaterCode;
 
 
     /*
-    * 修改时间
-    * */
+     * 修改时间
+     * */
     @Column(name = "XGSJ")
     private String lastUpdate;
 
 
     /*
-    * 修改机构代码
-    * */
+     * 修改机构代码
+     * */
     @Column(name = "XGJG_DM")
     private String updaterDeptCode;
 
     /*
-    * 审批意见
-    * */
+     * 审批意见
+     * */
     @Column(name = "SPYJ")
     private String approvalOpinion;
 
     /*
-    * 审批人代码
-    * */
+     * 审批人代码
+     * */
     @Column(name = "SPR_DM")
     private String verifierCode;
 

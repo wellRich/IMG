@@ -4,7 +4,10 @@ import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +20,7 @@ import java.util.Map;
  * @Deprecated
  */
 @Controller
-public class BaseController{
+public class BaseController {
 
     @ExceptionHandler(value = RuntimeException.class)
     @ResponseStatus(HttpStatus.OK)
@@ -26,11 +29,4 @@ public class BaseController{
         e.printStackTrace();
         return new RtnData(Constants.RTN_CODE_ERROR,e.getMessage()).toString();
     }
-
-    @RequestMapping("/")
-    public String home(){
-        return "demo/index";
-    }
-
-
 }

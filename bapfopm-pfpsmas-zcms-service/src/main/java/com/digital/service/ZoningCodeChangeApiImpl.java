@@ -1,15 +1,12 @@
 package com.digital.service;
 
-import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.digital.dao.*;
+import com.digital.entity.*;
 import com.digital.util.Common;
-import com.digital.entity.ZCCDetail;
-import com.digital.entity.ZCCGroup;
 import com.digital.util.JSONHelper;
-import com.digital.entity.ChangeInfo;
 import com.digital.util.StringUtil;
 import com.digital.util.search.QueryResp;
 import com.github.pagehelper.Page;
@@ -22,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.digital.api.ZoningCodeChangeApi;
-import com.digital.entity.ZCCRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -52,10 +48,11 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     @Autowired
     LogicCheckMapper logicCheckMapper;
-    
-    
+
+
     @Autowired
     CommonService commonService;
+
 
     /**
      * 通过区划代码查找申请单
@@ -94,12 +91,11 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         return resp;
     }
 
-
     /**
-    * 添加申请单
-    * @param content 申请单属性键值对json字符串
-    * @return 新增失败返回0，新增成功返回对象的主键——申请单序号
-    */
+     * 添加申请单
+     * @param content 申请单属性键值对json字符串
+     * @return 新增失败返回0，新增成功返回对象的主键——申请单序号
+     */
 
     public int addZCCRequest(String content) {
         Map<String, Object> params = JSONHelper.toMap(content, new Class[]{String.class, Object.class});
@@ -123,12 +119,12 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
 
     /**
-    * 通过状态与区划代码查找申请单
-    * 〈功能详细描述〉
-    * @param zoingCode 区划代码
-    * @param status 申请单状态
-    * @return 申请单列表
-    */
+     * 通过状态与区划代码查找申请单
+     * 〈功能详细描述〉
+     * @param zoingCode 区划代码
+     * @param status 申请单状态
+     * @return 申请单列表
+     */
     @Override
     public List<ZCCRequest> findZCCReqByZCAndStatus(String zoingCode, String status) {
 
@@ -138,30 +134,47 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     /**
      *  根据区划代码查找申请单
-     * @param zoingCode
+     * @param zoningCode
      * @return
      */
     @Override
-    public List<ZCCRequest> findZCCReqByZoningCode(String zoingCode) {
-        return zccRequestMapper.findAllByZoningCode(zoingCode);
+    public List<ZCCRequest> findZCCReqByZoningCode(String zoningCode) {
+        return zccRequestMapper.findAllByZoningCode(zoningCode);
     }
 
     /**
      * 初始化录入明细表的数据
      * 获取区划预览数据
-     * @param zoingCode
+     * @param zoningCode
      * @return
      */
     @Override
-    public String findPreviewByZoingCode(String zoingCode) {
-        return JSONHelper.toJSON(previewDataInfoMapper.findAllByZoningCode(zoingCode));
+    public Map<String, List<PreviewDataInfo>> findPreviewByZoningCode(String zoningCode) {
+        log.info("findPreviewByZoningCode.zoningCode-------> " + zoningCode);
+        List<PreviewDataInfo> previewDataInfos = previewDataInfoMapper.findAllByZoningCode(zoningCode);
+        Map<String, List<PreviewDataInfo>> result = new HashMap<>();
+        for (PreviewDataInfo dataInfo : previewDataInfos) {
+            if (result.containsKey(dataInfo.getAssigningCode())) {
+                result.get(dataInfo.getAssigningCode()).add(dataInfo);
+            } else {
+                List<PreviewDataInfo> cell = new ArrayList<>();
+                cell.add(dataInfo);
+                result.put(dataInfo.getAssigningCode(), cell);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<PreviewDataInfo> findSubordinateZoning(String zoningCode) {
+        return previewDataInfoMapper.findSubordinateZoning(zoningCode);
     }
 
     /**
-    *  删除未提交或未通过审核的申请单
+     *  删除未提交或未通过审核的申请单
      *  需要删除相应的变更组与变更明细表记录
-    * @param seq 申请单序号
-    */
+     * @param seq 申请单序号
+     */
     public void deleteRequest(Integer seq){
         ZCCRequest target = zccRequestMapper.get(seq);
         String status = target.getStatus();
@@ -185,14 +198,25 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         }
     }
 
+    /**
+     * 通过区划代码查找区划预览数据
+     * @param zoningCode 区划代码
+     * @return PreviewDataInfo
+     */
+    public PreviewDataInfo findOneByZoningCode(String zoningCode){
+        return previewDataInfoMapper.findOneByZoningCode(zoningCode);
+    }
 
+    public List<PreviewDataInfo> findBrothersByCode(String zoningCode){
+       return previewDataInfoMapper.findBrothersByCode(zoningCode);
+    }
 
     @Override
-    public void addDetails(String group, String details, String zoingCode) {
+    public void addDetails(String group, String details, String zoningCode) {
 
         // 1 添加变更对照组
         Map groupInfo = JSONHelper.toMap(group, new Class[]{String.class, Object.class});
-        Integer groupSeq = addZCCGroup(zoingCode, groupInfo);//zccGroupMapper.insert(groupInfo);
+        Integer groupSeq = addZCCGroup(zoningCode, groupInfo);//zccGroupMapper.insert(groupInfo);
         log.info("addDetails.groupSeq-------------> " + groupSeq);
 
         // 2 添加变更对照明细数据
@@ -202,7 +226,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         ChangeInfo info;
         for(int i = 0; i < size; i ++){
             System.out.println("c--------> " + changesInfo.get(i));
-           // info = new ChangeInfo(changesInfo.get(i));
+            // info = new ChangeInfo(changesInfo.get(i));
             info = changesInfo.get(i);
             info.setGroupSeq(groupSeq);
             //2.1 名称变更，直接插入变更对照明细表、区划预览表以及变更明细历史记录
@@ -472,15 +496,10 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         zccDetailMapper.deleteByGroupSeq(groupSeq);
     }
 
-
-    public void deleteByGroupSeqs(Integer requestSeq){
-        zccDetailMapper.deleteByGroupSeqs(zccGroupMapper.findByRequestSeq(requestSeq).stream().map(group->group.getSeq()).collect(Collectors.toList()));
-    }
-
     /**
-    * 提交申请单
-    * @param  seq 申请单序号
-    */
+     * 提交申请单
+     * @param  seq 申请单序号
+     */
     @Override
     public void submitZCCRequest(Integer seq) {
         ZCCRequest req = zccRequestMapper.get(seq);
@@ -522,19 +541,19 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     /**
      * 添加变更对照组
-     * @param zoingCode
+     * @param zoningCode
      * @param group
      * @return 新增组的主键
      */
-    public Integer addZCCGroup(String zoingCode, Map<String, Object> group){
-        log.info("addZCCGroup.zoingCode----> " + zoingCode);
-        BigInteger maxSerialNumber = zccGroupMapper.getMaxSerialNumber(zoingCode);
+    public Integer addZCCGroup(String zoningCode, Map<String, Object> group){
+        log.info("addZCCGroup.zoningCode----> " + zoningCode);
+        Long maxSerialNumber = zccGroupMapper.getMaxSerialNumber(zoningCode);
         if(maxSerialNumber == null){
-            BigInteger serialNumber = BigInteger.valueOf(Integer.valueOf(zoingCode + "001"));
+            Integer serialNumber = Integer.valueOf(zoningCode + "001");
             group.put("serialNumber", serialNumber);
         }else {
-            BigInteger serialNumber = maxSerialNumber.add(BigInteger.valueOf(1));
-          group.put("serialNumber", serialNumber);
+            Long serialNumber = maxSerialNumber + 1;
+            group.put("serialNumber", serialNumber);
         }
         Long maxOrderNum = getMaxOrderNum(ZCCGroup.tableName);
         group.put("orderNum", maxOrderNum);
@@ -548,13 +567,10 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return 新增组的主键
      */
     public int addZCCGroup( Map<String, Object> group){
-
         Long maxOrderNum = getMaxOrderNum(ZCCGroup.tableName);
         group.put("orderNum", maxOrderNum);
         return zccGroupMapper.insert(group);
     }
-
-
 
     /**
      * 获取表中某排序列的最大值

@@ -68,8 +68,13 @@ public interface PreviewDataInfoMapper {
      * @param zoningName 区划名称
      * @return Integer 数量
      */
+    @SelectProvider(type = PreviewDataInfoSql.class, method = "findBrothersByCodeAndName")
+    int findBrothersByCodeAndName(String zoningCode, String zoningName);
+
     @SelectProvider(type = PreviewDataInfoSql.class, method = "findBrothersByCode")
-    int findBrothersByCode(String zoningCode, String zoningName);
+    @ResultMap(value = "findAll")
+    List<PreviewDataInfo> findBrothersByCode(String zoningCode);
+
 
     /**
      * 通过区划代码查找区划预览数据
@@ -106,12 +111,15 @@ public interface PreviewDataInfoMapper {
     PreviewDataInfo findValidOneByZoningCode(@Param(value = "zoningCode") String zoningCode);
 
 
+    @SelectProvider(type = PreviewDataInfoSql.class, method = "findSubordinateZoning")
+    @ResultMap(value = "findAll")
+    List<PreviewDataInfo> findSubordinateZoning(String zoningCode);
 
 
     //更新数据至预览数据表
     @Update("UPDATE DM_XZQH_YLSJ Y SET Y.XYBZ='N', Y.YXBZ='N', Y.YXQ_Z =#{createDate}, Y.XGSJ =#{createDate} WHERE Y.XYBZ = 'Y' AND Y.YXBZ = 'Y' AND Y.XZQH_DM=#{zoningCode}")
-    @ResultType(String.class)
-    String saveMergeData(@Param(value = "zoningCode") String zoningCode, @Param(value = "createDate") Date createDate);
+    @ResultType(Integer.class)
+    Integer saveMergeData(@Param(value = "zoningCode") String zoningCode, @Param(value = "createDate") Date createDate);
 
 
     //插入历史数据

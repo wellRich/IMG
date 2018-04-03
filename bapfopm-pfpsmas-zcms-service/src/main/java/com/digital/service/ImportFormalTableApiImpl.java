@@ -145,7 +145,7 @@ public class ImportFormalTableApiImpl implements ImportFormalTableApi {
 
        }
        //将申请单序列保存到文件信息表
-        zoningDataUploadMapper.updateFocusApplicationNum(fileSquence,seqNum);
+        zoningDataUploadMapper.updateFocusApplicationNum(fileSquence,seqNum,Common.XZQH_JZBGZT_SQDSQCG);
        return true;
     }
 

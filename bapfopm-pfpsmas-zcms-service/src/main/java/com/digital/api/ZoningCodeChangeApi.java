@@ -1,5 +1,6 @@
 package com.digital.api;
 
+import com.digital.entity.PreviewDataInfo;
 import com.digital.entity.ZCCDetail;
 import com.digital.entity.ZCCRequest;
 
@@ -14,7 +15,7 @@ import java.util.Map;
  * @version 2018/3/15
  * @see [相关类/方法]
  * @since [产品/模块版本]
- 
+
  */
 public interface ZoningCodeChangeApi {
 
@@ -30,24 +31,24 @@ public interface ZoningCodeChangeApi {
     int addZCCRequest(ZCCRequest obj);
 
     /**
-    * 根据区划代码查询申请单
-    *  做分页
-    * @param levelCode 登录用户的所属区划代码的级别代码
-     * @param zoningName 登录用户的所属区划代码的区划名称
+     * 根据区划代码查询申请单
+     *  做分页
+     * @param levelCode 登录用户的所属区划代码的级别代码
+     * @param zoningCode 区划代码
      * @param pageSize 每页数量
      * @param pageIndex 页码
      * @param totalRecord 数据总数
-    * @return dataList实体数据，数据总量totalCount,总页数totalPage,当前页数pageIndex
-    */
-    Object findZCCReqByZoningLevelCode(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
+     * @return dataList实体数据，数据总量totalCount,总页数totalPage,当前页数pageIndex
+     */
+    Object findZCCReqByZoningLevelCode(String levelCode, String zoningCode, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
 
     /**
-    * 根据区划代码查询申请单
-    * 不分页
-    * @param zoingCode
-    * @return
-    */
-    List<ZCCRequest> findZCCReqByZoningCode(String zoingCode);
+     * 根据区划代码查询申请单
+     * 不分页
+     * @param zoningCode
+     * @return
+     */
+    List<ZCCRequest> findZCCReqByZoningCode(String zoningCode);
 
 
     /**
@@ -65,20 +66,41 @@ public interface ZoningCodeChangeApi {
 
     /**
      * 根据区划代码查询区划预览数据
-     * @param zoingCode
+     * @param zoningCode
      * @return
      */
-    String findPreviewByZoingCode(String zoingCode);
+    Map findPreviewByZoningCode(String zoningCode);
+
 
     /**
-    * 录入区划变更明细对照表数据
-    * @param  group  里面是变更对照组的属性键值对（除主键之外的所有属性）
+     *
+     * @param zoningCode
+     * @return
+     */
+    List<PreviewDataInfo> findSubordinateZoning(String zoningCode);
+
+    /**
+     * 通过区划代码查找区划预览数据
+     * @param zoningCode 区划代码
+     * @return PreviewDataInfo
+     */
+    PreviewDataInfo findOneByZoningCode(String zoningCode);
+
+    /**
+     * 录入区划变更明细对照表数据
+     * @param  group  里面是变更对照组的属性键值对（除主键之外的所有属性）
      * @param details 里面是json数组包含若干变更明细数据，具体的结构是ChangeInfo的属性键值对
      * @param  zoingCode 登录用户所属的区划区划代码
-    */
+     */
     void addDetails(String group, String details, String zoingCode);
 
 
+    /**
+     * 根据区划代码查找同一父级下的同级区划
+     * @param zoningCode 区划代码
+     * @return List
+     */
+    List<PreviewDataInfo> findBrothersByCode(String zoningCode);
 
     /*
      * 维护变更对照申请
@@ -86,10 +108,10 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-    * 修改申请单
-    * 〈功能详细描述〉
-    * @param req 申请单序号
-    */
+     * 修改申请单
+     * 〈功能详细描述〉
+     * @param req 申请单序号
+     */
     void updateZCCRequest(Map<String, Object> req);
 
 
@@ -102,36 +124,30 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-    * 删除明细数据
-    * 〈功能详细描述〉
-    * @param groupSeq 明细表序号
-    */
+     * 删除明细数据
+     * 〈功能详细描述〉
+     * @param groupSeq 明细表序号
+     */
     void deleteDetails(Integer groupSeq);
 
-    /**
-     * 批量删除明细数据
-     * 〈功能详细描述〉
-     * @param requestSeq 明细表序号
-     */
 
-    void deleteByGroupSeqs(Integer requestSeq);
     /**
      * 提交变更申请单
      */
 
     /**
-    * 提交变更申请单
-    * 〈功能详细描述〉
-    * @param seq 申请单序号
-    */
+     * 提交变更申请单
+     * 〈功能详细描述〉
+     * @param seq 申请单序号
+     */
     void submitZCCRequest(Integer seq);
 
 
     /**
-    * 撤销变更申请单
-    * 〈功能详细描述〉
-    * @param seq 申请单序号
-    */
+     * 撤销变更申请单
+     * 〈功能详细描述〉
+     * @param seq 申请单序号
+     */
     void revokeZCCRequest(Integer seq);
 
     /**

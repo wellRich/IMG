@@ -4,7 +4,6 @@ import com.digital.util.search.Column;
 import com.digital.util.search.Table;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 行政区划变更对照表明细

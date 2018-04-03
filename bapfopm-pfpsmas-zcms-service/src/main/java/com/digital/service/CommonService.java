@@ -128,7 +128,7 @@ public class CommonService {
      * @return boolean
      */
     public boolean isUsedZoningName(String zoningCode, String zoningName){
-        return previewDataInfoMapper.findBrothersByCode(zoningCode, zoningName) > 0;
+        return previewDataInfoMapper.findBrothersByCodeAndName(zoningCode, zoningName) > 0;
     }
 
     /**
@@ -172,6 +172,7 @@ public class CommonService {
         }
 
         if(changeType.equals(Common.CHANGE) || changeType.equals(Common.MOVE)) {
+
             List<ChangeInfo> changeInfoList = accountChangeOrders(info);
             int size = changeInfoList.size();
             if(size > 0){
@@ -181,7 +182,9 @@ public class CommonService {
                 String sjSrcXzqhdm = changeInfo.getOriginZoningCode();
                 String sjSrcXzqhmc = changeInfo.getOriginZoningName();
                 if(changeType.equals(Common.MOVE)){
+                    //
                     sjDestXzqhmc = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getTargetZoningCode())).getDivisionName();
+                    //
                     sjSrcXzqhmc = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getOriginZoningCode())).getDivisionName();
                 }
 
@@ -371,6 +374,11 @@ public class CommonService {
         return result;
     }
 
+    /**
+     * 查找子级（包括自身）区划
+     * @param level 区划级别代码
+     * @return List
+     */
     public List<PreviewDataInfo> findChildrenZoning(String level){
         return previewDataInfoMapper.findChildrenZoning(level, "XZQH_DM,XZQH_MC,JCDM");
     }
@@ -387,23 +395,31 @@ public class CommonService {
 
         if(changeType.equals(Common.ADD) || changeType.equals(Common.MERGE)){
             result.add(info);
-        }else {
-            String currentZoningCode = info.getOriginZoningCode();
-            //原区划级别代码
-            String currentLevelCode = Common.getLevelCode(currentZoningCode);
-            //现区化级别代码
-            String originLevelCode = info.getLevelCode();
+        }
 
-            List<PreviewDataInfo> previewDataInfos = findChildrenZoning(currentLevelCode);
+        // 变更与迁移
+        else {
+            String originZoningCode = info.getOriginZoningCode();
+
+            //原区划级别代码
+            String  originLevelCode= Common.getLevelCode(originZoningCode);
+
+            //现区化级别代码
+            String currentLevelCode = info.getLevelCode();
+
+            List<PreviewDataInfo> previewDataInfos = findChildrenZoning(originLevelCode);
             for (int i = 0; i < previewDataInfos.size(); i++) {
                 ChangeInfo changeInfo = new ChangeInfo();
                 PreviewDataInfo previewDataInfo =  previewDataInfos.get(i);
+                //获取区划代码
                 String zoningCode = previewDataInfo.getZoningCode();
 
                 //目标区划代码
                 if(i == 0){
+                    //第一个区划代码是本区划代码的目标区划名称
                     changeInfo.setTargetZoningName(info.getTargetZoningName());
                 }else {
+                    //之后的代码是查询到的区划名称
                     changeInfo.setTargetZoningName(previewDataInfo.getDivisionName());
                 }
 
@@ -420,13 +436,13 @@ public class CommonService {
                 changeInfo.setTargetZoningCode(zoningCode.replaceFirst(originLevelCode, currentLevelCode));
 
                 //权限机构代码
-                changeInfo.setOrganizationCode(changeInfo.getOriginZoningCode());
+                changeInfo.setOrganizationCode(info.getOrganizationCode());
 
                 //原区划名称
-                changeInfo.setOriginZoningName(changeInfo.getOriginZoningName());
+                changeInfo.setOriginZoningName(previewDataInfo.getDivisionName());
 
                 //原区划代码
-                changeInfo.setOrganizationCode(changeInfo.getOrganizationCode());
+                changeInfo.setOrganizationCode(previewDataInfo.getZoningCode());
 
                 //录入人代码
                 changeInfo.setCreatorCode(info.getCreatorCode());
@@ -438,6 +454,7 @@ public class CommonService {
         }
         return result;
     }
+
 
 
 

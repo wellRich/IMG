@@ -80,12 +80,17 @@ public class ZoningDataUploadController extends BaseController {
      */
     @RequestMapping(value = "/upload/zipFile", method = RequestMethod.POST)
     @ResponseBody
-    public String codeUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Map codeUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
         boolean checked = false;
+        Map<String,Object> map = new HashMap<>();
+
         //校验文件名称是否正确
         checked = FileUtil.checkFileName(file,filePath);
         if (!checked){
-            return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_MESSAGE_UPLOAD,"文件名出错！").toString();
+            map.put("rtnCode",Constants.RTN_CODE_ERROR);
+            map.put("rtnMessage",Constants.RTN_MESSAGE_UPLOAD);
+            map.put("responseData","文件名出错！");
+            return map;//new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_MESSAGE_UPLOAD,"文件名出错！").toString();
         }
         String fileName = file.getOriginalFilename();
         String zipName = fileName.substring(0, fileName.lastIndexOf("."));
@@ -111,9 +116,14 @@ public class ZoningDataUploadController extends BaseController {
 
         int fileNum = zoningDataUploadApi.recordFileInfo(fileInfo);
         if (fileNum > 0) {
-            return new RtnData().toString();
+            map.put("rtnCode",Constants.RTN_CODE_SUCCESS);
+            map.put("rtnMessage",Constants.RTN_MESSAGE_SUCCESS);
+            return map;//new RtnData().toString();
         }
-        return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        map.put("rtnCode",Constants.RTN_CODE_ERROR);
+        map.put("rtnMessage",Constants.RTN_MESSAGE_UPLOAD);
+        map.put("responseData","文件名出错！");
+        return map;//new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
     }
 
     /**
@@ -125,7 +135,7 @@ public class ZoningDataUploadController extends BaseController {
      */
     @RequestMapping(value = "/query/fileInfo", method = RequestMethod.GET)
     @ResponseBody
-    public Object queryFocusChangeFileInfo(@RequestParam("zoningCode")String zoningCode,
+    public String queryFocusChangeFileInfo(@RequestParam("zoningCode")String zoningCode,
                                            @RequestParam("date")String date,
                                            @RequestParam("pageNum")Integer pageNum,
                                            @RequestParam("pageSize")Integer pageSize,
@@ -133,19 +143,21 @@ public class ZoningDataUploadController extends BaseController {
 
         /*获取 页数和 页码*/
         PageHelper.startPage(pageNum, pageSize);
-        List<FocusChangeFileInfo> fileInfoList = new ArrayList<>();
+        List<Object> fileInfoList = new ArrayList<>();
         fileInfoList = zoningDataUploadApi.queryFocusChangeFileInfo(zoningCode,date);
-        PageHelper.count(()->{
+        long count = PageHelper.count(()->{
             zoningDataUploadApi.queryFocusChangeFileInfo(zoningCode,date);
         });
-        System.out.println(fileInfoList.get(0).getFileSquence());
-        for (FocusChangeFileInfo fileInfo : fileInfoList) {
-            logger.info(StringUtil.objToJson(fileInfo));
-        }
+
+    //    System.out.println(fileInfoList.get(0).getFileSquence());
+//        for (FocusChangeFileInfo fileInfo : fileInfoList) {
+//            logger.info(StringUtil.objToJson(fileInfo));
+//        }
         if (fileInfoList.isEmpty()) {
             //没有查到数据
         }
-        return new RtnData(StringUtil.objToJson(fileInfoList)).toString();
+        String result = StringUtil.objToJson(new RtnData(fileInfoList));
+        return result;
     }
 
     /**
@@ -174,11 +186,12 @@ public class ZoningDataUploadController extends BaseController {
      * @return java.lang.String
      * @exception
      */
-    @RequestMapping(value = "delete/zipFile",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/zipFile",method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteFileInfo(@RequestParam("fileSquence")Integer fileSquence){
-        zoningDataUploadApi.deleteFileInfo(fileSquence);
-        return new RtnData().toString();
+        boolean ckecked =  zoningDataUploadApi.deleteFileInfo(fileSquence);
+        return  new RtnData(StringUtil.objToJson(ckecked)).toString();
+
     }
 
 
@@ -194,7 +207,8 @@ public class ZoningDataUploadController extends BaseController {
     public String checkFileStatus(@RequestParam("fileSquence") Integer fileSquence){
 
         boolean ckecked = zoningDataUploadApi.checkFileStatus(fileSquence);
-        return new RtnData(ckecked).toString();
+        return  new RtnData(StringUtil.objToJson(ckecked)).toString();
+
     }
 
 

@@ -4,8 +4,6 @@ import com.digital.util.search.Column;
 import com.digital.util.search.Table;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Date;
 
 /**
  * 行政区划代码变更对照组
@@ -27,7 +25,7 @@ public class ZCCGroup implements Serializable{
      *编号
      **/
     @Column(name = "BH")
-    private BigInteger serialNumber;
+    private Long serialNumber;
 
     /**
      *名称(调整说明)
@@ -75,11 +73,11 @@ public class ZCCGroup implements Serializable{
         this.seq = seq;
     }
 
-    public BigInteger getSerialNumber() {
+    public Long getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(BigInteger serialNumber) {
+    public void setSerialNumber(Long serialNumber) {
         this.serialNumber = serialNumber;
     }
 

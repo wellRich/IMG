@@ -256,11 +256,15 @@ public class FileUtil {
      */
     public static boolean checkFileName(MultipartFile uploadFile, String filePath) {
         String fileName = uploadFile.getOriginalFilename();
-        String zipName = fileName.substring(0, fileName.lastIndexOf("."));
+        logger.info("是否有一个点："+fileName.contains("."));
+        String zipName = fileName.substring(0, fileName.indexOf("."));
+        logger.info("是否有一个点："+fileName.contains("."));
+
         File file1 = new File(filePath + zipName);
         if (!file1.exists()) {
             file1.mkdirs();
         }
+
         File file = new File(file1.getAbsolutePath() + File.separator+ fileName);
         boolean result = true;
         try {
