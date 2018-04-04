@@ -175,23 +175,23 @@ public interface ZoningCodeChangeApi {
 
     /**
      * 省级审核
-     * @param seqList 若干申请单序号
+     * @param seq 申请单序号
      */
-    void provincialCheck(List<Integer> seqList);
+    void provincialCheck(Integer seq);
 
 
     /**
      * 省级确认
-     * @param seqList 若干申请单序号
+     * @param seq 申请单序号
      */
-    void provincialConfirm(List<Integer> seqList);
+    void provincialConfirm(Integer seq);
 
 
     /**
      * 国家审核
-     * @param seqList 申请单序号
+     * @param seq 申请单序号
      */
-    void nationalCheck(List<Integer> seqList);
+    void nationalCheck(Integer seq);
 
 
 }

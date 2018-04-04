@@ -236,17 +236,8 @@ public class ZoningChangeController {
      * 更新申请单
      * @return RtnData
      */
-    @RequestMapping(value = "/updateZCCRequest", method = RequestMethod.GET)
-    @ResponseBody
-    public Object updateReq(@Param("seq") Integer seq, @Param("name") String name, @Param("notes") String notes) {
-        try {
-            zoningCodeChangeApi.updateZCCRequest(seq, name, notes);
-            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
-        }
-
+    public Object updateReq(){
+        return null;
     }
 
     /**

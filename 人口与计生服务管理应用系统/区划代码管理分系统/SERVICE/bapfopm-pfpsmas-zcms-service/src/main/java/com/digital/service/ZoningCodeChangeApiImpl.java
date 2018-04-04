@@ -597,37 +597,17 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
     @Override
-    public void provincialCheck(List seq) {
-       /* ZCCRequest req = zccRequestMapper.get(seq);
-        String status = req.getStatus();
-        if(req == null){
-            throw new RuntimeException("区划变更申请表不存在!");
-        }else {
-            if(status.equals(Common.XZQH_SQDZT_WTJ)){
-                zccRequestMapper.update(ImmutableMap.of("seq", seq, "status", Common.XZQH_SQDZT_YTJ));
-            }else {
-                throw new RuntimeException("区划变更申请表状态是[" + status + "]，请提交符合规范的数据!");
-            }
-        }*/
+    public void provincialCheck(Integer seq) {
+
     }
 
     @Override
-    public void provincialConfirm(List seq) {
-        /*ZCCRequest req = zccRequestMapper.get(seq);
-        String status = req.getStatus();
-        if(req == null){
-            throw new RuntimeException("区划变更申请表不存在!");
-        }else {
-            if(status.equals(Common.XZQH_SQDZT_WTJ)){
-                zccRequestMapper.update(ImmutableMap.of("seq", seq, "status", Common.XZQH_SQDZT_YTJ));
-            }else {
-                throw new RuntimeException("区划变更申请表状态是[" + status + "]，请提交符合规范的数据!");
-            }
-        }*/
+    public void provincialConfirm(Integer seq) {
+
     }
 
     @Override
-    public void nationalCheck(List seq) {
+    public void nationalCheck(Integer seq) {
 
     }
 }
