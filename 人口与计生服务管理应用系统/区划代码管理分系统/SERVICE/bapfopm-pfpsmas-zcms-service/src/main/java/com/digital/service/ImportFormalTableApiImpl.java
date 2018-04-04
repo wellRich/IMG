@@ -11,7 +11,6 @@ import com.digital.entity.ZCCRequest;
 import com.digital.entity.province.ContrastTemporary;
 import com.digital.entity.province.FocusChangeFileInfo;
 import com.digital.util.Common;
-import com.digital.util.JSONHelper;
 import com.digital.util.ListUtil;
 import com.digital.util.StringUtil;
 import org.slf4j.Logger;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,8 +102,8 @@ public class ImportFormalTableApiImpl implements ImportFormalTableApi {
                         zccDetail.setGroupSeq(zccGroup.getSeq());
                         zccDetail.setChangeType(v.getTypeCode());
                         zccDetail.setOrderNum(v.getOrderNum());
-                        zccDetail.setOriginZoningCode(v.getOriginalCode());
-                        zccDetail.setOriginZoningName(v.getOriginalName());
+                        zccDetail.setOriginalZoningCode(v.getOriginalCode());
+                        zccDetail.setOriginalZoningName(v.getOriginalName());
                         zccDetail.setCurrentZoningCode(v.getNowCode());
                         zccDetail.setCurrentZoningName(v.getNowName());
                         zccDetail.setStatus(Common.XZQH_CLZT_DCL);

@@ -81,8 +81,8 @@ public class ChangeInfo implements Cloneable{
     public ZCCDetail toDetail(){
         ZCCDetail detail = new ZCCDetail();
         detail.setChangeType(this.changeType);
-        detail.setOriginZoningCode(this.originalZoningCode);
-        detail.setOriginZoningName(this.getOriginalZoningName());
+        detail.setOriginalZoningCode(this.originalZoningCode);
+        detail.setOriginalZoningName(this.getOriginalZoningName());
         detail.setCurrentZoningCode(this.targetZoningCode);
         detail.setCurrentZoningName(this.targetZoningName);
         detail.setGroupSeq(this.groupSeq);

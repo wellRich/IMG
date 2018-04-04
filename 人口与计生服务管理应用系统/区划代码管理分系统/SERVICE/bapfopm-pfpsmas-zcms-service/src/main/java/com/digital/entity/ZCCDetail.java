@@ -30,13 +30,13 @@ public class ZCCDetail implements Serializable {
      * 原区划代码
      */
     @Column(name = "YSXZQH_DM")
-    private String originZoningCode;
+    private String originalZoningCode;
 
     /**
      * 原区划名称
      */
     @Column(name = "YSXZQH_MC")
-    private String originZoningName;
+    private String originalZoningName;
 
     /**
      * 变更类型
@@ -140,20 +140,20 @@ public class ZCCDetail implements Serializable {
         this.groupSeq = groupSeq;
     }
 
-    public String getOriginZoningCode() {
-        return originZoningCode;
+    public String getOriginalZoningCode() {
+        return originalZoningCode;
     }
 
-    public void setOriginZoningCode(String originZoningCode) {
-        this.originZoningCode = originZoningCode;
+    public void setOriginalZoningCode(String originalZoningCode) {
+        this.originalZoningCode = originalZoningCode;
     }
 
-    public String getOriginZoningName() {
-        return originZoningName;
+    public String getOriginalZoningName() {
+        return originalZoningName;
     }
 
-    public void setOriginZoningName(String originZoningName) {
-        this.originZoningName = originZoningName;
+    public void setOriginalZoningName(String originalZoningName) {
+        this.originalZoningName = originalZoningName;
     }
 
     public String getChangeType() {
@@ -267,4 +267,5 @@ public class ZCCDetail implements Serializable {
     public void setRingFlag(Integer ringFlag) {
         this.ringFlag = ringFlag;
     }
+
 }

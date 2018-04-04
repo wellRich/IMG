@@ -24,14 +24,14 @@ public interface ZCCDetailMapper {
     @Results(id = "get", value = {
             @Result(property = "seq", column = "MXBXH", javaType = Integer.class),
             @Result(property = "groupSeq", column = "GROUPXH", javaType = Integer.class),
-            @Result(property = "originalCode", column = "YSXZQH_DM", javaType = String.class),
-            @Result(property = "originalName", column = "YSXZQH_MC", javaType = String.class),
+            @Result(property = "originalZoningCode", column = "YSXZQH_DM", javaType = String.class),
+            @Result(property = "originalZoningName", column = "YSXZQH_MC", javaType = String.class),
             @Result(property = "changeType", column = "BGLX_DM", javaType = String.class),
-            @Result(property = "currentCode", column = "MBXZQH_DM", javaType = String.class),
+            @Result(property = "currentZoningCode", column = "MBXZQH_DM", javaType = String.class),
             @Result(property = "status", column = "CLZT_DM", javaType = String.class),
             @Result(property = "result", column = "CLJG", javaType = String.class),
             @Result(property = "orderNum", column = "PXH", javaType = String.class),
-            @Result(property = "currentName", column = "MBXZQH_MC", javaType = String.class),
+            @Result(property = "currentZoningName", column = "MBXZQH_MC", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class),
             @Result(property = "ringFlag", column = "RINGFLAG", javaType = Integer.class)
     })
@@ -73,6 +73,7 @@ public interface ZCCDetailMapper {
      * @return 变更明细列表
      */
     @SelectProvider(type = ZCCDetailSql.class, method = "pageSeekByGroups")
+    @ResultMap(value = "get")
     List<ZCCDetail> pageSeekByGroups(String seqStr, int offset, int limit);
 
 
