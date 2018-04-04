@@ -95,7 +95,7 @@ public interface ZCCRequestMapper {
     * @param zccRequest 申请单对象或者map
      *@return 被修改的数量
     */
-    @UpdateProvider(type = ZCCDetailSql.class, method = "update")
+    @UpdateProvider(type = ZCCRequestSql.class, method = "update")
     int update(Object zccRequest);
 
     /**

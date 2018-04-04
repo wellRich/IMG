@@ -129,7 +129,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
                     sql = new SQL(){{
                         UPDATE(tableName);
                         temp.forEach((k, v) ->{
-                            SET(getColumnByField(k.toString()) + "=#{" + v + "}");
+                            SET(getColumnByField(k.toString()) + "=#{" + k + "}");
                         });
                         WHERE(getColumnByField(primaryField) + "=#{" + primaryField + "}");
                     }}.toString();

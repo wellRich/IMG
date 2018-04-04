@@ -598,7 +598,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     @Override
     public void provincialCheck(Integer seq) {
-        
+
     }
 
     @Override
