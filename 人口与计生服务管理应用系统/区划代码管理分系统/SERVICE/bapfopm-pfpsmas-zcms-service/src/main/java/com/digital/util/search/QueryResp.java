@@ -97,6 +97,6 @@ public final class QueryResp<T> {
     }
 
     public int getPageCount() {
-        return this.pageSize == 0 ? 0 : (this.totalRecord + this.pageSize - 1) / this.pageSize;
+        return getPageSize() == 0 ? 0 : (getTotalRecord() + getPageSize() - 1) / getPageSize();
     }
 }

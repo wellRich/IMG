@@ -477,12 +477,14 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     @Override
     public QueryResp<ZCCDetail> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize) {
+
         String seqStr = StringUtils.join(zccGroupMapper.findByRequestSeq(requestSeq).stream().map(group -> group.getSeq()).collect(Collectors.toList()), ",");
-        ZCCRequest req = zccRequestMapper.get(requestSeq);
         QueryResp<ZCCDetail> detailQueryResp = new QueryResp<>(pageIndex, pageSize);
         detailQueryResp.setTotalRecord(zccDetailMapper.countByGroups(seqStr));
         detailQueryResp.setTotalPage(detailQueryResp.getPageCount());
         int offset = (pageIndex - 1) * pageSize;
+        System.out.println("pageSeekByGroups.pageSize------------> " + detailQueryResp.getPageSize());
+        System.out.println("js--------------> " + JSONHelper.toJSON(detailQueryResp));
         detailQueryResp.setDataList(zccDetailMapper.pageSeekByGroups(seqStr, offset, pageSize));
        return detailQueryResp;
     }
