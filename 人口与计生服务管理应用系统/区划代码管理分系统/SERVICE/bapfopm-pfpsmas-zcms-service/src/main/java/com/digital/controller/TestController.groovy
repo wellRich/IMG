@@ -3,10 +3,13 @@ package com.digital.controller
 import com.digital.api.ZoningCodeChangeApi
 import com.digital.dao.PreviewDataInfoMapper
 import com.digital.dao.ZCCGroupMapper
+import com.digital.dao.ZCCRequestMapper
 import com.digital.entity.PreviewDataInfo
 import com.digital.entity.ZCCGroup
+import com.digital.entity.ZCCRequest
 import com.digital.util.JSONHelper
 import com.digital.util.StringUtil
+import org.apache.ibatis.annotations.Param
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -57,5 +60,16 @@ class TestController {
         int key = zoningCodeChangeApi.addZCCGroup(group)
         println "key----------> " + key
         println("group-------------> " + JSONHelper.toJSON(group))
+    }
+
+    @Autowired
+    ZCCRequestMapper zccRequestMapper;
+
+    @RequestMapping("/updateZCCRequest")
+    @ResponseBody
+    def updateZCCRequest(@Param("seq")Integer seq, @Param("name")String name, @Param("notes")String notes){
+        zoningCodeChangeApi.updateZCCRequest(seq, name, notes)
+        ZCCRequest req = zccRequestMapper.get(seq)
+        return req;
     }
 }

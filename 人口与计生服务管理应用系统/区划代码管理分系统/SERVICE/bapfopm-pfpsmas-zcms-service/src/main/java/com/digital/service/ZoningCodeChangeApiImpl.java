@@ -468,7 +468,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     @Override
     public void updateZCCRequest(Integer seq, String name, String notes) {
-        zccRequestMapper.update(ImmutableMap.of("seq", seq, "name", name, "notes", notes););
+        zccRequestMapper.update(ImmutableMap.of("seq", seq, "name", name, "notes", notes));
     }
 
     /**
@@ -594,5 +594,20 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             zccGroupMapper.updateMaxOrderNum(tableName);
         }
         return max == null ? 1L : max;
+    }
+
+    @Override
+    public void provincialCheck(Integer seq) {
+        
+    }
+
+    @Override
+    public void provincialConfirm(Integer seq) {
+
+    }
+
+    @Override
+    public void nationalCheck(Integer seq) {
+
     }
 }
