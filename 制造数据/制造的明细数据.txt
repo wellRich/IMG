@@ -1,0 +1,79 @@
+新增
+[
+    {
+        "requestSeq": "1",
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "",
+        "originalZoningName": "",
+        "changeType": "11",
+        "targetZoningCode": "370102006700000",
+        "targetZoningName": "天堂",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "1",
+        "organizationCode": "9527"
+    },
+    {
+        "requestSeq": "1",
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "",
+        "originalZoningName": "",
+        "changeType": "11",
+        "targetZoningCode": "370102006701000",
+        "targetZoningName": "英灵殿",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "1",
+        "organizationCode": "9527"
+    },
+    {
+        "requestSeq": "1",
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "",
+        "originalZoningName": "",
+        "changeType": "11",
+        "targetZoningCode": "370102006702000",
+        "targetZoningName": "巴托九狱",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "1",
+        "organizationCode": "9527"
+    }
+]
+
+
+修改
+
+[
+    {
+        "requestSeq": "1",
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "370102006700000",
+        "originalZoningName": "天堂",
+        "changeType": "21",
+        "targetZoningCode": "370102006700000",
+        "targetZoningName": "天堂山",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "100",
+        "organizationCode": "9527"
+    },
+    {
+        "requestSeq": "1",
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "370102006701000",
+        "originalZoningName": "英灵殿",
+        "changeType": "21",
+        "targetZoningCode": "370102006801000",
+        "targetZoningName": "英灵殿",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "100",
+        "organizationCode": "9527"
+    }
+]
