@@ -252,6 +252,9 @@ public class ZoningChangeController {
      * 省级审核
      */
 
+    public Object provincialCheck(){
+        return null;
+    }
 
     /**
      * 、省级确认
@@ -261,5 +264,8 @@ public class ZoningChangeController {
     /**
      * 国家审核
      */
+    public Object nationalCheck(){
+        return null;
+    }
 
 }
