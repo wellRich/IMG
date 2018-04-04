@@ -6,6 +6,7 @@ import com.digital.api.LogicCheckApi;
 import com.digital.api.ZoningDataUploadApi;
 import com.digital.entity.province.ContrastTemporary;
 import com.digital.entity.province.FocusChangeFileInfo;
+import com.digital.util.Common;
 import com.digital.util.StringUtil;
 import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
@@ -51,7 +52,7 @@ public class ImportTemporaryController extends BaseController {
     /**
      * @return java.lang.String ：响应结果
      * @throws
-     * @description TODO 将集中上传的数据 导入临时表  简单校验后导入表中
+     * @description  将集中上传的数据 导入临时表  简单校验后导入表中
      * @method importTemporary
      * @params [instructionCode：变更指令 1 导入临时表, fileSquence：上传zip文件序号, request, response]
      */
@@ -67,10 +68,15 @@ public class ImportTemporaryController extends BaseController {
             if (StringUtil.isEmpty(fileInfo.getFileName()) || StringUtil.isEmpty(fileInfo.getFilePath())) {
                 throw new RuntimeException("数据有问题 || 或查询接口有问题");
             }
+            if (!Common.XZQH_JZBGZT_YSC.equals(fileInfo.getStatusCode())){
+                return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_IMPORT_CHEKED).toString();
+            }
+
             /*进行内容校验*/
             boolean checked = importTemporaryApi.importTemporary(fileInfo);
             if (!checked) {
-                return new RtnData("内容校验失败！  具体错误将在备注中显示。。").toString();
+
+                return new RtnData(Constants.RTN_CODE_ERROR,"内容校验失败！  具体错误将在备注中显示。。").toString();
             }
             return new RtnData().toString();
         }
@@ -78,9 +84,17 @@ public class ImportTemporaryController extends BaseController {
     }
 
 
+    /**
+     * @description   校验并导入预览数据
+     * @method  checkAndImport
+     * @params [fileSquence:文件序号]
+     * @return java.lang.String
+     * @exception
+     */
     @RequestMapping(value = "code/checkAndImport", method = RequestMethod.GET)
     @ResponseBody
     public String checkAndImport(@RequestParam("fileSquence") Integer fileSquence) {
+
         Map<String, Object> checkedMap = new HashMap<>();
         if (fileSquence != 0 && fileSquence != null) {
             //获取文件名
@@ -104,6 +118,7 @@ public class ImportTemporaryController extends BaseController {
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "导入正式表的过程中，发现逻辑校验出错的数据，详情请查看错误页面").toString();
 
     }
+
 
 }
 

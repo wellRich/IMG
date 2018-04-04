@@ -6,6 +6,7 @@ import com.digital.dao.ZoningDataUploadMapper;
 import com.digital.entity.province.ContrastTemporary;
 import com.digital.entity.province.FocusChangeFileInfo;
 import com.digital.entity.province.ProvinceSectionalData;
+import com.digital.util.Common;
 import com.digital.util.FileUtil;
 import com.digital.util.StringUtil;
 import org.slf4j.Logger;
@@ -43,6 +44,7 @@ public class ImportTemporaryApiImpl implements ImportTemporaryApi{
 
 
 
+
     /*
      * 导入临时表
      * */
@@ -52,6 +54,7 @@ public class ImportTemporaryApiImpl implements ImportTemporaryApi{
         List<String> zoningCodeList = new ArrayList<>();
         List<String> changeCodeList = new ArrayList<>();
         Map checkMap = new HashMap();
+
 
         String fileName = fileInfo.getFileName();
         String filePath = fileInfo.getFilePath();
@@ -65,7 +68,8 @@ public class ImportTemporaryApiImpl implements ImportTemporaryApi{
             for (int i = 0; i < changeCodeList.size(); i++) {
                 int result = this.importContrast(changeCodeList.get(i),fileInfo,i+1);
                 if (result!=1){
-                    logger.debug("含有插入失败的数据!");
+                    checkStatus =false;
+                    logger.debug("含有插入失败的数据!该数据的序号为："+i+1);
                 }
             }
             zoningCodeList = (List<String>) checkMap.get("XZQH");
@@ -75,16 +79,32 @@ public class ImportTemporaryApiImpl implements ImportTemporaryApi{
             for (int i =0;i<zoningCodeList.size();i++){
                 int result = this.importZoningCode(zoningCodeList.get(i),fileInfo);
                 if (result!=1){
-                    logger.debug("含有插入失败的数据!");
+                    logger.debug("含有插入失败的数据!该数据的序号为："+i+1);
+                    checkStatus =false;
                 }
+            }
+            if (checkStatus){
+                zoningDataUploadMapper.updateFocusChangeInfo(fileInfo.getFileSquence(), Common.XZQH_JZBGZT_DRLSBCG,(String) checkMap.get("message"));
+            }else {
+                zoningDataUploadMapper.updateFocusChangeInfo(fileInfo.getFileSquence(), Common.XZQH_JZBGZT_DRLSBSB,(String) checkMap.get("message"));
             }
 
         }else{
             //记录错误信息
-            zoningDataUploadMapper.updateFocusChangeInfo(fileInfo.getFileSquence(), "22",(String) checkMap.get("message"));
+            zoningDataUploadMapper.updateFocusChangeInfo(fileInfo.getFileSquence(), Common.XZQH_JZBGZT_DRLSBSB,(String) checkMap.get("message"));
             checkStatus= false;
         }
         return checkStatus;
+    }
+
+    /*
+    * 提供下载查询
+    * */
+    @Override
+    public List<ContrastTemporary> queryTemporary(Integer fileSquence, String errorIdentification) {
+        List<ContrastTemporary> temporaryList = new ArrayList<>();
+        temporaryList = temporaryDataMapper.queryTemporary(fileSquence,errorIdentification);
+        return temporaryList;
     }
 
 
@@ -123,4 +143,6 @@ public class ImportTemporaryApiImpl implements ImportTemporaryApi{
         provinceSectionalData.setDate(StringUtil.getTime());
         return temporaryDataMapper.insertZoningData(provinceSectionalData);
     }
+
+
 }

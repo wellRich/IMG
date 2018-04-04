@@ -2,7 +2,9 @@ package com.digital.api;
 
 import com.digital.entity.PreviewDataInfo;
 import com.digital.entity.ZCCDetail;
+import com.digital.entity.ZCCGroup;
 import com.digital.entity.ZCCRequest;
+import com.digital.util.search.QueryResp;
 
 import java.util.List;
 import java.util.Map;
@@ -116,10 +118,12 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-     * 获取变更申请单的明细对照数据
+     * 获取变更申请单的明细对照数据,分页
      * @param requestSeq 申请单序号
+     * @param pageIndex 页码
+     * @param pageSize 每页显示数量
      */
-    List<ZCCDetail> getDetails(Integer requestSeq);
+    QueryResp<ZCCDetail> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize);
 
 
 
@@ -155,5 +159,14 @@ public interface ZoningCodeChangeApi {
      〈功能详细描述〉
      * @param groupInfoMap 变更组信息
      */
-    int addZCCGroup(Map<String,Object> groupInfoMap);
+    int addZCCGroup(ZCCGroup groupInfoMap);
+
+    /**
+     * 添加变更对照组
+     〈功能详细描述〉
+     * @param group 变更组信息
+     * @param levelCode 区划级别代码
+     */
+    int addZCCGroup(String levelCode, ZCCGroup group);
+
 }

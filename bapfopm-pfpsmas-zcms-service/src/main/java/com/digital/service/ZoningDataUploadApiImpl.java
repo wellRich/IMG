@@ -149,7 +149,13 @@ public class ZoningDataUploadApiImpl implements ZoningDataUploadApi {
         return zoningDataUploadMapper.queryFocusChangeFileInfoByCode(zoningCode,date);
     }
 
-
+    /*
+     * 修改文件变更状态
+     * */
+    @Override
+    public int updateTypeCode(Integer fileSquence, String typeCode) {
+        return zoningDataUploadMapper.updateFocusChangeInfo(fileSquence,typeCode,null);
+    }
 
 
 }

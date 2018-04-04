@@ -217,5 +217,22 @@ public class ZoningDataUploadController extends BaseController {
 
     }
 
+    /**
+     * @description  修改文件状态
+     * @method  modifyTypeCode
+     * @params [fileSquence, typeCode]
+     * @return java.lang.String
+     * @exception
+     */
+    @RequestMapping(value = "/update/modifyTypeCode", method = RequestMethod.PATCH)
+    @ResponseBody
+    public String modifyTypeCode(@RequestParam("fileSquence") Integer fileSquence,@RequestParam("typeCode")String typeCode) {
+        int result = zoningDataUploadApi.updateTypeCode(fileSquence,typeCode);
+        if (result!=1){
+            return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_UPDATE_FAIL).toString();
+        }
+        return new RtnData().toString();
+    }
+
 
 }

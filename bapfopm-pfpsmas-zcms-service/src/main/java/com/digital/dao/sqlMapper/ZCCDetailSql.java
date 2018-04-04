@@ -32,15 +32,27 @@ public class ZCCDetailSql extends EntitySql<ZCCDetail>  {
         return sql;
     }
 
-    public String findByGroupSeqs(List<Integer> seqList){
+    //查找若干对照组下的变更对照明细
+    public String pageSeekByGroups(String seqStr, int offset, int limit){
         String sql = new SQL(){{
             FROM(getTableName());
-            WHERE("GROUPXH in (" + StringUtils.join(seqList, ",")+ ")" );
-        }}.toString();
-        log.info("findByGroupSeqs.sql--------> " + sql);
+            SELECT(getColumns());
+            WHERE("GROUPXH in (" + seqStr + ")" );
+        }}.toString() + " LIMIT " + limit + " OFFSET " + offset;;
+        log.info("pageSeekByGroups.sql--------> " + sql);
         return sql;
     }
 
+    //统计若干对照组下的变更对照明细数量
+    public String countByGroups(String seqStr){
+        String sql = new SQL(){{
+            FROM(getTableName());
+            SELECT("COUNT(*)");
+            WHERE("GROUPXH in (" + seqStr + ")" );
+        }}.toString();
+        log.info("countByGroups.sql----------> " + sql);
+        return sql;
+    }
 
    /* public String findByApplicationNum(Integer applicationNum){
         String sql = new SQL(){

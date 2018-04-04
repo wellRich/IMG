@@ -3,6 +3,7 @@ package com.digital.dao.sqlMapper;
 import com.alibaba.druid.sql.visitor.functions.If;
 import com.digital.entity.province.FocusChangeFileInfo;
 import com.digital.util.StringUtil;
+import org.apache.ibatis.javassist.runtime.Desc;
 import org.apache.ibatis.jdbc.SQL;
 
 /**
@@ -57,6 +58,10 @@ public class ZoningDataUploadSql {
                     AND();
                     WHERE("RQ="+date);
                 }
+
+                ORDER_BY("LRSJ desc");
+
+
             }
         }.toString();
     }
@@ -73,10 +78,10 @@ public class ZoningDataUploadSql {
         return new SQL(){
             {
                 UPDATE("xzqh_jzbgzip");
-                if (!"".equals(statusCode)&&statusCode!=null) {
+                if (!StringUtil.isEmpty(statusCode)) {
                     SET("JZBGZT_DM=" + statusCode);
                 }
-                if (!"".equals(note)||note!=null) {
+                if (!StringUtil.isEmpty(note)) {
                     SET("BZ=" + note);
                 }
                 WHERE("ZIPXH="+fileSquence);

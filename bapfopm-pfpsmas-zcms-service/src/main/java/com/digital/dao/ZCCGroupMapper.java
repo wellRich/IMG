@@ -3,6 +3,7 @@ package com.digital.dao;
 import com.digital.dao.sqlMapper.ZCCGroupSql;
 import org.apache.ibatis.annotations.*;
 import com.digital.entity.ZCCGroup;
+import org.apache.ibatis.mapping.StatementType;
 
 import java.util.List;
 import java.util.Map;
@@ -22,9 +23,9 @@ public interface ZCCGroupMapper {
     int save(ZCCGroup group);
 
     @InsertProvider(type = ZCCGroupSql.class, method = "insert")
-    @SelectKey(before = false, resultType = Integer.class, keyColumn = "GROUPXH", keyProperty = "seq", statement = "SELECT LAST_INSERT_ID()")
+    @SelectKey(before = false, resultType = Integer.class, keyProperty = "seq", statementType= StatementType.STATEMENT, statement = "SELECT LAST_INSERT_ID()")
     @Options(useGeneratedKeys = true)
-    int insert(Object group);
+    Integer insert(Object group);
 
     //根据申请单查找变更对照组
     @Select("SELECT GROUPXH, GROUPMC, SQDXH FROM XZQH_BGGROUP WHERE SQDXH=#{requestSeq}")

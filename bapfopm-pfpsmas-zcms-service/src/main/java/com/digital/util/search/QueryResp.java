@@ -52,6 +52,10 @@ public final class QueryResp<T> {
     public QueryResp() {
     }
 
+    public QueryResp(int pageIndex, int pageSize) {
+
+    }
+
     public int getTotalPage() {
         return totalPage;
     }

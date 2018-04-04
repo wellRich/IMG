@@ -59,6 +59,26 @@ public interface TemporaryDataMapper {
 
 
     /*
+    * 提供下载的查询
+    * */
+    @SelectProvider(type=TemporaryDataSql.class,method = "queryTemporary")
+    @Results(id = "queryTemporary",value = {
+            @Result(column = "DZBXH",property = "tableNum",javaType =Integer.class ),
+            @Result(column = "YSXZQH_DM",property = "originalCode",javaType =String.class ),
+            @Result(column = "YSXZQH_MC",property = "originalName",javaType =String.class ),
+            @Result(column = "BGLX_DM",property = "typeCode",javaType =String.class ),
+            @Result(column = "MBXZQH_DM",property = "nowCode",javaType =String.class ),
+            @Result(column = "MBXZQH_MC",property = "nowName",javaType =String.class ),
+            @Result(column = "CWXX",property = "errorMessage",javaType =String.class ),
+            @Result(column = "BH",property = "groupNum",javaType = BigInteger.class),
+            @Result(column = "GROUPMC",property = "groupName",javaType = String.class),
+            @Result(column = "LRSJ",property = "enterTime",javaType = String.class),
+            @Result(column = "PXH",property = "orderNum",javaType =Integer.class )
+    })
+    @Options(useGeneratedKeys = true)
+    List<ContrastTemporary> queryTemporary(Integer fileSquence,String errorIdentification);
+
+    /*
      * 删除临时表中的区划数据
      * */
     @Delete("delete from xzqh_jzbgsj_temp where ZIPXH=#{fileSquence}")

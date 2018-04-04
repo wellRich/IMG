@@ -10,6 +10,7 @@ import com.digital.util.JSONHelper;
 import com.digital.util.StringUtil;
 import com.digital.util.search.QueryResp;
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -77,7 +78,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     private QueryResp<ZCCRequest> pageSeekByZoningCode(String levelCode, Integer pageIndex, Integer pageSize, Integer totalRecord){
         QueryResp<ZCCRequest> resp = new QueryResp<>();
         if (totalRecord == 0) {
-            totalRecord = zccRequestMapper.countByZoingCode(levelCode);
+            totalRecord = zccRequestMapper.countByZoningCode(levelCode);
         }
         resp.setTotalRecord(totalRecord);
         resp.setPageIndex(pageIndex);
@@ -88,29 +89,19 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         return resp;
     }
 
-    /**
-     * 添加申请单
-     * @param content 申请单属性键值对json字符串
-     * @return 新增失败返回0，新增成功返回对象的主键——申请单序号
-     */
 
-    public int addZCCRequest(String content) {
-        Map<String, Object> params = JSONHelper.toMap(content, new Class[]{String.class, Object.class});
-        List<ZCCRequest> zccRequestList = findZCCReqByZCAndStatus((String)params.get("ownZoningCode"), Common.XZQH_SQDZT_GJYSH);
-        if(zccRequestList.size() == 0){
-            return zccRequestMapper.insert(params);
-        }else {
-            return 0;
-        }
-    }
 
     @Override
-    public int addZCCRequest(ZCCRequest object) {
-        List<ZCCRequest> zccRequestList = findZCCReqByZCAndStatus(object.getOwnZoningCode(), Common.XZQH_SQDZT_GJYSH);
+    public int addZCCRequest(ZCCRequest req) {
+        List<ZCCRequest> zccRequestList = findZCCReqByZCAndStatus(req.getOwnZoningCode(), Common.XZQH_SQDZT_GJYSH);
         if(zccRequestList.size() == 0){
-            return zccRequestMapper.insert(object);
+            if(zccRequestMapper.insert(req) >  0){
+                return req.getSeq();
+            }else {
+                throw new RuntimeException("添加变更申请单失败！");
+            }
         }else {
-            return 0;
+            throw new RuntimeException("存在未经过审核的区划变更申请单，不可继续添加区划变更申请单！");
         }
     }
 
@@ -212,7 +203,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     public void addDetails(String group, String details, String zoningCode) {
         log.info("addDetails.zoningCode ---> " + zoningCode);
         // 1 添加变更对照组
-        Map groupInfo = JSONHelper.toMap(group, new Class[]{String.class, Object.class});
+        ZCCGroup groupInfo = JSONHelper.fromJsonObject(group, ZCCGroup.class);
         Integer groupSeq = addZCCGroup(zoningCode.substring(0,6), groupInfo);//zccGroupMapper.insert(groupInfo);
         log.info("addDetails.groupSeq-------------> " + groupSeq);
 
@@ -256,7 +247,8 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     public void saveDetail(ChangeInfo info){
 
         //1 插入明细变更对照表
-        zccDetailMapper.insert(info.toDetail());
+        int key = zccDetailMapper.insert(info.toDetail());
+        System.out.println("saveDetail().key---------------> " + key);
 
         //2 逻辑校验
         commonService.logicVerifyZCChange(info);
@@ -479,11 +471,20 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     /**
      * 查找申请单下的变更对照明细
      * @param requestSeq 申请单序号
+     * @param pageIndex 页码
+     * @param pageSize 每页显示数量
      * @return 变更对照明细列表
      */
     @Override
-    public List<ZCCDetail> getDetails(Integer requestSeq) {
-        return zccDetailMapper.findByGroupSeqs(zccGroupMapper.findByRequestSeq(requestSeq).stream().map(group -> group.getSeq()).collect(Collectors.toList()));
+    public QueryResp<ZCCDetail> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize) {
+        String seqStr = StringUtils.join(zccGroupMapper.findByRequestSeq(requestSeq).stream().map(group -> group.getSeq()).collect(Collectors.toList()), ",");
+        ZCCRequest req = zccRequestMapper.get(requestSeq);
+        QueryResp<ZCCDetail> detailQueryResp = new QueryResp<>(pageIndex, pageSize);
+        detailQueryResp.setTotalRecord(zccDetailMapper.countByGroups(seqStr));
+        detailQueryResp.setTotalPage(detailQueryResp.getPageCount());
+        int offset = (pageIndex - 1) * pageSize;
+        detailQueryResp.setDataList(zccDetailMapper.pageSeekByGroups(seqStr, offset, pageSize));
+       return detailQueryResp;
     }
 
     /**
@@ -536,40 +537,42 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
 
-
-
     /**
      * 添加变更对照组
-     * @param zoningCode
      * @param group
      * @return 新增组的主键
      */
-    public Integer addZCCGroup(String zoningCode, Map<String, Object> group){
-        log.info("addZCCGroup.zoningCode----> " + zoningCode);
-        Long maxSerialNumber = zccGroupMapper.getMaxSerialNumber(zoningCode);
-        if(maxSerialNumber == null){
-            Integer serialNumber = Integer.valueOf(zoningCode + "001");
-            group.put("serialNumber", serialNumber);
-        }else {
-            Long serialNumber = maxSerialNumber + 1;
-            group.put("serialNumber", serialNumber);
-        }
+    public int addZCCGroup(ZCCGroup group){
         Long maxOrderNum = getMaxOrderNum(ZCCGroup.tableName);
-        group.put("orderNum", maxOrderNum);
-        group.put("createDate", StringUtil.getTime());
-        return zccGroupMapper.insert(group);
+        group.setOrderNum(maxOrderNum.toString());
+        if(zccGroupMapper.insert(group) > 0){
+            return group.getSeq();
+        }else {
+            throw new RuntimeException("新增变更对照组失败！");
+        }
+
     }
 
-
-    /**
-     * 添加变更对照组
-     * @param group
-     * @return 新增组的主键
-     */
-    public int addZCCGroup( Map<String, Object> group){
+    @Override
+    public int addZCCGroup(String levelCode, ZCCGroup group) {
+        log.info("addZCCGroup.zoningCode----> " + levelCode);
+        Long maxSerialNumber = zccGroupMapper.getMaxSerialNumber(levelCode);
+        if(maxSerialNumber == null){
+            Long serialNumber = Long.valueOf(levelCode + "001");
+            group.setSerialNumber(serialNumber);
+        }else {
+            Long serialNumber = maxSerialNumber + 1;
+            group.setSerialNumber(serialNumber);
+        }
         Long maxOrderNum = getMaxOrderNum(ZCCGroup.tableName);
-        group.put("orderNum", maxOrderNum);
-        return zccGroupMapper.insert(group);
+        group.setOrderNum(maxOrderNum.toString());
+        group.setCreateDate(StringUtil.getTime());
+        if(zccGroupMapper.insert(group) > 0){
+            return group.getSeq();
+        }else {
+            throw new RuntimeException("新增变更对照组失败");
+        }
+
     }
 
     /**

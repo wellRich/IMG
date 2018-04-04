@@ -106,7 +106,8 @@ public class ZoningChangeController {
     public Object addZoningChangeRequest(ZCCRequest obj){
         log.info("addZoningChangeRequest");
         try {
-            zoningCodeChangeApi.addZCCRequest(obj);
+            int key = zoningCodeChangeApi.addZCCRequest(obj);
+            log.info("addZoningChangeRequest.key-----> " + key);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -129,6 +130,8 @@ public class ZoningChangeController {
 
             //级次代码
             String assigningCode = Common.getAssigningCode(zoningCode);
+
+            //查找申请单，如果没有找到，则返回信息，请先建立申请单
             log.info("zoningCode---------> " + zoningCode);
             Map<String, Object> result = new HashMap<>();
             result.put("assigningCode", assigningCode);
@@ -184,7 +187,7 @@ public class ZoningChangeController {
      * @param group json变更组信息
      * @param details json变更对照明细
      * @param zoningCode 区划代码
-     * @return
+     * @return RtnData 处理结果
      */
     @RequestMapping(value = "/saveDetails", method = RequestMethod.POST)
     @ResponseBody
@@ -200,5 +203,63 @@ public class ZoningChangeController {
         }
     }
 
+
+
+    /**
+     * 查看变更申请单下的变更明细对照数据
+     * @param seq 申请单序号
+     * @return RtnData
+     */
+    @RequestMapping(value = "/checkDetails", method = RequestMethod.GET)
+    @ResponseBody
+    public Object checkDetails(@Param(value = "seq")Integer seq, @RequestParam(value = "pageIndex", defaultValue = "1")int pageIndex, @RequestParam(value = "pageSize", defaultValue = "10")int pageSize){
+        try {
+            //zoningCodeChangeApi.getDetails(seq);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.pageSeekByGroups(seq, pageIndex, pageSize)).toString() ;
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        }
+    }
+
+    /**
+     * 以excel形式导出指定申请单下的变更对照明细数据
+     *
+     */
+    public Object exportDetailsOfReq(){
+        return null;
+    }
+
+
+    /**
+     * 更新申请单
+     * @return RtnData
+     */
+    public Object updateReq(){
+        return null;
+    }
+
+    /**
+     * 删除指定组的明细数据
+     * @return
+     */
+    public Object deleteDetailsOfGroup(){
+        return null;
+    }
+
+
+    /**
+     * 省级审核
+     */
+
+
+    /**
+     * 、省级确认
+     */
+
+
+    /**
+     * 国家审核
+     */
 
 }

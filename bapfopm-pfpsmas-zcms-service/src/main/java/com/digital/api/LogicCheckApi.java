@@ -6,7 +6,7 @@ import com.digital.entity.province.FocusChangeFileInfo;
 import java.util.Map;
 
 /**
- * @Description: TODO
+ * @Description: TODO 校验
  * @Author: zhanghpj
  * @Version 1.0, 18:31 2018/3/12
  * @See

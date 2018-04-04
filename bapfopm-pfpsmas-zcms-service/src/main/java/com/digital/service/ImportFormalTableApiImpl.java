@@ -10,6 +10,7 @@ import com.digital.entity.ZCCRequest;
 import com.digital.entity.province.ContrastTemporary;
 import com.digital.entity.province.FocusChangeFileInfo;
 import com.digital.util.Common;
+import com.digital.util.JSONHelper;
 import com.digital.util.ListUtil;
 import com.digital.util.StringUtil;
 import org.slf4j.Logger;
@@ -116,7 +117,7 @@ public class ImportFormalTableApiImpl implements ImportFormalTableApi {
                     });
                     //预览数据所需要的数据
                     ChangeInfo changeInfo = new ChangeInfo();
-                    for (ContrastTemporary contrastTemporary : temporaryList) {
+                    for (ContrastTemporary contrastTemporary : list) {
                         changeInfo.setOriginalZoningCode(contrastTemporary.getOriginalCode());
                         changeInfo.setOriginalZoningName(contrastTemporary.getOriginalName());
                         changeInfo.setRequestSeq(seqNum);

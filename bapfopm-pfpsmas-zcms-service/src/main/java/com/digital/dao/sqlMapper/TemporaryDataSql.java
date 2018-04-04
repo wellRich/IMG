@@ -3,6 +3,8 @@ package com.digital.dao.sqlMapper;
 import com.digital.util.Common;
 import com.digital.util.StringUtil;
 import org.apache.ibatis.jdbc.SQL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @Description: TODO 逻辑校验的sql   方法名与相应的mapper中方法名相同
@@ -13,6 +15,8 @@ import org.apache.ibatis.jdbc.SQL;
  * @Deprecated
  */
 public class TemporaryDataSql {
+
+    private static final Logger logger = LoggerFactory.getLogger(TemporaryDataSql.class);
 
 
     public String queryChangeData(Integer fileNum,String zoningCode,String changeType){
@@ -43,4 +47,22 @@ public class TemporaryDataSql {
             }
         }.toString();
     }
+
+    public String queryTemporary(Integer fileSquence,String errorIdentification){
+        String sql = new SQL(){
+            {
+                SELECT("DZBXH","YSXZQH_DM","YSXZQH_MC","BGLX_DM","MBXZQH_DM","MBXZQH_MC","CWXX","BH","GROUPMC","LRSJ","PXH");
+                FROM("xzqh_jzbgdzb_temp");
+                WHERE("ZIPXH="+fileSquence);
+                if (!StringUtil.isEmpty(errorIdentification)){
+                    AND();
+                    WHERE("CWSJBZ='" + errorIdentification+"'");
+                }
+                ORDER_BY("PXH");
+            }
+        }.toString();
+        logger.info("queryTemporary:"+sql);
+        return sql;
+    }
+
 }

@@ -69,11 +69,20 @@ public interface ZCCDetailMapper {
 
     /**
      * 查找若干组下的变更对照明细
-     * @param seqList 变更组序号列表
+     * @param seqStr 若干变更组序号，以“,”分隔
      * @return 变更明细列表
      */
-    @SelectProvider(type = ZCCDetailSql.class, method = "findByGroupSeqs")
-    List<ZCCDetail> findByGroupSeqs(List<Integer> seqList);
+    @SelectProvider(type = ZCCDetailSql.class, method = "pageSeekByGroups")
+    List<ZCCDetail> pageSeekByGroups(String seqStr, int offset, int limit);
+
+
+    /**
+     * 统计若干组下的变更对照明细数量
+     * @param seqStr 若干变更组序号，以“,”分隔
+     * @return 变更明细列表
+     */
+    @SelectProvider(type = ZCCDetailSql.class, method = "countByGroups")
+    int countByGroups(String seqStr);
 
 
 }

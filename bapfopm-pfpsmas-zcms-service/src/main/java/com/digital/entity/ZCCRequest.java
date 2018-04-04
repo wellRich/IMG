@@ -1,5 +1,6 @@
 package com.digital.entity;
 
+import com.digital.util.Common;
 import com.digital.util.JSONHelper;
 import com.digital.util.search.Column;
 import com.digital.util.search.Table;
@@ -40,7 +41,7 @@ public class ZCCRequest implements Serializable {
      * 申请单状态
      * */
     @Column(name = "SQDZT_DM")
-    private String status;
+    private String status = Common.XZQH_SQDZT_WTJ;
 
     /*
      * 上报区划的区划代码

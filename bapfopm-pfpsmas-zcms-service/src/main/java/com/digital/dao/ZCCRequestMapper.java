@@ -49,11 +49,11 @@ public interface ZCCRequestMapper {
 
     /**
      * 根据区划代码统计申请单数量
-     * @param zoingCode 区划代码
+     * @param zoningCode 区划代码
      * @return
      */
     @SelectProvider(type = ZCCRequestSql.class, method = "countByZoningCode")
-    int countByZoingCode(String zoingCode);
+    int countByZoningCode(String zoningCode);
 
     /** 根据区划代码分页查询申请单
      * @param zoningCode 区划代码
@@ -84,6 +84,7 @@ public interface ZCCRequestMapper {
      * @return 申请单主键值
      */
     @InsertProvider(type = ZCCRequestSql.class, method = "insert")
+    @SelectKey(before = false, resultType = Integer.class, keyColumn = "SQDXH", keyProperty = "seq", statement = "SELECT LAST_INSERT_ID()")
     @Options(useGeneratedKeys = true,keyProperty = "seq",keyColumn = "SQDXH")
     int insert(Object obj);
 

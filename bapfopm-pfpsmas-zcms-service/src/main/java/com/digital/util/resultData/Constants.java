@@ -44,7 +44,15 @@ public class Constants {
     /*
     * 查询集中变更临时数据为空
     * */
-
+    public final static String RTN_QUERY_ISEMPTY = "该条件下未查到数据";
+    /*
+    * 文件状态信息修改失败
+    * */
+    public final static String RTN_UPDATE_FAIL = "文件修改状态失败";
+    /*
+    * 该文件信息状态不可以导入
+    * */
+    public final static String RTN_IMPORT_CHEKED = "该文件状态不可以导入临时表";
 
 
 }
