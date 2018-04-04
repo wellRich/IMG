@@ -104,17 +104,20 @@ public interface ZoningCodeChangeApi {
      */
     List<PreviewDataInfo> findBrothersByCode(String zoningCode);
 
+
+    ///////////////////////////////////////////////////////////////////
     /*
      * 维护变更对照申请
      */
 
-
     /**
      * 更新申请单
      * 省级审核、省级确认、国家审核与申请单维护，都通过这个接口实现
-     * @param req 申请单序号
+     * @param seq 申请单序号
+     * @param name 申请单名称
+     * @param notes 申请单说明
      */
-    void updateZCCRequest(Map<String, Object> req);
+    void updateZCCRequest(Integer seq, String name, String notes);
 
 
     /**
@@ -134,7 +137,7 @@ public interface ZoningCodeChangeApi {
      */
     void deleteDetails(Integer groupSeq);
 
-
+   ////////////////////////////////////////////////////////////
     /**
      * 提交变更申请单
      */
@@ -168,6 +171,27 @@ public interface ZoningCodeChangeApi {
      * @param levelCode 区划级别代码
      */
     int addZCCGroup(String levelCode, ZCCGroup group);
+
+
+    /**
+     * 省级审核
+     * @param seq 申请单序号
+     */
+    void provincialCheck(Integer seq);
+
+
+    /**
+     * 省级确认
+     * @param seq 申请单序号
+     */
+    void provincialConfirm(Integer seq);
+
+
+    /**
+     * 国家审核
+     * @param seq 申请单序号
+     */
+    void nationalCheck(Integer seq);
 
 
 }

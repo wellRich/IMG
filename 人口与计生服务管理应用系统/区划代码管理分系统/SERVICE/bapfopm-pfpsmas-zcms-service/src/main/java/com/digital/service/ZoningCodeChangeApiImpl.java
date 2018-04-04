@@ -460,12 +460,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
 
     /**
-     * 更新区划代码变更申请单
-     * @param req 申请单序号
+     * 更新申请单
+     * 省级审核、省级确认、国家审核与申请单维护，都通过这个接口实现
+     * @param seq 申请单序号
+     * @param name 申请单名称
+     * @param notes 申请单说明
      */
     @Override
-    public void updateZCCRequest(Map<String, Object> req) {
-        zccRequestMapper.update(req);
+    public void updateZCCRequest(Integer seq, String name, String notes) {
+        zccRequestMapper.update(ImmutableMap.of("seq", seq, "name", name, "notes", notes););
     }
 
     /**

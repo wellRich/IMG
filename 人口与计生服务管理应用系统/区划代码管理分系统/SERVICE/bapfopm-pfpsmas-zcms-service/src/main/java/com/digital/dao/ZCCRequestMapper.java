@@ -91,7 +91,7 @@ public interface ZCCRequestMapper {
     /**
     * 修改申请单
     * 若传入一个申请单，则会把它所有的属性更新到数据库
-     * 传入一个map，只会更新map中除主键以外的键值对
+     * 传入一个map，只会更新map中的键值对
     * @param zccRequest 申请单对象或者map
      *@return 被修改的数量
     */
