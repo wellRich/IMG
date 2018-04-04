@@ -110,8 +110,8 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-     * 修改申请单
-     * 〈功能详细描述〉
+     * 更新申请单
+     * 省级审核、省级确认、国家审核与申请单维护，都通过这个接口实现
      * @param req 申请单序号
      */
     void updateZCCRequest(Map<String, Object> req);
@@ -168,5 +168,6 @@ public interface ZoningCodeChangeApi {
      * @param levelCode 区划级别代码
      */
     int addZCCGroup(String levelCode, ZCCGroup group);
+
 
 }

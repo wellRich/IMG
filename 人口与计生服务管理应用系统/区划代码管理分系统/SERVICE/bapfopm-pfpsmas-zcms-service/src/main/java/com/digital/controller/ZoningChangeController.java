@@ -11,6 +11,7 @@ import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
 import com.digital.util.search.QueryResp;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -250,14 +251,17 @@ public class ZoningChangeController {
 
     /**
      * 省级审核
+     * @param seq 申请单序号
      */
+    @RequestMapping(value = "/provincialCheck", method = RequestMethod.GET)
+    @ResponseBody
+    public Object provincialCheck(@RequestParam(value = "seq")Integer seq){
 
-    public Object provincialCheck(){
         return null;
     }
 
     /**
-     * 、省级确认
+     * 省级确认
      */
 
 
