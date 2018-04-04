@@ -1,0 +1,5 @@
+server:
+  port: 7321 #7321-7329 可用
+spring:
+  application:
+    name: bapfopm-sp-lt-service
