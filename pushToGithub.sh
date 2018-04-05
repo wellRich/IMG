@@ -1,7 +1,7 @@
 #! /bin/bash
 echo "Start to publish...\n"
 # 切换到项目目录
-cd E:/workspace/Server
+cd E:/workspace/IMG
 # 执行git命令
 # git pull origin test
 git add .
