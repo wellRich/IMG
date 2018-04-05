@@ -6,5 +6,5 @@ cd E:/workspace/IMG
 # git pull origin test
 git add .
 git commit -m "自动提交"
-git push https://github.com/wellRich/IMG.git
+git push origin master
 echo "Success\n";
