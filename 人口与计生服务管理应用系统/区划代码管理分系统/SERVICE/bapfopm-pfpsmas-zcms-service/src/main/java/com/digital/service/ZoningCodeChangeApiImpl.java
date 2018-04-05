@@ -597,17 +597,31 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
     @Override
-    public void provincialCheck(Integer seq) {
+    public void provincialCheck(List seqList, boolean isPassed) {
+        String status = isPassed ? Common.XZQH_SQDZT_SHTG : Common.XZQH_SQDZT_SHBTG;
+        for(Object seq: seqList){
+            Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
+            req.ifPresent(e -> {
+                if(e.getStatus() == Common.XZQH_SQDZT_YTJ){
+                    zccRequestMapper.update(ImmutableMap.of("seq", e, "status", status));
+                }else {
+                    throw new RuntimeException("申请单状态为[" + e.getStatus() + "]，请传入状态为[已提交]的申请单序号！");
+                }
+            });
+        }
+        /*seqList.stream().filter(Objects::nonNull)
+                .map(zccRequestMapper::get)
+                .filter(e -> e == Common.XZQH_SQDZT_YTJ)
+                .peek(e -> zccRequestMapper.update(ImmutableMap.of("seq", e, "status", status)));*/
+    }
+
+    @Override
+    public void provincialConfirm(List seqList) {
 
     }
 
     @Override
-    public void provincialConfirm(Integer seq) {
-
-    }
-
-    @Override
-    public void nationalCheck(Integer seq) {
+    public void nationalCheck(List seqList, boolean isPassed) {
 
     }
 }

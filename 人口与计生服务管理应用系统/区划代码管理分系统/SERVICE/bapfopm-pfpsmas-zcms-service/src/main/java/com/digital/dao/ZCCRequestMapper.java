@@ -29,7 +29,7 @@ public interface ZCCRequestMapper {
             @Result(property = "ownZoningCode", column = "SBXZQH_DM", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class)
     })
-    ZCCRequest get(Integer seq);
+    ZCCRequest get(Object seq);
 
 
     /**
