@@ -6,8 +6,7 @@ import com.digital.entity.ZCCGroup;
 import com.digital.entity.ZCCRequest;
 import com.digital.util.search.QueryResp;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 〈一句话功能简述〉
@@ -54,17 +53,23 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-     * 根据区划代码与状态查询申请单
-     * @param zoingCode
-     * @param status
-     * @return
+     * 查找未被国家审核的申请单
+     * @param levelCode
+     * @return List
      */
-    List<ZCCRequest> findZCCReqByZCAndStatus(String zoingCode, String status);
+    List<ZCCRequest> findNotPassNationalCheckReq(String levelCode);
 
     /*
      *
      * 录入变更明细
      * */
+
+    /**
+     * 查找允许录入明细的申请单，状态为未提交或者是审核不通过
+     * @param levelCode 区划级别代码
+     * @return
+     */
+    List<ZCCRequest> findWritableZCCRequests(String levelCode);
 
     /**
      * 根据区划代码查询区划预览数据
@@ -113,11 +118,9 @@ public interface ZoningCodeChangeApi {
     /**
      * 更新申请单
      * 省级审核、省级确认、国家审核与申请单维护，都通过这个接口实现
-     * @param seq 申请单序号
-     * @param name 申请单名称
-     * @param notes 申请单说明
+     * @param param 更新信息
      */
-    void updateZCCRequest(Integer seq, String name, String notes);
+    void updateZCCRequest(Map<String, Object> param);
 
 
     /**
@@ -175,25 +178,25 @@ public interface ZoningCodeChangeApi {
 
     /**
      * 省级审核
-     * @param seqList 申请单序号列表
+     * @param seqStr 以逗号分隔的若干申请单序号
      * @param isPassed 是否通过审核
      */
-    void provincialCheck(List seqList, boolean isPassed);
+    void provincialCheck(String seqStr, boolean isPassed);
 
 
     /**
      * 省级确认
-     * @param seqList 申请单序号列表
+     * @param seqStr 以逗号分隔的若干申请单序号
      */
-    void provincialConfirm(List seqList);
+    void provincialConfirm(String seqStr);
 
 
     /**
      * 国家审核
-     * @param seqList 申请单序号列表
+     * @param seqStr 以逗号分隔的若干申请单序号
      * @param isPassed 是否通过审核
      */
-    void nationalCheck(List seqList, boolean isPassed);
+    void nationalCheck(String seqStr, boolean isPassed);
 
 
 }

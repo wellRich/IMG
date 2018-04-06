@@ -1,20 +1,13 @@
 package com.digital.entity;
 
 import com.digital.util.Common;
-import com.digital.util.JSONHelper;
 import com.digital.util.search.Column;
 import com.digital.util.search.Table;
-import jdk.internal.org.objectweb.asm.Handle;
-import jdk.internal.org.objectweb.asm.commons.Method;
-import org.springframework.beans.BeanUtils;
-import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 行政区划代码变更申请单
@@ -44,10 +37,10 @@ public class ZCCRequest implements Serializable {
     private String status = Common.XZQH_SQDZT_WTJ;
 
     /*
-     * 上报区划的区划代码
+     * 上报区划的区划的级别代码
      * */
     @Column(name = "SBXZQH_DM")
-    private String ownZoningCode;
+    private String levelCode;
 
 
 
@@ -146,12 +139,12 @@ public class ZCCRequest implements Serializable {
         this.status = status;
     }
 
-    public String getOwnZoningCode() {
-        return ownZoningCode;
+    public String getLevelCode() {
+        return levelCode;
     }
 
-    public void setOwnZoningCode(String ownZoningCode) {
-        this.ownZoningCode = ownZoningCode;
+    public void setLevelCode(String levelCode) {
+        this.levelCode = levelCode;
     }
 
     public String getNotes() {

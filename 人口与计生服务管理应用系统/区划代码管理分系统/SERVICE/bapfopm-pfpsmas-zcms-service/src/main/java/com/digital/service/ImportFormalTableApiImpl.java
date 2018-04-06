@@ -67,7 +67,7 @@ public class ImportFormalTableApiImpl implements ImportFormalTableApi {
         zccRequest.setCreatorCode(enterOneCode);
         zccRequest.setCreateDate( StringUtil.getTime());
         zccRequest.setCreatorDeptCode(organizationCode);
-        zccRequest.setOwnZoningCode(zoningCode);
+        zccRequest.setLevelCode(zoningCode);
         //返回申请单的序号
        int seqNum = zoningCodeChangeApi.addZCCRequest(zccRequest);
 

@@ -133,7 +133,7 @@ public interface PreviewDataInfoMapper {
 
     //插入历史数据
     @Insert("INSERT INTO XZQH_BGMXLSJL (MXBXH,GROUPXH,YSXZQH_DM,YSXZQH_MC,BGLX_DM,MBXZQH_DM,MBXZQH_MC,LRR_DM,LRSJ)" +
-            " VALUES(#{requestReq, jdbcType = INTEGER}," +
+            " VALUES(#{seq, jdbcType = INTEGER}," +
             " #{groupSeq, jdbcType = INTEGER}, #{originCode, jdbcType = CHAR}, #{originName, jdbcType = VARCHAR}," +
             " #{changeType, jdbcType = CHAR}, #{currentCode, jdbcType = CHAR}, #{currentName, jdbcType = CHAR}, #{creatorCode, jdbcType = CHAR}, #{createDate, jdbcType = VARCHAR})")
     Integer insertHistoryData(Map info);

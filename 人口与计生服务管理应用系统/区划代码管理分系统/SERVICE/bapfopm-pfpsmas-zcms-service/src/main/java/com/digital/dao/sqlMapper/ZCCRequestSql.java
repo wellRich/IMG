@@ -2,6 +2,7 @@ package com.digital.dao.sqlMapper;
 
 import com.digital.entity.ZCCRequest;
 import org.apache.ibatis.jdbc.SQL;
+import org.apache.tools.ant.util.StringUtils;
 
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
         String sql = new SQL(){{
             FROM(getTableName());
             SELECT("count(*)");
-            WHERE(getColumnByField("ownZoningCode")  + " LIKE '"  + zoingCode + "%'");
+            WHERE(getColumnByField("levelCode")  + " LIKE '"  + zoingCode + "%'");
         }}.toString();
         log.info("countByZoningCode.sql----------> " + sql);
         return sql;
@@ -38,11 +39,23 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
         String sql = new SQL(){{
             FROM(getTableName());
             SELECT(getColumns());
-            WHERE(getColumnByField("ownZoningCode")  + " LIKE '"  + levelCode + "%'");
+            WHERE(getColumnByField("levelCode")  + " LIKE '"  + levelCode + "%'");
             ORDER_BY(getColumnByField("createDate") + " DESC");
         }}.toString() + " LIMIT " + pageSize + " OFFSET " + offset;
         log.info("pageSeekByZoningCode.sql----------> " + sql);
         return sql;
 
+    }
+
+    public String findByLevelCodeAndStatuses(String levelCode, String ... statuses){
+        String sql = new SQL(){{
+            FROM(getTableName());
+            SELECT(getColumns());
+            WHERE(getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
+            AND();
+            WHERE(getColumnByField("levelCode") + " = '" + levelCode + "'");
+        }}.toString();
+        log.info("findOneByLevelCodeAndStatuses.sql----------> " + sql);
+        return sql;
     }
 }

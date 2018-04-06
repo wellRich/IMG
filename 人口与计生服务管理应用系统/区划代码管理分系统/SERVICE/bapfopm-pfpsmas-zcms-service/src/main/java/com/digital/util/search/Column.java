@@ -22,6 +22,4 @@ import java.lang.annotation.Target;
 public @interface Column {
 
     String name() default "";
-
-    boolean primary() default false;
 }

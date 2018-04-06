@@ -26,7 +26,7 @@ public interface ZCCRequestMapper {
             @Result(property = "seq", column = "SQDXH", javaType = Integer.class),
             @Result(property = "name", column = "SQDMC", javaType = String.class),
             @Result(property = "status", column = "SQDZT_DM", javaType = String.class),
-            @Result(property = "ownZoningCode", column = "SBXZQH_DM", javaType = String.class),
+            @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class)
     })
     ZCCRequest get(Object seq);
@@ -34,18 +34,33 @@ public interface ZCCRequestMapper {
 
     /**
      * 通过区划代码查找变更申请单
-    * @param zoingCode 区划代码
+    * @param zoningCode 区划代码
     * @return 返回申请单列表
     */
-    @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{zoingCode, jdbcType=CHAR} ORDER BY LRSJ ")
+    @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{zoningCode, jdbcType=CHAR} ORDER BY LRSJ ")
     @Results(id = "findAll", value = {
             @Result(property = "seq", column = "SQDXH", javaType = Integer.class),
             @Result(property = "name", column = "SQDMC", javaType = String.class),
             @Result(property = "status", column = "SQDZT_DM", javaType = String.class),
-            @Result(property = "ownZoningCode", column = "SBXZQH_DM", javaType = String.class),
+            @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class)
     })
-    List<ZCCRequest> findAllByZoningCode(@Param(value = "zoingCode") String zoingCode);
+    List<ZCCRequest> findAllByZoningCode(@Param(value = "zoningCode") String zoningCode);
+
+    /**
+     * 通过区划级别代码与状态查找申请单
+     * @param levelCode 级别代码
+     * @param statuses 若干申请单状态代码
+     * @return 申请单实例
+     */
+    @SelectProvider(type = ZCCRequestSql.class, method = "findByLevelCodeAndStatuses")
+    @Results({
+            @Result(id=true, property = "seq", column = "SBXZQH_DM"),
+            @Result(property = "name", column = "SQDMC")
+    })
+    //@Select("SELECT SBXZQH_DM, SQDMC FROM xzqh_bgsqd WHERE SQDZT_DM IN (#{statuses}) AND SBXZQH_DM = #{levelCode}")
+    //List<ZCCRequest> findByLevelCodeAndStatuses(@Param("levelCode")String levelCode, @Param("statuses")String ... statuses);
+    List<ZCCRequest> findByLevelCodeAndStatuses(String levelCode, String ... statuses);
 
     /**
      * 根据区划代码统计申请单数量
@@ -73,9 +88,9 @@ public interface ZCCRequestMapper {
      * @param status 申请单状态
      * @return 申请单列表
      */
-    @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{ownZoningCode} and SQDZT_DM < #{status}")
+    @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{levelCode} and SQDZT_DM < #{status}")
     @ResultMap(value = "findAll")
-    List<ZCCRequest> findAllByZoningCodeAndStatus(@Param(value = "ownZoningCode") String zoingCode, @Param(value = "status") String status);
+    List<ZCCRequest> findAllByZoningCodeAndStatus(@Param(value = "levelCode") String zoingCode, @Param(value = "status") String status);
 
 
     /**

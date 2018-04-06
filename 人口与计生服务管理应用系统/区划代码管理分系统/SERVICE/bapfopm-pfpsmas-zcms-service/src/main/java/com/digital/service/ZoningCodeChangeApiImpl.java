@@ -93,7 +93,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     @Override
     public int addZCCRequest(ZCCRequest req) {
-        List<ZCCRequest> zccRequestList = findZCCReqByZCAndStatus(req.getOwnZoningCode(), Common.XZQH_SQDZT_GJYSH);
+        List<ZCCRequest> zccRequestList = findNotPassNationalCheckReq(req.getLevelCode());
         if(zccRequestList.size() == 0){
             if(zccRequestMapper.insert(req) >  0){
                 return req.getSeq();
@@ -109,15 +109,11 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     /**
      * 通过状态与区划代码查找申请单
      * 〈功能详细描述〉
-     * @param zoingCode 区划代码
-     * @param status 申请单状态
+     * @param levelCode 区划代码
      * @return 申请单列表
      */
-    @Override
-    public List<ZCCRequest> findZCCReqByZCAndStatus(String zoingCode, String status) {
-
-        //取得区划代码的前六位
-        return zccRequestMapper.findAllByZoningCodeAndStatus(zoingCode.substring(0, 6), status);
+    public List<ZCCRequest> findNotPassNationalCheckReq(String levelCode) {
+        return zccRequestMapper.findAllByZoningCodeAndStatus(levelCode, Common.XZQH_SQDZT_GJYSH);
     }
 
     /**
@@ -128,6 +124,12 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     @Override
     public List<ZCCRequest> findZCCReqByZoningCode(String zoningCode) {
         return zccRequestMapper.findAllByZoningCode(zoningCode);
+    }
+
+
+    @Override
+    public List<ZCCRequest> findWritableZCCRequests(String levelCode) {
+        return zccRequestMapper.findByLevelCodeAndStatuses(levelCode, Common.XZQH_SQDZT_WTJ, Common.XZQH_SQDZT_SHBTG);
     }
 
     /**
@@ -192,7 +194,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return PreviewDataInfo
      */
     public PreviewDataInfo findOneByZoningCode(String zoningCode){
-        return previewDataInfoMapper.findOneByZoningCode(zoningCode);
+        return previewDataInfoMapper.get(zoningCode);
     }
 
     public List<PreviewDataInfo> findBrothersByCode(String zoningCode){
@@ -247,8 +249,9 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     public void saveDetail(ChangeInfo info){
 
         //1 插入明细变更对照表
-        int key = zccDetailMapper.insert(info.toDetail());
-        System.out.println("saveDetail().key---------------> " + key);
+        ZCCDetail detail = info.toDetail();
+        zccDetailMapper.insert(detail);
+        System.out.println("saveDetail().key---------------> " + detail.getSeq());
 
         //2 逻辑校验
         commonService.logicVerifyZCChange(info);
@@ -259,7 +262,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
         //4 保存到变更明细历史数据表
         Map<String, Object> param = new HashMap<>();
-        param.put("requestReq", info.getRequestSeq());
+        param.put("seq", detail.getSeq());
         param.put("groupSeq", info.getGroupSeq());
         param.put("originCode", info.getOriginalZoningCode());
         param.put("originName", info.getOriginalZoningName());
@@ -462,13 +465,11 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     /**
      * 更新申请单
      * 省级审核、省级确认、国家审核与申请单维护，都通过这个接口实现
-     * @param seq 申请单序号
-     * @param name 申请单名称
-     * @param notes 申请单说明
+     * @param param 更新信息
      */
     @Override
-    public void updateZCCRequest(Integer seq, String name, String notes) {
-        zccRequestMapper.update(ImmutableMap.of("seq", seq, "name", name, "notes", notes));
+    public void updateZCCRequest(Map<String, Object> param) {
+        zccRequestMapper.update(param);
     }
 
     /**
@@ -498,7 +499,20 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     @Override
     public void deleteDetails(Integer groupSeq) {
+
+        List<ZCCDetail> details = zccDetailMapper.findByGroupSeq(groupSeq);
+        //1 删除历史数据
+
+
+        //2 删除预览数据
+
+
+        //3 删除明细数据
         zccDetailMapper.deleteByGroupSeq(groupSeq);
+
+        //4 删除变更对照组
+        zccGroupMapper.delete(groupSeq);
+
     }
 
     /**
@@ -507,13 +521,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     @Override
     public void submitZCCRequest(Integer seq) {
-        ZCCRequest req = zccRequestMapper.get(seq);
-        if(req.getStatus().equals(Common.XZQH_SQDZT_WTJ)){
-            //修改申请单状态为已经提交
-            zccRequestMapper.update(ImmutableMap.of("status", Common.XZQH_SQDZT_YTJ));
-        }else {
-            throw new RuntimeException("只能提交未提交的申请单！");
-        }
+        Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
+        req.ifPresent(e -> {
+            if(e.getStatus().equals(Common.XZQH_SQDZT_WTJ)){
+                //修改申请单状态为已经提交
+                zccRequestMapper.update(ImmutableMap.of("status", Common.XZQH_SQDZT_YTJ, "seq", seq));
+            }else {
+                throw new RuntimeException("只能提交未提交的申请单！");
+            }
+        });
     }
 
 
@@ -597,13 +613,13 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
     @Override
-    public void provincialCheck(List seqList, boolean isPassed) {
+    public void provincialCheck(String seqStr, boolean isPassed) {
         String status = isPassed ? Common.XZQH_SQDZT_SHTG : Common.XZQH_SQDZT_SHBTG;
-        for(Object seq: seqList){
+        for(Object seq: seqStr.split(",")){
             Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
             req.ifPresent(e -> {
-                if(e.getStatus() == Common.XZQH_SQDZT_YTJ){
-                    zccRequestMapper.update(ImmutableMap.of("seq", e, "status", status));
+                if(e.getStatus().equals(Common.XZQH_SQDZT_YTJ)){
+                    zccRequestMapper.update(ImmutableMap.of("seq", e.getSeq(), "status", status));
                 }else {
                     throw new RuntimeException("申请单状态为[" + e.getStatus() + "]，请传入状态为[已提交]的申请单序号！");
                 }
@@ -616,12 +632,21 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
     @Override
-    public void provincialConfirm(List seqList) {
-
+    public void provincialConfirm(String seqStr) {
+        for(Object seq: seqStr.split(",")){
+            Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
+            req.ifPresent(e -> {
+                if(e.getStatus() == Common.XZQH_SQDZT_SHTG){
+                    zccRequestMapper.update(ImmutableMap.of("seq", e, "status", Common.XZQH_SQDZT_YQR));
+                }else {
+                    throw new RuntimeException("申请单状态为[" + e.getStatus() + "]，请传入状态为[审核通过]的申请单序号！");
+                }
+            });
+        }
     }
 
     @Override
-    public void nationalCheck(List seqList, boolean isPassed) {
+    public void nationalCheck(String seqStr, boolean isPassed) {
 
     }
 }
