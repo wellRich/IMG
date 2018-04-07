@@ -80,7 +80,51 @@ details:
         "originalZoningCode": "",
         "originalZoningName": "",
         "changeType": "11",
-        "targetZoningCode": "370102006700100",
+        "targetZoningCode": "370102006701100",
+        "targetZoningName": "祈祷室",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "1",
+        "organizationCode": "9527"
+    },
+    {
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "",
+        "originalZoningName": "",
+        "changeType": "11",
+        "targetZoningCode": "370102006701200",
+        "targetZoningName": "接待室",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "1",
+        "organizationCode": "9527"
+    }
+]
+
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "英灵殿也有了下级区划",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+
+details:
+[
+    {
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "",
+        "originalZoningName": "",
+        "changeType": "11",
+        "targetZoningCode": "370102006701000",
         "targetZoningName": "欢乐谷",
         "status": "10",
         "notes": "xxxx备注",
@@ -101,6 +145,8 @@ details:
         "organizationCode": "9527"
     }
 ]
+
+
 
 变更
 
