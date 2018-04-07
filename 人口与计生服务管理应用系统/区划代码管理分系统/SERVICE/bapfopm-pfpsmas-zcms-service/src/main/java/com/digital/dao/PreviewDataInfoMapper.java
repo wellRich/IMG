@@ -98,10 +98,10 @@ public interface PreviewDataInfoMapper {
             @Result(column = "JCDM", property = "assigningCode", javaType = String.class),
             @Result(column = "DM_XZQH_YLSJ", property = "subordinateRelations", javaType = String.class),
             @Result(column = "JBDM", property = "levelCode", javaType = String.class)
-    })*/
+    })
     @Select("SELECT * FROM DM_XZQH_YLSJ WHERE XZQH_DM =#{zoningCode}")
     @ResultMap(value = "findAll")
-    PreviewDataInfo findOneByZoningCode(@Param(value = "zoningCode") String zoningCode);
+    PreviewDataInfo findOneByZoningCode(@Param(value = "zoningCode") String zoningCode);*/
 
 
     /**

@@ -185,11 +185,14 @@ public class ChangeInfo implements Cloneable{
         if(this.assigningCode != null){
             return this.assigningCode;
         }else {
-            setAssigningCode( Common.getAssigningCode(this.targetZoningCode));
+            buildAssigningCode();
             return this.assigningCode;
         }
     }
 
+    public void buildAssigningCode(){
+        setAssigningCode( Common.getAssigningCode(this.targetZoningCode));
+    }
 
     public void setAssigningCode(String assigningCode) {
         this.assigningCode = assigningCode;

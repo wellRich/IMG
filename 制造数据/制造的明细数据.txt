@@ -239,10 +239,103 @@ details:
 [{
 	"level": "5",
 	"ringFlag": "0",
-	"originalZoningCode": "370102006701000",
+	"originalZoningCode": "370102006901000",
+	"originalZoningName": "天堂山",
+	"changeType": "21",
+	"targetZoningCode": "370102006902000",
+	"targetZoningName": "天堂山",
+	"status": "10",
+	"notes": "xxxx备注",
+	"creatorCode": "100",
+	"organizationCode": "9527"
+}]
+
+
+
+2.4
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "天堂的区划代码换换",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+details:
+
+[{
+	"level": "5",
+	"ringFlag": "0",
+	"originalZoningCode": "370102006700000",
 	"originalZoningName": "天堂山",
 	"changeType": "21",
 	"targetZoningCode": "370102006901000",
+	"targetZoningName": "天堂山",
+	"status": "10",
+	"notes": "xxxx备注",
+	"creatorCode": "100",
+	"organizationCode": "9527"
+}]
+
+2.5
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "天堂的区划代码换换",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+details:
+
+[{
+	"level": "5",
+	"ringFlag": "0",
+	"originalZoningCode": "370102006902000",
+	"originalZoningName": "天堂山",
+	"changeType": "21",
+	"targetZoningCode": "370102006903000",
+	"targetZoningName": "天堂山",
+	"status": "10",
+	"notes": "xxxx备注",
+	"creatorCode": "100",
+	"organizationCode": "9527"
+}]
+
+
+2.5
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "天堂的区划代码换换",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+details:
+
+[{
+	"level": "5",
+	"ringFlag": "0",
+	"originalZoningCode": "370102006903000",
+	"originalZoningName": "天堂山",
+	"changeType": "21",
+	"targetZoningCode": "370102006904000",
 	"targetZoningName": "天堂山",
 	"status": "10",
 	"notes": "xxxx备注",

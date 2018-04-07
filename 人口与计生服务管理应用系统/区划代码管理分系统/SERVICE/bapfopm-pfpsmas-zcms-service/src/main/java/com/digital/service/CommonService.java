@@ -225,20 +225,15 @@ public class CommonService {
                 //现区划全称
                 String currentFullName = currentSuperInfo.getDivisionFullName() + info.getTargetZoningName();
 
-                //原区划代码
-                String originalZoningCode = info.getOriginalZoningCode();
-
                 //原区划级别代码
-                String originalLevelCode = Common.getLevelCode(info.getOriginalZoningCode());
-
-
+                String originalLevelCode = info.getOriginalLevelCode();
 
                 //目标区划级别代码
-                String targetZoningCode = info.getTargetLevelCode();
+                String targetLevelCode = info.getTargetLevelCode();
 
                 log.info("originalFullName--------> " + originalFullName + ", currentFullName-------> " + currentFullName);
                 for (int i = 0; i < size; i++) {
-                    updatePreviewData(changeInfoList.get(i), originalZoningCode, targetZoningCode, originalFullName, currentFullName);
+                    updatePreviewData(changeInfoList.get(i), originalLevelCode, targetLevelCode, originalFullName, currentFullName);
                 }
             }
 
@@ -253,7 +248,7 @@ public class CommonService {
      * @param originalFullName 原始行政区划上级名称
      * @param currentFullName 目标行政区划上级名称
      */
-    public void updatePreviewData(ChangeInfo info, String originalLevelCode, String targetLevelCode, String  originalFullName, String currentFullName) {
+    public void updatePreviewData(ChangeInfo info, String originalLevelCode, String targetLevelCode, String originalFullName, String currentFullName) {
         String originZoningCode = info.getOriginalZoningCode();
         String originalZoningName = info.getOriginalZoningName();
         String targetZoningCode = info.getTargetZoningCode();
@@ -308,6 +303,9 @@ public class CommonService {
 
             //级别代码
             pf.setLevelCode(newLevelCode);
+
+            //级次代码
+            pf.setAccessCode(info.getAssigningCode());
 
             //上级区划代码
             pf.setSuperiorZoningCode(previewDataInfo.getSuperiorZoningCode());
