@@ -203,9 +203,18 @@ public class ChangeInfo implements Cloneable{
         if(this.targetLevelCode != null){
             return this.targetLevelCode;
         }else {
-            setTargetLevelCode(Common.getLevelCode(this.targetZoningCode));
+            buildTargetLevelCode();
             return this.targetLevelCode;
         }
+    }
+
+    public void buildTargetLevelCode(){
+        setTargetLevelCode(Common.getLevelCode(this.targetZoningCode));
+    }
+
+
+    public void buildOriginalLevelCode(){
+        setOriginalLevelCode(Common.getLevelCode(originalZoningCode));
     }
 
     public void setTargetLevelCode(String targetLevelCode) {
@@ -220,7 +229,7 @@ public class ChangeInfo implements Cloneable{
             if(changeType.equals(Common.ADD)){
                 return originalLevelCode;
             }else {
-                setOriginalLevelCode(Common.getLevelCode(originalZoningCode));
+                buildOriginalLevelCode();
                 return originalLevelCode;
             }
         }

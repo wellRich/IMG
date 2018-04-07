@@ -249,6 +249,7 @@ public class CommonService {
      * @param currentFullName 目标行政区划上级名称
      */
     public void updatePreviewData(ChangeInfo info, String originalLevelCode, String targetLevelCode, String originalFullName, String currentFullName) {
+
         String originZoningCode = info.getOriginalZoningCode();
         String originalZoningName = info.getOriginalZoningName();
         String targetZoningCode = info.getTargetZoningCode();
@@ -258,9 +259,6 @@ public class CommonService {
 
         //变更后的区划全称
         String fullName = previewDataInfo.getDivisionFullName().replace(originalFullName, currentFullName);
-
-
-        log.info("updatePreviewData.变更后的fullName---------> " + fullName);
 
         //仅仅是名称变更
         if (Common.hasSameZoningCode(originZoningCode, targetZoningCode)) {
@@ -288,7 +286,6 @@ public class CommonService {
 
             //变更后的区划代码
             String targetCode = targetZoningCode.replace(originalLevelCode, targetLevelCode);
-            log.info("updatePreviewData.targetCode---------> " + targetCode);
             //区划代码
             pf.setZoningCode(targetCode);
 
@@ -305,7 +302,7 @@ public class CommonService {
             pf.setLevelCode(newLevelCode);
 
             //级次代码
-            pf.setAccessCode(info.getAssigningCode());
+            pf.setAccessCode(previewDataInfo.getAssigningCode());
 
             //上级区划代码
             pf.setSuperiorZoningCode(previewDataInfo.getSuperiorZoningCode());
@@ -345,6 +342,8 @@ public class CommonService {
 
             //变更类型
             pf.setType(previewDataInfo.getType());
+
+            log.info("js-----------> " + JSONHelper.toJSON(pf));
             previewDataInfoMapper.insert(pf);
         }
     }
@@ -441,7 +440,7 @@ public class CommonService {
      * @return List
      */
     public List<PreviewDataInfo> findFamilyZoning(String level){
-        return previewDataInfoMapper.findFamilyZoning(level, "XZQH_DM,XZQH_MC,JCDM");
+        return previewDataInfoMapper.findFamilyZoning(level, "*");
     }
 
     /**
@@ -473,11 +472,10 @@ public class CommonService {
             for (int i = 0; i < previewDataInfos.size(); i++) {
                 ChangeInfo changeInfo = new ChangeInfo();
                 PreviewDataInfo previewDataInfo =  previewDataInfos.get(i);
+                System.out.println("accountChangeOrders.previewDataInfo----> " + JSONHelper.toJSON(previewDataInfo));
 
                 //获取区划代码
                 String zoningCode = previewDataInfo.getZoningCode();
-
-                log.info("accountChangeOrders.previewDataInfo.zoningCode------> " + zoningCode);
 
                 //目标区划代码
                 if(i == 0){
@@ -509,11 +507,34 @@ public class CommonService {
                 //原区划代码
                 changeInfo.setOriginalZoningCode(previewDataInfo.getZoningCode());
 
+                //级次代码
+                changeInfo.setAssigningCode(previewDataInfo.getAssigningCode());
+                if(changeInfo.getAssigningCode() == null || changeInfo.getAssigningCode() == ""){
+                    changeInfo.setAssigningCode(Common.getAssigningCode(previewDataInfo.getZoningCode()));
+                }
+
+                //原级别代码
+                changeInfo.setOriginalLevelCode(previewDataInfo.getLevelCode());
+
+                //目标级别代码
+                changeInfo.setTargetLevelCode(currentLevelCode);
+
                 //录入人代码
                 changeInfo.setCreatorCode(info.getCreatorCode());
 
-                //级次代码
-                changeInfo.setAssigningCode(previewDataInfo.getAccessCode());
+                //录入时间
+                changeInfo.setCreatorDate(new Date());
+
+                //变更说明
+                changeInfo.setNotes(info.getNotes());
+
+                //是否环状变更
+                changeInfo.setRingFlag(info.getRingFlag());
+
+
+                System.out.println("accountChangeOrders.changeInfo.jcdm----> " + changeInfo.getAssigningCode());
+
+                System.out.println("accountChangeOrders.changeInfo----> " + JSONHelper.toJSON(changeInfo));
                 result.add(changeInfo);
             }
         }

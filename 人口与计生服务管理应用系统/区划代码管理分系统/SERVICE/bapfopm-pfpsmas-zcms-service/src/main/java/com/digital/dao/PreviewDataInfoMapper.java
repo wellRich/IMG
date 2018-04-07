@@ -61,11 +61,12 @@ public interface PreviewDataInfoMapper {
     List<PreviewDataInfo> findAllByZoningCode(String zoningCode);
 
     @SelectProvider(type = PreviewDataInfoSql.class, method = "findFamilyZoning")
-    @Results({
+   /* @Results({
             @Result(column = "XZQH_DM", property = "zoningCode", javaType = String.class),
             @Result(column = "XZQH_JC", property = "divisionAbbreviation", javaType = String.class),
             @Result(column = "XZQH_MC", property = "divisionName", javaType = String.class)
-    })
+    })*/
+    @ResultMap(value = "findAll")
     List<PreviewDataInfo> findFamilyZoning(String levelCode, String columns);
 
     /**

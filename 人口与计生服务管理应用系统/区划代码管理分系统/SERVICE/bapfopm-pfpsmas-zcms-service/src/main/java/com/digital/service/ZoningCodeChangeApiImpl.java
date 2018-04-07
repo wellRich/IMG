@@ -226,6 +226,8 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             info.setCreatorDate(new Date());
             info.setGroupSeq(groupSeq);
             info.buildAssigningCode();
+            info.buildTargetLevelCode();
+            info.buildOriginalLevelCode();
             System.out.println("addDetails.info---------> " + JSONHelper.toJSON(info));
 
             //2.1 名称变更，直接插入变更对照明细表、区划预览表以及变更明细历史记录
@@ -256,11 +258,10 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * 单位隶属关系是个问题，不明白是个什么东西
      */
     public void saveDetail(ChangeInfo info){
-
-       /* //1 插入明细变更对照表
+        log.info("saveDetail-assigningCode----> " + info.getAssigningCode());
+        //1 插入明细变更对照表
         ZCCDetail detail = info.toDetail();
         zccDetailMapper.insert(detail);
-        System.out.println("saveDetail().key---------------> " + detail.getSeq());
 
         //2 逻辑校验
         commonService.logicVerifyZCChange(info);
@@ -280,7 +281,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         param.put("currentName", info.getTargetZoningName());
         param.put("creatorCode", info.getCreatorCode());
         param.put("createDate", info.getCreatorDate());
-        historicalZoningChangeMapper.insert(param);*/
+        historicalZoningChangeMapper.insert(param);
 
     }
 
