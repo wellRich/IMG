@@ -190,7 +190,7 @@ public class CommonService {
             //目标父级区划代码
             String currentSuperCode = Common.getSuperiorZoningCode(currentZoningCode);
 
-            PreviewDataInfo currentSuperInfo = previewDataInfoMapper.findOneByZoningCode(currentSuperCode);
+            PreviewDataInfo currentSuperInfo = previewDataInfoMapper.findValidOneByZoningCode(currentSuperCode);
             log.info("savePreviewData.previewDataInfo-----> " + JSONHelper.toJSON(currentSuperInfo, PreviewDataInfo.class));
             addPreviewData(info, currentSuperInfo.getSubordinateRelations(), currentSuperInfo.getAssigningCode(), currentSuperInfo.getDivisionFullName(), new Date());
         }
@@ -213,20 +213,32 @@ public class CommonService {
                  * 原子孙级区划全称 = 原上级区划全称 + 原区划名称
                  * 现子孙级区划全称 = 现上级区划全称 + 原区划名称
                  */
-                PreviewDataInfo originalPreview = previewDataInfoMapper.findOneByZoningCode(info.getOriginalZoningCode());
+                PreviewDataInfo originalPreview = previewDataInfoMapper.findValidOneByZoningCode(info.getOriginalZoningCode());
 
                 //原区划全称
                 String originalFullName = originalPreview.getDivisionFullName();
 
                 //目标父级区划代码
                 String currentSuperCode = Common.getSuperiorZoningCode(currentZoningCode);
-                PreviewDataInfo currentSuperInfo = previewDataInfoMapper.findOneByZoningCode(currentSuperCode);
+                PreviewDataInfo currentSuperInfo = previewDataInfoMapper.findValidOneByZoningCode(currentSuperCode);
 
                 //现区划全称
                 String currentFullName = currentSuperInfo.getDivisionFullName() + info.getTargetZoningName();
+
+                //原区划代码
+                String originalZoningCode = info.getOriginalZoningCode();
+
+                //原区划级别代码
+                String originalLevelCode = Common.getLevelCode(info.getOriginalZoningCode());
+
+
+
+                //目标区划级别代码
+                String targetZoningCode = info.getTargetLevelCode();
+
                 log.info("originalFullName--------> " + originalFullName + ", currentFullName-------> " + currentFullName);
                 for (int i = 0; i < size; i++) {
-                    updatePreviewData(changeInfoList.get(i), info.getAssigningCode(), originalFullName, currentFullName);
+                    updatePreviewData(changeInfoList.get(i), originalZoningCode, targetZoningCode, originalFullName, currentFullName);
                 }
             }
 
@@ -236,19 +248,23 @@ public class CommonService {
 
     /**
      * 更新区划数据
+     * 使用场景：区划变更类型为change或者move
      * @param info 变更信息
      * @param originalFullName 原始行政区划上级名称
      * @param currentFullName 目标行政区划上级名称
      */
-    public void updatePreviewData(ChangeInfo info, String assigningCode, String  originalFullName, String currentFullName) {
+    public void updatePreviewData(ChangeInfo info, String originalLevelCode, String targetLevelCode, String  originalFullName, String currentFullName) {
         String originZoningCode = info.getOriginalZoningCode();
         String originalZoningName = info.getOriginalZoningName();
         String targetZoningCode = info.getTargetZoningCode();
         String targetZoningName = info.getTargetZoningName();
         String newDate = StringUtil.formatDateTime(new Date());
         PreviewDataInfo previewDataInfo = previewDataInfoMapper.findValidOneByZoningCode(originZoningCode);
-        System.out.println("updatePreviewData.previewDataInfo--> " + previewDataInfo.getDivisionFullName());
+
+        //变更后的区划全称
         String fullName = previewDataInfo.getDivisionFullName().replace(originalFullName, currentFullName);
+
+
         log.info("updatePreviewData.变更后的fullName---------> " + fullName);
 
         //仅仅是名称变更
@@ -275,8 +291,11 @@ public class CommonService {
             String oldLevelCode = previewDataInfo.getLevelCode();
             String newLevelCode = targetZoningCode.substring(0, oldLevelCode.length());
 
+            //变更后的区划代码
+            String targetCode = targetZoningCode.replace(originalLevelCode, targetLevelCode);
+            log.info("updatePreviewData.targetCode---------> " + targetCode);
             //区划代码
-            pf.setZoningCode(targetZoningCode);
+            pf.setZoningCode(targetCode);
 
             //区划名称
             pf.setDivisionName(targetZoningName);
@@ -449,7 +468,7 @@ public class CommonService {
             String originalLevelCode = Common.getLevelCode(originalZoningCode);
 
             //现区化级别代码
-            String currentLevelCode = info.getLevelCode();
+            String currentLevelCode = info.getTargetLevelCode();
 
             List<PreviewDataInfo> previewDataInfos = findFamilyZoning(originalLevelCode);
             log.info("accountChangeOrders.previewDataInfos.size----> " + previewDataInfos.size());

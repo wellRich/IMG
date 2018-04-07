@@ -1,20 +1,16 @@
 package com.digital.service;
 
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import com.google.common.collect.ImmutableMap;
@@ -321,7 +317,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                     for(int j = 0; j < size; j ++){
                         ChangeInfo info = changes[j];
                         if(j == size - 1){
-                            String rank = end.getLevelCode();
+                            String rank = end.getTargetLevelCode();
                             int length = rank.length();
                             if(count < 10){
                                 if (length <= 6 && length >= 2) {

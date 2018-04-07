@@ -24,7 +24,8 @@ public class ChangeInfo implements Cloneable{
     private String targetZoningName;//目标区划名称
     private String changeType;//变更类型代码
     private String assigningCode;//变更区划的级次代码（原和目标都是同级）
-    private String levelCode;//级别代码
+    private String targetLevelCode;//目标区划级别代码
+    private String originalLevelCode;//原区划级别代码
     private String organizationCode;//权限机构代码
     private String creatorCode;//录入人代码
     private Date creatorDate;//创建时间
@@ -179,7 +180,7 @@ public class ChangeInfo implements Cloneable{
         this.changeType = changeType;
     }
 
-    //获取级次代码
+    //获取目标的级次代码
     public String getAssigningCode() {
         if(this.assigningCode != null){
             return this.assigningCode;
@@ -189,22 +190,41 @@ public class ChangeInfo implements Cloneable{
         }
     }
 
+
     public void setAssigningCode(String assigningCode) {
         this.assigningCode = assigningCode;
     }
 
-    //获取级别代码
-    public String getLevelCode() {
-        if(this.levelCode != null){
-            return this.levelCode;
+    //获取目标区划的级别代码
+    public String getTargetLevelCode() {
+        if(this.targetLevelCode != null){
+            return this.targetLevelCode;
         }else {
-            setLevelCode(Common.getLevelCode(this.targetZoningCode));
-            return this.levelCode;
+            setTargetLevelCode(Common.getLevelCode(this.targetZoningCode));
+            return this.targetLevelCode;
         }
     }
 
-    public void setLevelCode(String levelCode) {
-        this.levelCode = levelCode;
+    public void setTargetLevelCode(String targetLevelCode) {
+        this.targetLevelCode = targetLevelCode;
+    }
+
+    //获取原区划的级别代码
+    public String getOriginalLevelCode() {
+        if(originalLevelCode != null){
+            return originalLevelCode;
+        }else {
+            if(changeType.equals(Common.ADD)){
+                return originalLevelCode;
+            }else {
+                setOriginalLevelCode(Common.getLevelCode(originalZoningCode));
+                return originalLevelCode;
+            }
+        }
+    }
+
+    public void setOriginalLevelCode(String originalLevelCode) {
+        this.originalLevelCode = originalLevelCode;
     }
 
     public String getOrganizationCode() {
