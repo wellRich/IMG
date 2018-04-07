@@ -182,13 +182,17 @@ public class CommonService {
      */
     public void savePreviewData(ChangeInfo info){
         String changeType = info.getChangeType();
+
         String currentZoningCode = info.getTargetZoningCode();
 
         if(changeType.equals(Common.ADD)){
-            String superCode = Common.getSuperiorZoningCode(currentZoningCode);
-            PreviewDataInfo previewDataInfo = previewDataInfoMapper.findOneByZoningCode(superCode);
-            log.info("savePreviewData.previewDataInfo-----> " + JSONHelper.toJSON(previewDataInfo, PreviewDataInfo.class));
-            addPreviewData(info, previewDataInfo.getSubordinateRelations(), previewDataInfo.getAssigningCode(), previewDataInfo.getDivisionFullName(), new Date());
+
+            //目标父级区划代码
+            String currentSuperCode = Common.getSuperiorZoningCode(currentZoningCode);
+
+            PreviewDataInfo currentSuperInfo = previewDataInfoMapper.findOneByZoningCode(currentSuperCode);
+            log.info("savePreviewData.previewDataInfo-----> " + JSONHelper.toJSON(currentSuperInfo, PreviewDataInfo.class));
+            addPreviewData(info, currentSuperInfo.getSubordinateRelations(), currentSuperInfo.getAssigningCode(), currentSuperInfo.getDivisionFullName(), new Date());
         }
 
         if(changeType.equals(Common.MERGE)) {
@@ -197,23 +201,32 @@ public class CommonService {
 
         if(changeType.equals(Common.CHANGE) || changeType.equals(Common.MOVE)) {
 
+            //获取自身及子孙区划
             List<ChangeInfo> changeInfoList = accountChangeOrders(info);
             int size = changeInfoList.size();
             if(size > 0){
-                ChangeInfo changeInfo = changeInfoList.get(size - 1);
-                String superTargetZoningCode = changeInfo.getTargetZoningCode();
-                String superTargetZoningName = changeInfo.getTargetZoningName();
-                String superOriginalZoningCode = changeInfo.getOriginalZoningCode();
-                String superOriginalZoningName = changeInfo.getOriginalZoningName();
-                if(changeType.equals(Common.MOVE)){
-                    //
-                    superTargetZoningName = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getTargetZoningCode())).getDivisionName();
-                    //
-                    superOriginalZoningName = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getOriginalZoningCode())).getDivisionName();
-                }
 
-                for (int m = 0; m < size; m++) {
-                    updatePreviewData(changeInfoList.get(m), superOriginalZoningName, superTargetZoningName);
+                /*
+                 * 获取变动的区划名称
+                 * 原区划全称 = 原上级区划全称 + 原区划名称
+                 * 现区划全称 = 现上级区划全称 + 现区划名称
+                 * 原子孙级区划全称 = 原上级区划全称 + 原区划名称
+                 * 现子孙级区划全称 = 现上级区划全称 + 原区划名称
+                 */
+                PreviewDataInfo originalPreview = previewDataInfoMapper.findOneByZoningCode(info.getOriginalZoningCode());
+
+                //原区划全称
+                String originalFullName = originalPreview.getDivisionFullName();
+
+                //目标父级区划代码
+                String currentSuperCode = Common.getSuperiorZoningCode(currentZoningCode);
+                PreviewDataInfo currentSuperInfo = previewDataInfoMapper.findOneByZoningCode(currentSuperCode);
+
+                //现区划全称
+                String currentFullName = currentSuperInfo.getDivisionFullName() + info.getTargetZoningName();
+                log.info("originalFullName--------> " + originalFullName + ", currentFullName-------> " + currentFullName);
+                for (int i = 0; i < size; i++) {
+                    updatePreviewData(changeInfoList.get(i), info.getAssigningCode(), originalFullName, currentFullName);
                 }
             }
 
@@ -224,17 +237,19 @@ public class CommonService {
     /**
      * 更新区划数据
      * @param info 变更信息
-     * @param superOriginName 原始行政区划上级名称
-     * @param superTargetName 目标行政区划上级名称
+     * @param originalFullName 原始行政区划上级名称
+     * @param currentFullName 目标行政区划上级名称
      */
-    public void updatePreviewData(ChangeInfo info, String superOriginName, String superTargetName) {
+    public void updatePreviewData(ChangeInfo info, String assigningCode, String  originalFullName, String currentFullName) {
         String originZoningCode = info.getOriginalZoningCode();
+        String originalZoningName = info.getOriginalZoningName();
         String targetZoningCode = info.getTargetZoningCode();
         String targetZoningName = info.getTargetZoningName();
         String newDate = StringUtil.formatDateTime(new Date());
         PreviewDataInfo previewDataInfo = previewDataInfoMapper.findValidOneByZoningCode(originZoningCode);
-        System.out.println("updatePreviewData.previewDataInfo--> " + JSONHelper.toJSON(previewDataInfo));
-        String fullName = previewDataInfo.getDivisionFullName();
+        System.out.println("updatePreviewData.previewDataInfo--> " + previewDataInfo.getDivisionFullName());
+        String fullName = previewDataInfo.getDivisionFullName().replace(originalFullName, currentFullName);
+        log.info("updatePreviewData.变更后的fullName---------> " + fullName);
 
         //仅仅是名称变更
         if (Common.hasSameZoningCode(originZoningCode, targetZoningCode)) {
@@ -242,7 +257,7 @@ public class CommonService {
             previewDataInfo.setDivisionAbbreviation(targetZoningName);
             previewDataInfo.setLastUpdate(newDate);
             previewDataInfo.setUpdaterCode(info.getCreatorCode());
-            previewDataInfo.setDivisionFullName(fullName.replace(superOriginName, superTargetName));
+            previewDataInfo.setDivisionFullName(fullName);
             previewDataInfoMapper.save(previewDataInfo);
         } else {
 
@@ -270,7 +285,7 @@ public class CommonService {
             pf.setDivisionAbbreviation(targetZoningName);
 
             //区划全称
-            pf.setDivisionFullName(fullName.replace(superOriginName, superTargetName));
+            pf.setDivisionFullName(fullName.replace(originalZoningName, targetZoningName));
 
             //级别代码
             pf.setLevelCode(newLevelCode);
@@ -414,7 +429,7 @@ public class CommonService {
 
     /**
      * 汇集变更信息
-     * ，下级联动变更
+     * 取得自身与子孙区划
      * @param info 变更信息
      * @return
      */

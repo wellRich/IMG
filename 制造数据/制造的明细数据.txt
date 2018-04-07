@@ -16,7 +16,6 @@ details:
 
 [
     {
-        "requestSeq": "1",
         "level": "5",
         "ringFlag": "0",
         "originalZoningCode": "",
@@ -30,7 +29,6 @@ details:
         "organizationCode": "9527"
     },
     {
-        "requestSeq": "1",
         "level": "5",
         "ringFlag": "0",
         "originalZoningCode": "",
@@ -44,7 +42,6 @@ details:
         "organizationCode": "9527"
     },
     {
-        "requestSeq": "1",
         "level": "5",
         "ringFlag": "0",
         "originalZoningCode": "",
@@ -59,8 +56,55 @@ details:
     }
 ]
 
+增加子级区划：
 
-修改
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "天堂有了下级区划",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+
+details:
+[
+    {
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "",
+        "originalZoningName": "",
+        "changeType": "11",
+        "targetZoningCode": "370102006700100",
+        "targetZoningName": "欢乐谷",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "1",
+        "organizationCode": "9527"
+    },
+    {
+        "level": "5",
+        "ringFlag": "0",
+        "originalZoningCode": "",
+        "originalZoningName": "",
+        "changeType": "11",
+        "targetZoningCode": "370102006700200",
+        "targetZoningName": "失落园",
+        "status": "10",
+        "notes": "xxxx备注",
+        "creatorCode": "1",
+        "organizationCode": "9527"
+    }
+]
+
+变更
+
+名称变更
 
 group:
 
@@ -79,7 +123,6 @@ details:
 
 [
     {
-        "requestSeq": "1",
         "level": "5",
         "ringFlag": "0",
         "originalZoningCode": "370102006700000",
@@ -94,6 +137,8 @@ details:
     }
 ]
 
+
+代码变更
 group:
 
 {
@@ -110,7 +155,6 @@ group:
 details:
 
 [{
-	"requestSeq": "1",
 	"level": "5",
 	"ringFlag": "0",
 	"originalZoningCode": "370102006701000",
@@ -123,3 +167,5 @@ details:
 	"creatorCode": "100",
 	"organizationCode": "9527"
 }]
+
+

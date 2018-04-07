@@ -89,15 +89,15 @@ public interface PreviewDataInfoMapper {
      * @param zoningCode 区划代码
      * @return PreviewDataInfo 单条区划预览数据
      */
-    @Select("SELECT * FROM DM_XZQH_YLSJ WHERE XZQH_DM =#{zoningCode}")
-   /* @Results({
+    @Select("SELECT XZQH_DM, XZQH_MC, XZQH_QC, XZQH_JC, JCDM, JBDM FROM DM_XZQH_YLSJ WHERE XZQH_DM =#{zoningCode}")
+    @Results(id = "findOne", value = {
             @Result(column = "XZQH_DM", property = "zoningCode", javaType = String.class),
             @Result(column = "XZQH_MC", property = "divisionName", javaType = String.class),
             @Result(column = "XZQH_JC", property = "divisionAbbreviation", javaType = String.class),
+            @Result(column = "XZQH_QC", property = "divisionFullName", javaType = String.class),
             @Result(column = "JCDM", property = "assigningCode", javaType = String.class),
-            @Result(column = "DWLSGX_DM", property = "subordinateRelations", javaType = String.class)
-    })*/
-    @ResultMap(value = "findAll")
+            @Result(column = "JBDM", property = "levelCode", javaType = String.class)
+    })
     PreviewDataInfo findOneByZoningCode(@Param(value = "zoningCode") String zoningCode);
 
 
