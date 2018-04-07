@@ -1,4 +1,19 @@
 新增
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "新增几个区划",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+details:
+
 [
     {
         "requestSeq": "1",
@@ -47,6 +62,21 @@
 
 修改
 
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "天堂也要换个名了",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+details:
+
 [
     {
         "requestSeq": "1",
@@ -61,19 +91,35 @@
         "notes": "xxxx备注",
         "creatorCode": "100",
         "organizationCode": "9527"
-    },
-    {
-        "requestSeq": "1",
-        "level": "5",
-        "ringFlag": "0",
-        "originalZoningCode": "370102006701000",
-        "originalZoningName": "英灵殿",
-        "changeType": "21",
-        "targetZoningCode": "370102006801000",
-        "targetZoningName": "英灵殿",
-        "status": "10",
-        "notes": "xxxx备注",
-        "creatorCode": "100",
-        "organizationCode": "9527"
     }
 ]
+
+group:
+
+{
+    "seq": null,
+    "serialNumber": null,
+    "name": "英灵殿的区划代码换换",
+    "creatorCode": "9527",
+    "createDate": null,
+    "creatorDeptCode": "1000",
+    "requestSeq": 1000,
+    "orderNum": null
+}
+
+details:
+
+[{
+	"requestSeq": "1",
+	"level": "5",
+	"ringFlag": "0",
+	"originalZoningCode": "370102006701000",
+	"originalZoningName": "英灵殿",
+	"changeType": "21",
+	"targetZoningCode": "370102006801000",
+	"targetZoningName": "英灵殿",
+	"status": "10",
+	"notes": "xxxx备注",
+	"creatorCode": "100",
+	"organizationCode": "9527"
+}]

@@ -1016,111 +1016,114 @@
     <index id="244" parent="212" name="XZQH_DM">
       <ColNames>XZQH_DM</ColNames>
     </index>
-    <key id="245" parent="212" name="PRIMARY">
+    <index id="245" parent="212" name="dm_xzqh_ylsj_JBDM_index">
+      <ColNames>JBDM</ColNames>
+    </index>
+    <key id="246" parent="212" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>XZQH_DM</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="246" parent="213" name="KEY">
+    <column id="247" parent="213" name="KEY">
       <Position>1</Position>
       <DataType>varchar(23)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="247" parent="213" name="ID">
+    <column id="248" parent="213" name="ID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="213" name="XZQH_DM">
+    <column id="249" parent="213" name="XZQH_DM">
       <Position>3</Position>
       <DataType>varchar(15)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="213" name="JCDM">
+    <column id="250" parent="213" name="JCDM">
       <Position>4</Position>
       <DataType>varchar(1)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="213" name="JBDM">
+    <column id="251" parent="213" name="JBDM">
       <Position>5</Position>
       <DataType>varchar(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="251" parent="213" name="SJ_XZQH_DM">
+    <column id="252" parent="213" name="SJ_XZQH_DM">
       <Position>6</Position>
       <DataType>varchar(15)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="252" parent="213" name="QX_JGDM">
+    <column id="253" parent="213" name="QX_JGDM">
       <Position>7</Position>
       <DataType>varchar(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="253" parent="213" name="LRR_DM">
+    <column id="254" parent="213" name="LRR_DM">
       <Position>8</Position>
       <DataType>varchar(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="254" parent="213" name="LRSJ">
+    <column id="255" parent="213" name="LRSJ">
       <Position>9</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="255" parent="213" name="XZQHLX_DM">
+    <column id="256" parent="213" name="XZQHLX_DM">
       <Position>10</Position>
       <DataType>varchar(2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="256" parent="213" name="XZQH_SHENG">
+    <column id="257" parent="213" name="XZQH_SHENG">
       <Position>11</Position>
       <DataType>varchar(80)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="257" parent="213" name="XZQH_SHI">
+    <column id="258" parent="213" name="XZQH_SHI">
       <Position>12</Position>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="258" parent="213" name="XZQH_XIAN">
+    <column id="259" parent="213" name="XZQH_XIAN">
       <Position>13</Position>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="259" parent="213" name="XZQH_XIANG">
+    <column id="260" parent="213" name="XZQH_XIANG">
       <Position>14</Position>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="260" parent="213" name="XZQH_CUN">
+    <column id="261" parent="213" name="XZQH_CUN">
       <Position>15</Position>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="261" parent="213" name="XZQH_ZU">
+    <column id="262" parent="213" name="XZQH_ZU">
       <Position>16</Position>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="262" parent="213" name="INDEX_KEY">
+    <index id="263" parent="213" name="INDEX_KEY">
       <ColNames>KEY
 ID</ColNames>
     </index>
-    <index id="263" parent="213" name="INDEX_XZQHDM">
+    <index id="264" parent="213" name="INDEX_XZQHDM">
       <ColNames>XZQH_DM</ColNames>
     </index>
-    <index id="264" parent="213" name="INDEX_SJXZDM">
+    <index id="265" parent="213" name="INDEX_SJXZDM">
       <ColNames>SJ_XZQH_DM</ColNames>
     </index>
-    <column id="265" parent="214" name="GROUPXH">
+    <column id="266" parent="214" name="GROUPXH">
       <Position>1</Position>
       <Comment>组序号</Comment>
       <DataType>int(20)|0</DataType>
@@ -1128,26 +1131,26 @@ ID</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="266" parent="214" name="BH">
+    <column id="267" parent="214" name="BH">
       <Position>2</Position>
       <Comment>编号</Comment>
       <DataType>int(17)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="267" parent="214" name="GROUPMC">
+    <column id="268" parent="214" name="GROUPMC">
       <Position>3</Position>
       <Comment>组名称（调整说明）</Comment>
       <DataType>varchar(100)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="268" parent="214" name="LRR_DM">
+    <column id="269" parent="214" name="LRR_DM">
       <Position>4</Position>
       <Comment>录入人代码&#xd;
 	</Comment>
       <DataType>char(11)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="269" parent="214" name="LRSJ">
+    <column id="270" parent="214" name="LRSJ">
       <Position>5</Position>
       <Comment>录入时间&#xd;
 	</Comment>
@@ -1155,32 +1158,32 @@ ID</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="270" parent="214" name="LRJG_DM">
+    <column id="271" parent="214" name="LRJG_DM">
       <Position>6</Position>
       <Comment>录入机构代码</Comment>
       <DataType>char(15)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="271" parent="214" name="SQDXH">
+    <column id="272" parent="214" name="SQDXH">
       <Position>7</Position>
       <Comment>申请单序号</Comment>
       <DataType>int(20)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="272" parent="214" name="PXH">
+    <column id="273" parent="214" name="PXH">
       <Position>8</Position>
       <Comment>排序号&#xd;
 	</Comment>
       <DataType>varchar(30)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="273" parent="214" name="PRIMARY">
+    <key id="274" parent="214" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>GROUPXH</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="274" parent="215" name="MXBXH">
+    <column id="275" parent="215" name="MXBXH">
       <Position>1</Position>
       <Comment>明细表序号&#xd;
 	</Comment>
@@ -1189,68 +1192,68 @@ ID</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="215" name="GROUPXH">
+    <column id="276" parent="215" name="GROUPXH">
       <Position>2</Position>
       <Comment>组序号</Comment>
       <DataType>int(20)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="215" name="YSXZQH_DM">
+    <column id="277" parent="215" name="YSXZQH_DM">
       <Position>3</Position>
       <Comment>原区划代码</Comment>
       <DataType>char(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="215" name="YSXZQH_MC">
+    <column id="278" parent="215" name="YSXZQH_MC">
       <Position>4</Position>
       <Comment>原区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="215" name="BGLX_DM">
+    <column id="279" parent="215" name="BGLX_DM">
       <Position>5</Position>
       <Comment>变更类型代码</Comment>
       <DataType>char(2)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="215" name="MBXZQH_DM">
+    <column id="280" parent="215" name="MBXZQH_DM">
       <Position>6</Position>
       <Comment>现区划代码</Comment>
       <DataType>char(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="215" name="MBXZQH_MC">
+    <column id="281" parent="215" name="MBXZQH_MC">
       <Position>7</Position>
       <Comment>现区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="215" name="CLZT_DM">
+    <column id="282" parent="215" name="CLZT_DM">
       <Position>8</Position>
       <Comment>处理状态代码</Comment>
       <DataType>char(2)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="215" name="CLJG">
+    <column id="283" parent="215" name="CLJG">
       <Position>9</Position>
       <Comment>处理结果</Comment>
       <DataType>varchar(2000)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="215" name="BZ">
+    <column id="284" parent="215" name="BZ">
       <Position>10</Position>
       <Comment>备注</Comment>
       <DataType>varchar(2000)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="215" name="LRR_DM">
+    <column id="285" parent="215" name="LRR_DM">
       <Position>11</Position>
       <Comment>录入人代码&#xd;
 	</Comment>
       <DataType>char(11)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="215" name="LRSJ">
+    <column id="286" parent="215" name="LRSJ">
       <Position>12</Position>
       <Comment>录入时间&#xd;
 	</Comment>
@@ -1258,75 +1261,75 @@ ID</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="215" name="LRJG_DM">
+    <column id="287" parent="215" name="LRJG_DM">
       <Position>13</Position>
       <Comment>录入机构代码</Comment>
       <DataType>char(15)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="215" name="XGR_DM">
+    <column id="288" parent="215" name="XGR_DM">
       <Position>14</Position>
       <Comment>修改人代码</Comment>
       <DataType>char(11)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="215" name="XGSJ">
+    <column id="289" parent="215" name="XGSJ">
       <Position>15</Position>
       <Comment>修改人代码</Comment>
       <DataType>date|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="215" name="XGJG_DM">
+    <column id="290" parent="215" name="XGJG_DM">
       <Position>16</Position>
       <Comment>修改机构代码</Comment>
       <DataType>char(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="215" name="PXH">
+    <column id="291" parent="215" name="PXH">
       <Position>17</Position>
       <Comment>排序号</Comment>
       <DataType>int(5)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="215" name="RINGFLAG">
+    <column id="292" parent="215" name="RINGFLAG">
       <Position>18</Position>
       <Comment>环状数据标志</Comment>
       <DataType>char(1)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="292" parent="215" name="PRIMARY">
+    <key id="293" parent="215" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>MXBXH</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="293" parent="216" name="MXBXH">
+    <column id="294" parent="216" name="MXBXH">
       <Position>1</Position>
       <Comment>明细表序号</Comment>
       <DataType>int(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="216" name="GROUPXH">
+    <column id="295" parent="216" name="GROUPXH">
       <Position>2</Position>
       <Comment>组序号</Comment>
       <DataType>int(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="216" name="YSXZQH_DM">
+    <column id="296" parent="216" name="YSXZQH_DM">
       <Position>3</Position>
       <Comment>原区划代码</Comment>
       <DataType>char(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="216" name="YSXZQH_MC">
+    <column id="297" parent="216" name="YSXZQH_MC">
       <Position>4</Position>
       <Comment>原区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="216" name="BGLX_DM">
+    <column id="298" parent="216" name="BGLX_DM">
       <Position>5</Position>
       <Comment>变更类型代码&#xd;
 	</Comment>
@@ -1334,33 +1337,38 @@ ID</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="216" name="MBXZQH_DM">
+    <column id="299" parent="216" name="MBXZQH_DM">
       <Position>6</Position>
       <Comment>现区划代码</Comment>
       <DataType>char(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="216" name="MBXZQH_MC">
+    <column id="300" parent="216" name="MBXZQH_MC">
       <Position>7</Position>
       <Comment>现区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="216" name="LRR_DM">
+    <column id="301" parent="216" name="LRR_DM">
       <Position>8</Position>
       <Comment>录入人代码</Comment>
       <DataType>char(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="216" name="LRSJ">
+    <column id="302" parent="216" name="LRSJ">
       <Position>9</Position>
       <Comment>录入时间</Comment>
       <DataType>varchar(25)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="217" name="SQDXH">
+    <key id="303" parent="216" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>MXBXH</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="304" parent="217" name="SQDXH">
       <Position>1</Position>
       <Comment>申请单序号</Comment>
       <DataType>int(11)|0</DataType>
@@ -1368,41 +1376,41 @@ ID</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="217" name="SQDMC">
+    <column id="305" parent="217" name="SQDMC">
       <Position>2</Position>
       <Comment>申请单名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="304" parent="217" name="SQDZT_DM">
+    <column id="306" parent="217" name="SQDZT_DM">
       <Position>3</Position>
       <Comment>申请单状态代码</Comment>
       <DataType>char(2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="217" name="SBXZQH_DM">
+    <column id="307" parent="217" name="SBXZQH_DM">
       <Position>4</Position>
       <Comment>上报行政区划代码</Comment>
       <DataType>char(6)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="217" name="BZ">
+    <column id="308" parent="217" name="BZ">
       <Position>5</Position>
       <Comment>备注</Comment>
       <DataType>varchar(1000)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="217" name="LRR_DM">
+    <column id="309" parent="217" name="LRR_DM">
       <Position>6</Position>
       <Comment>录入人代码&#xd;
 	</Comment>
       <DataType>char(11)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="217" name="LRSJ">
+    <column id="310" parent="217" name="LRSJ">
       <Position>7</Position>
       <Comment>录入时间&#xd;
 	</Comment>
@@ -1410,49 +1418,49 @@ ID</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="217" name="LRJG_DM">
+    <column id="311" parent="217" name="LRJG_DM">
       <Position>8</Position>
       <Comment>录入机构代码</Comment>
       <DataType>char(15)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="310" parent="217" name="XGR_DM">
+    <column id="312" parent="217" name="XGR_DM">
       <Position>9</Position>
       <Comment>修改人代码</Comment>
       <DataType>char(11)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="217" name="XGSJ">
+    <column id="313" parent="217" name="XGSJ">
       <Position>10</Position>
       <Comment>修改人代码</Comment>
       <DataType>date|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="217" name="XGJG_DM">
+    <column id="314" parent="217" name="XGJG_DM">
       <Position>11</Position>
       <Comment>修改机构代码</Comment>
       <DataType>char(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="313" parent="217" name="SPYJ">
+    <column id="315" parent="217" name="SPYJ">
       <Position>12</Position>
       <Comment>审批意见</Comment>
       <DataType>varchar(1000)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="314" parent="217" name="SPR_DM">
+    <column id="316" parent="217" name="SPR_DM">
       <Position>13</Position>
       <Comment>审批人代码</Comment>
       <DataType>char(11)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="315" parent="217" name="PRIMARY">
+    <key id="317" parent="217" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SQDXH</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="316" parent="218" name="DZBXH">
+    <column id="318" parent="218" name="DZBXH">
       <Position>1</Position>
       <Comment>对照表序号</Comment>
       <DataType>int(20)|0</DataType>
@@ -1460,134 +1468,134 @@ ID</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="317" parent="218" name="ZIPXH">
+    <column id="319" parent="218" name="ZIPXH">
       <Position>2</Position>
       <Comment>上传文件序号</Comment>
       <DataType>int(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="318" parent="218" name="YSXZQH_DM">
+    <column id="320" parent="218" name="YSXZQH_DM">
       <Position>3</Position>
       <Comment>原区划代码</Comment>
       <DataType>char(25)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="319" parent="218" name="YSXZQH_MC">
+    <column id="321" parent="218" name="YSXZQH_MC">
       <Position>4</Position>
       <Comment>原区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="320" parent="218" name="BGLX_DM">
+    <column id="322" parent="218" name="BGLX_DM">
       <Position>5</Position>
       <Comment>变更类型代码</Comment>
       <DataType>char(2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="321" parent="218" name="MBXZQH_DM">
+    <column id="323" parent="218" name="MBXZQH_DM">
       <Position>6</Position>
       <Comment>现区划代码</Comment>
       <DataType>char(25)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="322" parent="218" name="MBXZQH_MC">
+    <column id="324" parent="218" name="MBXZQH_MC">
       <Position>7</Position>
       <Comment>现区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="323" parent="218" name="CWSJBZ">
+    <column id="325" parent="218" name="CWSJBZ">
       <Position>8</Position>
       <Comment>错误数据标志</Comment>
       <DataType>char(1)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="324" parent="218" name="BZ">
+    <column id="326" parent="218" name="BZ">
       <Position>9</Position>
       <Comment>备注</Comment>
       <DataType>varchar(1000)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="325" parent="218" name="LRR_DM">
+    <column id="327" parent="218" name="LRR_DM">
       <Position>10</Position>
       <Comment>录入人代码</Comment>
       <DataType>char(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="326" parent="218" name="LRSJ">
+    <column id="328" parent="218" name="LRSJ">
       <Position>11</Position>
       <Comment>录入时间</Comment>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="327" parent="218" name="LRJG_DM">
+    <column id="329" parent="218" name="LRJG_DM">
       <Position>12</Position>
       <Comment>录入机构代码</Comment>
       <DataType>char(25)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="328" parent="218" name="CWXX">
+    <column id="330" parent="218" name="CWXX">
       <Position>13</Position>
       <Comment>错误信息</Comment>
       <DataType>varchar(2000)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="329" parent="218" name="BH">
+    <column id="331" parent="218" name="BH">
       <Position>14</Position>
       <Comment>组编号</Comment>
       <DataType>bigint(20)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="330" parent="218" name="GROUPMC">
+    <column id="332" parent="218" name="GROUPMC">
       <Position>15</Position>
       <Comment>组名称</Comment>
       <DataType>varchar(100)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="331" parent="218" name="PXH">
+    <column id="333" parent="218" name="PXH">
       <Position>16</Position>
       <Comment>排序号</Comment>
       <DataType>int(5)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="332" parent="218" name="PRIMARY">
+    <key id="334" parent="218" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>DZBXH</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="333" parent="219" name="ZIPXH">
+    <column id="335" parent="219" name="ZIPXH">
       <Position>1</Position>
       <Comment>上传文件序号</Comment>
       <DataType>int(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="334" parent="219" name="XZQH_DM">
+    <column id="336" parent="219" name="XZQH_DM">
       <Position>2</Position>
       <Comment>区划代码</Comment>
       <DataType>char(25)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="219" name="XZQH_MC">
+    <column id="337" parent="219" name="XZQH_MC">
       <Position>3</Position>
       <Comment>区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="336" parent="219" name="DRSJ">
+    <column id="338" parent="219" name="DRSJ">
       <Position>4</Position>
       <Comment>导入时间</Comment>
       <DataType>datetime|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="337" parent="220" name="ZIPXH">
+    <column id="339" parent="220" name="ZIPXH">
       <Position>1</Position>
       <Comment>文件序号</Comment>
       <DataType>int(20)|0</DataType>
@@ -1595,158 +1603,158 @@ ID</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="338" parent="220" name="XZQH_DM">
+    <column id="340" parent="220" name="XZQH_DM">
       <Position>2</Position>
       <Comment>区划代码（解析文件的6位区划代码）</Comment>
       <DataType>varchar(6)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="339" parent="220" name="RQ">
+    <column id="341" parent="220" name="RQ">
       <Position>3</Position>
       <Comment>日期(解析文件的8位日期代码YYYYMMDD)</Comment>
       <DataType>varchar(8)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="340" parent="220" name="JZBGZT_DM">
+    <column id="342" parent="220" name="JZBGZT_DM">
       <Position>4</Position>
       <Comment>集中变更状态代码</Comment>
       <DataType>varchar(2)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="341" parent="220" name="BZ">
+    <column id="343" parent="220" name="BZ">
       <Position>5</Position>
       <Comment>备注(备注,主要写入一些逻辑校验失败的异常信息)</Comment>
       <DataType>varchar(2000)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="342" parent="220" name="BGZL_DM">
+    <column id="344" parent="220" name="BGZL_DM">
       <Position>6</Position>
       <Comment>变更指令代码(变更指令1:导入临时表 2:逻辑校验 3:生成申请单)</Comment>
       <DataType>varchar(1)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="343" parent="220" name="SQDXH">
+    <column id="345" parent="220" name="SQDXH">
       <Position>7</Position>
       <Comment>对应的申请单序号</Comment>
       <DataType>int(20)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="344" parent="220" name="WJM">
+    <column id="346" parent="220" name="WJM">
       <Position>8</Position>
       <Comment>文件名</Comment>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="345" parent="220" name="WJLJ">
+    <column id="347" parent="220" name="WJLJ">
       <Position>9</Position>
       <Comment>文件路径</Comment>
       <DataType>varchar(1000)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="346" parent="220" name="LRR_DM">
+    <column id="348" parent="220" name="LRR_DM">
       <Position>10</Position>
       <Comment>录入人代码</Comment>
       <DataType>varchar(11)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="347" parent="220" name="LRSJ">
+    <column id="349" parent="220" name="LRSJ">
       <Position>11</Position>
       <Comment>录入时间</Comment>
       <DataType>datetime|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="348" parent="220" name="LRJG_DM">
+    <column id="350" parent="220" name="LRJG_DM">
       <Position>12</Position>
       <Comment>录入机构代码</Comment>
       <DataType>varchar(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="349" parent="220" name="PRIMARY">
+    <key id="351" parent="220" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ZIPXH</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="350" parent="221" name="TABLE_NAME">
+    <column id="352" parent="221" name="TABLE_NAME">
       <Position>1</Position>
       <Comment>表名</Comment>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="221" name="TABLE_NOTE">
+    <column id="353" parent="221" name="TABLE_NOTE">
       <Position>2</Position>
       <Comment>表注释</Comment>
       <DataType>varchar(40)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="352" parent="221" name="TABLE_MAX">
+    <column id="354" parent="221" name="TABLE_MAX">
       <Position>3</Position>
       <Comment>最大值</Comment>
       <DataType>bigint(20)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="353" parent="222" name="SQBXH">
+    <column id="355" parent="222" name="SQBXH">
       <Position>1</Position>
       <Comment>申请表序号</Comment>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="354" parent="222" name="SQBRZXH">
+    <column id="356" parent="222" name="SQBRZXH">
       <Position>2</Position>
       <Comment>申请表日志序号</Comment>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="355" parent="222" name="SRCXZQHDM">
+    <column id="357" parent="222" name="SRCXZQHDM">
       <Position>3</Position>
       <Comment>原行政区划代码</Comment>
       <DataType>char(15)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="356" parent="222" name="SRCXZQHMC">
+    <column id="358" parent="222" name="SRCXZQHMC">
       <Position>4</Position>
       <Comment>原行政区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="357" parent="222" name="BGLX_DM">
+    <column id="359" parent="222" name="BGLX_DM">
       <Position>5</Position>
       <Comment>变更类型代码</Comment>
       <DataType>char(2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="358" parent="222" name="DESTXZQHDM">
+    <column id="360" parent="222" name="DESTXZQHDM">
       <Position>6</Position>
       <Comment>目标区划代码</Comment>
       <DataType>char(15)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="359" parent="222" name="DESTXZQHMC">
+    <column id="361" parent="222" name="DESTXZQHMC">
       <Position>7</Position>
       <Comment>目标行政区划名称</Comment>
       <DataType>varchar(80)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="360" parent="222" name="LOG_SJ">
+    <column id="362" parent="222" name="LOG_SJ">
       <Position>8</Position>
       <Comment>日志时间</Comment>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <argument id="361" parent="223">
+    <argument id="363" parent="223">
       <ArgumentDirection>R</ArgumentDirection>
       <DataType>varchar(300)|0</DataType>
     </argument>
-    <argument id="362" parent="223" name="id">
+    <argument id="364" parent="223" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
     </argument>
