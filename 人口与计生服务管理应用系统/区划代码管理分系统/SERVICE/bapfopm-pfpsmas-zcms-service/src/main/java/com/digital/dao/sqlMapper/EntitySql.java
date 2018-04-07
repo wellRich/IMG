@@ -194,6 +194,19 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         }
     }
 
+    /**
+     *
+     * @return sql
+     */
+    public String batchDelete(Collection<?> keys){
+        String sql = new SQL(){{
+            DELETE_FROM(getTableName());
+            WHERE(getColumnByField("seq") + " IN (#{" + StringUtils.join(keys, ",")  + "})");
+        }}.toString();
+        log.info("batchDelete.sql----------> " + sql);
+        return sql;
+    }
+
     private boolean isEntity(Object obj){
         return obj.getClass().equals(clazz);
     }

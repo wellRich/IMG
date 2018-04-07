@@ -1,24 +1,32 @@
 package com.digital.service;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.*;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import com.google.common.collect.ImmutableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.digital.api.ZoningCodeChangeApi;
 import com.digital.dao.*;
 import com.digital.entity.*;
 import com.digital.util.Common;
 import com.digital.util.JSONHelper;
 import com.digital.util.StringUtil;
 import com.digital.util.search.QueryResp;
-import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.digital.api.ZoningCodeChangeApi;
-import org.springframework.transaction.annotation.Transactional;
-
 
 
 /**
@@ -50,6 +58,9 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     @Autowired
     CommonService commonService;
+
+    @Autowired
+    HistoricalZoningChangeMapper historicalZoningChangeMapper;
 
 
     /**
@@ -245,6 +256,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     /**
      * 保存变更
+     * 单位隶属关系是个问题，不明白是个什么东西
      */
     public void saveDetail(ChangeInfo info){
 
@@ -271,7 +283,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         param.put("currentName", info.getTargetZoningName());
         param.put("creatorCode", info.getCreatorCode());
         param.put("createDate", info.getCreatorDate());
-        previewDataInfoMapper.insertHistoryData(param);
+        historicalZoningChangeMapper.insert(param);
 
     }
 
@@ -501,10 +513,37 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     public void deleteDetails(Integer groupSeq) {
 
         List<ZCCDetail> details = zccDetailMapper.findByGroupSeq(groupSeq);
-        //1 删除历史数据
+        details.stream().peek(e ->{
+
+            //1 删除历史数据
+            historicalZoningChangeMapper.delete(e.getSeq());
+
+            //2 回滚预览数据
+            String changeType = e.getChangeType();
+            if(changeType.equals(Common.ADD)){
+
+                //删除一条预览数据
+                previewDataInfoMapper.delete(e.getSeq());
+            }else if(changeType.equals(Common.CHANGE)){
+
+                //仅仅是名称变更
+                if(Common.hasSameZoningCode(e.getOriginalZoningCode(), e.getCurrentZoningCode())){
+                    PreviewDataInfo updatedInfo = previewDataInfoMapper.findValidOneByZoningCode(e.getCurrentZoningCode());
 
 
-        //2 删除预览数据
+                }else {
+
+                }
+            }else if(changeType.equals(Common.MERGE)){
+
+            }else if(changeType.equals(Common.MOVE)){
+
+            }else {
+                throw new RuntimeException("未定义的变更类型[" + changeType + "]");
+            }
+        });
+
+
 
 
         //3 删除明细数据
@@ -612,41 +651,270 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         return max == null ? 1L : max;
     }
 
+    /**
+     * 审批申请单
+     * @param seqStr 若干申请单序号
+     * @param status 需要修改的目标状态
+     * @param msg 审批意见
+     * @param expectedStatus 期望的状态
+     * @param isPassed 是否通过审批
+     */
+    private void checkZCCRequest(String seqStr, String status, String msg, String expectedStatus, boolean isPassed){
+        for(Object seq: seqStr.split(",")){
+            Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
+            req.ifPresent(e -> {
+                if(e.getStatus().equals(expectedStatus)){
+                    if(isPassed){
+                        zccRequestMapper.update(ImmutableMap.of("seq", e.getSeq(), "status", status));
+                    }else {
+                        zccRequestMapper.update(ImmutableMap.of("seq", e.getSeq(), "status", status, "approvalOpinion", msg));
+                    }
+                }else {
+                    throw new RuntimeException("申请单状态为[" + e.getStatus() + "]，请传入状态为[" + expectedStatus + "]的申请单序号！");
+                }
+            });
+        }
+    }
+
     @Override
-    public void provincialCheck(String seqStr, boolean isPassed) {
+    public void provincialCheck(String seqStr, boolean isPassed, String msg) {
         String status = isPassed ? Common.XZQH_SQDZT_SHTG : Common.XZQH_SQDZT_SHBTG;
-        for(Object seq: seqStr.split(",")){
-            Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
-            req.ifPresent(e -> {
-                if(e.getStatus().equals(Common.XZQH_SQDZT_YTJ)){
-                    zccRequestMapper.update(ImmutableMap.of("seq", e.getSeq(), "status", status));
-                }else {
-                    throw new RuntimeException("申请单状态为[" + e.getStatus() + "]，请传入状态为[已提交]的申请单序号！");
-                }
-            });
-        }
-        /*seqList.stream().filter(Objects::nonNull)
-                .map(zccRequestMapper::get)
-                .filter(e -> e == Common.XZQH_SQDZT_YTJ)
-                .peek(e -> zccRequestMapper.update(ImmutableMap.of("seq", e, "status", status)));*/
+        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YTJ, isPassed);
     }
 
     @Override
-    public void provincialConfirm(String seqStr) {
-        for(Object seq: seqStr.split(",")){
-            Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
-            req.ifPresent(e -> {
-                if(e.getStatus() == Common.XZQH_SQDZT_SHTG){
-                    zccRequestMapper.update(ImmutableMap.of("seq", e, "status", Common.XZQH_SQDZT_YQR));
-                }else {
-                    throw new RuntimeException("申请单状态为[" + e.getStatus() + "]，请传入状态为[审核通过]的申请单序号！");
-                }
-            });
-        }
+    public void provincialConfirm(String seqStr, boolean isPassed, String msg) {
+        String status = isPassed ? Common.XZQH_SQDZT_YQR : Common.XZQH_SQDZT_SHBTG;
+        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_SHTG, isPassed);
+    }
+
+
+    @Override
+    public void nationalCheck(String seqStr, boolean isPassed, String msg) {
+        String status = isPassed ? Common.XZQH_SQDZT_GJYSH : Common.XZQH_SQDZT_SHBTG;
+        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YQR, isPassed);
     }
 
     @Override
-    public void nationalCheck(String seqStr, boolean isPassed) {
+    public void exportDetailsOfReq(Integer seq, HttpServletResponse response) {
+        Workbook workbook = getHSSFWorkbookOfReq(seq);
+        ZCCRequest zccRequest = zccRequestMapper.get(seq);
+        try {
+            setResponseHeader(response, zccRequest.getName() + ".xls");
+            OutputStream os = response.getOutputStream();
+            workbook.write(os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+
+
+    /**
+     * 发送响应流方法
+     * @param response 响应对象
+     * @param fileName 文件命名
+     */
+    private void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            try {
+                fileName = new String(fileName.getBytes(),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            response.setContentType("application/octet-stream;charset=ISO8859-1");
+            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
+            response.addHeader("Pargam", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 获取excel对象
+     *
+     * @param seq 申请单序号
+     * @return Workbook
+     */
+    public Workbook getHSSFWorkbookOfReq(Integer seq) {
+        Workbook wb = new HSSFWorkbook();
+        //标题 样式
+        CellStyle titleStyle = wb.createCellStyle();
+        titleStyle.setBorderBottom(BorderStyle.THIN);
+        titleStyle.setBorderLeft(BorderStyle.THIN);
+        titleStyle.setBorderRight(BorderStyle.THIN);
+        titleStyle.setBorderTop(BorderStyle.THIN);
+        Font titleFont = wb.createFont();
+        titleFont.setBold(true);
+        titleFont.setFontHeightInPoints((short) 16);
+        titleStyle.setFont(titleFont);
+        titleStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        //固定内容
+        CellStyle leftStyle = wb.createCellStyle();
+        leftStyle.setBorderBottom(BorderStyle.THIN);
+        leftStyle.setBorderLeft(BorderStyle.THIN);
+        leftStyle.setBorderRight(BorderStyle.THIN);
+        leftStyle.setBorderTop(BorderStyle.THIN);
+        leftStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        Font hardFont = wb.createFont();
+        hardFont.setFontHeightInPoints((short) 11);
+        leftStyle.setFont(hardFont);
+
+        CellStyle centerStyle = wb.createCellStyle();
+        centerStyle.setBorderBottom(BorderStyle.THIN);
+        centerStyle.setBorderLeft(BorderStyle.THIN);
+        centerStyle.setBorderRight(BorderStyle.THIN);
+        centerStyle.setBorderTop(BorderStyle.THIN);
+        centerStyle.setFont(hardFont);
+        centerStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        //数据样式
+        CellStyle dataStyle = wb.createCellStyle();
+        dataStyle.setBorderBottom(BorderStyle.THIN);
+        dataStyle.setBorderLeft(BorderStyle.THIN);
+        dataStyle.setBorderRight(BorderStyle.THIN);
+        dataStyle.setBorderTop(BorderStyle.THIN);
+        Font dataFont = wb.createFont();
+        dataFont.setItalic(true);
+        dataFont.setFontHeightInPoints((short) 11);
+        dataFont.setFontName("Arial");
+        dataStyle.setFont(dataFont);
+        dataStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        Sheet sheet = wb.createSheet("变更对照表详细信息");
+        int width = 18 * 256;
+        for (int i = 0; i < 7; i++) {
+            sheet.setColumnWidth(i, width);
+        }
+
+        //1 设置标题
+        Row titleRow = sheet.createRow(1);
+        createCell(titleRow, 1, titleStyle).setCellValue("人口计生系统区划代码单位变更明细");
+
+        //创建空白的单元格
+        for (int i = 2; i <= 6; i++) {
+            createCell(titleRow, i, titleStyle);
+        }
+
+        //合并标题单元格
+        sheet.addMergedRegion(new CellRangeAddress(
+                1, //first row (0-based)
+                1, //last row  (0-based)
+                1, //first column (0-based)
+                6  //last column  (0-based)
+        ));
+
+        //2 签字栏
+        Row signatureRow = sheet.createRow(2);
+        signatureRow.setHeightInPoints((short) 18);
+
+        //2.1 领导签名
+        createCell(signatureRow, 1, leftStyle).setCellValue("领导人签字：");
+
+        //创建空白的单元格
+        createCell(signatureRow, 2, leftStyle);
+        createCell(signatureRow, 3, leftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                2, //first row (0-based)
+                2, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        //日期栏
+        createCell(signatureRow, 4, centerStyle).setCellValue("          年           月           日         ");
+
+        //创建空白的单元格
+        for (int i = 5; i <= 6; i++) {
+            createCell(signatureRow, i, centerStyle);
+        }
+        sheet.addMergedRegion(new CellRangeAddress(
+                2, //first row (0-based)
+                2, //last row  (0-based)
+                4, //first column (0-based)
+                6  //last column  (0-based)
+        ));
+
+        //从第4行开始是迭代内容
+        int rowIndex = 3;
+
+        //遍历变更对照组
+        List<ZCCGroup> groups = zccGroupMapper.findByRequestSeq(seq);
+
+        for(ZCCGroup group: groups){
+
+            //调整内容
+            Row accountRow = sheet.createRow(rowIndex);
+            createCell(accountRow, 1, leftStyle).setCellValue("调整说明");
+
+            createCell(accountRow, 2, dataStyle).setCellValue("说明说明");
+            //创建空白的单元格
+            for (int k = 3; k <= 6; k++) {
+                createCell(accountRow, k, dataStyle);
+            }
+            sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 2, 6));
+
+            //表头
+            int headRowIndex = rowIndex + 1;
+            Row headRow = sheet.createRow(headRowIndex);
+            createCell(headRow, 1, centerStyle).setCellValue("原区划代码及名称");
+
+            //创建空白的单元格
+            createCell(headRow, 2, centerStyle);
+            sheet.addMergedRegion(new CellRangeAddress(headRowIndex, headRowIndex, 1, 2));
+
+            createCell(headRow, 3, centerStyle).setCellValue("调整类型");
+
+            createCell(headRow, 4, centerStyle).setCellValue("现区划代码及名称");
+            createCell(headRow, 5, centerStyle);
+            sheet.addMergedRegion(new CellRangeAddress(headRowIndex, headRowIndex, 4, 5));
+
+            createCell(headRow, 6, centerStyle).setCellValue("备注");
+
+
+            //遍历变更组中的明细对照数据
+            List<ZCCDetail> details = zccDetailMapper.findByGroupSeq(group.getSeq());
+            int loopStartIndex = rowIndex + 2;
+            for (ZCCDetail detail: details) {
+
+                //区划变更内容
+                Row dataRow = sheet.createRow(loopStartIndex);
+
+                //原区划代码
+                createCell(dataRow, 1, dataStyle).setCellValue(detail.getOriginalZoningCode());
+
+                //原区划名称
+                createCell(dataRow, 2, dataStyle).setCellValue(detail.getOriginalZoningName());
+
+                //变更类型，文字
+                createCell(dataRow, 3, dataStyle).setCellValue(detail.displayChangeType());
+
+                //目标区划代码
+                createCell(dataRow, 4, dataStyle).setCellValue(detail.getCurrentZoningCode());
+
+                //目标区划名称
+                createCell(dataRow, 5, dataStyle).setCellValue(detail.getCurrentZoningName());
+
+                //备注
+                createCell(dataRow, 6, dataStyle).setCellValue(detail.getNotes());
+                loopStartIndex = loopStartIndex + 1;
+            }
+            //行数增加，数量为变更组中变更明细对照数据的数量
+            rowIndex = loopStartIndex;
+        }
+        return wb;
+    }
+
+
+    private Cell createCell(Row row, int col, CellStyle cellStyle){
+        Cell cell = row.createCell(col);
+        cell.setCellStyle(cellStyle);
+        return cell;
     }
 }

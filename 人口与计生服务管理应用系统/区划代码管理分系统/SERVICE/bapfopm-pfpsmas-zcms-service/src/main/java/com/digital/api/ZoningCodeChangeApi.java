@@ -6,6 +6,7 @@ import com.digital.entity.ZCCGroup;
 import com.digital.entity.ZCCRequest;
 import com.digital.util.search.QueryResp;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -132,6 +133,13 @@ public interface ZoningCodeChangeApi {
     QueryResp<ZCCDetail> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize);
 
 
+    /**
+     * 导出指定申请单下的区划变更明细对照表
+     * @param seq 申请单序号
+     * @param response  响应
+     * @return 表格
+     */
+    void exportDetailsOfReq(Integer seq, HttpServletResponse response);
 
     /**
      * 删除明细数据
@@ -180,15 +188,16 @@ public interface ZoningCodeChangeApi {
      * 省级审核
      * @param seqStr 以逗号分隔的若干申请单序号
      * @param isPassed 是否通过审核
+     * @param msg 审核意见
      */
-    void provincialCheck(String seqStr, boolean isPassed);
+    void provincialCheck(String seqStr, boolean isPassed, String msg);
 
 
     /**
      * 省级确认
      * @param seqStr 以逗号分隔的若干申请单序号
      */
-    void provincialConfirm(String seqStr);
+    void provincialConfirm(String seqStr, boolean isPassed, String msg);
 
 
     /**
@@ -196,7 +205,7 @@ public interface ZoningCodeChangeApi {
      * @param seqStr 以逗号分隔的若干申请单序号
      * @param isPassed 是否通过审核
      */
-    void nationalCheck(String seqStr, boolean isPassed);
+    void nationalCheck(String seqStr, boolean isPassed, String msg);
 
 
 }

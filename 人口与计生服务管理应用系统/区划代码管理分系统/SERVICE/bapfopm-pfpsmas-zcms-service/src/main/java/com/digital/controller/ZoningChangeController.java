@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -238,8 +239,14 @@ public class ZoningChangeController {
      * 以excel形式导出指定申请单下的变更对照明细数据
      *
      */
-    public Object exportDetailsOfReq(){
-        return null;
+    @RequestMapping(value = "/exportExcel")
+    @ResponseBody
+    public void exportDetailsOfReq(@Param("seq")Integer seq, HttpServletResponse response){
+        try {
+            zoningCodeChangeApi.exportDetailsOfReq(seq, response);
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+        }
     }
 
 
@@ -259,7 +266,7 @@ public class ZoningChangeController {
             param.put("name", name);
             param.put("seq", seq);
             zoningCodeChangeApi.updateZCCRequest(param);
-            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getLocalizedMessage());
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
@@ -268,10 +275,16 @@ public class ZoningChangeController {
 
     /**
      * 删除指定组的明细数据
-     * @return
+     * @return RtnData
      */
-    public Object deleteDetailsOfGroup(){
-        return null;
+    public Object deleteDetailsOfGroup(Integer groupSeq){
+        try {
+            zoningCodeChangeApi.deleteDetails(groupSeq);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        }
     }
 
 
@@ -294,12 +307,14 @@ public class ZoningChangeController {
      * 省级审核
      * 是否还有一个审批意见，需要更新到申请单上
      * @param seqStr 若干申请单序号，以逗号分隔
+     * @param isPassed 是否通过
+     * @param msg 审核意见
      */
     @RequestMapping(value = "/provincialCheck", method = RequestMethod.GET)
     @ResponseBody
-    public Object provincialCheck(@RequestParam(value = "seqStr")String seqStr, @RequestParam(value = "isPassed")boolean isPassed){
+    public Object provincialCheck(@RequestParam(value = "seqStr")String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "")String msg){
         try {
-            zoningCodeChangeApi.provincialCheck(seqStr, isPassed);
+            zoningCodeChangeApi.provincialCheck(seqStr, isPassed, msg);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -312,9 +327,9 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/provincialConfirm", method = RequestMethod.GET)
     @ResponseBody
-    public Object provincialConfirm(@RequestParam(value = "seqStr")String seqStr){
+    public Object provincialConfirm(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "")String msg){
         try {
-            zoningCodeChangeApi.provincialConfirm(seqStr);
+            zoningCodeChangeApi.provincialConfirm(seqStr, isPassed, msg);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -325,8 +340,14 @@ public class ZoningChangeController {
     /**
      * 国家审核
      */
-    public Object nationalCheck(){
-        return null;
+    public Object nationalCheck(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "")String msg){
+        try {
+            zoningCodeChangeApi.nationalCheck(seqStr, isPassed, msg);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        }
     }
 
 }

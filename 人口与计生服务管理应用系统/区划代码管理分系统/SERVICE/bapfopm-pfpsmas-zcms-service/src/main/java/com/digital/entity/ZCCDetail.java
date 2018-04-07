@@ -1,5 +1,6 @@
 package com.digital.entity;
 
+import com.digital.util.Common;
 import com.digital.util.search.Column;
 import com.digital.util.search.Table;
 
@@ -123,6 +124,24 @@ public class ZCCDetail implements Serializable {
      */
     @Column(name = "RINGFLAG")
     private Integer ringFlag;
+
+    public String translateChangeType(String changeType){
+        if(changeType.equals(Common.ADD)){
+            return "新增";
+        }else if(changeType.equals(Common.CHANGE)){
+            return "变更";
+        }else if(changeType.equals(Common.MERGE)){
+            return "并入";
+        }else if(changeType.equals(Common.MOVE)){
+            return "迁移";
+        }else {
+            return "N/A";
+        }
+    }
+
+    public String displayChangeType(){
+        return translateChangeType(changeType);
+    }
 
     public Integer getSeq() {
         return seq;

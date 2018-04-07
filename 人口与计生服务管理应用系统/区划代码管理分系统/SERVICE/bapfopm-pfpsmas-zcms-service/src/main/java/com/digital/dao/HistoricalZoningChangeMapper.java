@@ -1,6 +1,10 @@
 package com.digital.dao;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.digital.dao.sqlMapper.HistoricalZoningChangeSql;
+import org.apache.ibatis.annotations.*;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 〈一句话功能简述〉
@@ -13,4 +17,17 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface HistoricalZoningChangeMapper {
 
+    //插入历史数据
+    @InsertProvider(type = HistoricalZoningChangeSql.class, method = "insert")
+    @ResultType(Integer.class)
+    Integer insert(Object info);
+
+
+    //删除历史数据
+    @DeleteProvider(type = HistoricalZoningChangeSql.class, method = "delete")
+    Integer delete(Object key);
+
+
+    @DeleteProvider(type = HistoricalZoningChangeSql.class, method = "batchDelete")
+    Integer batchDelete(@Param("keys")Collection<?> keys);
 }

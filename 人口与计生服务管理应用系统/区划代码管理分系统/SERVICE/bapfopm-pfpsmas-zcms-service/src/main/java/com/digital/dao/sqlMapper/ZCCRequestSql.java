@@ -20,14 +20,14 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
 
     /**
      * 统计查询
-     * @param zoingCode 查询条件，区划代码前六位
+     * @param zoningCode 查询条件，区划代码前六位
      * @return
      */
-    public String countByZoningCode(String zoingCode){
+    public String countByZoningCode(String zoningCode){
         String sql = new SQL(){{
             FROM(getTableName());
             SELECT("count(*)");
-            WHERE(getColumnByField("levelCode")  + " LIKE '"  + zoingCode + "%'");
+            WHERE(getColumnByField("levelCode")  + " LIKE '"  + zoningCode + "%'");
         }}.toString();
         log.info("countByZoningCode.sql----------> " + sql);
         return sql;

@@ -188,11 +188,7 @@ public class CommonService {
             String superCode = Common.getSuperiorZoningCode(currentZoningCode);
             PreviewDataInfo previewDataInfo = previewDataInfoMapper.findOneByZoningCode(superCode);
             log.info("savePreviewData.previewDataInfo-----> " + JSONHelper.toJSON(previewDataInfo, PreviewDataInfo.class));
-            if(previewDataInfo == null){
-                throw new RuntimeException("区划代码[" + currentZoningCode + "]的上级区划代码：" + superCode + "不存在！");
-            }else {
-                addPreviewData(info, previewDataInfo.getSubordinateRelations(), previewDataInfo.getAssigningCode(), previewDataInfo.getDivisionFullName(), new Date());
-            }
+            addPreviewData(info, previewDataInfo.getSubordinateRelations(), previewDataInfo.getAssigningCode(), previewDataInfo.getDivisionFullName(), new Date());
         }
 
         if(changeType.equals(Common.MERGE)) {
@@ -205,19 +201,19 @@ public class CommonService {
             int size = changeInfoList.size();
             if(size > 0){
                 ChangeInfo changeInfo = changeInfoList.get(size - 1);
-                String sjDestXzqhdm = changeInfo.getTargetZoningCode();
-                String sjDestXzqhmc = changeInfo.getTargetZoningName();
-                String sjSrcXzqhdm = changeInfo.getOriginalZoningCode();
-                String sjSrcXzqhmc = changeInfo.getOriginalZoningName();
+                String superTargetZoningCode = changeInfo.getTargetZoningCode();
+                String superTargetZoningName = changeInfo.getTargetZoningName();
+                String superOriginalZoningCode = changeInfo.getOriginalZoningCode();
+                String superOriginalZoningName = changeInfo.getOriginalZoningName();
                 if(changeType.equals(Common.MOVE)){
                     //
-                    sjDestXzqhmc = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getTargetZoningCode())).getDivisionName();
+                    superTargetZoningName = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getTargetZoningCode())).getDivisionName();
                     //
-                    sjSrcXzqhmc = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getOriginalZoningCode())).getDivisionName();
+                    superOriginalZoningName = previewDataInfoMapper.findOneByZoningCode(Common.getSuperiorZoningCode(changeInfo.getOriginalZoningCode())).getDivisionName();
                 }
 
                 for (int m = 0; m < size; m++) {
-                    updatePreviewData(changeInfoList.get(m), sjSrcXzqhmc, sjDestXzqhmc);
+                    updatePreviewData(changeInfoList.get(m), superOriginalZoningName, superTargetZoningName);
                 }
             }
 
@@ -231,96 +227,93 @@ public class CommonService {
      * @param superOriginName 原始行政区划上级名称
      * @param superTargetName 目标行政区划上级名称
      */
-    public void updatePreviewData(ChangeInfo info, String superOriginName, String superTargetName){
+    public void updatePreviewData(ChangeInfo info, String superOriginName, String superTargetName) {
         String originZoningCode = info.getOriginalZoningCode();
         String targetZoningCode = info.getTargetZoningCode();
         String targetZoningName = info.getTargetZoningName();
         String newDate = StringUtil.formatDateTime(new Date());
         PreviewDataInfo previewDataInfo = previewDataInfoMapper.findValidOneByZoningCode(originZoningCode);
         System.out.println("updatePreviewData.previewDataInfo--> " + JSONHelper.toJSON(previewDataInfo));
-        if(previewDataInfo == null){
-            throw new RuntimeException("原始行政区划代码：" + originZoningCode + "不存在！");
-        }else {
-            String fullName = previewDataInfo.getDivisionFullName();
+        String fullName = previewDataInfo.getDivisionFullName();
 
-            //仅仅是名称变更
-            if(Common.hasSameZoningCode(originZoningCode, targetZoningCode)){
-                previewDataInfo.setDivisionName(targetZoningName);
-                previewDataInfo.setDivisionAbbreviation(targetZoningName);
-                previewDataInfo.setDivisionFullName(fullName.replace(superOriginName, superTargetName));
-                previewDataInfoMapper.save(previewDataInfo);
-            }else{
+        //仅仅是名称变更
+        if (Common.hasSameZoningCode(originZoningCode, targetZoningCode)) {
+            previewDataInfo.setDivisionName(targetZoningName);
+            previewDataInfo.setDivisionAbbreviation(targetZoningName);
+            previewDataInfo.setLastUpdate(newDate);
+            previewDataInfo.setUpdaterCode(info.getCreatorCode());
+            previewDataInfo.setDivisionFullName(fullName.replace(superOriginName, superTargetName));
+            previewDataInfoMapper.save(previewDataInfo);
+        } else {
 
-                //修改原来的数据
-                previewDataInfo.setValidityStup(newDate);
-                previewDataInfo.setChooseSign("N");
-                previewDataInfo.setUsefulSign("N");
-                previewDataInfo.setLastUpdate(newDate);
-                previewDataInfo.setUpdaterCode(info.getCreatorCode());
-                previewDataInfoMapper.save(previewDataInfo);
+            //修改原来的数据
+            previewDataInfo.setValidityStup(newDate);
+            previewDataInfo.setChooseSign("N");
+            previewDataInfo.setUsefulSign("N");
+            previewDataInfo.setLastUpdate(newDate);
+            previewDataInfo.setUpdaterCode(info.getCreatorCode());
+            previewDataInfoMapper.save(previewDataInfo);
 
-                //添加新的数据
-                PreviewDataInfo pf = new PreviewDataInfo();
-                //取得最新的级别代码
-                String oldLevelCode = previewDataInfo.getLevelCode();
-                String newLevelCode = targetZoningCode.substring(0, oldLevelCode.length());
+            //添加新的数据
+            PreviewDataInfo pf = new PreviewDataInfo();
+            //取得最新的级别代码
+            String oldLevelCode = previewDataInfo.getLevelCode();
+            String newLevelCode = targetZoningCode.substring(0, oldLevelCode.length());
 
-                //区划代码
-                pf.setZoningCode(targetZoningCode);
+            //区划代码
+            pf.setZoningCode(targetZoningCode);
 
-                //区划名称
-                pf.setDivisionName(targetZoningName);
+            //区划名称
+            pf.setDivisionName(targetZoningName);
 
-                //区划简称
-                pf.setDivisionAbbreviation(targetZoningName);
+            //区划简称
+            pf.setDivisionAbbreviation(targetZoningName);
 
-                //区划全称
-                pf.setDivisionFullName(fullName.replace(superOriginName, superTargetName));
+            //区划全称
+            pf.setDivisionFullName(fullName.replace(superOriginName, superTargetName));
 
-                //级别代码
-                pf.setLevelCode(newLevelCode);
+            //级别代码
+            pf.setLevelCode(newLevelCode);
 
-                //上级区划代码
-                pf.setSuperiorZoningCode(previewDataInfo.getSuperiorZoningCode());
+            //上级区划代码
+            pf.setSuperiorZoningCode(previewDataInfo.getSuperiorZoningCode());
 
-                //选用标志
-                pf.setChooseSign("Y");
+            //选用标志
+            pf.setChooseSign("Y");
 
-                //有效标志
-                pf.setUsefulSign("Y");
+            //有效标志
+            pf.setUsefulSign("Y");
 
-                //旧的区划代码
-                pf.setOldZoningCode(originZoningCode);
+            //旧的区划代码
+            pf.setOldZoningCode(originZoningCode);
 
-                //生效时间
-                pf.setValidityStart(newDate);
+            //生效时间
+            pf.setValidityStart(newDate);
 
-                //权限机构代码
-                pf.setAccessCode(info.getOrganizationCode());
+            //权限机构代码
+            pf.setAccessCode(info.getOrganizationCode());
 
-                //录入人代码
-                pf.setEnterOneCode(info.getCreatorCode());
+            //录入人代码
+            pf.setEnterOneCode(info.getCreatorCode());
 
-                //创建时间
-                pf.setCreateDate(newDate);
+            //创建时间
+            pf.setCreateDate(newDate);
 
-                //修改人代码
-                pf.setUpdaterCode(info.getCreatorCode());
+            //修改人代码
+            pf.setUpdaterCode(info.getCreatorCode());
 
-                //修改机构
-                pf.setAccessCode(info.getOrganizationCode());
+            //修改机构
+            pf.setAccessCode(info.getOrganizationCode());
 
-                //修改时间
-                pf.setLastUpdate(newDate);
+            //修改时间
+            pf.setLastUpdate(newDate);
 
-                //单位隶属关系
-                pf.setSubordinateRelations(previewDataInfo.getSubordinateRelations());
+            //单位隶属关系
+            pf.setSubordinateRelations(previewDataInfo.getSubordinateRelations());
 
-                //变更类型
-                pf.setType(previewDataInfo.getType());
-
-                previewDataInfoMapper.insert(pf);
-            }
+            //变更类型
+            pf.setType(previewDataInfo.getType());
+            previewDataInfoMapper.insert(pf);
         }
     }
 

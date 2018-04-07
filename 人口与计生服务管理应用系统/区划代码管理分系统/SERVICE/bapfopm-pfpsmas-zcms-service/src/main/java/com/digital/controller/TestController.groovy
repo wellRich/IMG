@@ -1,9 +1,11 @@
 package com.digital.controller
 
 import com.digital.api.ZoningCodeChangeApi
+import com.digital.dao.HistoricalZoningChangeMapper
 import com.digital.dao.PreviewDataInfoMapper
 import com.digital.dao.ZCCGroupMapper
 import com.digital.dao.ZCCRequestMapper
+import com.digital.entity.HistoricalZoningChange
 import com.digital.entity.PreviewDataInfo
 import com.digital.entity.ZCCGroup
 import com.digital.entity.ZCCRequest
@@ -31,6 +33,9 @@ class TestController {
 
     @Autowired
     ZoningCodeChangeApi zoningCodeChangeApi;
+
+    @Autowired
+    HistoricalZoningChangeMapper historicalZoningChangeMapper;
 
     @RequestMapping("/testPreviewDataInfoMapper")
     @ResponseBody
@@ -71,5 +76,28 @@ class TestController {
         zoningCodeChangeApi.updateZCCRequest(seq, name, notes)
         ZCCRequest req = zccRequestMapper.get(seq)
         return req;
+    }
+
+    @RequestMapping("/insertHistory")
+    @ResponseBody
+    def insertHistory(){
+        HistoricalZoningChange change = new HistoricalZoningChange()
+        change.seq = 1;
+        change.changeType ='11'
+        change.createDate = StringUtil.getTime();
+        change.creatorCode = '9527'
+        change.groupSeq = 100
+        change.originalZoningCode = '1000'
+        change.originalZoningName = '238878'
+        change.targetZoningCode = '2000'
+        change.targetZoningName = '098'
+        historicalZoningChangeMapper.insert(change)
+    }
+
+
+    @RequestMapping("/deleteHistory")
+    @ResponseBody
+    def deleteHistory(){
+        historicalZoningChangeMapper.delete(1)
     }
 }
