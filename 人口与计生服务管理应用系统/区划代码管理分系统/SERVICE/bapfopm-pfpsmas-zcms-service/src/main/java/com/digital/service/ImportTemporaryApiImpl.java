@@ -107,6 +107,13 @@ public class ImportTemporaryApiImpl implements ImportTemporaryApi{
         return temporaryList;
     }
 
+    /*
+    * 动态查询变更信息
+    * */
+    public List<ContrastTemporary> queryChangeData(Integer fileSquence,String zoningCode,String errorIdentification, String typeCode){
+        return temporaryDataMapper.queryChangeData(fileSquence,zoningCode,errorIdentification,typeCode);
+    }
+
 
     /*
      * 导入到变更临时表

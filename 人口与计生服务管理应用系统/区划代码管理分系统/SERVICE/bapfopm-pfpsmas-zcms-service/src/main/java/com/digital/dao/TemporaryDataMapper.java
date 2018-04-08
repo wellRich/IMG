@@ -47,15 +47,16 @@ public interface TemporaryDataMapper {
             @Result(column = "BGLX_DM",property = "typeCode",javaType =String.class ),
             @Result(column = "MBXZQH_DM",property = "nowCode",javaType =String.class ),
             @Result(column = "MBXZQH_MC",property = "nowName",javaType =String.class ),
+            @Result(column = "CWXX",property = "errorMessage",javaType =String.class ),
             @Result(column = "LRR_DM",property = "enterOneCode",javaType =String.class ),
             @Result(column = "BZ",property = "note",javaType =String.class ),
-            @Result(column = "BH",property = "groupNum",javaType = BigInteger.class),
+            @Result(column = "BH",property = "groupNum",javaType = Long.class),
             @Result(column = "GROUPMC",property = "groupName",javaType = String.class),
             @Result(column = "LRJG_DM",property = "organizationCode",javaType =String.class ),
             @Result(column = "PXH",property = "orderNum",javaType =Integer.class )
     })
     @SelectProvider(type = TemporaryDataSql.class,method = "queryChangeData")
-    List<ContrastTemporary> queryChangeData( Integer fileNum,String zoningCode,String changeType);
+    List<ContrastTemporary> queryChangeData( Integer fileNum,String zoningCode,String errorIdentification,String changeType);
 
 
     /*
@@ -70,7 +71,7 @@ public interface TemporaryDataMapper {
             @Result(column = "MBXZQH_DM",property = "nowCode",javaType =String.class ),
             @Result(column = "MBXZQH_MC",property = "nowName",javaType =String.class ),
             @Result(column = "CWXX",property = "errorMessage",javaType =String.class ),
-            @Result(column = "BH",property = "groupNum",javaType = BigInteger.class),
+            @Result(column = "BH",property = "groupNum",javaType = Long.class),
             @Result(column = "GROUPMC",property = "groupName",javaType = String.class),
             @Result(column = "LRSJ",property = "enterTime",javaType = String.class),
             @Result(column = "PXH",property = "orderNum",javaType =Integer.class )

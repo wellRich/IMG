@@ -66,7 +66,7 @@ public class LogicCheckApiImpl implements LogicCheckApi {
 
         String fileName = fileInfo.getFileName();
         //以fileSquence为条件获取所有变更数据
-        List<ContrastTemporary> temporaryList = temporaryDataMapper.queryChangeData(fileInfo.getFileSquence(),null,null);
+        List<ContrastTemporary> temporaryList = temporaryDataMapper.queryChangeData(fileInfo.getFileSquence(),null,null,null);
         int index = 1;
         for (ContrastTemporary contrastTemporary : temporaryList) {
             //内容校验

@@ -63,6 +63,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * 通过区划代码查找申请单
      * 数据用来初始化申请单创建页面
      * @param levelCode 区划级别代码
+     * @param zoningName 区划名称
      * @param pageSize 每页数据量
      * @param pageIndex 请求的页码
      * @param totalRecord 数据总量，首次查询为空，随后的查询，就从前台传来
@@ -503,7 +504,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     @Override
     public void updateZCCRequest(Map<String, Object> param) {
-        zccRequestMapper.update(param);
+        Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(param.get("seq")));
+        req.ifPresent(e -> {
+            String status = e.getStatus();
+            if(status.equals(Common.XZQH_SQDZT_WTJ) || status.equals(Common.XZQH_SQDZT_SHBTG)){
+                throw new RuntimeException("不能修改状态为[" + status + "]的区划变更申请单");
+            }else {
+                zccRequestMapper.update(param);
+            }
+        });
     }
 
     /**
@@ -527,18 +536,43 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
        return detailQueryResp;
     }
 
+    /**
+     * 初始化区划变更申请单维护界面
+     * @param levelCode 区划级别代码
+     * @param pageIndex 当前页码
+     * @param zoningName 区划名称
+     * @param pageSize 每页总数
+     * @param total 查询总数
+     * @return 分页查询对象
+     */
     @Override
-    public QueryResp<ZCCRequest> initMaintainZCCReq(String levelCode, int pageIndex, int pageSize) {
+    public Map<String, Object> initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer total) throws IllegalAccessException {
+        QueryResp<ZCCRequest> resp = pageSeekByLevelCodeAndStatuses(levelCode, pageIndex, pageSize, total);
+        Map<String, Object> result = resp.toMap();
+        List respList = new ArrayList();
+        for (ZCCRequest zccRequest : resp.getDataList()) {
+            Map cell = zccRequest.toMap();
+            cell.put("zoningName", zoningName);
+            respList.add(cell);
+        }
+        result.put("dataList", respList);
+        return result;
+    }
+
+
+    private QueryResp<ZCCRequest> pageSeekByLevelCodeAndStatuses(String levelCode, Integer pageIndex, Integer pageSize, Integer total){
+        if(total == 0){
+            total = zccRequestMapper.countByZoningCodeAndStatus(levelCode, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ);
+        }
         QueryResp<ZCCRequest> resp = new QueryResp<>();
         resp.setPageIndex(pageIndex);
         resp.setPageSize(pageSize);
-        resp.setTotalRecord();
-        resp.setTotalPage();
+        resp.setTotalRecord(total);
+        resp.setTotalPage(resp.getPageCount());
         int offset = (pageIndex - 1) * pageSize;
         resp.setDataList(pageSeekByLevelCodeAndStatuses(levelCode, offset, pageSize, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ));
-        return null;
+        return resp;
     }
-
     /**
      * 删除指定对变更照组序号的变更对照明细
      * @param groupSeq 明细表序号
@@ -596,11 +630,12 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     public void submitZCCRequest(Integer seq) {
         Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
         req.ifPresent(e -> {
-            if(e.getStatus().equals(Common.XZQH_SQDZT_WTJ)){
+            String status = e.getStatus();
+            if(status.equals(Common.XZQH_SQDZT_WTJ) || status.equals(Common.XZQH_SQDZT_SHBTG)){
                 //修改申请单状态为已经提交
                 zccRequestMapper.update(ImmutableMap.of("status", Common.XZQH_SQDZT_YTJ, "seq", seq));
             }else {
-                throw new RuntimeException("只能提交未提交的申请单！");
+                throw new RuntimeException("只能提交状态为未提交的或者审核不通过的申请单，当前申请的状态是[" + status + "]！");
             }
         });
     }
@@ -688,7 +723,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     /**
      * 审批申请单
      * @param seqStr 若干申请单序号
-     * @param status 需要修改的目标状态
+     * @param status 需要修改成的目标状态
      * @param msg 审批意见
      * @param expectedStatus 期望的状态
      * @param isPassed 是否通过审批
@@ -710,12 +745,24 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         }
     }
 
+    /**
+     * 省级审核变更申请单
+     * @param seqStr 以逗号分隔的若干申请单序号
+     * @param isPassed 是否通过审核
+     * @param msg 审核意见
+     */
     @Override
     public void provincialCheck(String seqStr, boolean isPassed, String msg) {
         String status = isPassed ? Common.XZQH_SQDZT_SHTG : Common.XZQH_SQDZT_SHBTG;
         checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YTJ, isPassed);
     }
 
+    /**
+     * 省级确认变更申请单
+     * @param seqStr 以逗号分隔的若干申请单序号
+     * @param isPassed 是否审批通过
+     * @param msg 审批意见
+     */
     @Override
     public void provincialConfirm(String seqStr, boolean isPassed, String msg) {
         String status = isPassed ? Common.XZQH_SQDZT_YQR : Common.XZQH_SQDZT_SHBTG;
@@ -723,12 +770,24 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
 
+    /**
+     * 国家审核变更申请单
+     * @param seqStr 以逗号分隔的若干申请单序号
+     * @param isPassed 是否通过审核
+     * @param msg 审批意见
+     */
     @Override
     public void nationalCheck(String seqStr, boolean isPassed, String msg) {
         String status = isPassed ? Common.XZQH_SQDZT_GJYSH : Common.XZQH_SQDZT_SHBTG;
         checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YQR, isPassed);
     }
 
+
+    /**
+     *  导出变更申请单的变更对照明细数据
+     * @param seq 申请单序号
+     * @param response  响应
+     */
     @Override
     public void exportDetailsOfReq(Integer seq, HttpServletResponse response) {
         Workbook workbook = getHSSFWorkbookOfReq(seq);

@@ -21,9 +21,15 @@ public interface ImportTemporaryApi {
     boolean importTemporary(FocusChangeFileInfo fileInfo);
 
     /*
-    * 导入数据查询
+    * 提供下载查询
     * */
     List<ContrastTemporary> queryTemporary(Integer fileSquence,String errorIdentification);
+    /*
+    * 导入数据查询
+    * */
+    List<ContrastTemporary> queryChangeData(Integer fileSquence,String zoningCode,String errorIndentification,String typeCode);
+
+
 
 
 

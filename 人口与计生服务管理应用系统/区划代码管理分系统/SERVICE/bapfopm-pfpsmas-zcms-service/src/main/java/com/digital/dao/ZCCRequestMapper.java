@@ -64,11 +64,21 @@ public interface ZCCRequestMapper {
 
     /**
      * 根据区划代码统计申请单数量
-     * @param zoningCode 区划代码
-     * @return
+     * @param levelCode 区划代码
+     * @return 数量
      */
     @SelectProvider(type = ZCCRequestSql.class, method = "countByZoningCode")
-    int countByZoningCode(String zoningCode);
+    int countByZoningCode(String levelCode);
+
+
+    /**
+     * 统计指定级别、状态的申请单数量
+     * @param levelCode 级别代码
+     * @param statuses 若干状态
+     * @return 符合条件的申请单数量
+     */
+    @SelectProvider(type = ZCCRequestSql.class, method = "countByZoningCodeAndStatus")
+    int countByZoningCodeAndStatus(String levelCode, String ... statuses);
 
     /** 根据区划代码分页查询申请单
      * @param zoningCode 区划代码

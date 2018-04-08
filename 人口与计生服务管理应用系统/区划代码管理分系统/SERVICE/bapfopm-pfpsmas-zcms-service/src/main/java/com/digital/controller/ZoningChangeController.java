@@ -82,18 +82,20 @@ public class ZoningChangeController {
 
     /**
      * 查询出登录用户的申请单，分页
-     * @param zoningName 区划名称
-     * @param levelCode 级别代码
+     * 是否需要增加创建人代码作为过滤条件 ======>
      * @param pageIndex 页码
+     * @param pageSize 每页总数
      * @param total 总数
      * @return QueryResp 查询结果
      */
     @RequestMapping(value = "/ZoningChangeRequestList", method = RequestMethod.GET)
     @ResponseBody
-    public Object ZoningChangeRequestList(@RequestParam(value = "zoningName")String zoningName, @RequestParam(value = "levelCode", required = true)String levelCode, @RequestParam(value = "pageIndex", defaultValue = "1")Integer pageIndex, @RequestParam(value = "total", defaultValue = "0")Integer total){
+    public Object ZoningChangeRequestList(@RequestParam(value = "pageIndex", defaultValue = "1")Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize, @RequestParam(value = "total", defaultValue = "0")Integer total){
+        String levelCode = "370102";
+        String zoningName = "历下区";
         log.info("ZoningChangeRequestList.levelCode----> " + levelCode);
         try{
-            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZCCReqByZoningLevelCode(levelCode, zoningName, pageIndex, 5, total) ).toString();
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZCCReqByZoningLevelCode(levelCode, zoningName, pageIndex, pageSize, total) ).toString();
         }catch (Exception e) {
             log.error("ZoningChangeRequestList---> " + e.getMessage());
             return new  RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
@@ -129,14 +131,15 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/initAddDetails", method = RequestMethod.GET)
     @ResponseBody
-    public Object intAddDetails(@RequestParam(value = "zoningCode", defaultValue = "370102000000000")String zoningCode){
+    public Object intAddDetails(){
         try {
 
+            String zoningCode = "370102000000000";
             //级次代码
             String assigningCode = Common.getAssigningCode(zoningCode);
 
             //级别代码
-            String levelCode = Common.getLevelCode(zoningCode);
+            String levelCode = Common.getLevelCode("370102");
 
             //查找申请单，如果没有找到，则返回信息，请先建立申请单
             List<ZCCRequest> zccRequests = zoningCodeChangeApi.findWritableZCCRequests(levelCode);
@@ -251,10 +254,20 @@ public class ZoningChangeController {
     }
 
 
-    //维护区划变更申请单
-    public Object maintainZCCReq(){
-        return null;
-    }
+   /* //维护区划变更申请单
+    @RequestMapping(value = "/initMaintainZCCReq", method = RequestMethod.GET)
+    @ResponseBody
+    public Object initMaintainZCCReq(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize, @RequestParam(value = "total", defaultValue = "0")Integer total){
+        String levelCode = "370102";
+        String zoningName = "历下区";
+        try {
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.initMaintainZCCReq(levelCode, zoningName, pageIndex, pageSize, total)).toString() ;
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        }
+    }*/
+
 
     /**
      * 更新申请单
@@ -295,7 +308,7 @@ public class ZoningChangeController {
 
 
     /**
-     * 提交审核
+     * 提交省级审核
      */
     @RequestMapping(value = "/submitToCheck", method = RequestMethod.GET)
     @ResponseBody
@@ -333,7 +346,7 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/provincialConfirm", method = RequestMethod.GET)
     @ResponseBody
-    public Object provincialConfirm(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "")String msg){
+    public Object provincialConfirm(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "审批通过")String msg){
         try {
             zoningCodeChangeApi.provincialConfirm(seqStr, isPassed, msg);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();

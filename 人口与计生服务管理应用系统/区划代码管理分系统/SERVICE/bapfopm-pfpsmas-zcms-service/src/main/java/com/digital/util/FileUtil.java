@@ -1,5 +1,6 @@
 package com.digital.util;
 
+import com.digital.entity.province.ContrastTemporary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import org.apache.commons.io.FileUtils;
 
 /**
  * @Author: zhanghpj
@@ -27,7 +29,9 @@ public class FileUtil {
 
     private static final String QHDM_TITLE = "区划名称,区划代码";
 
-    private static final String QHDM_BGDZB_TITLE = "调整编号,调整说明,原区划名称,原区划代码,调整类型,现区划名称,现区划代码";
+    private static final String QHDM_BGDZB_TITLE = "调整编号,调整说明,原区划名称,原区划代码,调整类型,现区划名称,现区划代码,错误信息";
+
+    private static final String sign = ",";
 
     //区划代码变更对照文件的文件名开头
     private static final String QHDM_BGDZB = "QHDM_BGDZB_";
@@ -159,6 +163,35 @@ public class FileUtil {
         return resultMap;
     }
 
+    public static void writerTxt(List<ContrastTemporary> temporaryList,String filePath)  {
+        //创建文件
+
+        if (fileExists(filePath)) {
+            File file = new File(filePath);
+            deleteDir(file);
+        }
+        try {
+            File file =  buildFile(filePath,false);
+            //"调整编号,调整说明,原区划名称,原区划代码,调整类型,现区划名称,现区划代码,错误信息"
+            FileUtils.writeStringToFile(file,QHDM_BGDZB_TITLE+"\r\n","UTF-8");
+            for (ContrastTemporary temporary : temporaryList) {
+                FileUtils.writeStringToFile(file,temporary.getGroupNum()+sign+temporary.getGroupName()+sign+
+                        temporary.getOriginalName()+sign+temporary.getOriginalCode()+sign+
+                        temporary.getTypeCode()+sign+
+                        temporary.getNowName()+sign+temporary.getNowCode()+sign+
+                        (StringUtil.isEmpty(temporary.getErrorMessage())?"无":temporary.getErrorMessage())+"\r\n","UTF-8",true);
+            }
+        } catch (IOException e) {
+            logger.info("文件创建失败");
+            e.printStackTrace();
+        }
+
+
+    }
+
+    /*
+    * 读取txt文件中的内容
+    * */
     public static List<String> readTxt(String file)  {
 
         FileInputStream inputStream = null;

@@ -36,13 +36,13 @@ public interface ZoningCodeChangeApi {
      * 根据区划代码查询申请单
      *  做分页
      * @param levelCode 登录用户的所属区划代码的级别代码
-     * @param zoningCode 区划代码
+     * @param zoningName 区划名称
      * @param pageSize 每页数量
      * @param pageIndex 页码
      * @param totalRecord 数据总数
      * @return dataList实体数据，数据总量totalCount,总页数totalPage,当前页数pageIndex
      */
-    Object findZCCReqByZoningLevelCode(String levelCode, String zoningCode, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
+    Object findZCCReqByZoningLevelCode(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
 
     /**
      * 根据区划代码查询申请单
@@ -119,11 +119,13 @@ public interface ZoningCodeChangeApi {
     /**
      * 初始化区划变更申请单维护界面
      * @param levelCode 区划级别代码
+     * @param zoningName 区划名称
      * @param pageIndex 当前页码
      * @param pageSize 每页总数
+     * @param total 查询总数
      * @return 分页查询对象
      */
-    QueryResp<ZCCRequest> initMaintainZCCReq(String levelCode, int pageIndex, int pageSize);
+    Object initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer total) throws IllegalAccessException;
 
     /**
      * 更新申请单
@@ -204,6 +206,8 @@ public interface ZoningCodeChangeApi {
 
     /**
      * 省级确认
+     * @param isPassed 是否审批通过
+     * @param msg 审批意见
      * @param seqStr 以逗号分隔的若干申请单序号
      */
     void provincialConfirm(String seqStr, boolean isPassed, String msg);
@@ -213,6 +217,7 @@ public interface ZoningCodeChangeApi {
      * 国家审核
      * @param seqStr 以逗号分隔的若干申请单序号
      * @param isPassed 是否通过审核
+     * @param msg 审批意见
      */
     void nationalCheck(String seqStr, boolean isPassed, String msg);
 

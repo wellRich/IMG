@@ -68,7 +68,7 @@ public class ImportTemporaryController extends BaseController {
             if (StringUtil.isEmpty(fileInfo.getFileName()) || StringUtil.isEmpty(fileInfo.getFilePath())) {
                 throw new RuntimeException("数据有问题 || 或查询接口有问题");
             }
-            if (!Common.XZQH_JZBGZT_YSC.equals(fileInfo.getStatusCode())){
+            if (!Common.XZQH_JZBGZT_DRLSBCG.equals(fileInfo.getStatusCode())){
                 return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_IMPORT_CHEKED).toString();
             }
 

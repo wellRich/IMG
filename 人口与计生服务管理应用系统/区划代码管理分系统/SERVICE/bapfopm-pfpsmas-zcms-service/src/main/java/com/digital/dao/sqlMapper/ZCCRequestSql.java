@@ -20,14 +20,14 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
 
     /**
      * 统计查询
-     * @param zoningCode 查询条件，区划代码前六位
+     * @param levelCode 查询条件，区划代码前六位
      * @return
      */
-    public String countByZoningCode(String zoningCode){
+    public String countByZoningCode(String levelCode){
         String sql = new SQL(){{
             FROM(getTableName());
             SELECT("count(*)");
-            WHERE(getColumnByField("levelCode")  + " LIKE '"  + zoningCode + "%'");
+            WHERE(getColumnByField("levelCode")  + " = '"  + levelCode + "'");
         }}.toString();
         log.info("countByZoningCode.sql----------> " + sql);
         return sql;
@@ -45,6 +45,24 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
         log.info("pageSeekByZoningCode.sql----------> " + sql);
         return sql;
 
+    }
+
+    /**
+     * 统计指定级别、状态的申请单数量
+     * @param levelCode 级别代码
+     * @param statuses 若干状态
+     * @return sql
+     */
+    public String countByZoningCodeAndStatus(String levelCode, String ... statuses){
+        String sql = new SQL(){{
+            FROM(getTableName());
+            SELECT("count(*)");
+            WHERE(getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
+            AND();
+            WHERE(getColumnByField("levelCode") + " = '" + levelCode + "'");
+        }}.toString();
+        log.info("countByZoningCode.sql----------> " + sql);
+        return sql;
     }
 
     public String findByLevelCodeAndStatuses(String levelCode, String ... statuses){

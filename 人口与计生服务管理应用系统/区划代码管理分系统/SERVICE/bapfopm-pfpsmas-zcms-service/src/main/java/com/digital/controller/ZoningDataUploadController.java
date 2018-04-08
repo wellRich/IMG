@@ -224,7 +224,7 @@ public class ZoningDataUploadController extends BaseController {
      * @return java.lang.String
      * @exception
      */
-    @RequestMapping(value = "/update/modifyTypeCode", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/update/modifyTypeCode", method = RequestMethod.GET)
     @ResponseBody
     public String modifyTypeCode(@RequestParam("fileSquence") Integer fileSquence,@RequestParam("typeCode")String typeCode) {
         int result = zoningDataUploadApi.updateTypeCode(fileSquence,typeCode);

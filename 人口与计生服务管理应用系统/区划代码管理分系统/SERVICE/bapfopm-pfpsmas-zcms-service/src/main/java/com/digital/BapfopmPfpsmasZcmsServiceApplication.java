@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ServletComponentScan
 @EnableTransactionManagement
 public class BapfopmPfpsmasZcmsServiceApplication {
-
+	//1212
 	public static void main(String[] args) {
 		SpringApplication.run(BapfopmPfpsmasZcmsServiceApplication.class, args);
 	}
