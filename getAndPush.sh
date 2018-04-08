@@ -1,7 +1,7 @@
 #! /bin/bash
+#提交代码，从idea的工作目录拷贝代码文件，至github本地文件夹，再提交至github
+
 echo "Start to publish...\n"
-
-
 echo "移除.git中的文件...\n"
 filelist=`ls .git`
 for file in $filelist
@@ -25,10 +25,7 @@ do
  mv F:/gitTemp/$file .git
 done
 
-
-
-#提交代码
-#cd 人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java
+cd 人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java
 #执行git命令
 git add .
 git commit -m "自动提交"
