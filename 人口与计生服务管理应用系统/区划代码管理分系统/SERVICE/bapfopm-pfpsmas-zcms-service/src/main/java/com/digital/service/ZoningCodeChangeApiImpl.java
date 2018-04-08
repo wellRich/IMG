@@ -726,9 +726,8 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @param status 需要修改成的目标状态
      * @param msg 审批意见
      * @param expectedStatus 期望的状态
-     * @param isPassed 是否通过审批
      */
-    private void checkZCCRequest(String seqStr, String status, String msg, String expectedStatus, boolean isPassed){
+    private void checkZCCRequest(String seqStr, String status, String msg, String expectedStatus){
         for(Object seq: seqStr.split(",")){
             Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
             req.ifPresent(e -> {
@@ -750,7 +749,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     @Override
     public void provincialCheck(String seqStr, boolean isPassed, String msg) {
         String status = isPassed ? Common.XZQH_SQDZT_SHTG : Common.XZQH_SQDZT_SHBTG;
-        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YTJ, isPassed);
+        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YTJ);
     }
 
     /**
@@ -762,7 +761,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     @Override
     public void provincialConfirm(String seqStr, boolean isPassed, String msg) {
         String status = isPassed ? Common.XZQH_SQDZT_YQR : Common.XZQH_SQDZT_SHBTG;
-        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_SHTG, isPassed);
+        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_SHTG);
     }
 
 
@@ -775,7 +774,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     @Override
     public void nationalCheck(String seqStr, boolean isPassed, String msg) {
         String status = isPassed ? Common.XZQH_SQDZT_GJYSH : Common.XZQH_SQDZT_SHBTG;
-        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YQR, isPassed);
+        checkZCCRequest(seqStr, status, msg, Common.XZQH_SQDZT_YQR);
     }
 
 
