@@ -244,14 +244,14 @@ public class WhbgdzbManager {
 	 * @since 2009-9-22
 	 */
 	/**
-	 *
+	 * 还原区划预览数据
 	 * @param ysxzqh_dm 原区划代码
 	 * @param ysxzqh_mc 原区划名称
 	 * @param bglx_dm 变更类型
-	 * @param mbxzqh_dm
-	 * @param mbxzqh_mc
-	 * @param lrsj
-	 * @param mxbxh
+	 * @param mbxzqh_dm 目标区划代码
+	 * @param mbxzqh_mc 目标区划名称
+	 * @param lrsj 录入时间
+	 * @param mxbxh 明细表序号
 	 * @param ut
 	 * @throws Exception
 	 */

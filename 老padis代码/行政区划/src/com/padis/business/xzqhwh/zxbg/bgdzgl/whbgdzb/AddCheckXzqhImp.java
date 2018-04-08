@@ -19,8 +19,20 @@ public class AddCheckXzqhImp extends CheckXzqhImp{
 	 * @throws Exception 
 	 * @since 2009-10-10
 	 */
+	/**
+	 *
+	 * @param srcXzqh_dm 原区划代码
+	 * @param xzqh_dm 目标区划代码
+	 * @param groupxh 变更组序号
+	 * @param lrsj 录入时间
+	 * @param sbxzqh_dm 上报行政区划代码
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean checkXzqh(String srcXzqh_dm, String xzqh_dm, String groupxh, String lrsj ,String sbxzqh_dm) throws Exception{
 		boolean flag=true;
+
+		//级别代码
 		String xzqh_jbdm = Common.getJbdm(xzqh_dm);
 		StringBuffer message= new StringBuffer("");
 		StringBuffer sql = new StringBuffer("SELECT M.MBXZQH_DM,M.MBXZQH_MC,M.YSXZQH_DM,M.YSXZQH_MC,M.BGLX_DM,G.GROUPMC FROM XZQH_BGMXB M,XZQH_BGGROUP G" +
