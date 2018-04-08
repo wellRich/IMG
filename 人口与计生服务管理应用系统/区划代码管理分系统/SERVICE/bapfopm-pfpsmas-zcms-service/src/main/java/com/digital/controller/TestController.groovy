@@ -82,7 +82,7 @@ class TestController {
     @ResponseBody
     def insertHistory(){
         HistoricalZoningChange change = new HistoricalZoningChange()
-        change.seq = 1;
+        change.seq = 10;
         change.changeType ='11'
         change.createDate = StringUtil.getTime();
         change.creatorCode = '9527'

@@ -299,13 +299,14 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         Map<String, Object> param = new HashMap<>();
         param.put("seq", detail.getSeq());
         param.put("groupSeq", info.getGroupSeq());
-        param.put("originCode", info.getOriginalZoningCode());
-        param.put("originName", info.getOriginalZoningName());
+        param.put("originalZoningCode", info.getOriginalZoningCode());
+        param.put("originalZoningName", info.getOriginalZoningName());
         param.put("changeType", info.getChangeType());
-        param.put("currentCode", info.getTargetZoningCode());
-        param.put("currentName", info.getTargetZoningName());
+        param.put("targetZoningCode", info.getTargetZoningCode());
+        param.put("targetZoningName", info.getTargetZoningName());
         param.put("creatorCode", info.getCreatorCode());
         param.put("createDate", info.getCreatorDate());
+        log.info("saveDetalis.param--------> "  + JSONHelper.toJSON(param));
         historicalZoningChangeMapper.insert(param);
 
     }
