@@ -331,7 +331,7 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/provincialCheck", method = RequestMethod.GET)
     @ResponseBody
-    public Object provincialCheck(@RequestParam(value = "seqStr")String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "")String msg){
+    public Object provincialCheck(@RequestParam(value = "seqStr")String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "审核通过！")String msg){
         try {
             zoningCodeChangeApi.provincialCheck(seqStr, isPassed, msg);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
@@ -346,7 +346,7 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/provincialConfirm", method = RequestMethod.GET)
     @ResponseBody
-    public Object provincialConfirm(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "审批通过")String msg){
+    public Object provincialConfirm(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "审核通过！")String msg){
         try {
             zoningCodeChangeApi.provincialConfirm(seqStr, isPassed, msg);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
@@ -359,7 +359,7 @@ public class ZoningChangeController {
     /**
      * 国家审核
      */
-    public Object nationalCheck(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "")String msg){
+    public Object nationalCheck(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "审核通过！")String msg){
         try {
             zoningCodeChangeApi.nationalCheck(seqStr, isPassed, msg);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
