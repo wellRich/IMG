@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.0//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_0.dtd">
+<struts-config>
+  <form-beans>
+    <form-bean name="TranForm" type="com.digitalchina.cooffice.framework.control.MapForm" />
+	<form-bean name="uploadForm" type="com.techmore.struts.form.UploadForm"/>
+  </form-beans>
+  <global-forwards>
+    <forward name="success" contextRelative="true" path="/work/xzqhwh/public/seccuss.jsp" />
+    <forward name="failure"  contextRelative="true"  path="/work/xzqhwh/public/failure.jsp" />
+    <forward name="exception"  contextRelative="true"  path="/work/xzqhwh/public/exception.jsp" />
+  </global-forwards>
+	<action-mappings type="org.apache.struts.action.ActionMapping">
+		
+		<action path="/jscripts/uploadFile" scope="request"
+			parameter="upload"
+			type="com.techmore.struts.action.UploadFilesAction">
+			<forward name="success" path="/index.jsp"></forward>
+		</action>
+		
+		<action name="TranForm" path="/work/xzqhwh/*/*.*" parameter="com.padis.business.xzqhwh.{1}.{2}.{3}" scope="request" type="adp.web.struts.action.EditAction">
+			<forward name="success" path="/work/xzqhwh/{1}/{3}_success.jsp"/>
+		</action>
+		<action name="TranForm" path="/work/xzqhwh/*/*/*.*" parameter="com.padis.business.xzqhwh.{1}.{2}.{3}.{4}"  scope="request" type="adp.web.struts.action.EditAction">
+			<forward name="success" path="/work/xzqhwh/{1}/{2}/{4}_success.jsp"/>
+		</action>
+		<action name="TranForm" path="/work/xzqhwh/*/*/*/*.*" parameter="com.padis.business.xzqhwh.{1}.{2}.{3}.{4}.{5}"  scope="request" type="adp.web.struts.action.EditAction">
+			<forward name="success" path="/work/xzqhwh/{1}/{2}/{3}/{5}_success.jsp"/>
+		</action>
+		<action name="TranForm" path="/work/xzqhwh/*/*/*/*/*.*" parameter="com.padis.business.xzqhwh.{1}.{2}.{3}.{4}.{5}.{6}" scope="request" type="adp.web.struts.action.EditAction">
+			<forward name="success" path="/work/xzqhwh/{1}/{2}/{3}/{4}/{6}_success.jsp"/>
+		</action>
+	</action-mappings>
+</struts-config>

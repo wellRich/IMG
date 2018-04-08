@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="行政区划"
+  id="myeclipse.1418627111802"
+  context-root="/行政区划"
+  j2ee-spec="1.4"
+  archive="行政区划.war">
+  <attributes>
+    <attribute name="webrootdir" value="web应用/adp" />
+  </attributes>
+</project-module>
+

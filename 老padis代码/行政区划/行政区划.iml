@@ -1,0 +1,2301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file://D:/adp/WEB-INF/lib/activation.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/adp.base.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/adp.portal.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/adp.query.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/adp.report.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/ant.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/antlr.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/bcprov-jdk14-129.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/bosdk.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/bsh-2.0b4.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/cas-server-3.0.5.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/cglib-nodep-2.1_3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/coherence.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commonframe.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-beanutils-1.7.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-cli-1.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-codec-1.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-collections-3.2.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-digester.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-fileupload.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-httpclient-3.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-io-1.3.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-lang-2.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-logging-1.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-math-1.0-dev.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-pool-1.2.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/commons-validator-1.3.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/dnsjava-2[1].0.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/dom4j-full.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/drools-all-2.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/dwr-1.1.beta3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/easymock-1.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/easymockclassextension-1.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/ehcache-1.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/ezmorph-1.0.4.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/FCKeditor-2.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/FontBox-0.1.0-dev.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/FormSecurity-Client.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/FormServer-Client.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/frame.common.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/frame.portal.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/frame-micro-kernel.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/hibernate3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/htmllexer.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/htmlparser.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/itext2_rq.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jakarta-oro-2.0.8.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jakarta-regexp-1.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/janino-2.3.2.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/javabuilder.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/javaee.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/javax.servlet.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/javax.servlet.jsp.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jaxen-core.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jaxen-jdom.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jaxrpc.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jbcl.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jbossall-client.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jboss-j2ee.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jboss-jaxrpc.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jboss-jsr77.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jboss-saaj.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jce12.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jcommon-1.0.5.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jdom.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/je-analysis-1.5.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jfreechart-1.0.2.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/joda-time-1.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jodconverter-2.2.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jodconverter-cli-2.2.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jrules-bres-session-WL81.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jrules-bres-xu-WL81.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jrules-engine.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/js.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jsf-api.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jsf-impl.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/json-lib-2.2.1-jdk13.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jsr94.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jsr173_1.0_api.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jstl.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jstl-1.2.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jug-2.0.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/juh-2.3.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/junit-3.8.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jurt-2.3.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/jxl.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/log.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/log4j-1.2.14.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/lucene-core-2.3.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/mail.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/mail-1.4.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/namespace.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/ognl-2.6.7.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/ojdbc14.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/opencsv-1.8.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/ormap.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/oscache-2.1.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis2or.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis2or_20110719.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis2or_20110720.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis2or_20110929.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis2or_20111008.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis2or_bak.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis-common.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/padis-st-yj-xml.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/pager-taglib.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/PDFBox-0.7.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/pinyin4j-2.5.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/poi2.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/poi-3.1-FINAL-20080629.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/poi-contrib-3.1-FINAL-20080629.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/poi-scratchpad-3.1-FINAL-20080629.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/portlet-api.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/quartz.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/report3_5_5.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/resolver.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/resolver-2.8.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/ridl-2.3.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/saxpath.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/serializer.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/slf4j-api-1.4.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/slf4j-jdk14-1.4.3.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/spring.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/spring-ldap-1.1.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/spring-mock.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/standard.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/struts-1.2.8.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/sunjce_provider.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/tangosol.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/tirip-log.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/tran.xml.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/uitags-main-0.6.7.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/unoil-2.3.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/util.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/velocity-1.4.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/wcmclasses.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/wcmsoapclient.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/wcmsoaphandler.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/workflow.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xalan-2.7.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xbean.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xbean_xpath.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xerces.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xercesImpl-2.8.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xml-apis.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xml-apis-2.8.0.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xmlbeans-qname.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xmlpublic.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/xstream-1.1.2.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/zcltable.jar" />
+    <libelement value="file://D:/adp/WEB-INF/lib/复件 padis2or.jar" />
+    <libelement value="file://D:/adp/lib/adp.base.jar" />
+    <libelement value="file://D:/adp/lib/adp.portal.jar" />
+    <libelement value="file://D:/adp/lib/adp.query.jar" />
+    <libelement value="file://D:/adp/lib/adp.report.jar" />
+    <libelement value="file://D:/adp/lib/commonframe.jar" />
+    <libelement value="file://D:/adp/lib/dnsjava-2[1].0.3.jar" />
+    <libelement value="file://D:/adp/lib/itext2_rq.jar" />
+    <libelement value="file://D:/adp/lib/jce12.jar" />
+    <libelement value="file://D:/adp/lib/jdom.jar" />
+    <libelement value="file://D:/adp/lib/mail-1.4.jar" />
+    <libelement value="file://D:/adp/lib/ojdbc14.jar" />
+    <libelement value="file://D:/adp/lib/poi2.jar" />
+    <libelement value="file://D:/adp/lib/report3_5_5.jar" />
+    <libelement value="file://D:/adp/lib/sunjce_provider.jar" />
+    <libelement value="file://D:/adp/lib/tran.xml.jar" />
+    <libelement value="file://D:/adp/lib/frame/antlr.jar" />
+    <libelement value="file://D:/adp/lib/frame/bcprov-jdk14-129.jar" />
+    <libelement value="file://D:/adp/lib/frame/bsh-2.0b4.jar" />
+    <libelement value="file://D:/adp/lib/frame/cas-server-3.0.5.jar" />
+    <libelement value="file://D:/adp/lib/frame/cglib-nodep-2.1_3.jar" />
+    <libelement value="file://D:/adp/lib/frame/coherence.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-beanutils-1.7.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-collections-3.2.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-digester.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-fileupload.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-lang-2.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-logging-1.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-math-1.0-dev.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-pool-1.2.jar" />
+    <libelement value="file://D:/adp/lib/frame/commons-validator-1.3.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/dom4j-full.jar" />
+    <libelement value="file://D:/adp/lib/frame/drools-all-2.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/dwr-1.1.beta3.jar" />
+    <libelement value="file://D:/adp/lib/frame/easymock-1.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/easymockclassextension-1.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/ehcache-1.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/frame-micro-kernel.jar" />
+    <libelement value="file://D:/adp/lib/frame/hibernate3.jar" />
+    <libelement value="file://D:/adp/lib/frame/jakarta-oro-2.0.8.jar" />
+    <libelement value="file://D:/adp/lib/frame/jakarta-regexp-1.3.jar" />
+    <libelement value="file://D:/adp/lib/frame/janino-2.3.2.jar" />
+    <libelement value="file://D:/adp/lib/frame/jbcl.jar" />
+    <libelement value="file://D:/adp/lib/frame/jcommon-1.0.5.jar" />
+    <libelement value="file://D:/adp/lib/frame/jfreechart-1.0.2.jar" />
+    <libelement value="file://D:/adp/lib/frame/joda-time-1.3.jar" />
+    <libelement value="file://D:/adp/lib/frame/jrules-bres-session-WL81.jar" />
+    <libelement value="file://D:/adp/lib/frame/jrules-bres-xu-WL81.jar" />
+    <libelement value="file://D:/adp/lib/frame/jrules-engine.jar" />
+    <libelement value="file://D:/adp/lib/frame/js.jar" />
+    <libelement value="file://D:/adp/lib/frame/jsr94.jar" />
+    <libelement value="file://D:/adp/lib/frame/jstl.jar" />
+    <libelement value="file://D:/adp/lib/frame/jug-2.0.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/junit-3.8.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/jxl.jar" />
+    <libelement value="file://D:/adp/lib/frame/log.jar" />
+    <libelement value="file://D:/adp/lib/frame/log4j-1.2.14.jar" />
+    <libelement value="file://D:/adp/lib/frame/ognl-2.6.7.jar" />
+    <libelement value="file://D:/adp/lib/frame/oscache-2.1.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/pager-taglib.jar" />
+    <libelement value="file://D:/adp/lib/frame/portlet-api.jar" />
+    <libelement value="file://D:/adp/lib/frame/quartz.jar" />
+    <libelement value="file://D:/adp/lib/frame/resolver-2.8.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/spring.jar" />
+    <libelement value="file://D:/adp/lib/frame/spring-ldap-1.1.jar" />
+    <libelement value="file://D:/adp/lib/frame/spring-mock.jar" />
+    <libelement value="file://D:/adp/lib/frame/standard.jar" />
+    <libelement value="file://D:/adp/lib/frame/struts-1.2.8.jar" />
+    <libelement value="file://D:/adp/lib/frame/tangosol.jar" />
+    <libelement value="file://D:/adp/lib/frame/uitags-main-0.6.7.jar" />
+    <libelement value="file://D:/adp/lib/frame/util.jar" />
+    <libelement value="file://D:/adp/lib/frame/velocity-1.4.jar" />
+    <libelement value="file://D:/adp/lib/frame/xalan-2.7.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/xercesImpl-2.8.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/xml-apis-2.8.0.jar" />
+    <libelement value="file://D:/adp/lib/frame/xstream-1.1.2.jar" />
+    <libelement value="file://D:/adp/lib/frame/zcltable.jar" />
+    <conelement value="com.genuitec.eclipse.j2eedt.core.J2EE14_CONTAINER" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web应用/adp/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/web应用/adp" relative="/" />
+        </webroots>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/web应用/adp/applications/padis/WEB-INF/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" name="com.genuitec.eclipse.j2eedt.core.J2EE14_CONTAINER" level="application" />
+    <orderEntry type="module-library">
+      <library name="activation.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/activation.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="adp.base.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/adp.base.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="adp.portal.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/adp.portal.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="adp.query.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/adp.query.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="adp.report.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/adp.report.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ant.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/ant.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="antlr.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/antlr.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bcprov-jdk14-129.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/bcprov-jdk14-129.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bosdk.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/bosdk.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bsh-2.0b4.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/bsh-2.0b4.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="cas-server-3.0.5.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/cas-server-3.0.5.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="cglib-nodep-2.1_3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/cglib-nodep-2.1_3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="coherence.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/coherence.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commonframe.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commonframe.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-beanutils-1.7.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-beanutils-1.7.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-cli-1.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-cli-1.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-codec-1.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-codec-1.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-collections-3.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-collections-3.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-digester.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-digester.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-fileupload.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-fileupload.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-httpclient-3.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-httpclient-3.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-io-1.3.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-io-1.3.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-lang-2.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-lang-2.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-logging-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-logging-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-math-1.0-dev.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-math-1.0-dev.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-pool-1.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-pool-1.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-validator-1.3.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/commons-validator-1.3.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="dnsjava-2[1].0.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/dnsjava-2[1].0.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="dom4j-full.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/dom4j-full.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="drools-all-2.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/drools-all-2.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="dwr-1.1.beta3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/dwr-1.1.beta3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="easymock-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/easymock-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="easymockclassextension-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/easymockclassextension-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ehcache-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/ehcache-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ezmorph-1.0.4.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/ezmorph-1.0.4.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="FCKeditor-2.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/FCKeditor-2.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="FontBox-0.1.0-dev.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/FontBox-0.1.0-dev.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="FormSecurity-Client.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/FormSecurity-Client.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="FormServer-Client.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/FormServer-Client.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="frame.common.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/frame.common.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="frame.portal.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/frame.portal.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="frame-micro-kernel.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/frame-micro-kernel.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hibernate3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/hibernate3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="htmllexer.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/htmllexer.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="htmlparser.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/htmlparser.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="itext2_rq.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/itext2_rq.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jakarta-oro-2.0.8.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jakarta-oro-2.0.8.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jakarta-regexp-1.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jakarta-regexp-1.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="janino-2.3.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/janino-2.3.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javabuilder.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/javabuilder.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javaee.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/javaee.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javax.servlet.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/javax.servlet.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javax.servlet.jsp.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/javax.servlet.jsp.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaxen-core.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jaxen-core.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaxen-jdom.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jaxen-jdom.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaxrpc.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jaxrpc.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jbcl.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jbcl.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jbossall-client.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jbossall-client.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jboss-j2ee.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jboss-j2ee.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jboss-jaxrpc.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jboss-jaxrpc.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jboss-jsr77.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jboss-jsr77.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jboss-saaj.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jboss-saaj.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jce12.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jce12.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jcommon-1.0.5.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jcommon-1.0.5.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jdom.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jdom.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="je-analysis-1.5.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/je-analysis-1.5.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jfreechart-1.0.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jfreechart-1.0.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="joda-time-1.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/joda-time-1.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jodconverter-2.2.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jodconverter-2.2.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jodconverter-cli-2.2.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jodconverter-cli-2.2.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jrules-bres-session-WL81.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jrules-bres-session-WL81.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jrules-bres-xu-WL81.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jrules-bres-xu-WL81.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jrules-engine.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jrules-engine.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="js.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/js.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsf-api.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jsf-api.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsf-impl.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jsf-impl.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="json-lib-2.2.1-jdk13.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/json-lib-2.2.1-jdk13.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsr94.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jsr94.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsr173_1.0_api.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jsr173_1.0_api.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jstl.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jstl.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jstl-1.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jstl-1.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jug-2.0.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jug-2.0.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="juh-2.3.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/juh-2.3.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="junit-3.8.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/junit-3.8.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jurt-2.3.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jurt-2.3.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jxl.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/jxl.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/log.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log4j-1.2.14.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/log4j-1.2.14.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lucene-core-2.3.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/lucene-core-2.3.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mail.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/mail.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mail-1.4.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/mail-1.4.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="namespace.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/namespace.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ognl-2.6.7.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/ognl-2.6.7.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ojdbc14.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/ojdbc14.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="opencsv-1.8.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/opencsv-1.8.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ormap.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/ormap.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="oscache-2.1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/oscache-2.1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis2or.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis2or.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis2or_20110719.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis2or_20110719.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis2or_20110720.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis2or_20110720.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis2or_20110929.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis2or_20110929.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis2or_20111008.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis2or_20111008.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis2or_bak.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis2or_bak.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis-common.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis-common.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="padis-st-yj-xml.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/padis-st-yj-xml.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="pager-taglib.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/pager-taglib.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="PDFBox-0.7.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/PDFBox-0.7.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="pinyin4j-2.5.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/pinyin4j-2.5.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/poi2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-3.1-FINAL-20080629.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/poi-3.1-FINAL-20080629.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-contrib-3.1-FINAL-20080629.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/poi-contrib-3.1-FINAL-20080629.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-scratchpad-3.1-FINAL-20080629.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/poi-scratchpad-3.1-FINAL-20080629.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="portlet-api.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/portlet-api.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="quartz.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/quartz.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="report3_5_5.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/report3_5_5.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="resolver.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/resolver.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="resolver-2.8.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/resolver-2.8.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ridl-2.3.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/ridl-2.3.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="saxpath.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/saxpath.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="serializer.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/serializer.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="slf4j-api-1.4.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/slf4j-api-1.4.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="slf4j-jdk14-1.4.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/slf4j-jdk14-1.4.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="spring.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/spring.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="spring-ldap-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/spring-ldap-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="spring-mock.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/spring-mock.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="standard.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/standard.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="struts-1.2.8.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/struts-1.2.8.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sunjce_provider.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/sunjce_provider.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="tangosol.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/tangosol.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="tirip-log.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/tirip-log.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="tran.xml.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/tran.xml.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="uitags-main-0.6.7.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/uitags-main-0.6.7.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="unoil-2.3.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/unoil-2.3.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="util.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/util.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="velocity-1.4.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/velocity-1.4.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="wcmclasses.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/wcmclasses.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="wcmsoapclient.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/wcmsoapclient.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="wcmsoaphandler.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/wcmsoaphandler.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="workflow.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/workflow.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xalan-2.7.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xalan-2.7.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xbean.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xbean.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xbean_xpath.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xbean_xpath.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xerces.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xerces.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xercesImpl-2.8.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xercesImpl-2.8.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xml-apis.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xml-apis.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xml-apis-2.8.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xml-apis-2.8.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xmlbeans-qname.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xmlbeans-qname.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xmlpublic.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xmlpublic.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xstream-1.1.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/xstream-1.1.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="zcltable.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/zcltable.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="复件 padis2or.jar">
+        <CLASSES>
+          <root url="file://D:/adp/WEB-INF/lib/复件 padis2or.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/adp.base.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/adp.base.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/adp.portal.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/adp.portal.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/adp.query.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/adp.query.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/adp.report.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/adp.report.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/commonframe.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/commonframe.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/dnsjava-2[1].0.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/dnsjava-2[1].0.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/itext2_rq.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/itext2_rq.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/jce12.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/jce12.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/jdom.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/jdom.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/mail-1.4.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/mail-1.4.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/ojdbc14.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/ojdbc14.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/poi2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/poi2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/report3_5_5.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/report3_5_5.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/sunjce_provider.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/sunjce_provider.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/tran.xml.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/tran.xml.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/antlr.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/antlr.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/bcprov-jdk14-129.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/bcprov-jdk14-129.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/bsh-2.0b4.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/bsh-2.0b4.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/cas-server-3.0.5.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/cas-server-3.0.5.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/cglib-nodep-2.1_3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/cglib-nodep-2.1_3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/coherence.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/coherence.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-beanutils-1.7.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-beanutils-1.7.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-collections-3.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-collections-3.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-digester.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-digester.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-fileupload.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-fileupload.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-lang-2.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-lang-2.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-logging-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-logging-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-math-1.0-dev.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-math-1.0-dev.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-pool-1.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-pool-1.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/commons-validator-1.3.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/commons-validator-1.3.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/dom4j-full.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/dom4j-full.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/drools-all-2.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/drools-all-2.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/dwr-1.1.beta3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/dwr-1.1.beta3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/easymock-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/easymock-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/easymockclassextension-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/easymockclassextension-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/ehcache-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/ehcache-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/frame-micro-kernel.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/frame-micro-kernel.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/hibernate3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/hibernate3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jakarta-oro-2.0.8.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jakarta-oro-2.0.8.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jakarta-regexp-1.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jakarta-regexp-1.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/janino-2.3.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/janino-2.3.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jbcl.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jbcl.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jcommon-1.0.5.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jcommon-1.0.5.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jfreechart-1.0.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jfreechart-1.0.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/joda-time-1.3.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/joda-time-1.3.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jrules-bres-session-WL81.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jrules-bres-session-WL81.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jrules-bres-xu-WL81.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jrules-bres-xu-WL81.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jrules-engine.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jrules-engine.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/js.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/js.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jsr94.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jsr94.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jstl.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jstl.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jug-2.0.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jug-2.0.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/junit-3.8.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/junit-3.8.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/jxl.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/jxl.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/log.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/log.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/log4j-1.2.14.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/log4j-1.2.14.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/ognl-2.6.7.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/ognl-2.6.7.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/oscache-2.1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/oscache-2.1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/pager-taglib.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/pager-taglib.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/portlet-api.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/portlet-api.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/quartz.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/quartz.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/resolver-2.8.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/resolver-2.8.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/spring.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/spring.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/spring-ldap-1.1.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/spring-ldap-1.1.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/spring-mock.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/spring-mock.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/standard.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/standard.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/struts-1.2.8.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/struts-1.2.8.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/tangosol.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/tangosol.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/uitags-main-0.6.7.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/uitags-main-0.6.7.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/util.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/util.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/velocity-1.4.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/velocity-1.4.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/xalan-2.7.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/xalan-2.7.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/xercesImpl-2.8.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/xercesImpl-2.8.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/xml-apis-2.8.0.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/xml-apis-2.8.0.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/xstream-1.1.2.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/xstream-1.1.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="D:/adp/lib/frame/zcltable.jar">
+        <CLASSES>
+          <root url="file://D:/adp/lib/frame/zcltable.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
