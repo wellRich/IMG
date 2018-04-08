@@ -58,4 +58,10 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
         log.info("findOneByLevelCodeAndStatuses.sql----------> " + sql);
         return sql;
     }
+
+    public String pageSeekByLevelCodeAndStatuses(String levelCode, int offset, int pageSize, String ... statuses){
+        String sql = findByLevelCodeAndStatuses(levelCode, statuses) + " LIMIT " + pageSize + " OFFSET " + offset;
+        log.info("findOneByLevelCodeAndStatuses.sql----------> " + sql);
+        return sql;
+    }
 }

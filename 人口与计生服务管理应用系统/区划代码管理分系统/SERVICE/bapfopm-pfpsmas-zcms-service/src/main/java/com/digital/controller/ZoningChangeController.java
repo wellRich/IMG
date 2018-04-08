@@ -135,6 +135,7 @@ public class ZoningChangeController {
             //级次代码
             String assigningCode = Common.getAssigningCode(zoningCode);
 
+            //级别代码
             String levelCode = Common.getLevelCode(zoningCode);
 
             //查找申请单，如果没有找到，则返回信息，请先建立申请单
@@ -249,6 +250,11 @@ public class ZoningChangeController {
         }
     }
 
+
+    //维护区划变更申请单
+    public Object maintainZCCReq(){
+        return null;
+    }
 
     /**
      * 更新申请单

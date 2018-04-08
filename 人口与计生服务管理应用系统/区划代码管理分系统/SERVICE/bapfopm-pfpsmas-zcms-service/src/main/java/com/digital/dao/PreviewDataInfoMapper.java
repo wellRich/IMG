@@ -127,6 +127,7 @@ public interface PreviewDataInfoMapper {
     PreviewDataInfo findValidOneByZoningCode(String zoningCode);
 
 
+    //获取下一级区划预览数据
     @SelectProvider(type = PreviewDataInfoSql.class, method = "findSubordinateZoning")
     @ResultMap(value = "findAll")
     List<PreviewDataInfo> findSubordinateZoning(String zoningCode);

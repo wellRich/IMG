@@ -134,16 +134,34 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
 
+    /**
+     * 查找可以修改的区划变更申请单
+     * @param levelCode 区划级别代码
+     * @return 申请单列表
+     */
     @Override
     public List<ZCCRequest> findWritableZCCRequests(String levelCode) {
         return zccRequestMapper.findByLevelCodeAndStatuses(levelCode, Common.XZQH_SQDZT_WTJ, Common.XZQH_SQDZT_SHBTG);
     }
 
     /**
+     * 分页查询申请单
+     * 通过级别代码与状态过滤
+     * @param levelCode 区划级别代码
+     * @param offset 起始
+     * @param pageSize 每页大小
+     * @param statuses 若干状态代码
+     * @return 区划列表
+     */
+    List<ZCCRequest> pageSeekByLevelCodeAndStatuses(String levelCode, int offset, int pageSize, String ... statuses){
+        return zccRequestMapper.pageSeekByLevelCodeAndStatuses(levelCode, offset, pageSize, statuses);
+    }
+
+    /**
      * 初始化录入明细表的数据
      * 获取区划预览数据
-     * @param zoningCode
-     * @return
+     * @param zoningCode 区划代码
+     * @return [级次代码：相应的区划列表]
      */
     @Override
     public Map<String, List<PreviewDataInfo>> findPreviewByZoningCode(String zoningCode) {
@@ -162,10 +180,16 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         return result;
     }
 
+    /**
+     * 查找下级区划
+     * @param zoningCode 代码
+     * @return
+     */
     @Override
     public List<PreviewDataInfo> findSubordinateZoning(String zoningCode) {
         return previewDataInfoMapper.findSubordinateZoning(zoningCode);
     }
+
 
     /**
      *  删除未提交或未通过审核的申请单
@@ -503,6 +527,18 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
        return detailQueryResp;
     }
 
+    @Override
+    public QueryResp<ZCCRequest> initMaintainZCCReq(String levelCode, int pageIndex, int pageSize) {
+        QueryResp<ZCCRequest> resp = new QueryResp<>();
+        resp.setPageIndex(pageIndex);
+        resp.setPageSize(pageSize);
+        resp.setTotalRecord();
+        resp.setTotalPage();
+        int offset = (pageIndex - 1) * pageSize;
+        resp.setDataList(pageSeekByLevelCodeAndStatuses(levelCode, offset, pageSize, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ));
+        return null;
+    }
+
     /**
      * 删除指定对变更照组序号的变更对照明细
      * @param groupSeq 明细表序号
@@ -720,7 +756,6 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             try {
                 fileName = new String(fileName.getBytes(),"ISO8859-1");
             } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             response.setContentType("application/octet-stream;charset=ISO8859-1");

@@ -80,8 +80,19 @@ public interface ZCCRequestMapper {
     @ResultMap(value = "findAll")
     List<ZCCRequest> pageSeekByZoningCode(String zoningCode, int offset, int limit);
 
+    /**
+     * 分页查询申请单
+     * 通过级别代码与状态过滤
+     * @param levelCode 区划级别代码
+     * @param offset 起始
+     * @param pageSize 每页大小
+     * @param statuses 若干状态代码
+     * @return 区划列表
+     */
+    @SelectProvider(type = ZCCRequestSql.class, method = "pageSeekByLevelCodeAndStatuses")
+    @ResultMap(value = "findAll")
+    List<ZCCRequest> pageSeekByLevelCodeAndStatuses(String levelCode, int offset, int pageSize, String ... statuses);
 
-    Page<ZCCRequest> pageSeek(String zoningCode);
     /**
      * 使用上报行政区划代码与状态查找变更申请单
      * @param zoingCode 区划代码

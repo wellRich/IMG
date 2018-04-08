@@ -68,7 +68,7 @@ public interface ZoningCodeChangeApi {
     /**
      * 查找允许录入明细的申请单，状态为未提交或者是审核不通过
      * @param levelCode 区划级别代码
-     * @return
+     * @return 申请单列表
      */
     List<ZCCRequest> findWritableZCCRequests(String levelCode);
 
@@ -81,9 +81,9 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-     *
-     * @param zoningCode
-     * @return
+     * 获取下一级区划预览数据
+     * @param zoningCode 代码
+     * @return 子级区划代码
      */
     List<PreviewDataInfo> findSubordinateZoning(String zoningCode);
 
@@ -115,6 +115,15 @@ public interface ZoningCodeChangeApi {
     /*
      * 维护变更对照申请
      */
+
+    /**
+     * 初始化区划变更申请单维护界面
+     * @param levelCode 区划级别代码
+     * @param pageIndex 当前页码
+     * @param pageSize 每页总数
+     * @return 分页查询对象
+     */
+    QueryResp<ZCCRequest> initMaintainZCCReq(String levelCode, int pageIndex, int pageSize);
 
     /**
      * 更新申请单
