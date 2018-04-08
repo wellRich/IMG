@@ -733,11 +733,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             Optional<ZCCRequest> req = Optional.of(zccRequestMapper.get(seq));
             req.ifPresent(e -> {
                 if(e.getStatus().equals(expectedStatus)){
-                    if(isPassed){
-                        zccRequestMapper.update(ImmutableMap.of("seq", e.getSeq(), "status", status));
-                    }else {
-                        zccRequestMapper.update(ImmutableMap.of("seq", e.getSeq(), "status", status, "approvalOpinion", msg));
-                    }
+                    zccRequestMapper.update(ImmutableMap.of("seq", e.getSeq(), "status", status, "approvalOpinion", msg));
                 }else {
                     throw new RuntimeException("申请单状态为[" + e.getStatus() + "]，请传入状态为[" + expectedStatus + "]的申请单序号！");
                 }
