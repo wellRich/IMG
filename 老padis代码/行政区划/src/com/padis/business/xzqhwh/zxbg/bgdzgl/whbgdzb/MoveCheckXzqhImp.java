@@ -40,146 +40,146 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 		if(cnt>0){
 			for(int i=0;i<cnt ;i++){
 				String groupName = StringEx.sNull(mxbDw.getItemAny(i, "GROUPMC"));
-				String mbxzqh_dm = StringEx.sNull(mxbDw.getItemAny(i, "MBXZQH_DM"));
-				String ysxzqh_dm = StringEx.sNull(mxbDw.getItemAny(i, "YSXZQH_DM"));
-				String bglx_dm = StringEx.sNull(mxbDw.getItemAny(i, "BGLX_DM"));
+				String targetCode = StringEx.sNull(mxbDw.getItemAny(i, "MBXZQH_DM"));
+				String originalCode = StringEx.sNull(mxbDw.getItemAny(i, "YSXZQH_DM"));
+				String changeType = StringEx.sNull(mxbDw.getItemAny(i, "BGLX_DM"));
 				String msg = "";
 				if(!groupName.equals("")){
 					msg = "在调整说明“"+groupName+"”";
 				}
-				if(bglx_dm.equals(Common.ADD)){
-					if(originalZoningCode.equals(mbxzqh_dm)){
+				if(changeType.equals(Common.ADD)){
+					if(originalZoningCode.equals(targetCode)){
 						message.append("原区划代码“").append(originalZoningCode).append("”").append(msg)
 						.append("中被再次使用，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
-					}else if(mbxzqh_dm.indexOf(xzqh_jbdm)>-1){
+					}else if(targetCode.indexOf(xzqh_jbdm)>-1){
 						message.append("现区划代码“").append(targetZoningCode).append("”").append(msg).append("下有新增区划").append("，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
 						continue;
 					}
-				}else if(bglx_dm.equals(Common.CHANGE)){
-					if(originalZoningCode.equals(mbxzqh_dm)){
+				}else if(changeType.equals(Common.CHANGE)){
+					if(originalZoningCode.equals(targetCode)){
 						message.append("原区划代码“").append(originalZoningCode).append("”").append(msg)
 						.append("中被再次使用，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
-					}else if(checkSjXzqh(originalZoningCode,ysxzqh_dm)){
-						message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(ysxzqh_dm).append("”")
-						.append(msg).append("中已被变更为：").append(mbxzqh_dm).append("，请先删除此调整说明！");
+					}else if(checkSjXzqh(originalZoningCode,originalCode)){
+						message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
+						.append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());					
 					}
-					if(targetZoningCode.equals(ysxzqh_dm)){
+					if(targetZoningCode.equals(originalCode)){
 						message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
-						.append("中已被变更为“").append(mbxzqh_dm).append("”，请先删除此调整说明！");
+						.append("中已被变更为“").append(targetCode).append("”，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(ysxzqh_dm.indexOf(xzqh_jbdm)>-1){
-							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(ysxzqh_dm).append("”")
-							.append(msg).append("中已被变更为：").append(mbxzqh_dm).append("，请先删除此调整说明！");
+						if(originalCode.indexOf(xzqh_jbdm)>-1){
+							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
+							.append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());
-						}else if(checkSjXzqh(targetZoningCode,ysxzqh_dm)){
-							message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(Common.getSjxzqhdm(ysxzqh_dm)).append("”")
-							.append(msg).append("中已被变更为：").append(mbxzqh_dm).append("，请先删除此调整说明！");
+						}else if(checkSjXzqh(targetZoningCode,originalCode)){
+							message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(Common.getSjxzqhdm(originalCode)).append("”")
+							.append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());					
 						}else{
 							continue;
 						}
 					}
-				}else if(bglx_dm.equals(Common.MERGE)){
+				}else if(changeType.equals(Common.MERGE)){
 					//查看是否有区划并入到此区划或者此区划下级区划的下面
-					if(targetZoningCode.equals(mbxzqh_dm)){
-						message.append("现区划代码“").append(ysxzqh_dm).append("”").append(msg)
+					if(targetZoningCode.equals(targetCode)){
+						message.append("现区划代码“").append(originalCode).append("”").append(msg)
 						.append("中被并入到“").append(targetZoningCode).append("”下，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(mbxzqh_dm.indexOf(xzqh_jbdm)>-1){
+						if(targetCode.indexOf(xzqh_jbdm)>-1){
 							message.append("现区划代码“").append(targetZoningCode).append("”");
-							if(!targetZoningCode.equals(ysxzqh_dm)){
-								message.append("的下级区划“").append(ysxzqh_dm).append("”");
+							if(!targetZoningCode.equals(originalCode)){
+								message.append("的下级区划“").append(originalCode).append("”");
 							}
-							message.append(msg).append("中已被并入到“").append(mbxzqh_dm).append("”下，请先删除此调整说明！");
+							message.append(msg).append("中已被并入到“").append(targetCode).append("”下，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());
 						}
 					}				
-					if(checkSjXzqh(originalZoningCode,ysxzqh_dm)){
-						message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(ysxzqh_dm).append("”")
-						.append(msg).append("中已被并入到“").append(mbxzqh_dm).append("”下，请先删除此调整说明！");
+					if(checkSjXzqh(originalZoningCode,originalCode)){
+						message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
+						.append(msg).append("中已被并入到“").append(targetCode).append("”下，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());					
 					}
-					if(targetZoningCode.equals(mbxzqh_dm)){
-						message.append("现区划代码“").append(ysxzqh_dm).append("”").append(msg)
-						.append("中已被并入到“").append(mbxzqh_dm).append("下”，请先删除此调整说明！");
+					if(targetZoningCode.equals(targetCode)){
+						message.append("现区划代码“").append(originalCode).append("”").append(msg)
+						.append("中已被并入到“").append(targetCode).append("下”，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(ysxzqh_dm.indexOf(xzqh_jbdm)>-1){
+						if(originalCode.indexOf(xzqh_jbdm)>-1){
 							message.append("现区划代码“").append(targetZoningCode).append("”");
-							if(!targetZoningCode.equals(ysxzqh_dm)){
-								message.append("的下级区划“").append(ysxzqh_dm).append("”");
+							if(!targetZoningCode.equals(originalCode)){
+								message.append("的下级区划“").append(originalCode).append("”");
 							}
-							message.append(msg).append("中已被并入到：").append(mbxzqh_dm).append("下，请先删除此调整说明！");
+							message.append(msg).append("中已被并入到：").append(targetCode).append("下，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());
-						}else if(checkSjXzqh(targetZoningCode,ysxzqh_dm)){
-							message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(ysxzqh_dm).append("”")
-							.append(msg).append("中已被并入到：").append(mbxzqh_dm).append("下，请先删除此调整说明！");
+						}else if(checkSjXzqh(targetZoningCode,originalCode)){
+							message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(originalCode).append("”")
+							.append(msg).append("中已被并入到：").append(targetCode).append("下，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());					
 						}else{
 							continue;
 						}
 					}
-				}else if(bglx_dm.equals(Common.MOVE)){
+				}else if(changeType.equals(Common.MOVE)){
 					//查看是否有区划迁移到此区划或者此区划下级区划的下面
-					if(originalZoningCode.equals(mbxzqh_dm)){
+					if(originalZoningCode.equals(targetCode)){
 						message.append("原区划代码“").append(originalZoningCode).append("”").append(msg)
 						.append("中被再次使用，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
-					}else if(targetZoningCode.equals(Common.getSjxzqhdm(mbxzqh_dm))){
+					}else if(targetZoningCode.equals(Common.getSjxzqhdm(targetCode))){
 						message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
-						.append("中新增迁移区划“").append(mbxzqh_dm).append("”，请先删除此调整说明！");
+						.append("中新增迁移区划“").append(targetCode).append("”，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(mbxzqh_dm.indexOf(xzqh_jbdm)>-1){
-							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(Common.getSjxzqhdm(mbxzqh_dm)).append("”")
-							.append(msg).append("中有新迁移区划：").append(mbxzqh_dm).append("，请先删除此调整说明！");
+						if(targetCode.indexOf(xzqh_jbdm)>-1){
+							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(Common.getSjxzqhdm(targetCode)).append("”")
+							.append(msg).append("中有新迁移区划：").append(targetCode).append("，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());
 						}
 					}
 					
-					if(checkSjXzqh(originalZoningCode,ysxzqh_dm)){
-						message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(ysxzqh_dm).append("”")
-						.append(msg).append("中已被迁移到：").append(Common.getSjxzqhdm(mbxzqh_dm)).append("，请先删除此调整说明！");
+					if(checkSjXzqh(originalZoningCode,originalCode)){
+						message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
+						.append(msg).append("中已被迁移到：").append(Common.getSjxzqhdm(targetCode)).append("，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());					
 					}
-					if(targetZoningCode.equals(ysxzqh_dm)){
+					if(targetZoningCode.equals(originalCode)){
 						message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
-						.append("中已被迁移到“").append(Common.getSjxzqhdm(mbxzqh_dm)).append("下”，请先删除此调整说明！");
+						.append("中已被迁移到“").append(Common.getSjxzqhdm(targetCode)).append("下”，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(ysxzqh_dm.indexOf(xzqh_jbdm)>-1){
-							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(ysxzqh_dm).append("”")
-							.append(msg).append("中已被迁移到：").append(Common.getSjxzqhdm(mbxzqh_dm)).append("下，请先删除此调整说明！");
+						if(originalCode.indexOf(xzqh_jbdm)>-1){
+							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
+							.append(msg).append("中已被迁移到：").append(Common.getSjxzqhdm(targetCode)).append("下，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());
-						}else if(checkSjXzqh(targetZoningCode,ysxzqh_dm)){
-							message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(ysxzqh_dm).append("”")
-							.append(msg).append("中已被迁移到：").append(Common.getSjxzqhdm(mbxzqh_dm)).append("下，请先删除此调整说明！");
+						}else if(checkSjXzqh(targetZoningCode,originalCode)){
+							message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(originalCode).append("”")
+							.append(msg).append("中已被迁移到：").append(Common.getSjxzqhdm(targetCode)).append("下，请先删除此调整说明！");
 							flag=false;
 							throw new Exception(message.toString());					
 						}else{

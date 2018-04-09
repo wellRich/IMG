@@ -616,15 +616,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         Map<String, List<ZCCDetail>> referData = allGroups.stream()
                 //找出编号大于编号最小的组
                 .filter(e -> e.getSerialNumber() > lastGroup.getSerialNumber()).collect(Collectors.toMap(ZCCGroup::getName, zccDetailMapper::findByGroupSeq));
-        for(ZCCGroup group: groups){
+        for (ZCCGroup group : groups) {
             Integer groupSeq = group.getSeq();
-            for(ZCCDetail detail: zccDetailMapper.findByGroupSeq(groupSeq)){
-                
+            for (ZCCDetail detail : zccDetailMapper.findByGroupSeq(groupSeq)) {
+
                 //是否未牵涉其它的明细变更数据
                 String msg = findFetterOfDetail(detail.getOriginalZoningCode(), detail.getCurrentZoningCode(), referData);
-                if("".equals(msg)){
+                if ("".equals(msg)) {
                     restoreDetail(detail);
-                }else {
+                } else {
                     throw new RuntimeException(msg);
                 }
             }
@@ -650,11 +650,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return true or false
      */
     private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Map<String, List<ZCCDetail>>  referData){
+
+        //原级别代码
         String levelCode = Common.getLevelCode(targetZoningCode);
         StringBuffer msg = new StringBuffer();
         referData.forEach((groupName, v) -> {
             v.forEach(detail -> {
                 String changeType = detail.getChangeType();
+                String originalCode = detail.getOriginalZoningCode();
+                String targetCode = detail.getTargetZoningCode();
                 if(changeType.equals(Common.ADD)){
 
                 }else if(changeType.equals(Common.MERGE)){
