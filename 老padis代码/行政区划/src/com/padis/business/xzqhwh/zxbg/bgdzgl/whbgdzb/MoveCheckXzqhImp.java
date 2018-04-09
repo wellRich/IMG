@@ -21,7 +21,7 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 	 */
 	public boolean checkXzqh(String originalZoningCode, String targetZoningCode, String groupSeq, String createDate ,String ownZoningCode) throws Exception{
 		boolean flag=true;
-		String xzqh_jbdm = Common.getJbdm(targetZoningCode);
+		String levelCode = Common.getJbdm(targetZoningCode);
 		StringBuffer message= new StringBuffer("");
 		StringBuffer sql = new StringBuffer("SELECT M.MBXZQH_DM,M.MBXZQH_MC,M.YSXZQH_DM,M.YSXZQH_MC,M.BGLX_DM,G.GROUPMC FROM XZQH_BGMXB M,XZQH_BGGROUP G" +
 				",XZQH_BGSQD S WHERE M.GROUPXH=G.GROUPXH AND M.GROUPXH=G.GROUPXH AND M.GROUPXH<>'");
@@ -53,7 +53,7 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 						.append("中被再次使用，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
-					}else if(targetCode.indexOf(xzqh_jbdm)>-1){
+					}else if(targetCode.indexOf(levelCode)>-1){
 						message.append("现区划代码“").append(targetZoningCode).append("”").append(msg).append("下有新增区划").append("，请先删除此调整说明！");
 						flag=false;
 						throw new Exception(message.toString());
@@ -78,7 +78,7 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(originalCode.indexOf(xzqh_jbdm)>-1){
+						if(originalCode.indexOf(levelCode)>-1){
 							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
 							.append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
 							flag=false;
@@ -100,7 +100,7 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(targetCode.indexOf(xzqh_jbdm)>-1){
+						if(targetCode.indexOf(levelCode)>-1){
 							message.append("现区划代码“").append(targetZoningCode).append("”");
 							if(!targetZoningCode.equals(originalCode)){
 								message.append("的下级区划“").append(originalCode).append("”");
@@ -122,7 +122,7 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(originalCode.indexOf(xzqh_jbdm)>-1){
+						if(originalCode.indexOf(levelCode)>-1){
 							message.append("现区划代码“").append(targetZoningCode).append("”");
 							if(!targetZoningCode.equals(originalCode)){
 								message.append("的下级区划“").append(originalCode).append("”");
@@ -152,7 +152,7 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(targetCode.indexOf(xzqh_jbdm)>-1){
+						if(targetCode.indexOf(levelCode)>-1){
 							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(Common.getSjxzqhdm(targetCode)).append("”")
 							.append(msg).append("中有新迁移区划：").append(targetCode).append("，请先删除此调整说明！");
 							flag=false;
@@ -172,7 +172,7 @@ public class MoveCheckXzqhImp extends CheckXzqhImp{
 						flag=false;
 						throw new Exception(message.toString());
 					}else{
-						if(originalCode.indexOf(xzqh_jbdm)>-1){
+						if(originalCode.indexOf(levelCode)>-1){
 							message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
 							.append(msg).append("中已被迁移到：").append(Common.getSjxzqhdm(targetCode)).append("下，请先删除此调整说明！");
 							flag=false;
