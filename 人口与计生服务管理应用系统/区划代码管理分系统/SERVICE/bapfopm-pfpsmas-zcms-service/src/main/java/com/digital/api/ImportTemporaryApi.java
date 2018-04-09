@@ -30,8 +30,4 @@ public interface ImportTemporaryApi {
     List<ContrastTemporary> queryChangeData(Integer fileSquence,String zoningCode,String errorIndentification,String typeCode);
 
 
-
-
-
-
 }

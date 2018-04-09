@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class BapfopmPfpsmasZcmsServiceApplication {
 	public static void main(String[] args) {
+
 		SpringApplication.run(BapfopmPfpsmasZcmsServiceApplication.class, args);
 	}
 }

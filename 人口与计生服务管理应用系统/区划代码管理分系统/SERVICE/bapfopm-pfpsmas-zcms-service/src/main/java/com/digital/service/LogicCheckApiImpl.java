@@ -42,7 +42,7 @@ public class LogicCheckApiImpl implements LogicCheckApi {
     private TemporaryDataMapper temporaryDataMapper;
 
     @Autowired
-    private ZoningDataUploadMapper zoningDataUploadMapper;
+    private CommonService commonService ;
 
 
     private List<PreviewDataInfo> dataInfoList = new ArrayList<>();
@@ -93,10 +93,6 @@ public class LogicCheckApiImpl implements LogicCheckApi {
     }
 
 
-    public void importFormalTable(List<ContrastTemporary> temporaryList, FocusChangeFileInfo fileInfo){
-       //新增申请单
-
-    }
 
     /**
      * @description 对内容进行校验
@@ -183,6 +179,9 @@ public class LogicCheckApiImpl implements LogicCheckApi {
             } else if (this.isZoningCodeExist(nowCode)) {
                 logger.error("新增的区划代码[" + nowCode + "]已存在！");
                 errorMsg.append("新增的区划代码[").append(nowCode).append("]已存在！");
+            }else if (commonService.isUsedZoningName(nowCode,nowName)){
+                logger.error("新增的区划代码名称在同级[" + nowCode + "]已存在！");
+                errorMsg.append("新增的区划代码名称[").append(nowName).append("]已存在！");
             }
         } else if (Common.CHANGE.equals(typeCode)) {
 
@@ -212,8 +211,6 @@ public class LogicCheckApiImpl implements LogicCheckApi {
             } else if (!Common.getAssigningCode(originalCode).equals(Common.getAssigningCode(nowCode))) {
                 logger.error("并入的原区划代码[" + originalCode + "]和现区划代码[" + nowCode + "]不是同级区划！");
                 errorMsg.append("并入的原区划代码[").append(originalCode).append("]和现区划代码[").append(nowCode).append("]不是同级区划！");
-            } else if (false/*判断是否有下级   下级是否全部迁移*/) {
-
             }
 
         } else if (Common.MOVE.equals(typeCode)) {

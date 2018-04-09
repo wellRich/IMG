@@ -70,7 +70,7 @@ public class QueryTemporaryController {
     * */
     @RequestMapping(value = "/query/downloadData",method = RequestMethod.GET)
     @ResponseBody
-    public String downloadChangeData(@RequestParam("fileSquence") Integer fileSquence, String errorStatus, HttpServletResponse response){
+    public void downloadChangeData(@RequestParam("fileSquence") Integer fileSquence, String errorStatus, HttpServletResponse response){
         List<ContrastTemporary> temporaryList = new ArrayList<>();
         temporaryList = importTemporaryApi.queryTemporary(fileSquence,errorStatus);
         FocusChangeFileInfo fileInfo = zoningDataUploadApi.queryFocusChangeFileInfo(fileSquence);
@@ -82,9 +82,10 @@ public class QueryTemporaryController {
         //将数据写入到txt中
         FileUtil.writerTxt(temporaryList,txtName);
 
+        response.setCharacterEncoding("utf-8");
         response.setHeader("content-type", "text/plain");
         response.setContentType("text/plain");
-        response.setHeader("Content-Disposition", "attachment;filename=" + txtName.substring(txtName.lastIndexOf("/")));
+        response.setHeader("Content-Disposition", "attachment;filename=" + txtName.substring(txtName.lastIndexOf(File.separator)));
         byte[] buff = new byte[1024];
         BufferedInputStream bis = null;
         OutputStream os = null;
@@ -110,8 +111,6 @@ public class QueryTemporaryController {
                 }
             }
         }
-        return new RtnData().toString();
-
 
     }
 

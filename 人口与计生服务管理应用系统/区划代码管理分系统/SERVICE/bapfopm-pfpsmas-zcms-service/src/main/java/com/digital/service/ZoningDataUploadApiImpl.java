@@ -107,7 +107,10 @@ public class ZoningDataUploadApiImpl implements ZoningDataUploadApi {
         String status = fileInfo.getStatusCode();
         if (!StringUtil.isEmpty(status)){
             /*判断变更状态、如果是40表示 已经申请单生成成功；不可被删除*/
-            if (Common.XZQH_JZBGZT_SQDSQCG.equals(status)){
+            if (Common.XZQH_JZBGZT_SQDSQCG.equals(status)||
+                    Common.XZQH_JZBGZT_DRLSBCLZ.equals(status)||
+                    Common.XZQH_JZBGZT_LJJYCLZ.equals(status)||
+                    Common.XZQH_JZBGZT_SQDSQCLZ.equals(status)){
                 return false;
             }
         }

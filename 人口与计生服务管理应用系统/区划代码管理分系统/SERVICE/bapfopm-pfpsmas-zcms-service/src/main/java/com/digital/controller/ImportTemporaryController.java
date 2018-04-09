@@ -68,14 +68,15 @@ public class ImportTemporaryController extends BaseController {
             if (StringUtil.isEmpty(fileInfo.getFileName()) || StringUtil.isEmpty(fileInfo.getFilePath())) {
                 throw new RuntimeException("数据有问题 || 或查询接口有问题");
             }
-            if (!Common.XZQH_JZBGZT_DRLSBCG.equals(fileInfo.getStatusCode())){
+            if (!Common.XZQH_JZBGZT_DRLSBCLZ.equals(fileInfo.getStatusCode())){
                 return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_IMPORT_CHEKED).toString();
             }
 
             /*进行内容校验*/
             boolean checked = importTemporaryApi.importTemporary(fileInfo);
             if (!checked) {
-
+                //导入临时表失败 修改状态
+                zoningDataUploadApi.updateTypeCode(fileSquence,Common.XZQH_JZBGZT_DRLSBSB);
                 return new RtnData(Constants.RTN_CODE_ERROR,"内容校验失败！  具体错误将在备注中显示。。").toString();
             }
             return new RtnData().toString();
@@ -101,19 +102,22 @@ public class ImportTemporaryController extends BaseController {
             FocusChangeFileInfo fileInfo = zoningDataUploadApi.queryFocusChangeFileInfo(fileSquence);
             if (fileInfo == null) {
                 logger.info("没有该文件信息");
+                return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "没有该文件信息").toString();
             }
             checkedMap = logicCheckApi.ContentCheck(fileInfo);
+            //判断逻辑校验是否成功
             if (!(boolean) checkedMap.get("check")) {
-                return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "校验的过程中，未通过数据，详情请查看错误").toString();
+                logger.error(fileInfo.getFileName()+"逻辑校验失败！");
+                //修改文件信息中的集中变更状态为  失败
+                zoningDataUploadApi.updateTypeCode(fileSquence,Common.XZQH_JZBGZT_LJJYSB);
+                return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "校验的过程中，未通过数据，详情请查看错误信息").toString();
             }
             List<ContrastTemporary> temporaryList = (List<ContrastTemporary>) checkedMap.get("temporaryList");
             //导入预览数据表
             boolean result = importFormalTableApi.ImprotFormalT(fileInfo, temporaryList);
-
             if (result) {
                 return new RtnData().toString();
             }
-
         }
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "导入正式表的过程中，发现逻辑校验出错的数据，详情请查看错误页面").toString();
 

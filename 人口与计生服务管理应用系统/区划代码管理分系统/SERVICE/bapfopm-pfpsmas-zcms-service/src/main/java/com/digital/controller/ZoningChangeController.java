@@ -90,9 +90,12 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/ZoningChangeRequestList", method = RequestMethod.GET)
     @ResponseBody
-    public Object ZoningChangeRequestList(@RequestParam(value = "pageIndex", defaultValue = "1")Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize, @RequestParam(value = "total", defaultValue = "0")Integer total){
-        String levelCode = "370102";
-        String zoningName = "历下区";
+    public Object ZoningChangeRequestList(@RequestParam(value = "levelCode", defaultValue = "370102") String levelCode
+            , @RequestParam(value = "zoningName", defaultValue = "历下区")Integer zoningName
+            , @RequestParam(value = "pageIndex", defaultValue = "1")Integer pageIndex
+            , @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize
+            , @RequestParam(value = "total", defaultValue = "0")Integer total){
+        //String zoningName = "历下区";
         log.info("ZoningChangeRequestList.levelCode----> " + levelCode);
         try{
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZCCReqByZoningLevelCode(levelCode, zoningName, pageIndex, pageSize, total) ).toString();
