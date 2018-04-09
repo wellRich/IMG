@@ -57,11 +57,11 @@ public class ZCCGroupSql extends EntitySql<ZCCGroup> {
     }
 
     /**
-     * 查找变更对照组，按pxh倒序排列
+     * 查找变更对照组，按编号倒序排列
      * @param ids 以“,”分隔的id
      * @return
      */
     public String findByIds(String ids){
-        return super.findByIds(ids) + " ORDER BY PXH DESC";
+        return super.findByIds(ids) + " ORDER BY BH DESC";
     }
 }

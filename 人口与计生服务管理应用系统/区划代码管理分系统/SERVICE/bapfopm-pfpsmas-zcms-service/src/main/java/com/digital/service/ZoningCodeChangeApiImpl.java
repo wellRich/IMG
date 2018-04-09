@@ -599,17 +599,31 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
         //这一步目前只是通过查询serialNumber(编号)，以它的倒序来排序
         List<ZCCGroup> groups = zccGroupMapper.findByIds(groupSeqs);
+
+        int size = groups.size();
+
+        //取得编号最小的组，也是要删除的组中的最后一个变更组
+        ZCCGroup lastGroup = groups.get(size - 1);
         ZCCRequest req = zccRequestMapper.get(groups.get(0).getRequestSeq());
 
-        //该申请单下的
+        //该申请单下的所有变更组
         List<ZCCGroup> allGroups = zccGroupMapper.findByRequestSeq(req.getSeq());
 
+        //取两个list的差集
+        allGroups.removeAll(groups);
+
+
+        List<List<ZCCDetail>> referData = allGroups.stream()
+                //找出编号大于编号最小的组
+                .filter(e -> e.getSerialNumber() > lastGroup.getSerialNumber()).map( e -> {
+                    return zccDetailMapper.findByGroupSeq(e);
+                }).collect(Collectors.toList());
         for(ZCCGroup group: groups){
             Integer groupSeq = group.getSeq();
             for(ZCCDetail detail: zccDetailMapper.findByGroupSeq(groupSeq)){
                 
                 //是否未牵涉其它的明细变更数据
-                String msg = findFetterOfDetail(detail.getOriginalZoningCode(), detail.getCurrentZoningCode(), groupSeq, detail.getCreatorDate(), req.getLevelCode());
+                String msg = findFetterOfDetail(detail.getOriginalZoningCode(), detail.getCurrentZoningCode(), referData);
                 if("".equals(msg)){
                     restoreDetail(detail);
                 }else {
@@ -634,15 +648,27 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * 查找与指定明细有牵扯的区划变更明细
      * @param originalZoningCode 原区划代码
      * @param targetZoningCode 目标区划代码
-     * @param groupSeq 变更组序号
-     * @param createDate 创建时间
-     * @param ownZoningCode 录入人所在区划的区划代码
+     * @param referData 参照比较的明细数据
      * @return true or false
      */
-    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Integer groupSeq, String createDate, String ownZoningCode){
-        String msg = "";
+    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, List<List<ZCCDetail>> referData){
+        String levelCode = Common.getLevelCode(targetZoningCode);
+        StringBuffer msg = new StringBuffer();
+        referData.forEach(e -> {
+            e.forEach(detail -> {
+                String changeType = detail.getChangeType();
+                if(changeType.equals(Common.ADD)){
 
-        return msg;
+                }else if(changeType.equals(Common.MERGE)){
+
+                }else if(changeType.equals(Common.MOVE)){
+
+                }else if(changeType.equals(Common.CHANGE)){
+
+                }
+            });
+        });
+        return msg.toString();
     }
 
 
