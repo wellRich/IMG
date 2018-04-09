@@ -613,11 +613,9 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         allGroups.removeAll(groups);
 
 
-        List<List<ZCCDetail>> referData = allGroups.stream()
+        Map<String, List<ZCCDetail>> referData = allGroups.stream()
                 //找出编号大于编号最小的组
-                .filter(e -> e.getSerialNumber() > lastGroup.getSerialNumber()).map( e -> {
-                    return zccDetailMapper.findByGroupSeq(e);
-                }).collect(Collectors.toList());
+                .filter(e -> e.getSerialNumber() > lastGroup.getSerialNumber()).collect(Collectors.toMap(ZCCGroup::getName, zccDetailMapper::findByGroupSeq));
         for(ZCCGroup group: groups){
             Integer groupSeq = group.getSeq();
             for(ZCCDetail detail: zccDetailMapper.findByGroupSeq(groupSeq)){
@@ -651,11 +649,11 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @param referData 参照比较的明细数据
      * @return true or false
      */
-    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, List<List<ZCCDetail>> referData){
+    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Map<String, List<ZCCDetail>>  referData){
         String levelCode = Common.getLevelCode(targetZoningCode);
         StringBuffer msg = new StringBuffer();
-        referData.forEach(e -> {
-            e.forEach(detail -> {
+        referData.forEach((groupName, v) -> {
+            v.forEach(detail -> {
                 String changeType = detail.getChangeType();
                 if(changeType.equals(Common.ADD)){
 
