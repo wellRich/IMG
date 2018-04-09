@@ -644,157 +644,158 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
     /**
      * 查找与指定明细有牵扯的区划变更明细
+     * 并
      * @param originalZoningCode 原区划代码
-     * @param targetZoningCode 目标区划代码
-     * @param referData 参照比较的明细数据
+     * @param targetZoningCode   目标区划代码
+     * @param referData          参照比较的明细数据
      * @return true or false
      */
-    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Map<String, List<ZCCDetail>>  referData){
+    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Map<String, List<ZCCDetail>> referData) {
 
         //原级别代码
         String levelCode = Common.getLevelCode(targetZoningCode);
-        StringBuffer msg = new StringBuffer();
+        StringBuffer message = new StringBuffer();
         referData.forEach((groupName, v) -> {
             v.forEach(detail -> {
                 String changeType = detail.getChangeType();
                 String originalCode = detail.getOriginalZoningCode();
-                String targetCode = detail.getTargetZoningCode();
+                String targetCode = detail.getCurrentZoningCode();
 
-                if(changeType.equals(Common.ADD)){
-                    msg.append("在调整说明“" + groupName + "”中");
+                if (changeType.equals(Common.ADD)) {
+                    String msg = ("在调整说明“" + groupName + "”中");
 
-                    if(originalZoningCode.equals(targetCode)){
+                    if (originalZoningCode.equals(targetCode)) {
                         message.append("原区划代码“")
-                        .append(originalZoningCode)
-                        .append("”")
-                        .append(msg)
-                        .append("中被再次使用，请先删除此调整说明！");
+                                .append(originalZoningCode)
+                                .append("”")
+                                .append(msg)
+                                .append("中被再次使用，请先删除此调整说明！");
                     }
 
-                    if(targetCode.indexOf(xzqh_jbdm)>-1){
+                    if (targetCode.contains(levelCode)) {
                         message.append("现区划代码“")
-                        .append(targetZoningCode)
-                        .append("”")
-                        .append(msg)
-                        .append("下有新增区划")
-                        .append("，请先删除此调整说明！");
+                                .append(targetZoningCode)
+                                .append("”")
+                                .append(msg)
+                                .append("下有新增区划")
+                                .append("，请先删除此调整说明！");
                     }
-                }else if(changeType.equals(Common.CHANGE)){
-                    msg.append("在调整说明“" + groupName + "”中");
-                    if(originalZoningCode.equals(targetCode)){
+                } else if (changeType.equals(Common.CHANGE)) {
+                    String msg = ("在调整说明“" + groupName + "”中");
+                    if (originalZoningCode.equals(targetCode)) {
                         message.append("原区划代码“").append(originalZoningCode).append("”").append(msg)
-                        .append("中被再次使用，请先删除此调整说明！");
+                                .append("中被再次使用，请先删除此调整说明！");
                     }
 
-                    if(checkSuperCode(originalZoningCode,originalCode)){
+                    if (checkSuperCode(originalZoningCode, originalCode)) {
                         message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
-                        .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
+                                .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
                     }
 
-                    if(targetZoningCode.equals(originalCode)){
+                    if (targetZoningCode.equals(originalCode)) {
                         message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
-                        .append("中已被变更为“").append(targetCode).append("”，请先删除此调整说明！");
-                    }else{
-                        if(originalCode.indexOf(levelCode)>-1){
+                                .append("中已被变更为“").append(targetCode).append("”，请先删除此调整说明！");
+                    } else {
+                        if (originalCode.indexOf(levelCode) > -1) {
                             message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
-                            .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
-                        }else if(checkSuperCode(targetZoningCode,originalCode)){
-                            message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(Common.getSjxzqhdm(originalCode)).append("”")
-                            .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
+                                    .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
+                        } else if (checkSuperCode(targetZoningCode, originalCode)) {
+                            message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(Common.getSuperiorZoningCode(originalCode)).append("”")
+                                    .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
                         }
                     }
-                }else if(changeType.equals(Common.MERGE)){
-                    msg.append("在调整说明“" + groupName + "”中");
+                } else if (changeType.equals(Common.MERGE)) {
+                    String msg = ("在调整说明“" + groupName + "”中");
 
                     //查看是否有区划并入到此区划或者此区划下级区划的下面
-                    if(targetZoningCode.equals(targetCode)){
+                    if (targetZoningCode.equals(targetCode)) {
                         message.append("现区划代码“").append(originalCode).append("”").append(msg)
-                        .append("中被并入到“").append(targetZoningCode).append("”下，请先删除此调整说明！");
-                    }else{
-                        if(targetCode.indexOf(levelCode)>-1){
+                                .append("中被并入到“").append(targetZoningCode).append("”下，请先删除此调整说明！");
+                    } else {
+                        if (targetCode.indexOf(levelCode) > -1) {
                             message.append("现区划代码“").append(targetZoningCode).append("”");
-                            if(!targetZoningCode.equals(originalCode)){
+                            if (!targetZoningCode.equals(originalCode)) {
                                 message.append("的下级区划“").append(originalCode).append("”");
                             }
                             message.append(msg).append("中已被并入到“").append(targetCode).append("”下，请先删除此调整说明！");
                         }
                     }
 
-                    if(checkSuperCode(originalZoningCode,originalCode)){
+                    if (checkSuperCode(originalZoningCode, originalCode)) {
                         message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
-                        .append(msg).append("中已被并入到“").append(targetCode).append("”下，请先删除此调整说明！");
+                                .append(msg).append("中已被并入到“").append(targetCode).append("”下，请先删除此调整说明！");
                     }
 
-                    if(targetZoningCode.equals(targetCode)){
+                    if (targetZoningCode.equals(targetCode)) {
                         message.append("现区划代码“").append(originalCode).append("”").append(msg)
-                        .append("中已被并入到“").append(targetCode).append("下”，请先删除此调整说明！");
-                    }else{
-                        if(originalCode.indexOf(levelCode)>-1){
+                                .append("中已被并入到“").append(targetCode).append("下”，请先删除此调整说明！");
+                    } else {
+                        if (originalCode.indexOf(levelCode) > -1) {
                             message.append("现区划代码“").append(targetZoningCode).append("”");
-                            if(!targetZoningCode.equals(originalCode)){
+                            if (!targetZoningCode.equals(originalCode)) {
                                 message.append("的下级区划“").append(originalCode).append("”");
                             }
                             message.append(msg).append("中已被并入到：").append(targetCode).append("下，请先删除此调整说明！");
                         }
 
-                        if(checkSuperCode(targetZoningCode,originalCode)){
+                        if (checkSuperCode(targetZoningCode, originalCode)) {
                             message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(originalCode).append("”")
-                            .append(msg).append("中已被并入到：").append(targetCode).append("下，请先删除此调整说明！");
+                                    .append(msg).append("中已被并入到：").append(targetCode).append("下，请先删除此调整说明！");
                         }
                     }
-                }else if(changeType.equals(Common.MOVE)){
-                    msg.append("在调整说明“" + groupName + "”中");
+                } else if (changeType.equals(Common.MOVE)) {
+                    String msg = "在调整说明“" + groupName + "”中";
 
                     //查看是否有区划迁移到此区划或者此区划下级区划的下面
-                    if(originalZoningCode.equals(targetCode)){
+                    if (originalZoningCode.equals(targetCode)) {
                         message.append("原区划代码“").append(originalZoningCode).append("”").append(msg)
-                        .append("中被再次使用，请先删除此调整说明！");
+                                .append("中被再次使用，请先删除此调整说明！");
                     }
 
-                    if(targetZoningCode.equals(Common.getSuperiorZoningCode(targetCode))){
+                    if (targetZoningCode.equals(Common.getSuperiorZoningCode(targetCode))) {
                         message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
-                        .append("中新增迁移区划“").append(targetCode).append("”，请先删除此调整说明！");
-                    }else{
-                        if(targetCode.indexOf(levelCode)>-1){
-                            message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(Common.getSjxzqhdm(targetCode)).append("”")
-                            .append(msg).append("中有新迁移区划：").append(targetCode).append("，请先删除此调整说明！");
+                                .append("中新增迁移区划“").append(targetCode).append("”，请先删除此调整说明！");
+                    } else {
+                        if (targetCode.indexOf(levelCode) > -1) {
+                            message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(Common.getSuperiorZoningCode(targetCode)).append("”")
+                                    .append(msg).append("中有新迁移区划：").append(targetCode).append("，请先删除此调整说明！");
                         }
                     }
 
-                    if(checkSuperCode(originalZoningCode,originalCode)){
+                    if (checkSuperCode(originalZoningCode, originalCode)) {
                         message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
-                        .append(msg).append("中已被迁移到：").append(Common.getSuperiorZoningCode(targetCode)).append("，请先删除此调整说明！");
+                                .append(msg).append("中已被迁移到：").append(Common.getSuperiorZoningCode(targetCode)).append("，请先删除此调整说明！");
                     }
 
-                    if(targetZoningCode.equals(originalCode)){
+                    if (targetZoningCode.equals(originalCode)) {
                         message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
-                        .append("中已被迁移到“").append(Common.getSuperiorZoningCode(targetCode)).append("下”，请先删除此调整说明！");
-                    }else{
-                        if(originalCode.indexOf(levelCode)>-1){
+                                .append("中已被迁移到“").append(Common.getSuperiorZoningCode(targetCode)).append("下”，请先删除此调整说明！");
+                    } else {
+                        if (originalCode.indexOf(levelCode) > -1) {
                             message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
-                            .append(msg).append("中已被迁移到：").append(Common.getSuperiorZoningCode(targetCode)).append("下，请先删除此调整说明！");
+                                    .append(msg).append("中已被迁移到：").append(Common.getSuperiorZoningCode(targetCode)).append("下，请先删除此调整说明！");
                         }
 
-                        if(checkSuperCode(targetZoningCode,originalCode)){
+                        if (checkSuperCode(targetZoningCode, originalCode)) {
                             message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(originalCode).append("”")
-                            .append(msg).append("中已被迁移到：").append(Common.getSuperiorZoningCode(targetCode)).append("下，请先删除此调整说明！");
+                                    .append(msg).append("中已被迁移到：").append(Common.getSuperiorZoningCode(targetCode)).append("下，请先删除此调整说明！");
                         }
                     }
                 }
             });
         });
-        return msg.toString();
+        return message.toString();
     }
 
     //查找上级区划是否和给出的区划代码相同
-    public boolean checkSuperCode(String sonCode,String superiorCode) throws Exception{
-        boolean flag=false;
+    private boolean checkSuperCode(String sonCode, String superiorCode) {
+        boolean flag = false;
         String originalSuperiorCode = Common.getSuperiorZoningCode(sonCode);
-        while(Integer.parseInt(Common.getJcdm(originalSuperiorCode))>=1){
-            if(originalSuperiorCode.equals(superiorCode)){
-                flag=true;
+        while (Integer.parseInt(Common.getLevelCode(originalSuperiorCode)) >= 1) {
+            if (originalSuperiorCode.equals(superiorCode)) {
+                flag = true;
                 break;
-            }else{
+            } else {
                 originalSuperiorCode = Common.getSuperiorZoningCode(originalSuperiorCode);
             }
         }
@@ -808,6 +809,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @param detail 区划变更对照明细数据
      */
     private void restoreDetail(ZCCDetail detail){
+        String changeType = detail.getChangeType();
 
     }
 
