@@ -45,10 +45,19 @@ public interface ZCCGroupMapper {
             @Result(property = "createDate", column = "LRSJ"),
             @Result(property = "creatorDeptCode", column = "LRJG_DM"),
             @Result(property = "requestSeq", column = "SQDXH"),
+            @Result(property = "orderNum", column = "PXH")
 
     })
     ZCCGroup get(Object key);
 
+    /**
+     * 通过若干id查找对照组
+     * @param ids 若干对照组的序号（id），以“,”分割
+     * @return 对照组列表
+     */
+    @SelectProvider(type = ZCCGroupSql.class, method = "findByIds")
+    @ResultMap(value = "get")
+    List<ZCCGroup> findByIds(String ids);
 
     /**
      *  根据区划代码查找该区划相关的变更组中最大的编号
@@ -86,4 +95,6 @@ public interface ZCCGroupMapper {
      */
     @Update("INSERT INTO XZQH_MAX(TABLE_NAME, TABLE_NOTE, TABLE_MAX) VALUES(#{tableName}, #{tableNote}, #{tableMax})")
     int insertMaxOrderNum(Map<String, Object> params);
+
+
 }

@@ -55,4 +55,13 @@ public class ZCCGroupSql extends EntitySql<ZCCGroup> {
         log.info("getMaxOrderNum.sql---------> " + sql);
         return sql;
     }
+
+    /**
+     * 查找变更对照组，按pxh倒序排列
+     * @param ids 以“,”分隔的id
+     * @return
+     */
+    public String findByIds(String ids){
+        return super.findByIds(ids) + " ORDER BY PXH DESC";
+    }
 }

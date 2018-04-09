@@ -155,6 +155,22 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         return sql;
     }
 
+
+    /**
+     * 通过若干主键获取对象集合
+     * @param ids 以“,”分隔的id
+     * @return sql
+     */
+    public String findByIds(String ids){
+        String sql = new SQL(){{
+            FROM(tableName);
+            SELECT("*");
+            WHERE(getColumnByField(getPrimaryField()) + "  IN (" + ids + "");
+        }}.toString();
+        log.info("findByIds.sql ---> " + sql);
+        return sql;
+    }
+
     //通过字段名获取数据列名
     protected String getColumnByField(String fieldName){
         return fieldsAndCols.get(fieldName);

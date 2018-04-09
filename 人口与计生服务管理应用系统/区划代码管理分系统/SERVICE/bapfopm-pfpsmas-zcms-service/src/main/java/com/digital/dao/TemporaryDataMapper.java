@@ -47,6 +47,7 @@ public interface TemporaryDataMapper {
             @Result(column = "BGLX_DM",property = "typeCode",javaType =String.class ),
             @Result(column = "MBXZQH_DM",property = "nowCode",javaType =String.class ),
             @Result(column = "MBXZQH_MC",property = "nowName",javaType =String.class ),
+            @Result(column = "CWSJBZ",property = "errorIdentification",javaType =String.class ),
             @Result(column = "CWXX",property = "errorMessage",javaType =String.class ),
             @Result(column = "LRR_DM",property = "enterOneCode",javaType =String.class ),
             @Result(column = "BZ",property = "note",javaType =String.class ),

@@ -30,6 +30,10 @@ public class Constants {
      */
     public final static String RTN_MESSAGE_ERROR = "请求发生未知异常";
     /*
+    * 逻辑校验失败
+    * */
+    public final static String RTN_CHECKED_FAIL = "逻辑校验失败";
+    /*
      * 上传失败的错误信息
      * */
     public final static String RTN_MESSAGE_UPLOAD = "上传过程中文本校验未通过";

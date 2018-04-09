@@ -22,7 +22,7 @@ public class TemporaryDataSql {
     public String queryChangeData(Integer fileNum,String zoningCode,String errorIdentification,String changeType){
         return new SQL(){
             {
-                SELECT("DZBXH","YSXZQH_DM","YSXZQH_MC","BGLX_DM","MBXZQH_DM","MBXZQH_MC","CWXX","BZ","LRR_DM","BH","GROUPMC","LRJG_DM","PXH");
+                SELECT("DZBXH","YSXZQH_DM","YSXZQH_MC","BGLX_DM","MBXZQH_DM","MBXZQH_MC","CWSJBZ","CWXX","BZ","LRR_DM","BH","GROUPMC","LRJG_DM","PXH");
                 FROM("XZQH_JZBGDZB_TEMP");
                 WHERE("ZIPXH="+fileNum);
                 if (!StringUtil.isEmpty(errorIdentification)){

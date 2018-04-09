@@ -110,7 +110,7 @@ public class ImportTemporaryController extends BaseController {
                 logger.error(fileInfo.getFileName()+"逻辑校验失败！");
                 //修改文件信息中的集中变更状态为  失败
                 zoningDataUploadApi.updateTypeCode(fileSquence,Common.XZQH_JZBGZT_LJJYSB);
-                return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "校验的过程中，未通过数据，详情请查看错误信息").toString();
+                return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_CHECKED_FAIL, "校验的过程中，未通过数据，详情请查看错误信息").toString();
             }
             List<ContrastTemporary> temporaryList = (List<ContrastTemporary>) checkedMap.get("temporaryList");
             //导入预览数据表

@@ -63,7 +63,9 @@ public interface ZCCDetailMapper {
     @ResultMap(value = "get")
     List<ZCCDetail> findAll();
 
-    @Select("SELECT MXBXH, PXH, GROUPXH, BGLX_DM, BZ, YSXZQH_DM, YSXZQH_MC, YSXZQH_DM, MBXZQH_DM, MBXZQH_MC, CLJG, CLZT_DM, RINGFLAG FROM XZQH_BGMXB WHERE GROUPXH = #{groupSeq} ")
+    @Select("SELECT MXBXH, PXH, GROUPXH, BGLX_DM, BZ, YSXZQH_DM, YSXZQH_MC, YSXZQH_DM, MBXZQH_DM, MBXZQH_MC, CLJG, CLZT_DM, RINGFLAG " +
+            "FROM XZQH_BGMXB " +
+            "WHERE GROUPXH = #{groupSeq} ORDER BY PXH DESC")
     @ResultMap(value = "get")
     List<ZCCDetail> findByGroupSeq(@Param(value = "groupSeq") Object groupSeq);
 

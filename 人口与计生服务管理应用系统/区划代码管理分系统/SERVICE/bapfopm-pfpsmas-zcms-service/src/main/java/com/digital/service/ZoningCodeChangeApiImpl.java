@@ -230,7 +230,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
     public List<PreviewDataInfo> findBrothersByCode(String zoningCode){
-       return previewDataInfoMapper.findBrothersByCode(zoningCode);
+        return previewDataInfoMapper.findBrothersByCode(zoningCode);
     }
 
     /**
@@ -548,7 +548,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         detailQueryResp.setTotalPage(detailQueryResp.getPageCount());
         int offset = (pageIndex - 1) * pageSize;
         detailQueryResp.setDataList(zccDetailMapper.pageSeekByGroups(seqStr, offset, pageSize));
-       return detailQueryResp;
+        return detailQueryResp;
     }
 
     /**
@@ -596,37 +596,26 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     @Override
     public void deleteDetails(String groupSeqs) {
-        for(String groupSeq: groupSeqs.split(",")){
-            List<ZCCDetail> details = zccDetailMapper.findByGroupSeq(groupSeq);
-            details.stream().peek(e ->{
 
-                //1 删除历史数据
-                historicalZoningChangeMapper.delete(e.getSeq());
+        //这一步目前只是通过查询serialNumber(编号)，以它的倒序来排序
+        List<ZCCGroup> groups = zccGroupMapper.findByIds(groupSeqs);
+        ZCCRequest req = zccRequestMapper.get(groups.get(0).getRequestSeq());
 
-                //2 回滚预览数据
-                String changeType = e.getChangeType();
-                if(changeType.equals(Common.ADD)){
+        //该申请单下的
+        List<ZCCGroup> allGroups = zccGroupMapper.findByRequestSeq(req.getSeq());
 
-                    //删除一条预览数据
-                    previewDataInfoMapper.delete(e.getSeq());
-                }else if(changeType.equals(Common.CHANGE)){
-
-                    //仅仅是名称变更
-                    if(Common.hasSameZoningCode(e.getOriginalZoningCode(), e.getCurrentZoningCode())){
-                        PreviewDataInfo updatedInfo = previewDataInfoMapper.findValidOneByZoningCode(e.getCurrentZoningCode());
-
-
-                    }else {
-
-                    }
-                }else if(changeType.equals(Common.MERGE)){
-
-                }else if(changeType.equals(Common.MOVE)){
-
+        for(ZCCGroup group: groups){
+            Integer groupSeq = group.getSeq();
+            for(ZCCDetail detail: zccDetailMapper.findByGroupSeq(groupSeq)){
+                
+                //是否未牵涉其它的明细变更数据
+                String msg = findFetterOfDetail(detail.getOriginalZoningCode(), detail.getCurrentZoningCode(), groupSeq, detail.getCreatorDate(), req.getLevelCode());
+                if("".equals(msg)){
+                    restoreDetail(detail);
                 }else {
-                    throw new RuntimeException("未定义的变更类型[" + changeType + "]");
+                    throw new RuntimeException(msg);
                 }
-            });
+            }
 
             //3 删除明细数据
             zccDetailMapper.deleteByGroupSeq(groupSeq);
@@ -634,11 +623,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             //4 删除变更对照组
             zccGroupMapper.delete(groupSeq);
         }
+
+
+
+
     }
 
 
     /**
-     * 判断此明细变更对照数据是否可以直接、干净、彻底地删除
+     * 查找与指定明细有牵扯的区划变更明细
      * @param originalZoningCode 原区划代码
      * @param targetZoningCode 目标区划代码
      * @param groupSeq 变更组序号
@@ -646,8 +639,10 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @param ownZoningCode 录入人所在区划的区划代码
      * @return true or false
      */
-    private boolean isDeletableDetail(String originalZoningCode, String targetZoningCode, String groupSeq, String createDate, String ownZoningCode){
-        return false;
+    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Integer groupSeq, String createDate, String ownZoningCode){
+        String msg = "";
+
+        return msg;
     }
 
 
