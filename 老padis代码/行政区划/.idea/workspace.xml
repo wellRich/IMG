@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bd15f617-6aef-4656-8d79-063b8c3b5527" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java" afterPath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java" afterPath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java" />
     </list>
     <ignored path="$PROJECT_DIR$/web应用/adp/applications/padis/WEB-INF/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,7 +61,7 @@
       <file leaf-file-name="WhbgdzbService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
+            <state relative-caret-position="2717">
               <caret line="157" column="21" lean-forward="false" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="21" />
               <folding />
             </state>
@@ -73,8 +71,8 @@
       <file leaf-file-name="WhbgdzbManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="540" column="72" lean-forward="true" selection-start-line="540" selection-start-column="72" selection-end-line="540" selection-end-column="72" />
+            <state relative-caret-position="19">
+              <caret line="540" column="72" lean-forward="false" selection-start-line="540" selection-start-column="72" selection-end-line="540" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -83,7 +81,7 @@
       <file leaf-file-name="MoveCheckXzqhImp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2392">
+            <state relative-caret-position="323">
               <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
               <folding />
             </state>
@@ -93,7 +91,7 @@
       <file leaf-file-name="MergeCheckXzqhImp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MergeCheckXzqhImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-910">
+            <state relative-caret-position="304">
               <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
               <folding />
             </state>
@@ -103,7 +101,7 @@
       <file leaf-file-name="AddCheckXzqhImp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1443">
+            <state relative-caret-position="513">
               <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
               <folding />
             </state>
@@ -113,7 +111,7 @@
       <file leaf-file-name="ChangeCheckXzqhImp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/ChangeCheckXzqhImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2411">
+            <state relative-caret-position="323">
               <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
               <folding />
             </state>
@@ -508,7 +506,7 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -522,192 +520,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzblr" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-              <item name="jlbgdzb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-              <item name="tjbgdzb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-              <item name="whbgdzb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgqkhzcx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-              <item name="padis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-              <item name="padis" type="462c0819:PsiDirectoryNode" />
-              <item name="work" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-              <item name="padis" type="462c0819:PsiDirectoryNode" />
-              <item name="work" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-              <item name="padis" type="462c0819:PsiDirectoryNode" />
-              <item name="work" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-              <item name="padis" type="462c0819:PsiDirectoryNode" />
-              <item name="work" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-              <item name="padis" type="462c0819:PsiDirectoryNode" />
-              <item name="work" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzblr" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
-              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
-              <item name="web应用" type="462c0819:PsiDirectoryNode" />
-              <item name="adp" type="462c0819:PsiDirectoryNode" />
-              <item name="applications" type="462c0819:PsiDirectoryNode" />
-              <item name="padis" type="462c0819:PsiDirectoryNode" />
-              <item name="work" type="462c0819:PsiDirectoryNode" />
-              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
-              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
-              <item name="bgdzblr" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -868,15 +680,17 @@
       <workItem from="1522653972685" duration="2447000" />
       <workItem from="1522742470109" duration="2348000" />
       <workItem from="1523179436789" duration="1318000" />
-      <workItem from="1523180921700" duration="1918000" />
+      <workItem from="1523180921700" duration="2088000" />
+      <workItem from="1523235744510" duration="1709000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178228000" />
+    <option name="totallyTimeSpent" value="180107000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1177,14 +991,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="6" column="19" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-          <folding>
-            <element signature="e#1352#1353#0" expanded="false" />
-            <element signature="e#1385#1386#0" expanded="false" />
-            <element signature="e#1612#1613#0" expanded="false" />
-            <element signature="e#1641#1642#0" expanded="false" />
-            <element signature="e#1726#1727#0" expanded="false" />
-            <element signature="e#1751#1752#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1237,7 +1043,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="787">
           <caret line="138" column="52" lean-forward="false" selection-start-line="138" selection-start-column="47" selection-end-line="138" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1259,7 +1064,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1443">
+        <state relative-caret-position="513">
           <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
           <folding />
         </state>
@@ -1267,7 +1072,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/ChangeCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2411">
+        <state relative-caret-position="323">
           <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
           <folding />
         </state>
@@ -1275,7 +1080,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MergeCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-910">
+        <state relative-caret-position="304">
           <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
           <folding />
         </state>
@@ -1283,7 +1088,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2392">
+        <state relative-caret-position="323">
           <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
           <folding />
         </state>
@@ -1291,7 +1096,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
+        <state relative-caret-position="2717">
           <caret line="157" column="21" lean-forward="false" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="21" />
           <folding />
         </state>
@@ -1299,8 +1104,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="540" column="72" lean-forward="true" selection-start-line="540" selection-start-column="72" selection-end-line="540" selection-end-column="72" />
+        <state relative-caret-position="19">
+          <caret line="540" column="72" lean-forward="false" selection-start-line="540" selection-start-column="72" selection-end-line="540" selection-end-column="72" />
           <folding />
         </state>
       </provider>
