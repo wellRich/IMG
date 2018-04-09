@@ -96,11 +96,13 @@ public interface ZoningCodeChangeApi {
 
     /**
      * 录入区划变更明细对照表数据
+     * @param creatorCode 创建人代码
+     * @param creatorDeptCode 创建人所在机构代码
      * @param  group  里面是变更对照组的属性键值对（除主键之外的所有属性）
      * @param details 里面是json数组包含若干变更明细数据，具体的结构是ChangeInfo的属性键值对
-     * @param  zoingCode 登录用户所属的区划区划代码
+     * @param  zoningCode 登录用户所属的区划区划代码
      */
-    void addDetails(String group, String details, String zoingCode);
+    void addDetails(String group, String details, String zoningCode, String creatorCode, String creatorDeptCode);
 
 
     /**
@@ -155,9 +157,9 @@ public interface ZoningCodeChangeApi {
     /**
      * 删除明细数据
      * 〈功能详细描述〉
-     * @param groupSeq 明细表序号
+     * @param groupSeqs 若干明细表序号
      */
-    void deleteDetails(Integer groupSeq);
+    void deleteDetails(String groupSeqs);
 
    ////////////////////////////////////////////////////////////
     /**

@@ -44,7 +44,7 @@ public interface ZCCDetailMapper {
 
     //删除指定变更组下的变更明细
     @Delete("DELETE FROM XZQH_BGMXB WHERE GROUPXH =#{groupSeq}")
-    int deleteByGroupSeq(@Param("groupSeq") Integer groupSeq);
+    int deleteByGroupSeq(@Param("groupSeq") Object groupSeq);
 
     //删除若干变更组下的变更明细
     @DeleteProvider(type = ZCCDetailSql.class, method = "deleteByGroupSeqs")
@@ -65,7 +65,7 @@ public interface ZCCDetailMapper {
 
     @Select("SELECT MXBXH, PXH, GROUPXH, BGLX_DM, BZ, YSXZQH_DM, YSXZQH_MC, YSXZQH_DM, MBXZQH_DM, MBXZQH_MC, CLJG, CLZT_DM, RINGFLAG FROM XZQH_BGMXB WHERE GROUPXH = #{groupSeq} ")
     @ResultMap(value = "get")
-    List<ZCCDetail> findByGroupSeq(@Param(value = "groupSeq") Integer groupSeq);
+    List<ZCCDetail> findByGroupSeq(@Param(value = "groupSeq") Object groupSeq);
 
     /**
      * 查找若干组下的变更对照明细

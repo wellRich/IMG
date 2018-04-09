@@ -233,11 +233,22 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
        return previewDataInfoMapper.findBrothersByCode(zoningCode);
     }
 
+    /**
+     * 添加变更对照明细数据
+     * @param  group  里面是变更对照组的属性键值对（除主键之外的所有属性）
+     * @param details 里面是json数组包含若干变更明细数据，具体的结构是ChangeInfo的属性键值对
+     * @param  zoningCode 登录用户所属的区划区划代码
+     * @param creatorCode 创建人代码
+     * @param creatorDeptCode 创建人所在机构代码
+     */
     @Override
-    public void addDetails(String group, String details, String zoningCode) {
+    public void addDetails(String group, String details, String zoningCode, String creatorCode, String creatorDeptCode) {
         log.info("addDetails.zoningCode ---> " + zoningCode);
+
         // 1 添加变更对照组
         ZCCGroup groupInfo = JSONHelper.fromJsonObject(group, ZCCGroup.class);
+        groupInfo.setCreateDate(creatorCode);
+        groupInfo.setCreatorDeptCode(creatorDeptCode);
         Integer groupSeq = addZCCGroup(zoningCode.substring(0,6), groupInfo);//zccGroupMapper.insert(groupInfo);
         log.info("addDetails.groupSeq-------------> " + groupSeq);
 
@@ -248,12 +259,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         ChangeInfo info;
         for(int i = 0; i < size; i ++){
             info = changeInfoList.get(i);
+
+            //补充数据
             info.setCreatorDate(new Date());
             info.setGroupSeq(groupSeq);
+            info.setCreatorCode(creatorCode);
+            info.setOrganizationCode(creatorDeptCode);
             info.buildAssigningCode();
             info.buildTargetLevelCode();
             info.buildOriginalLevelCode();
-            System.out.println("addDetails.info---------> " + JSONHelper.toJSON(info));
 
             //2.1 名称变更，直接插入变更对照明细表、区划预览表以及变更明细历史记录
             if(Common.hasSameZoningCode(info.getOriginalZoningCode(), info.getTargetZoningCode())){
@@ -574,52 +588,75 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         resp.setDataList(pageSeekByLevelCodeAndStatuses(levelCode, offset, pageSize, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ));
         return resp;
     }
+
+
     /**
      * 删除指定对变更照组序号的变更对照明细
-     * @param groupSeq 明细表序号
+     * @param groupSeqs 若干明细表序号，以“,”分隔
      */
     @Override
-    public void deleteDetails(Integer groupSeq) {
+    public void deleteDetails(String groupSeqs) {
+        for(String groupSeq: groupSeqs.split(",")){
+            List<ZCCDetail> details = zccDetailMapper.findByGroupSeq(groupSeq);
+            details.stream().peek(e ->{
 
-        List<ZCCDetail> details = zccDetailMapper.findByGroupSeq(groupSeq);
-        details.stream().peek(e ->{
+                //1 删除历史数据
+                historicalZoningChangeMapper.delete(e.getSeq());
 
-            //1 删除历史数据
-            historicalZoningChangeMapper.delete(e.getSeq());
+                //2 回滚预览数据
+                String changeType = e.getChangeType();
+                if(changeType.equals(Common.ADD)){
 
-            //2 回滚预览数据
-            String changeType = e.getChangeType();
-            if(changeType.equals(Common.ADD)){
+                    //删除一条预览数据
+                    previewDataInfoMapper.delete(e.getSeq());
+                }else if(changeType.equals(Common.CHANGE)){
 
-                //删除一条预览数据
-                previewDataInfoMapper.delete(e.getSeq());
-            }else if(changeType.equals(Common.CHANGE)){
+                    //仅仅是名称变更
+                    if(Common.hasSameZoningCode(e.getOriginalZoningCode(), e.getCurrentZoningCode())){
+                        PreviewDataInfo updatedInfo = previewDataInfoMapper.findValidOneByZoningCode(e.getCurrentZoningCode());
 
-                //仅仅是名称变更
-                if(Common.hasSameZoningCode(e.getOriginalZoningCode(), e.getCurrentZoningCode())){
-                    PreviewDataInfo updatedInfo = previewDataInfoMapper.findValidOneByZoningCode(e.getCurrentZoningCode());
 
+                    }else {
+
+                    }
+                }else if(changeType.equals(Common.MERGE)){
+
+                }else if(changeType.equals(Common.MOVE)){
 
                 }else {
-
+                    throw new RuntimeException("未定义的变更类型[" + changeType + "]");
                 }
-            }else if(changeType.equals(Common.MERGE)){
+            });
 
-            }else if(changeType.equals(Common.MOVE)){
+            //3 删除明细数据
+            zccDetailMapper.deleteByGroupSeq(groupSeq);
 
-            }else {
-                throw new RuntimeException("未定义的变更类型[" + changeType + "]");
-            }
-        });
+            //4 删除变更对照组
+            zccGroupMapper.delete(groupSeq);
+        }
+    }
 
 
+    /**
+     * 判断此明细变更对照数据是否可以直接、干净、彻底地删除
+     * @param originalZoningCode 原区划代码
+     * @param targetZoningCode 目标区划代码
+     * @param groupSeq 变更组序号
+     * @param createDate 创建时间
+     * @param ownZoningCode 录入人所在区划的区划代码
+     * @return true or false
+     */
+    private boolean isDeletableDetail(String originalZoningCode, String targetZoningCode, String groupSeq, String createDate, String ownZoningCode){
+        return false;
+    }
 
 
-        //3 删除明细数据
-        zccDetailMapper.deleteByGroupSeq(groupSeq);
-
-        //4 删除变更对照组
-        zccGroupMapper.delete(groupSeq);
+    /**
+     * 恢复区划变更
+     * 主要是处理区划预览数据
+     * @param detail 区划变更对照明细数据
+     */
+    private void restoreDetail(ZCCDetail detail){
 
     }
 

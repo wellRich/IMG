@@ -52,19 +52,9 @@ public class ZoningChangeController {
         try {
             //传入登录人的区划代码
             String zoningCode = "370102000000000";
-
-            //级别代码
-            String levelCode = Common.getLevelCode(zoningCode);
-
-            //级次代码
-            String assigningCode = Common.getAssigningCode(zoningCode);
-
-            //单位隶属关系
-            String unitRelationShip = "20";
             Map<String, Object> model = new HashMap<>();
             PreviewDataInfo previewDataInfo = zoningCodeChangeApi.findOneByZoningCode(zoningCode);
             model.put("zoningCode", zoningCode);
-            model.put("levelCode", levelCode);
             if(previewDataInfo == null){
                 throw new RuntimeException("未找到登录用户所属的区划数据！");
             }else {
@@ -76,12 +66,14 @@ public class ZoningChangeController {
             log.error("buildRequest.error---> " + ex.getMessage(), ex);
             return new  RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
-
     }
 
 
     /**
      * 查询出登录用户的申请单，分页
+     * 区划代码、登录人信息将来是从session中取得的
+     * 暂时做为参数传入，并设置了默认值——山东历下区的区划代码，
+     * 如果是省级用户，可以传入370000000000000
      * 是否需要增加创建人代码作为过滤条件 ======>
      * @param pageIndex 页码
      * @param pageSize 每页总数
@@ -90,13 +82,15 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/ZoningChangeRequestList", method = RequestMethod.GET)
     @ResponseBody
-    public Object ZoningChangeRequestList(@RequestParam(value = "levelCode", defaultValue = "370102") String levelCode
-            , @RequestParam(value = "zoningName", defaultValue = "历下区")Integer zoningName
+    public Object ZoningChangeRequestList(@RequestParam(value = "zoningCode", defaultValue = "370102000000000") String zoningCode
+
             , @RequestParam(value = "pageIndex", defaultValue = "1")Integer pageIndex
             , @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize
             , @RequestParam(value = "total", defaultValue = "0")Integer total){
-        //String zoningName = "历下区";
-        log.info("ZoningChangeRequestList.levelCode----> " + levelCode);
+        PreviewDataInfo info = zoningCodeChangeApi.findOneByZoningCode(zoningCode);
+        String levelCode = info.getLevelCode();//Common.getLevelCode(zoningCode);
+        String zoningName = info.getDivisionName();
+        log.info("ZoningChangeRequestList.zoningName----> " + zoningName);
         try{
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZCCReqByZoningLevelCode(levelCode, zoningName, pageIndex, pageSize, total) ).toString();
         }catch (Exception e) {
@@ -134,15 +128,14 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/initAddDetails", method = RequestMethod.GET)
     @ResponseBody
-    public Object intAddDetails(){
+    public Object intAddDetails(@RequestParam(value = "zoningCode", defaultValue = "370102000000000")String zoningCode){
         try {
 
-            String zoningCode = "370102000000000";
             //级次代码
             String assigningCode = Common.getAssigningCode(zoningCode);
 
             //级别代码
-            String levelCode = Common.getLevelCode("370102");
+            String levelCode = Common.getLevelCode(zoningCode);
 
             //查找申请单，如果没有找到，则返回信息，请先建立申请单
             List<ZCCRequest> zccRequests = zoningCodeChangeApi.findWritableZCCRequests(levelCode);
@@ -187,7 +180,7 @@ public class ZoningChangeController {
     }
 
     /**
-     * 获取同一父级下的同级
+     * 获取同一父级下的同级区划，称同胞兄弟区划
      * @param zoningCode 当前操作的区划的区划代码
      * @return
      */
@@ -215,7 +208,9 @@ public class ZoningChangeController {
     public Object saveDetails(@Param(value = "group")String group, @Param(value = "details")String details, @Param(value = "zoningCode")String zoningCode){
         try {
             log.info("saveDetails.zoningCode---------> " + zoningCode);
-            zoningCodeChangeApi.addDetails(group, details, zoningCode);
+            String creatorCode = "9527";
+            String creatorDeptCode = "10000";
+            zoningCodeChangeApi.addDetails(group, details, zoningCode, creatorCode, creatorDeptCode);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -246,7 +241,7 @@ public class ZoningChangeController {
      * 以excel形式导出指定申请单下的变更对照明细数据
      *
      */
-    @RequestMapping(value = "/exportExcel")
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
     @ResponseBody
     public void exportDetailsOfReq(@Param("seq")Integer seq, HttpServletResponse response){
         try {
@@ -276,7 +271,7 @@ public class ZoningChangeController {
      * 更新申请单
      * @return RtnData
      */
-    @RequestMapping(value = "/updateZCCRequest")
+    @RequestMapping(value = "/updateZCCRequest", method = RequestMethod.GET)
     @ResponseBody
     public Object updateZCCReq(@Param("seq")Integer seq, @Param("name")String name, @Param("notes")String notes){
         try {
@@ -299,9 +294,11 @@ public class ZoningChangeController {
      * 删除指定组的明细数据
      * @return RtnData
      */
-    public Object deleteDetailsOfGroup(Integer groupSeq){
+    @RequestMapping(value = "/deleteDetails", method = RequestMethod.GET)
+    @ResponseBody
+    public Object deleteDetailsOfGroup(@RequestParam(value = "groupSeqs") String groupSeqs){
         try {
-            zoningCodeChangeApi.deleteDetails(groupSeq);
+            zoningCodeChangeApi.deleteDetails(groupSeqs);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -318,6 +315,21 @@ public class ZoningChangeController {
     public Object submitToCheck(@Param("seq")Integer seq){
         try {
             zoningCodeChangeApi.submitZCCRequest(seq);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        }
+    }
+
+    /**
+     * 撤销申请单
+     */
+    @RequestMapping(value = "/revokeToCheck", method = RequestMethod.GET)
+    @ResponseBody
+    public Object revokeZCCRequest(@Param("seq")Integer seq){
+        try {
+            zoningCodeChangeApi.revokeZCCRequest(seq);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -362,6 +374,8 @@ public class ZoningChangeController {
     /**
      * 国家审核
      */
+    @RequestMapping(value = "/nationalCheck", method = RequestMethod.GET)
+    @ResponseBody
     public Object nationalCheck(@RequestParam(value = "seqStr") String seqStr, @RequestParam(value = "isPassed")boolean isPassed, @RequestParam(value = "msg", defaultValue = "审核通过！")String msg){
         try {
             zoningCodeChangeApi.nationalCheck(seqStr, isPassed, msg);
@@ -371,5 +385,10 @@ public class ZoningChangeController {
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
     }
+
+
+    /**
+     * 国家查看未提交的省级申请单
+     */
 
 }
