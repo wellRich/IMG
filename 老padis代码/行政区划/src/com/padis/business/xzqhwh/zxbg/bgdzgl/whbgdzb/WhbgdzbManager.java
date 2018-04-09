@@ -277,6 +277,8 @@ public class WhbgdzbManager {
 		}else{
 			XzqhbgCommon bgCommon= new XzqhbgCommon();
 			String sjXzqhmc = bgCommon.getSjxzqhMc("dm_xzqh_ylsj",Common.getSjxzqhdm(ysxzqh_dm));
+
+			//名称变更
 			if(Common.checkMcbg(ysxzqh_dm, mbxzqh_dm)){
 				StringBuffer sqlSb1 = new StringBuffer("update DM_XZQH_YLSJ y set y.XZQH_MC = '");
 				sqlSb1.append(ysxzqh_mc);

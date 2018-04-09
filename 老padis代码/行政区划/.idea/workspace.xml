@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd15f617-6aef-4656-8d79-063b8c3b5527" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../资料/区划变更管理.md" afterPath="$PROJECT_DIR$/../../资料/区划变更管理.md" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java" afterPath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java" />
+      <change beforePath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java" afterPath="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java" />
     </list>
     <ignored path="$PROJECT_DIR$/web应用/adp/applications/padis/WEB-INF/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,16 +30,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BgdzblrManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2774">
-              <caret line="165" column="31" lean-forward="false" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="LgywsjscService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/lgywsjsc/LgywsjscService.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -68,21 +60,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WhbgdzbManager.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="WhbgdzbManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="530" column="48" lean-forward="false" selection-start-line="530" selection-start-column="48" selection-end-line="530" selection-end-column="48" />
+            <state relative-caret-position="-386">
+              <caret line="506" column="45" lean-forward="true" selection-start-line="506" selection-start-column="45" selection-end-line="506" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MoveCheckXzqhImp.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MoveCheckXzqhImp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="53" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="53" />
+            <state relative-caret-position="447">
+              <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CheckXzqhImp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/CheckXzqhImp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -101,8 +103,8 @@
       <file leaf-file-name="AddCheckXzqhImp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="61" column="26" lean-forward="false" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="26" />
+            <state relative-caret-position="-226">
+              <caret line="32" column="24" lean-forward="false" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -132,7 +134,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scsf</find>
       <find>counts</find>
       <find>addXzqhjzbgdzb</find>
       <find>setConnectionName</find>
@@ -161,6 +162,7 @@
       <find>xzqh_qc</find>
       <find>srcXzqh_dm</find>
       <find>xzqh_dm</find>
+      <find>targetZoningCode</find>
       <find>restoreXzqh</find>
     </findStrings>
   </component>
@@ -190,8 +192,9 @@
         <option value="$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/linkxzqh/LinkedXzqh.java" />
         <option value="$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgBean.java" />
         <option value="$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java" />
-        <option value="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java" />
         <option value="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java" />
+        <option value="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java" />
+        <option value="$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java" />
       </list>
     </option>
   </component>
@@ -207,7 +210,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1" />
     <option name="width" value="1438" />
     <option name="height" value="860" />
@@ -682,15 +685,15 @@
       <workItem from="1523179436789" duration="1318000" />
       <workItem from="1523180921700" duration="2088000" />
       <workItem from="1523235744510" duration="1709000" />
-      <workItem from="1523254888074" duration="2328000" />
+      <workItem from="1523254888074" duration="7070000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182435000" />
+    <option name="totallyTimeSpent" value="187177000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -785,13 +788,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/CheckXzqhImp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1079,6 +1075,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/CheckXzqhImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MergeCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="268">
@@ -1087,26 +1091,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="61" column="26" lean-forward="false" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="26" />
+        <state relative-caret-position="-226">
+          <caret line="32" column="24" lean-forward="false" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="530" column="48" lean-forward="false" selection-start-line="530" selection-start-column="48" selection-end-line="530" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="53" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="53" />
+        <state relative-caret-position="-386">
+          <caret line="506" column="45" lean-forward="true" selection-start-line="506" selection-start-column="45" selection-end-line="506" selection-end-column="45" />
           <folding />
         </state>
       </provider>
