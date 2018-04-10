@@ -25,7 +25,7 @@ do
  mv F:/gitTemp/$file .git
 done
 
-cd /人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java
+#cd /人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java
 #执行git命令
 git add .
 git commit -m "自动提交"
