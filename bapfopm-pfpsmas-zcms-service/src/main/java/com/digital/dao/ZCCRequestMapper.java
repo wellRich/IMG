@@ -45,13 +45,14 @@ public interface ZCCRequestMapper {
     * @return 返回申请单列表
     */
     @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{zoningCode, jdbcType=CHAR} ORDER BY LRSJ ")
-    @Results(value = {
+   /* @Results(value = {
             @Result(property = "seq", column = "SQDXH", javaType = Integer.class),
             @Result(property = "name", column = "SQDMC", javaType = String.class),
             @Result(property = "status", column = "SQDZT_DM", javaType = String.class),
             @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class)
-    })
+    })*/
+    @ResultMap(value = "findAll")
     List<ZCCRequest> findAllByZoningCode(@Param(value = "zoningCode") String zoningCode);
 
     /**
