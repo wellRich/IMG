@@ -1,6 +1,7 @@
 package com.digital.entity;
 
 import com.digital.util.Common;
+import com.digital.util.JSONHelper;
 import com.digital.util.search.Column;
 import com.digital.util.search.Table;
 
@@ -137,6 +138,11 @@ public class ZCCDetail implements Serializable {
         }else {
             return "N/A";
         }
+    }
+
+    @Override
+    public String toString() {
+        return JSONHelper.toJSON(this);
     }
 
     public String displayChangeType(){

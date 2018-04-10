@@ -2,6 +2,7 @@ package com.digital.dao.sqlMapper;
 
 import com.digital.util.Common;
 import com.digital.entity.PreviewDataInfo;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
             FROM(getTableName());
             SELECT(columns);
             WHERE(getColumnByField("levelCode") + " LIKE '" + levelCode.trim() + "%'");
-            ORDER_BY();
+            ORDER_BY(getColumnByField("levelCode") + " DESC");
         }}.toString();
         log.info("findFamilyZoning.sql -------------->" + sql);
         return sql;
@@ -80,15 +81,15 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
 
     //初始化时使用
     //获取父系以及下一级区划预览数据
-    public String findAllByZoningCode(String zoingCode) {
+    public String findAllByZoningCode(String zoningCode) {
 
-        int level = Integer.valueOf(Common.getAssigningCode(zoingCode));
+        int level = Integer.valueOf(Common.getAssigningCode(zoningCode));
 
         //去0后的区划代码
-        String code = Common.removeZeroOfTailing(zoingCode);
+        String code = Common.removeZeroOfTailing(zoningCode);
 
         //父系区划代码
-        List<String> codes = Common.getPaternalCodes(zoingCode);
+        List<String> codes = Common.getPaternalCodes(zoningCode);
 
         log.info("findAllByZoningCode.level----> " + level);
 
@@ -114,7 +115,7 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
             sql = new SQL() {{
                 FROM(getTableName());
                 SELECT(getColumns());
-                WHERE(getColumnByField("zoningCode") + " = '" + zoingCode.trim() + "'");
+                WHERE(getColumnByField("zoningCode") + " = '" + zoningCode.trim() + "'");
             }}.toString();
         }
 
@@ -146,6 +147,25 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
             WHERE("XYBZ = 'Y' AND YXBZ = 'Y' AND XZQH_DM =" + zoningCode);
         }}.toString();
         log.info("findValidOneByZoningCode.sql-------------> " + sql);
+        return sql;
+    }
+
+
+    /**
+     * 修改全称
+     * @param oldFullName 旧的全称
+     * @param newFullName 新的全称
+     * @param levelCode 级别代码
+     * @return sql
+     */
+    public String updateFullName(String oldFullName, String newFullName, String levelCode){
+        String sql = new SQL(){{
+            UPDATE(getTableName());
+            SET(getColumnByField("divisionFullName") +
+                    " = REPLACE(" + getColumnByField("divisionFullName") + ", '" + oldFullName + "', '" + newFullName +"')" );
+            WHERE(getColumnByField("levelCode") + " LIKE '" + levelCode + "%'");
+        }}.toString();
+        log.info("updateFullName.sql---------> " + sql);
         return sql;
     }
 }

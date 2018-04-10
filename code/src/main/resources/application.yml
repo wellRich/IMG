@@ -34,8 +34,8 @@ spring:
   #datasource
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    ##url: jdbc:mysql://10.1.2.42:3306/xzqh?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    url: jdbc:mysql://127.0.0.1:3306/mvc?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://10.1.2.42:3306/xzqh?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    ##url: jdbc:mysql://127.0.0.1:3306/mvc?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
 

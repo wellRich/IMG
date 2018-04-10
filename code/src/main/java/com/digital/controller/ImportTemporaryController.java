@@ -104,6 +104,11 @@ public class ImportTemporaryController extends BaseController {
                 logger.info("没有该文件信息");
                 return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "没有该文件信息").toString();
             }
+            if (!fileInfo.getStatusCode().equals(Common.XZQH_JZBGZT_LJJYCLZ)){
+                logger.info("状态没有修改");
+                return new RtnData(Constants.RTN_CODE_ERROR,"状态没有修改").toString();
+
+            }
             checkedMap = logicCheckApi.ContentCheck(fileInfo);
             //判断逻辑校验是否成功
             if (!(boolean) checkedMap.get("check")) {

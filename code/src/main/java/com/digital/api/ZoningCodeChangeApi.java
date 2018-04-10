@@ -77,7 +77,7 @@ public interface ZoningCodeChangeApi {
      * @param zoningCode
      * @return
      */
-    Map findPreviewByZoningCode(String zoningCode);
+    Map findPreviewByZoningCode(String zoningCode) throws IllegalAccessException;
 
 
     /**

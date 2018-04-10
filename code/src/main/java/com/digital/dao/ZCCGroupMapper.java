@@ -28,12 +28,8 @@ public interface ZCCGroupMapper {
     Integer insert(Object group);
 
     //根据申请单查找变更对照组
-    @Select("SELECT GROUPXH, GROUPMC, SQDXH FROM XZQH_BGGROUP WHERE SQDXH=#{requestSeq} ORDER BY PXH")
-    @Results({
-            @Result(id = true, property = "seq", column = "GROUPXH"),
-            @Result(property = "name", column = "GROUPMC"),
-            @Result(property = "requestSeq", column = "SQDXH")
-    })
+    @Select("SELECT * FROM XZQH_BGGROUP WHERE SQDXH=#{requestSeq} ORDER BY BH, PXH")
+    @ResultMap(value = "get")
     List<ZCCGroup> findByRequestSeq(@Param("requestSeq") Integer requestSeq);
 
     @SelectProvider(type = ZCCGroupSql.class, method = "get")

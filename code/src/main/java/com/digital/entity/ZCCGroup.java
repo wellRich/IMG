@@ -64,6 +64,10 @@ public class ZCCGroup implements Serializable{
     @Column(name = "PXH")
     private String orderNum;
 
+    @Override
+    public String toString() {
+        return name;
+    }
 
     public Integer getSeq() {
         return seq;

@@ -12,10 +12,10 @@ done
 
 #准备代码文件
 echo "删除github本地文件夹下的旧代码"
-rm -rf 人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java/com/digital
+rm -rf code/src/main/java/com/digital
 
 echo "从工作目录拷贝代码文件...\n"
-cp -rv E:/workspace/Server/人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java/com/$codeFile  人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java/
+cp -rv E:/workspace/Server/人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java/com/$codeFile  code/src/main/java/
 
 echo "找回.git中的文件...\n"
 filelist=`ls F:/gitTemp`

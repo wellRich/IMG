@@ -165,16 +165,18 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return [级次代码：相应的区划列表]
      */
     @Override
-    public Map<String, List<PreviewDataInfo>> findPreviewByZoningCode(String zoningCode) {
+    public Map<String, List<Map>> findPreviewByZoningCode(String zoningCode) throws IllegalAccessException {
         log.info("findPreviewByZoningCode.zoningCode-------> " + zoningCode);
         List<PreviewDataInfo> previewDataInfos = previewDataInfoMapper.findAllByZoningCode(zoningCode);
-        Map<String, List<PreviewDataInfo>> result = new HashMap<>();
+        Map<String, List<Map>> result = new HashMap<>();
         for (PreviewDataInfo dataInfo : previewDataInfos) {
             if (result.containsKey(dataInfo.getAssigningCode())) {
-                result.get(dataInfo.getAssigningCode()).add(dataInfo);
+                result.get(dataInfo.getAssigningCode()).add(dataInfo.toMap());
             } else {
-                List<PreviewDataInfo> cell = new ArrayList<>();
-                cell.add(dataInfo);
+                List<Map> cell = new ArrayList<>();
+                Map mapData = dataInfo.toMap();
+                mapData.put("superLevelCode", Common.getLevelCode(dataInfo.getSuperiorZoningCode()));
+                cell.add(mapData);
                 result.put(dataInfo.getAssigningCode(), cell);
             }
         }
@@ -604,26 +606,38 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
         //取得编号最小的组，也是要删除的组中的最后一个变更组
         ZCCGroup lastGroup = groups.get(size - 1);
-        ZCCRequest req = zccRequestMapper.get(groups.get(0).getRequestSeq());
-
+        ZCCRequest req = zccRequestMapper.get(lastGroup.getRequestSeq());
+        
+        Long serialNumOfLastGroup = lastGroup.getSerialNumber();
+        System.out.println("serialNumOfLastGroup--> " + serialNumOfLastGroup);
+        
         //该申请单下的所有变更组
         List<ZCCGroup> allGroups = zccGroupMapper.findByRequestSeq(req.getSeq());
 
-        //取两个list的差集
-        allGroups.removeAll(groups);
+        LinkedHashMap<ZCCGroup, List<ZCCDetail>> referData = new LinkedHashMap<>();
 
+        //排除要删除的组与时间线在所有删除组之前的组
+        for (ZCCGroup group: allGroups){
+            if(!groups.contains(group) && group.getSerialNumber() > serialNumOfLastGroup){
+                referData.put(group, zccDetailMapper.findByGroupSeq(group.getSeq()));
+            }
+        }
 
-        Map<String, List<ZCCDetail>> referData = allGroups.stream()
-                //找出编号大于编号最小的组
-                .filter(e -> e.getSerialNumber() > lastGroup.getSerialNumber()).collect(Collectors.toMap(ZCCGroup::getName, zccDetailMapper::findByGroupSeq));
         for (ZCCGroup group : groups) {
             Integer groupSeq = group.getSeq();
+            log.info("deleteDetails.groupSeq----------> " + groupSeq);
             for (ZCCDetail detail : zccDetailMapper.findByGroupSeq(groupSeq)) {
-
+                log.info("deleteDetails.targetDetail ----> " + detail);
                 //是否未牵涉其它的明细变更数据
                 String msg = findFetterOfDetail(detail.getOriginalZoningCode(), detail.getCurrentZoningCode(), referData);
                 if ("".equals(msg)) {
+
+                    //还原预览数据
                     restoreDetail(detail);
+
+                    //删除历史数据
+                    historicalZoningChangeMapper.delete(detail.getSeq());
+
                 } else {
                     throw new RuntimeException(msg);
                 }
@@ -635,10 +649,6 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             //4 删除变更对照组
             zccGroupMapper.delete(groupSeq);
         }
-
-
-
-
     }
 
 
@@ -650,19 +660,22 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @param referData          参照比较的明细数据
      * @return true or false
      */
-    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Map<String, List<ZCCDetail>> referData) {
+    private String findFetterOfDetail(String originalZoningCode, String targetZoningCode, Map<ZCCGroup, List<ZCCDetail>> referData) {
 
         //原级别代码
         String levelCode = Common.getLevelCode(targetZoningCode);
         StringBuffer message = new StringBuffer();
-        referData.forEach((groupName, v) -> {
+        log.info("findFetterOfDetail.size ----------> " + referData.size());
+        referData.forEach((group, v) -> {
+            log.info("findFetterOfDetail.group-----> " + group.getSerialNumber());
+            log.info("findFetterOfDetail.v.size-----------> " + v.size());
             v.forEach(detail -> {
                 String changeType = detail.getChangeType();
                 String originalCode = detail.getOriginalZoningCode();
                 String targetCode = detail.getCurrentZoningCode();
-
+                log.info("findFetterOfDetail.detail -------------> " + detail);
                 if (changeType.equals(Common.ADD)) {
-                    String msg = ("在调整说明“" + groupName + "”中");
+                    String msg = ("在调整说明“" + group + "”");
 
                     if (originalZoningCode.equals(targetCode)) {
                         message.append("原区划代码“")
@@ -681,38 +694,45 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                                 .append("，请先删除此调整说明！");
                     }
                 } else if (changeType.equals(Common.CHANGE)) {
-                    String msg = ("在调整说明“" + groupName + "”中");
-                    if (originalZoningCode.equals(targetCode)) {
-                        message.append("原区划代码“").append(originalZoningCode).append("”").append(msg)
-                                .append("中被再次使用，请先删除此调整说明！");
-                    }
+                    //名称变更，可以忽略
+                    if(targetCode.equals(originalCode)){
+                        System.out.println("名称变更------------》 " + detail);
+                    }else {
+                        String msg = ("在调整说明“" + group + "”");
+                        if (originalZoningCode.equals(targetCode)) {
+                            message.append("原区划代码“").append(originalZoningCode).append("”").append(msg)
+                                    .append("中被再次使用，请先删除此调整说明！");
+                        }
 
-                    if (checkSuperCode(originalZoningCode, originalCode)) {
-                        message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
-                                .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
-                    }
-
-                    if (targetZoningCode.equals(originalCode)) {
-                        message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
-                                .append("中已被变更为“").append(targetCode).append("”，请先删除此调整说明！");
-                    } else {
-                        if (originalCode.indexOf(levelCode) > -1) {
-                            message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
-                                    .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
-                        } else if (checkSuperCode(targetZoningCode, originalCode)) {
-                            message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(Common.getSuperiorZoningCode(originalCode)).append("”")
+                        if (checkSuperCode(originalZoningCode, originalCode)) {
+                            message.append("原区划代码“").append(originalZoningCode).append("”的上级区划“").append(originalCode).append("”")
                                     .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
                         }
+
+                        if (targetZoningCode.equals(originalCode)) {
+                            message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
+                                    .append("中已被变更为“").append(targetCode).append("”，请先删除此调整说明！");
+                        } else {
+                            if (originalCode.contains(levelCode)) {
+                                message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
+                                        .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
+                            } else if (checkSuperCode(targetZoningCode, originalCode)) {
+                                message.append("现区划代码“").append(targetZoningCode).append("”的上级区划“").append(Common.getSuperiorZoningCode(originalCode)).append("”")
+                                        .append(msg).append("中已被变更为：").append(targetCode).append("，请先删除此调整说明！");
+                            }
+                        }
                     }
+                    
+                    
                 } else if (changeType.equals(Common.MERGE)) {
-                    String msg = ("在调整说明“" + groupName + "”中");
+                    String msg = ("在调整说明“" + group + "”");
 
                     //查看是否有区划并入到此区划或者此区划下级区划的下面
                     if (targetZoningCode.equals(targetCode)) {
                         message.append("现区划代码“").append(originalCode).append("”").append(msg)
                                 .append("中被并入到“").append(targetZoningCode).append("”下，请先删除此调整说明！");
                     } else {
-                        if (targetCode.indexOf(levelCode) > -1) {
+                        if (targetCode.contains(levelCode)) {
                             message.append("现区划代码“").append(targetZoningCode).append("”");
                             if (!targetZoningCode.equals(originalCode)) {
                                 message.append("的下级区划“").append(originalCode).append("”");
@@ -730,7 +750,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                         message.append("现区划代码“").append(originalCode).append("”").append(msg)
                                 .append("中已被并入到“").append(targetCode).append("下”，请先删除此调整说明！");
                     } else {
-                        if (originalCode.indexOf(levelCode) > -1) {
+                        if (originalCode.contains(levelCode)) {
                             message.append("现区划代码“").append(targetZoningCode).append("”");
                             if (!targetZoningCode.equals(originalCode)) {
                                 message.append("的下级区划“").append(originalCode).append("”");
@@ -744,7 +764,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                         }
                     }
                 } else if (changeType.equals(Common.MOVE)) {
-                    String msg = "在调整说明“" + groupName + "”中";
+                    String msg = "在调整说明“" + group + "”";
 
                     //查看是否有区划迁移到此区划或者此区划下级区划的下面
                     if (originalZoningCode.equals(targetCode)) {
@@ -756,7 +776,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                         message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
                                 .append("中新增迁移区划“").append(targetCode).append("”，请先删除此调整说明！");
                     } else {
-                        if (targetCode.indexOf(levelCode) > -1) {
+                        if (targetCode.contains(levelCode)) {
                             message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(Common.getSuperiorZoningCode(targetCode)).append("”")
                                     .append(msg).append("中有新迁移区划：").append(targetCode).append("，请先删除此调整说明！");
                         }
@@ -771,7 +791,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                         message.append("现区划代码“").append(targetZoningCode).append("”").append(msg)
                                 .append("中已被迁移到“").append(Common.getSuperiorZoningCode(targetCode)).append("下”，请先删除此调整说明！");
                     } else {
-                        if (originalCode.indexOf(levelCode) > -1) {
+                        if (originalCode.contains(levelCode)) {
                             message.append("现区划代码“").append(targetZoningCode).append("”的下级区划“").append(originalCode).append("”")
                                     .append(msg).append("中已被迁移到：").append(Common.getSuperiorZoningCode(targetCode)).append("下，请先删除此调整说明！");
                         }
@@ -784,33 +804,127 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                 }
             });
         });
+        log.info("findFetterOfDetail.message--------> " + message);
         return message.toString();
     }
 
     //查找上级区划是否和给出的区划代码相同
-    private boolean checkSuperCode(String sonCode, String superiorCode) {
+    private boolean checkSuperCode(String targetCode, String superiorCode) {
+        log.info("checkSuperCode.sonCode ----> " + targetCode + ", superiorCode ---> " + superiorCode);
         boolean flag = false;
-        String originalSuperiorCode = Common.getSuperiorZoningCode(sonCode);
-        while (Integer.parseInt(Common.getLevelCode(originalSuperiorCode)) >= 1) {
-            if (originalSuperiorCode.equals(superiorCode)) {
-                flag = true;
-                break;
-            } else {
-                originalSuperiorCode = Common.getSuperiorZoningCode(originalSuperiorCode);
+
+        String targetSuperiorCode = Common.getSuperiorZoningCode(targetCode);
+        if(targetCode.equals("") || targetCode.equals(null)){
+            return false;
+        }else {
+            while (!Common.getLevelCode(targetSuperiorCode).equals("")) {
+                if (targetSuperiorCode.equals(superiorCode)) {
+                    flag = true;
+                    break;
+                } else {
+                    targetSuperiorCode = Common.getSuperiorZoningCode(targetSuperiorCode);
+                }
             }
+            return flag;
         }
-        return flag;
     }
 
 
     /**
      * 恢复区划变更
      * 主要是处理区划预览数据
+     *
      * @param detail 区划变更对照明细数据
      */
-    private void restoreDetail(ZCCDetail detail){
+    private void restoreDetail(ZCCDetail detail) {
         String changeType = detail.getChangeType();
+        String originalZoningCode = detail.getOriginalZoningCode();
+        String originalZoningName = detail.getOriginalZoningName();
+        String targetZoningCode = detail.getCurrentZoningCode();
+        String targetZoningName = detail.getCurrentZoningName();
 
+        //并入是要先将下级迁移的，所以这里并入的明细只有一条预览数据与之对应
+        if (changeType.equals(Common.MERGE)) {
+            recover(detail.getCreatorDate(), originalZoningCode);
+        } else {
+
+            //名称变更
+            if (Common.hasSameZoningCode(originalZoningCode, targetZoningCode)) {
+
+                //上级区划全称
+                String superiorZoningFullName = previewDataInfoMapper.get(Common.getSuperAssignCode(originalZoningCode)).getDivisionFullName();
+
+                //修改名称与简称
+                previewDataInfoMapper.update(ImmutableMap.of("zoningCode", originalZoningCode, "divisionName", originalZoningName, "divisionAbbreviation", originalZoningName));
+
+                //修改全称
+                previewDataInfoMapper.updateFullNameByLevelCode(superiorZoningFullName + targetZoningName, superiorZoningFullName + originalZoningName, Common.getLevelCode(originalZoningCode) );
+
+            } else {
+
+                List<ChangeInfo> changeInfoList = getLowChangeInfo(originalZoningCode, targetZoningCode, changeType);
+                int size = changeInfoList.size();
+                for (int i = 0; i < size; i++) {
+                    ChangeInfo changeInfo = changeInfoList.get(i);
+                    String originalCode = changeInfo.getOriginalZoningCode();
+                    String targetCode = changeInfo.getTargetZoningCode();
+                    String type = changeInfo.getChangeType();
+                    PreviewDataInfo previewDataInfo = previewDataInfoMapper.findValidOneByZoningCode(targetCode);
+                    if (previewDataInfo != null) {
+                        if (type.equals(Common.ADD)) {
+                            previewDataInfoMapper.delete(previewDataInfo.getZoningCode());
+                        } else {
+                            if (Common.hasSameZoningCode(originalCode, targetCode)) {
+                                continue;
+                            }
+                            recover(detail.getCreatorDate(), originalCode);
+                        }
+                    } else {
+                        throw new RuntimeException("未找到区划预览：[" + originalCode + "]");
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 恢复一条预览数据
+     * @param createDate
+     * @param zoningCode
+     */
+    private void recover(String createDate, String zoningCode){
+        PreviewDataInfo info = previewDataInfoMapper.findAbandoned(createDate, zoningCode);
+        if(info != null){
+            Map param = new HashMap();
+            param.put("zoningCode", zoningCode);
+            param.put("lastUpdate", StringUtil.getTime());
+            param.put("validityStup", "");
+            param.put("chooseSign", "Y");
+            param.put("usefulSign", "Y");
+            previewDataInfoMapper.update(param);
+        }else {
+            throw new RuntimeException("未找到区划：[" + zoningCode +  "]");
+        }
+    }
+
+    /**
+     * 获取本身及下级的变更信息
+     * @param originalZoningCode 原区划代码
+     * @param targetZoningCode 目标区划代码
+     * @param changeType 变更类型
+     * @return ChangeInfo列表
+     */
+    public List<ChangeInfo> getLowChangeInfo(String originalZoningCode,String targetZoningCode,String changeType){
+        String originalLevelCode = Common.getLevelCode(originalZoningCode);
+        String targetLevelCode = Common.getLevelCode(targetZoningCode);
+        return previewDataInfoMapper.findFamilyZoning(targetLevelCode, "*").stream().map(info -> {
+            ChangeInfo changeInfo = new ChangeInfo();
+            changeInfo.setTargetZoningName(info.getDivisionName());
+            changeInfo.setChangeType(changeType);
+            changeInfo.setTargetZoningCode(info.getZoningCode());
+            changeInfo.setOriginalZoningCode(originalZoningCode);
+            return changeInfo;
+        }).collect(Collectors.toList());
     }
 
     /**

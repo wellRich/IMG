@@ -9,7 +9,7 @@ echo "Start to publish...\n"
 #git config  user.name "wellRich"
 #git config  user.email "kitty_gyk@163.com"
 
-git add .
-git commit -m "自动提交"
-git push origin master;
+#git add .
+#git commit -m "自动提交"
+#git push origin master;
 echo "Success\n";

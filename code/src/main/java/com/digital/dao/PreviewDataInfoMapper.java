@@ -138,4 +138,21 @@ public interface PreviewDataInfoMapper {
     @ResultType(Integer.class)
     Integer saveMergeData(@Param(value = "zoningCode") String zoningCode, @Param(value = "createDate") Date createDate);
 
+    @Select("SELECT * FROM DM_XZQH_YLSJ WHERE XYBZ = 'N' AND YXBZ = 'N' AND YXQ_Z =#{createDate, jdbcType=DATE} AND XZQH_DM=#{zoningCode, jdbcType=VARCHAR}")
+    @ResultMap(value = "findAll")
+    PreviewDataInfo findAbandoned(@Param("createDate")String createDate, @Param("zoningCode") String zoningCode);
+
+    /**
+     * 修改预览数据
+     * @param object 预览数据实例或者是map
+     * @return 被修改的个数
+     */
+    @UpdateProvider(type = PreviewDataInfoSql.class, method = "update")
+    Integer update(Object object);
+
+
+    //@Update("UPDATE DM_XZQH_YLSJ Y SET Y.XZQH_QC=REPLACE(Y.XZQH_QC, #{oldFullname}, #{newFullName}) WHERE Y.JBDM LIKE '#{levelcode} ")
+    @UpdateProvider(type = PreviewDataInfoSql.class, method = "updateFullName")
+    @ResultType(Integer.class)
+    Integer updateFullNameByLevelCode(String oldFullName, String newFullName, String levelCode);
 }

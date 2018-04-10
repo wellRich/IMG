@@ -59,6 +59,7 @@ public class ZoningChangeController {
                 throw new RuntimeException("未找到登录用户所属的区划数据！");
             }else {
                 model.put("zoningName", previewDataInfo.getDivisionName());
+                model.put("levelCode", previewDataInfo.getLevelCode());
             }
             log.info("buildRequest--------> " + previewDataInfo);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, model).toString();
@@ -82,7 +83,7 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/ZoningChangeRequestList", method = RequestMethod.GET)
     @ResponseBody
-    public Object ZoningChangeRequestList(@RequestParam(value = "zoningCode", defaultValue = "370102000000000") String zoningCode
+    public Object ZoningChangeRequestList(@RequestParam(value = "zoningCode", required = false, defaultValue = "370102000000000") String zoningCode
 
             , @RequestParam(value = "pageIndex", defaultValue = "1")Integer pageIndex
             , @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize
@@ -110,8 +111,12 @@ public class ZoningChangeController {
     public Object addZoningChangeRequest(ZCCRequest obj){
         log.info("addZoningChangeRequest");
         try {
-            int key = zoningCodeChangeApi.addZCCRequest(obj);
-            log.info("addZoningChangeRequest.key-----> " + key);
+            String creatorCode = "9527";
+            String deptCode = "10000";
+            obj.setCreatorCode(creatorCode);
+            obj.setCreatorDeptCode(deptCode);
+            obj.setCreateDate(StringUtil.getTime());
+            zoningCodeChangeApi.addZCCRequest(obj);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -128,7 +133,7 @@ public class ZoningChangeController {
      */
     @RequestMapping(value = "/initAddDetails", method = RequestMethod.GET)
     @ResponseBody
-    public Object intAddDetails(@RequestParam(value = "zoningCode", defaultValue = "370102000000000")String zoningCode){
+    public Object intAddDetails(@RequestParam(value = "zoningCode", required = false, defaultValue = "370102000000000")String zoningCode){
         try {
 
             //级次代码
@@ -136,6 +141,7 @@ public class ZoningChangeController {
 
             //级别代码
             String levelCode = Common.getLevelCode(zoningCode);
+            log.info("initAddDetails.levelCOde--------> " + levelCode);
 
             //查找申请单，如果没有找到，则返回信息，请先建立申请单
             List<ZCCRequest> zccRequests = zoningCodeChangeApi.findWritableZCCRequests(levelCode);
@@ -169,9 +175,10 @@ public class ZoningChangeController {
     public Object getSubordinateZoning(@Param(value = "zoningCode")String zoningCode){
         try {
             String assigningCode = Common.getAssigningCode(zoningCode);
-            Map<String, Object> result = new HashMap<>();
+            log.info("asss-----> " + assigningCode);
+            Map<Object, Object> result = new HashMap<>();
             List<PreviewDataInfo> previewDataInfos = zoningCodeChangeApi.findSubordinateZoning(zoningCode);
-            result.put(assigningCode, previewDataInfos);
+            result.put(Integer.valueOf(assigningCode) + 1, previewDataInfos);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, result).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
@@ -302,6 +309,7 @@ public class ZoningChangeController {
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());
+            ex.printStackTrace();
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
     }

@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Param
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 
 /**
@@ -99,5 +100,26 @@ class TestController {
     @ResponseBody
     def deleteHistory(){
         historicalZoningChangeMapper.delete(1)
+    }
+
+
+    @RequestMapping("/testFind")
+    @ResponseBody
+    def testFind(@RequestParam(value = "createDate", required = false, defaultValue = "2008-10-19 11:00:21")String createDate
+                 , @RequestParam(value = "zoningCode", required = false, defaultValue = "370102001400000")String zoningCode){
+        PreviewDataInfo info = previewDataInfoMapper.findAbandoned(createDate, zoningCode)
+        Map m = [:]
+        m.oldFullName = "山东省济南市历下区东关街道办事处天堂山"
+        m.newFullName = "山东省济南市历下区东关街道办事处妙玉山"
+        m.levelCode = "370102006904"
+        println "update----------> " + previewDataInfoMapper.updateFullNameByLevelCode('山东省济南市历下区东关街道办事处天堂山',
+                '山东省济南市历下区东关街道办事处妙玉山', '370102006904')
+        return JSONHelper.toJSON(info)
+    }
+
+    @RequestMapping("/findFamily")
+    @ResponseBody
+    def findFamily(){
+        return previewDataInfoMapper.findFamilyZoning("370102", "*")
     }
 }

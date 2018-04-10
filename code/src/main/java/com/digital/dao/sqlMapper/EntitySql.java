@@ -165,7 +165,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         String sql = new SQL(){{
             FROM(tableName);
             SELECT("*");
-            WHERE(getColumnByField(getPrimaryField()) + "  IN (" + ids + "");
+            WHERE(getColumnByField(getPrimaryField()) + "  IN (" + ids + ")");
         }}.toString();
         log.info("findByIds.sql ---> " + sql);
         return sql;
