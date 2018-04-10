@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCircuitBreaker
 @ServletComponentScan
 @EnableTransactionManagement
+//@MapperScan("com.digital")
 public class BapfopmPfpsmasZcmsServiceApplication {
 	public static void main(String[] args) {
 

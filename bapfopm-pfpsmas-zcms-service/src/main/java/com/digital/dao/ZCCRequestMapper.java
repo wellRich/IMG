@@ -1,18 +1,10 @@
 package com.digital.dao;
 
-import com.digital.dao.sqlMapper.ZCCDetailSql;
-import com.digital.dao.sqlMapper.ZCCGroupSql;
 import com.digital.dao.sqlMapper.ZCCRequestSql;
 import com.digital.entity.ZCCRequest;
-import com.digital.util.search.MyMapper;
-import com.digital.util.search.QueryResp;
-import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
-import javax.websocket.server.ServerEndpoint;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 变更申请单映射
@@ -21,7 +13,7 @@ import java.util.Map;
  * @see ZCCRequest
  */
 @Mapper
-public interface ZCCRequestMapper extends MyMapper<ZCCRequest> {
+public interface ZCCRequestMapper{
 
 
     @SelectProvider(type = ZCCRequestSql.class, method = "get")
@@ -54,7 +46,7 @@ public interface ZCCRequestMapper extends MyMapper<ZCCRequest> {
             @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class)
     })*/
-    @ResultMap("com.digital.mapper.ZCCRequestMapper.test")
+    @ResultMap("test.aa")//引用*Mapper.xml的配置，可以做一个工具生成该xml，使用实体类的信息来生成
     List<ZCCRequest> findAllByLevelCode(@Param(value = "zoningCode") String zoningCode);
 
     /**
