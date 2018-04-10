@@ -3,21 +3,14 @@ package com.digital.util.search;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 /**
  * 〈一句话功能简述〉
  * 〈功能详细描述〉
  *
  * @author guoyka
- * @version 2018/4/3
+ * @version 2018/4/10
  */
-@Inherited
-@Retention(RetentionPolicy.RUNTIME)
-public @interface MyResults {
-    Results res = null;
+public interface MyMapper<T> {
 
     @Results(id = "test", value = {
             @Result(property = "seq", column = "SQDXH", javaType = Integer.class),

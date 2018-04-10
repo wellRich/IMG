@@ -121,6 +121,6 @@ class TestController {
     @ResponseBody
     def findFamily(){
         //return previewDataInfoMapper.findFamilyZoning("370102", "*")
-        return zccRequestMapper.findAllByZoningCode("370102000000000")
+        return zccRequestMapper.findAllByLevelCode("370102")
     }
 }

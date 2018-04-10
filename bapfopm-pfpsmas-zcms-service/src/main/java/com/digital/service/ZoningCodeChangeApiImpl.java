@@ -130,8 +130,8 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return
      */
     @Override
-    public List<ZCCRequest> findZCCReqByZoningCode(String zoningCode) {
-        return zccRequestMapper.findAllByZoningCode(zoningCode);
+    public List<ZCCRequest> findZCCReqByLevelCode(String zoningCode) {
+        return zccRequestMapper.findAllByLevelCode(zoningCode);
     }
 
 

@@ -4,6 +4,7 @@ import com.digital.dao.sqlMapper.ZCCDetailSql;
 import com.digital.dao.sqlMapper.ZCCGroupSql;
 import com.digital.dao.sqlMapper.ZCCRequestSql;
 import com.digital.entity.ZCCRequest;
+import com.digital.util.search.MyMapper;
 import com.digital.util.search.QueryResp;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
@@ -20,7 +21,8 @@ import java.util.Map;
  * @see ZCCRequest
  */
 @Mapper
-public interface ZCCRequestMapper {
+public interface ZCCRequestMapper extends MyMapper<ZCCRequest> {
+
 
     @SelectProvider(type = ZCCRequestSql.class, method = "get")
     @Results(id= "findAll",value = {
@@ -52,8 +54,8 @@ public interface ZCCRequestMapper {
             @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class)
     })*/
-    @ResultMap(value = "findAll")
-    List<ZCCRequest> findAllByZoningCode(@Param(value = "zoningCode") String zoningCode);
+    @ResultMap("com.digital.mapper.ZCCRequestMapper.test")
+    List<ZCCRequest> findAllByLevelCode(@Param(value = "zoningCode") String zoningCode);
 
     /**
      * 通过区划级别代码与状态查找申请单
