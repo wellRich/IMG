@@ -27,7 +27,7 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
         String sql = new SQL(){{
             FROM(getTableName());
             SELECT("count(*)");
-            WHERE(getColumnByField("levelCode")  + " LIKE '"  + levelCode + "'");
+            WHERE(getColumnByField("levelCode")  + " LIKE '"  + levelCode + "%'");
         }}.toString();
         log.info("countByZoningCode.sql----------> " + sql);
         return sql;

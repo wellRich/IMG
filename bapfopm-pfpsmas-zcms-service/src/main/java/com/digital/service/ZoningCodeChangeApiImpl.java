@@ -107,7 +107,10 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
     private QueryResp<ZCCRequest> pageSeekByZoningCode(String levelCode, Integer pageIndex, Integer pageSize, Integer totalRecord){
+        PageInfo<ZCCRequest> pageInfo = PageHelper.startPage(pageIndex, pageSize)
+                .doSelectPageInfo(() -> zccRequestMapper.findAllByLevelCode(levelCode));
         QueryResp<ZCCRequest> resp = new QueryResp<>();
+
         if (totalRecord == 0) {
             totalRecord = zccRequestMapper.countByZoningCode(levelCode);
         }
@@ -596,15 +599,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     @Override
     public Map<String, Object> initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Long total) throws IllegalAccessException {
-        int offset = pageIndex;
         QueryResp<ZCCRequest> resp = pageSeekByLevelCodeAndStatuses(levelCode, pageIndex, pageSize, total);
-
-        PageInfo<ZCCRequest> pageInfo = PageHelper.startPage(pageIndex, pageSize).doSelectPageInfo(() -> zccRequestMapper.findAllByLevelCode(levelCode));
-
-        if(total == 0 || total == null){
-            pageInfo.setTotal(zccRequestMapper.countByZoningCode(levelCode));
-        }
-        log.info("initMaintainZCCReq----> " + JSONHelper.toJSON(pageInfo));
         Map<String, Object> result = resp.toMap();
         List respList = new ArrayList();
         for (ZCCRequest zccRequest : resp.getDataList()) {
@@ -628,6 +623,13 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         resp.setTotalPage(resp.getPageCount());
         int offset = (pageIndex - 1) * pageSize;
         resp.setDataList(pageSeekByLevelCodeAndStatuses(levelCode, offset, pageSize, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ));
+        return resp;
+    }
+
+    public QueryResp test(){
+        QueryResp<ZCCGroup> resp = new QueryResp<>();
+        resp.query(() -> zccGroupMapper.findByRequestSeq(1000));
+        resp.count(() -> zccRequestMapper.countByZoningCode("370102"));
         return resp;
     }
 

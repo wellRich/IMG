@@ -6,8 +6,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.Reader;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +27,7 @@ public class JSONHelper {
             .serializeNulls()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
+
 
     /**
      * json字符串转化为map

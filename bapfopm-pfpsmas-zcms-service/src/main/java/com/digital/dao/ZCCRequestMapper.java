@@ -140,4 +140,6 @@ public interface ZCCRequestMapper{
      */
     @DeleteProvider(type = ZCCRequestSql.class, method = "delete")
     int delete(Integer seq);
+
+    void doSelect();
 }

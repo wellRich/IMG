@@ -1,18 +1,21 @@
 package com.digital.util.search;
 
+import com.github.pagehelper.PageInfo;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
- * 〈一句话功能简述〉
- * 〈功能详细描述〉
+ * 用于封装分页查询
  *
  * @author guoyka
  * @version 2018/3/21
  */
-public final class QueryResp<T> {
+public final class QueryResp<T>{
 
     /*
     数据总数
@@ -40,6 +43,8 @@ public final class QueryResp<T> {
     private List<T> dataList;
 
 
+
+
     public Map<String, Object> toMap() throws IllegalAccessException{
         Map<String, Object> map = new HashMap<>();
         Field[] fields = this.getClass().getDeclaredFields();
@@ -52,8 +57,22 @@ public final class QueryResp<T> {
     public QueryResp() {
     }
 
-    public QueryResp(int pageIndex, int pageSize) {
+    public QueryResp(int pageIndex, int pageSize, int totalRecord) {
+        this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
+        if(totalRecord > 0){
+            this.totalRecord = totalRecord;
+        }else {
 
+        }
+    }
+
+    public void query(Supplier<List<T>> supplier){
+        setDataList(supplier.get());
+    }
+
+    public void count(Count count){
+        setTotalRecord(count.get());
     }
 
     public int getTotalPage() {

@@ -9,6 +9,7 @@ import com.digital.entity.HistoricalZoningChange
 import com.digital.entity.PreviewDataInfo
 import com.digital.entity.ZCCGroup
 import com.digital.entity.ZCCRequest
+import com.digital.service.ZoningCodeChangeApiImpl
 import com.digital.util.JSONHelper
 import com.digital.util.StringUtil
 import org.apache.ibatis.annotations.Param
@@ -37,6 +38,9 @@ class TestController {
 
     @Autowired
     HistoricalZoningChangeMapper historicalZoningChangeMapper;
+
+    @Autowired
+    ZoningCodeChangeApiImpl zoningCodeChangeApi1;
 
     @RequestMapping("/testPreviewDataInfoMapper")
     @ResponseBody
@@ -120,8 +124,6 @@ class TestController {
     @RequestMapping("/findFamily")
     @ResponseBody
     def findFamily(){
-        //return previewDataInfoMapper.findFamilyZoning("370102", "*")
-        zoningCodeChangeApi.initMaintainZCCReq("370102", "区划名称", 1, 2, 0)
-        return zccRequestMapper.findAllByLevelCode("370102")
+        return zoningCodeChangeApi1.test()
     }
 }
