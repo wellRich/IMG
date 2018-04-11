@@ -38,7 +38,7 @@ public interface ZCCRequestMapper{
     * @param zoningCode 区划代码
     * @return 返回申请单列表
     */
-    @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{zoningCode, jdbcType=CHAR} ORDER BY LRSJ ")
+    @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{levelCode, jdbcType=CHAR} ORDER BY LRSJ ")
    /* @Results(value = {
             @Result(property = "seq", column = "SQDXH", javaType = Integer.class),
             @Result(property = "name", column = "SQDMC", javaType = String.class),
@@ -46,8 +46,8 @@ public interface ZCCRequestMapper{
             @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
             @Result(property = "notes", column = "BZ", javaType = String.class)
     })*/
-    @ResultMap("test.aa")//引用*Mapper.xml的配置，可以做一个工具生成该xml，使用实体类的信息来生成
-    List<ZCCRequest> findAllByLevelCode(@Param(value = "zoningCode") String zoningCode);
+    @ResultMap("findAll")//引用*Mapper.xml的配置，可以做一个工具生成该xml，使用实体类的信息来生成
+    List<ZCCRequest> findAllByLevelCode(@Param(value = "levelCode") String zoningCode);
 
     /**
      * 通过区划级别代码与状态查找申请单
@@ -56,10 +56,7 @@ public interface ZCCRequestMapper{
      * @return 申请单实例
      */
     @SelectProvider(type = ZCCRequestSql.class, method = "findByLevelCodeAndStatuses")
-    @Results({
-            @Result(id=true, property = "seq", column = "SBXZQH_DM"),
-            @Result(property = "name", column = "SQDMC")
-    })
+    @ResultMap("findAll")
     //@Select("SELECT SBXZQH_DM, SQDMC FROM xzqh_bgsqd WHERE SQDZT_DM IN (#{statuses}) AND SBXZQH_DM = #{levelCode}")
     //List<ZCCRequest> findByLevelCodeAndStatuses(@Param("levelCode")String levelCode, @Param("statuses")String ... statuses);
     List<ZCCRequest> findByLevelCodeAndStatuses(String levelCode, String ... statuses);
@@ -80,7 +77,7 @@ public interface ZCCRequestMapper{
      * @return 符合条件的申请单数量
      */
     @SelectProvider(type = ZCCRequestSql.class, method = "countByZoningCodeAndStatus")
-    int countByZoningCodeAndStatus(String levelCode, String ... statuses);
+    long countByZoningCodeAndStatus(String levelCode, String ... statuses);
 
     /** 根据区划代码分页查询申请单
      * @param zoningCode 区划代码

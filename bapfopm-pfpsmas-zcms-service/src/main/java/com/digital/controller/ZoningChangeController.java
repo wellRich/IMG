@@ -84,19 +84,15 @@ public class ZoningChangeController {
     @RequestMapping(value = "/ZoningChangeRequestList", method = RequestMethod.GET)
     @ResponseBody
     public Object ZoningChangeRequestList(@RequestParam(value = "zoningCode", required = false, defaultValue = "370102000000000") String zoningCode
-
-            , @RequestParam(value = "pageIndex", defaultValue = "1")Integer pageIndex
-            , @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize
-            , @RequestParam(value = "total", defaultValue = "0")Integer total){
-        PreviewDataInfo info = zoningCodeChangeApi.findOneByZoningCode(zoningCode);
-        String levelCode = info.getLevelCode();//Common.getLevelCode(zoningCode);
-        String zoningName = info.getDivisionName();
-        log.info("ZoningChangeRequestList.zoningName----> " + zoningName);
-        try{
-            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZCCReqByZoningLevelCode(levelCode, zoningName, pageIndex, pageSize, total) ).toString();
-        }catch (Exception e) {
+            , @RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex
+            , @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize
+            , @RequestParam(value = "total", defaultValue = "0") Integer total) {
+        try {
+            log.info("ZoningChangeRequestList.zoningCode----> " + zoningCode);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZCCReqByZoningCode(zoningCode, pageIndex, pageSize, total)).toString();
+        } catch (Exception e) {
             log.error("ZoningChangeRequestList---> " + e.getMessage());
-            return new  RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
     }
 
@@ -177,8 +173,7 @@ public class ZoningChangeController {
             String assigningCode = Common.getAssigningCode(zoningCode);
             log.info("asss-----> " + assigningCode);
             Map<Object, Object> result = new HashMap<>();
-            List<PreviewDataInfo> previewDataInfos = zoningCodeChangeApi.findSubordinateZoning(zoningCode);
-            result.put(Integer.valueOf(assigningCode) + 1, previewDataInfos);
+            result.put(Integer.valueOf(assigningCode) + 1, zoningCodeChangeApi.findSubordinateZoning(zoningCode));
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, result).toString();
         }catch (Exception ex){
             log.error(ex.getMessage());

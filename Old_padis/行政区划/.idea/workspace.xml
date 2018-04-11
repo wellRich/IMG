@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd15f617-6aef-4656-8d79-063b8c3b5527" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java/com/digital/service/ZoningCodeChangeApiImpl.java" afterPath="$PROJECT_DIR$/../../人口与计生服务管理应用系统/区划代码管理分系统/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java/com/digital/service/ZoningCodeChangeApiImpl.java" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/web应用/adp/applications/padis/WEB-INF/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WhbgdzbManager.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WhbgdzbManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="302" column="27" lean-forward="true" selection-start-line="302" selection-start-column="27" selection-end-line="302" selection-end-column="27" />
+            <state relative-caret-position="338">
+              <caret line="311" column="29" lean-forward="false" selection-start-line="311" selection-start-column="29" selection-end-line="311" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -52,58 +52,18 @@
       <file leaf-file-name="MoveCheckXzqhImp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="38" column="36" lean-forward="true" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+            <state relative-caret-position="646">
+              <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MergeCheckXzqhImp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MergeCheckXzqhImp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-854">
-              <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AddCheckXzqhImp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1606">
-              <caret line="32" column="24" lean-forward="false" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CheckXzqhImp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/CheckXzqhImp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="4" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="20" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChangeCheckXzqhImp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/ChangeCheckXzqhImp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2006">
-              <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XzqhbgCommon.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="XzqhbgCommon.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5457">
-              <caret line="336" column="42" lean-forward="false" selection-start-line="336" selection-start-column="35" selection-end-line="336" selection-end-column="42" />
+            <state relative-caret-position="231">
+              <caret line="501" column="22" lean-forward="false" selection-start-line="501" selection-start-column="22" selection-end-line="501" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -488,7 +448,7 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -502,6 +462,90 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="batch" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="lgywsjsc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="qhdmbgqkhztj" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="sjjzbg" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgsqqr" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="sjjd" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="sqdcx" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -514,7 +558,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="JAVA" />
-    <property name="SearchEverywhereHistoryKey" value="initXZ&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.lgywsjsc.LgywsjscService#initXzqh&#10;init&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/web应用/adp/applications/padis/work/xzqhwh/zxbg/bgdzgl/bgdzblr/initXzqh_success.jsp&#10;CZRY_DM&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.batch.SjjzbgdrzsbManager#czry_dm2&#10;XzqhService&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.common.XzqhService&#10;BgdzblrService&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrService.java&#10;revokeSqd&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.zxbg.bgdzgl.cxbgdzb.CxbgdzbManager#revokeSqd&#10;deleteS&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.zxbg.sqdsc.SqdscManager#deleteSqd&#10;deleteSq&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.zxbg.sqdsc.SqdscManager#deleteSqd&#10;XZQH_SQDZT_YQR&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.common.Common#XZQH_SQDZT_YQR&#10;gdrls&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/batch/SjjzbgdrlsbManager.java&#10;xz&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java&#10;Check&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/CheckSqd.java" />
+    <property name="SearchEverywhereHistoryKey" value="XzqhbgCommon&#9;FILE&#9;file://F:/下载目录/root/Old_padis/行政区划/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java&#10;initXZ&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.lgywsjsc.LgywsjscService#initXzqh&#10;init&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/web应用/adp/applications/padis/work/xzqhwh/zxbg/bgdzgl/bgdzblr/initXzqh_success.jsp&#10;CZRY_DM&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.batch.SjjzbgdrzsbManager#czry_dm2&#10;XzqhService&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.common.XzqhService&#10;BgdzblrService&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrService.java&#10;revokeSqd&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.zxbg.bgdzgl.cxbgdzb.CxbgdzbManager#revokeSqd&#10;deleteS&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.zxbg.sqdsc.SqdscManager#deleteSqd&#10;deleteSq&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.zxbg.sqdsc.SqdscManager#deleteSqd&#10;XZQH_SQDZT_YQR&#9;PSI&#9;JAVA://com.padis.business.xzqhwh.common.Common#XZQH_SQDZT_YQR&#10;gdrls&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/batch/SjjzbgdrlsbManager.java&#10;xz&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java&#10;Check&#9;FILE&#9;file://E:/project/padis/全民健康系统/人口统筹区划管理/代码2018-03-05pm/行政区划/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/CheckSqd.java" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -665,42 +709,43 @@
       <workItem from="1523180921700" duration="2088000" />
       <workItem from="1523235744510" duration="1709000" />
       <workItem from="1523254888074" duration="9545000" />
+      <workItem from="1523428174272" duration="1262000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189652000" />
+    <option name="totallyTimeSpent" value="190914000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295129" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.08094556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22851002" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295129" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gerrit" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -721,27 +766,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sjjd/SjjdManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/batch/BgsqbBatch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="43" column="13" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/qhdmtjcx/QhdmtjcxManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/qhdmxz/QhdmxzManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="779">
@@ -753,13 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgsqqr/BgsqqrManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -992,14 +1009,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5457">
-          <caret line="336" column="42" lean-forward="false" selection-start-line="336" selection-start-column="35" selection-end-line="336" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web应用/adp/applications/padis/work/xzqhwh/zxbg/bgdzgl/bgdzblr/js/tjxzqhGrid.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1029,14 +1038,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/lgywsjsc/LgywsjscManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="28" column="6" lean-forward="false" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1047,7 +1048,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MergeCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-854">
+        <state relative-caret-position="304">
           <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
           <folding />
         </state>
@@ -1055,7 +1056,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/AddCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1606">
+        <state relative-caret-position="532">
           <caret line="32" column="24" lean-forward="false" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
           <folding />
         </state>
@@ -1063,7 +1064,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/ChangeCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2006">
+        <state relative-caret-position="323">
           <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
           <folding />
         </state>
@@ -1071,7 +1072,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/CheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
+        <state relative-caret-position="133">
           <caret line="7" column="4" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="20" selection-end-column="5" />
           <folding />
         </state>
@@ -1079,16 +1080,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="38" column="36" lean-forward="true" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+        <state relative-caret-position="646">
+          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sjjd/SjjdManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sqdcx/SqdcxManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgsqqr/BgsqqrManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/lgywsjsc/LgywsjscManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2355">
+          <caret line="28" column="6" lean-forward="false" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/batch/ExpxzqhBatch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1252">
+          <caret line="58" column="13" lean-forward="false" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
+          <folding>
+            <marker date="1523343708267" expanded="true" signature="5003:5106" ph="select XZQH_... v_dm_xzqh_ylsj" />
+            <marker date="1523343708267" expanded="true" signature="7287:7394" ph="select XZQH_... v_dm_xzqh_ylsj" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="302" column="27" lean-forward="true" selection-start-line="302" selection-start-column="27" selection-end-line="302" selection-end-column="27" />
+        <state relative-caret-position="338">
+          <caret line="311" column="29" lean-forward="false" selection-start-line="311" selection-start-column="29" selection-end-line="311" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="501" column="22" lean-forward="false" selection-start-line="501" selection-start-column="22" selection-end-line="501" selection-end-column="22" />
           <folding />
         </state>
       </provider>

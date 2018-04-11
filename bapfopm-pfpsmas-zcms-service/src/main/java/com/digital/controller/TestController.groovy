@@ -121,6 +121,7 @@ class TestController {
     @ResponseBody
     def findFamily(){
         //return previewDataInfoMapper.findFamilyZoning("370102", "*")
+        zoningCodeChangeApi.initMaintainZCCReq("370102", "区划名称", 1, 2, 0)
         return zccRequestMapper.findAllByLevelCode("370102")
     }
 }

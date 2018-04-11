@@ -6,6 +6,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageInterceptor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +73,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @param totalRecord 数据总量，首次查询为空，随后的查询，就从前台传来
      * @return 申请单列表，分页
      */
-    @Override
-    public Map<String, Object> findZCCReqByZoningLevelCode(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException {
+    private Map<String, Object> findZCCReqByZoningLevelCode(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException {
         QueryResp<ZCCRequest> queryResp = pageSeekByZoningCode(levelCode, pageIndex, pageSize, totalRecord);
         Map<String, Object> objectMap = queryResp.toMap();
         List respList = new ArrayList();
@@ -81,6 +84,26 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         }
         objectMap.put("dataList", respList);
         return objectMap;
+    }
+
+    /**
+     * 通过区划代码查找申请单
+     * 数据用来初始化申请单创建页面
+     * @param zoningCode 区划代码
+     * @param pageIndex 请求的页码
+     * @param pageSize 每页数据量
+     * @param totalRecord 数据总量，首次查询为空，随后的查询，就从前台传来
+     * @return
+     * @throws IllegalAccessException
+     */
+    public Map<String, Object> findZCCReqByZoningCode(String zoningCode,  Integer pageIndex, Integer pageSize, Integer totalRecord)throws IllegalAccessException {
+
+        PreviewDataInfo info = previewDataInfoMapper.findValidOneByZoningCode(zoningCode);
+        if(info == null){
+            throw new RuntimeException("未找到登录人所属的区划代码[" + zoningCode +  "]对应和区划预览数据！");
+        } else {
+            return findZCCReqByZoningLevelCode(info.getLevelCode(), info.getDivisionName(), pageIndex, pageSize, totalRecord);
+        }
     }
 
     private QueryResp<ZCCRequest> pageSeekByZoningCode(String levelCode, Integer pageIndex, Integer pageSize, Integer totalRecord){
@@ -171,7 +194,9 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         Map<String, List<Map>> result = new HashMap<>();
         for (PreviewDataInfo dataInfo : previewDataInfos) {
             if (result.containsKey(dataInfo.getAssigningCode())) {
-                result.get(dataInfo.getAssigningCode()).add(dataInfo.toMap());
+                Map mapData = dataInfo.toMap();
+                mapData.put("superLevelCode", Common.getLevelCode(dataInfo.getSuperiorZoningCode()));
+                result.get(dataInfo.getAssigningCode()).add(mapData);
             } else {
                 List<Map> cell = new ArrayList<>();
                 Map mapData = dataInfo.toMap();
@@ -189,8 +214,15 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return
      */
     @Override
-    public List<PreviewDataInfo> findSubordinateZoning(String zoningCode) {
-        return previewDataInfoMapper.findSubordinateZoning(zoningCode);
+    public List<?> findSubordinateZoning(String zoningCode) throws IllegalAccessException {
+        List<Map> result = new ArrayList<>();
+        String levelCode = Common.getLevelCode(zoningCode);
+        for (PreviewDataInfo info: previewDataInfoMapper.findSubordinateZoning(zoningCode)){
+            Map cell = info.toMap();
+            cell.put("superLevelCode", levelCode);
+            result.add(cell);
+        }
+        return result;
     }
 
 
@@ -563,8 +595,16 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return 分页查询对象
      */
     @Override
-    public Map<String, Object> initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer total) throws IllegalAccessException {
+    public Map<String, Object> initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Long total) throws IllegalAccessException {
+        int offset = pageIndex;
         QueryResp<ZCCRequest> resp = pageSeekByLevelCodeAndStatuses(levelCode, pageIndex, pageSize, total);
+
+        PageInfo<ZCCRequest> pageInfo = PageHelper.startPage(pageIndex, pageSize).doSelectPageInfo(() -> zccRequestMapper.findAllByLevelCode(levelCode));
+
+        if(total == 0 || total == null){
+            pageInfo.setTotal(zccRequestMapper.countByZoningCode(levelCode));
+        }
+        log.info("initMaintainZCCReq----> " + JSONHelper.toJSON(pageInfo));
         Map<String, Object> result = resp.toMap();
         List respList = new ArrayList();
         for (ZCCRequest zccRequest : resp.getDataList()) {
@@ -577,14 +617,14 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
 
-    private QueryResp<ZCCRequest> pageSeekByLevelCodeAndStatuses(String levelCode, Integer pageIndex, Integer pageSize, Integer total){
+    private QueryResp<ZCCRequest> pageSeekByLevelCodeAndStatuses(String levelCode, Integer pageIndex, Integer pageSize, Long total){
         if(total == 0){
             total = zccRequestMapper.countByZoningCodeAndStatus(levelCode, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ);
         }
         QueryResp<ZCCRequest> resp = new QueryResp<>();
         resp.setPageIndex(pageIndex);
         resp.setPageSize(pageSize);
-        resp.setTotalRecord(total);
+        resp.setTotalRecord(total.intValue());
         resp.setTotalPage(resp.getPageCount());
         int offset = (pageIndex - 1) * pageSize;
         resp.setDataList(pageSeekByLevelCodeAndStatuses(levelCode, offset, pageSize, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ));

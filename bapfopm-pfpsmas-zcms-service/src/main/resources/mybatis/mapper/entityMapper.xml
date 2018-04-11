@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="entity.ZCCRequest">
+
+    <resultMap type="com.digital.entity.ZCCRequest" id="all">
+        <id     property="seq" column="SQDXH"  javaType="Integer"/>
+        <result property="name" column="SQDMC" javaType="String"/>
+        <result property="status" column="SQDZT_DM" javaType="String"/>
+        <result property="levelCode" column="SBXZQH_DM" javaType="String"/>
+        <result property="notes" column="BZ"  javaType="String"/>
+        <result property="createDate" column="LRSJ"  javaType="String"/>
+        <result property="creatorCode" column="LRR_DM" javaType="String"/>
+        <result property="approvalOpinion" column="SPYJ" javaType="String"/>
+        <result property="creatorDeptCode" column="LRJG_DM" javaType="String"/>
+        <result property="lastUpdate" column="XGSJ" javaType="String"/>
+        <result property="updaterCode" column="XGR_DM" javaType="String"/>
+        <result property="verifierCode" column="SPR_DM" javaType="String"/>
+        <result property="updaterDeptCode" column="XGJG_DM" javaType="String"/>
+    </resultMap>
+</mapper>

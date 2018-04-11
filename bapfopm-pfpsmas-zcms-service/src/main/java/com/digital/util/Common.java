@@ -58,6 +58,8 @@ public class Common {
 
     public static final String ORMAP_PACKAGE = "com.padis.business.common.data.dm";
 
+    public static final String NATION_ZONING_CODE = "000000000000000";
+
     /*国家级*/
     public static final Integer NATION_LEVEL = 0;
 

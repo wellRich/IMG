@@ -6,8 +6,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.LoggerFactory;
 

@@ -32,18 +32,18 @@ public interface ZoningCodeChangeApi {
      */
     int addZCCRequest(ZCCRequest obj);
 
-    /**
-     * 根据区划代码查询申请单
-     *  做分页
-     * @param levelCode 登录用户的所属区划代码的级别代码
-     * @param zoningName 区划名称
-     * @param pageSize 每页数量
-     * @param pageIndex 页码
-     * @param totalRecord 数据总数
-     * @return dataList实体数据，数据总量totalCount,总页数totalPage,当前页数pageIndex
-     */
-    Object findZCCReqByZoningLevelCode(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
 
+    /**
+     * 通过区划代码查找申请单
+     * 数据用来初始化申请单创建页面
+     * @param zoningCode 区划代码
+     * @param pageSize 每页数据量
+     * @param pageIndex 请求的页码
+     * @param totalRecord 数据总量，首次查询为空，随后的查询，就从前台传来
+     * @return 申请单列表，分页
+     */
+
+    Object findZCCReqByZoningCode(String zoningCode, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
     /**
      * 根据区划级别代码查询申请单
      * 不分页
@@ -85,7 +85,7 @@ public interface ZoningCodeChangeApi {
      * @param zoningCode 代码
      * @return 子级区划代码
      */
-    List<PreviewDataInfo> findSubordinateZoning(String zoningCode);
+    List<?> findSubordinateZoning(String zoningCode) throws IllegalAccessException;
 
     /**
      * 通过区划代码查找区划预览数据
@@ -127,7 +127,7 @@ public interface ZoningCodeChangeApi {
      * @param total 查询总数
      * @return 分页查询对象
      */
-    Object initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer total) throws IllegalAccessException;
+    Object initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Long total) throws IllegalAccessException;
 
     /**
      * 更新申请单
