@@ -1,7 +1,7 @@
 #! /bin/bash
 echo "Start to publish...\n"
 echo "remove .git...\n"
-source=E:/workspace/Server/äººå£ä¸è®¡ç”ŸæœåŠ¡ç®¡ç†åº”ç”¨ç³»ç»Ÿ/åŒºåˆ’ä»£ç ç®¡ç†åˆ†ç³»ç»Ÿ/SERVICE/bapfopm-pfpsmas-zcms-service
+source=E:/workspace/Server/ÈË¿ÚÓë¼ÆÉú·şÎñ¹ÜÀíÓ¦ÓÃÏµÍ³/Çø»®´úÂë¹ÜÀí·ÖÏµÍ³/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java/com/digital
 root=F:/github_work/root
 git=F:/github_work/root/.git
 filelist=`ls $git`
@@ -11,15 +11,15 @@ do
  mv $git/$file F:/gitTemp
 done
 
-#å‡†å¤‡ä»£ç æ–‡ä»¶
+
 echo "delete github local Code $root"
-rm -rf  $root/bapfopm-pfpsmas-zcms-service
+rm -rf  $root/bapfopm-pfpsmas-zcms-service/src/main/java/com/digital
 
-echo "ä»å·¥ä½œç›®å½•æ‹·è´ä»£ç æ–‡ä»¶...\n"
-cp -rv $source/$codeFile  $root
+echo "´Ó¹¤×÷Ä¿Â¼¿½±´´úÂëÎÄ¼ş...\n"
+cp -rv $source/$codeFile  $root/bapfopm-pfpsmas-zcms-service/src/main/java/com
 
 
-echo "æ‰¾å›.gitä¸­çš„æ–‡ä»¶...\n"
+echo "ÕÒ»Ø.gitÖĞµÄÎÄ¼ş...\n"
 filelist=`ls F:/gitTemp`
 for file in $filelist
 do 
@@ -27,7 +27,8 @@ do
  mv F:/gitTemp/$file $git
 done
 
+cd $root
 git add .
-git commit -m "è‡ªåŠ¨æäº¤"
+git commit -m "×Ô¶¯Ìá½»"
 git push origin master;
 echo "Success\n";
