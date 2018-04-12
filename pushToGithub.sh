@@ -1,15 +1,19 @@
 #! /bin/bash
 echo "Start to publish...\n"
-# åˆ‡æ¢åˆ°é¡¹ç›®ç›®å½•
+# ÇĞ»»µ½ÏîÄ¿Ä¿Â¼
 #cd E:/workspace/SERVER
 
-#cd äººå£ä¸è®¡ç”ŸæœåŠ¡ç®¡ç†åº”ç”¨ç³»ç»Ÿ/åŒºåˆ’ä»£ç ç®¡ç†åˆ†ç³»ç»Ÿ/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java
-# æ‰§è¡Œgitå‘½ä»¤
+#cd ÈË¿ÚÓë¼ÆÉú·şÎñ¹ÜÀíÓ¦ÓÃÏµÍ³/Çø»®´úÂë¹ÜÀí·ÖÏµÍ³/SERVICE/bapfopm-pfpsmas-zcms-service/src/main/java
+# Ö´ĞĞgitÃüÁî
 # git pull origin test
 #git config  user.name "wellRich"
 #git config  user.email "kitty_gyk@163.com"
 
 #git add .
-#git commit -m "è‡ªåŠ¨æäº¤"
+#git commit -m "×Ô¶¯Ìá½»"
 #git push origin master;
-echo "Success\n";
+#echo "Success\n";
+
+root=F:/github_work/root
+source=E:/workspace/Server/ÈË¿ÚÓë¼ÆÉú·şÎñ¹ÜÀíÓ¦ÓÃÏµÍ³/Çø»®´úÂë¹ÜÀí·ÖÏµÍ³/SERVICE/bapfopm-pfpsmas-zcms-service
+cp -rv $source/$codeFile  $root

@@ -3,11 +3,12 @@
 
 echo "Start to publish...\n"
 echo "移除.git中的文件...\n"
-filelist=`ls .git`
+di=F:/github_work/root/.git
+filelist=`ls F:/github_work/root/.git`
 for file in $filelist
 do 
  echo $file
- mv .git/$file F:/gitTemp
+ mv $di/$file F:/gitTemp
 done
 
 #准备代码文件
@@ -30,4 +31,4 @@ done
 git add .
 git commit -m "自动提交"
 git push origin master;
-echo "Success\n";
+echo "Success\n"
