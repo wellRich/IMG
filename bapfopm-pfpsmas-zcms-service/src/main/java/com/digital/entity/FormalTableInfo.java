@@ -150,13 +150,6 @@ public class FormalTableInfo implements Serializable{
     public String type = "11";
 
 
-    /*
-    * 版本号
-    * */
-    @Column(name = "VERSION")
-    public Integer version;
-
-
 
 
 
@@ -328,14 +321,6 @@ public class FormalTableInfo implements Serializable{
 
     public void setUniqueKey(String uniqueKeys) {
         this.uniqueKey = uniqueKeys;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
 }

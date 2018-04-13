@@ -252,7 +252,8 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return PreviewDataInfo
      */
     public PreviewDataInfo findOneByZoningCode(String zoningCode){
-        return previewDataInfoMapper.get(zoningCode);
+        //return previewDataInfoMapper.get(zoningCode);
+        return  previewDataInfoMapper.findValidOneByZoningCode(zoningCode);
     }
 
     public List<PreviewDataInfo> findBrothersByCode(String zoningCode){
@@ -873,7 +874,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             if (Common.hasSameZoningCode(originalZoningCode, targetZoningCode)) {
 
                 //上级区划全称
-                String superiorZoningFullName = previewDataInfoMapper.get(Common.getSuperAssignCode(originalZoningCode)).getDivisionFullName();
+                String superiorZoningFullName = previewDataInfoMapper.findValidOneByZoningCode(Common.getSuperAssignCode(originalZoningCode)).getDivisionFullName();
 
                 //修改名称与简称
                 previewDataInfoMapper.update(ImmutableMap.of("zoningCode", originalZoningCode, "divisionName", originalZoningName, "divisionAbbreviation", originalZoningName));

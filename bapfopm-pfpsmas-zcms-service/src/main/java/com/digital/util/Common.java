@@ -58,6 +58,7 @@ public class Common {
 
     public static final String ENTITY_PACKAGE = "com.digital.entity";
 
+
     public static final String NATION_ZONING_CODE = "000000000000000";
 
     /*国家级*/
@@ -86,9 +87,7 @@ public class Common {
      * @method  getSuperiorZoningCode
      * @params [xzqh_dm：行政区划代码]
      * @return java.lang.String：上级行政区划代码
-     * @exception
      */
-
     public static String getSuperiorZoningCode(String xzqh_dm){
 
         if(xzqh_dm==null||xzqh_dm.equals("")||xzqh_dm.length()!=15){

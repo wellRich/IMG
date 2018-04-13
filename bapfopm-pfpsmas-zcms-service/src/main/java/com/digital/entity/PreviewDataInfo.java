@@ -16,9 +16,20 @@ import java.util.Map;
  * @Since
  * @Deprecated
  */
-@Table(name = "DM_XZQH_YLSJ", primaryKey = "zoningCode")
+@Table(name = "DM_XZQH_YLSJ", primaryKey = "index")
 public class PreviewDataInfo implements Serializable {
 
+
+    /*
+     *序列号
+     * */
+    @Column(name = "ID")
+    private Integer index;
+    /*
+    * 区划对应的唯一主键
+    * */
+    @Column(name = "UNIQUE_KEY")
+    public String uniqueKey;
     /*
      * 行政区划代码
      * */
@@ -144,6 +155,8 @@ public class PreviewDataInfo implements Serializable {
     private String type = "11";
 
 
+
+
     public Map<String, Object> toMap() throws IllegalAccessException{
         Map<String, Object> map = new HashMap<>();
         Field[] fields = this.getClass().getDeclaredFields();
@@ -153,6 +166,20 @@ public class PreviewDataInfo implements Serializable {
         return map;
     }
 
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
+
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
+    }
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
     public String getZoningCode() {
         return zoningCode;
     }

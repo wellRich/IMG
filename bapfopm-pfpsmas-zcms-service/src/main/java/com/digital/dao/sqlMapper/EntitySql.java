@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import com.digital.util.search.QueryReq;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.LoggerFactory;
@@ -110,6 +111,23 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
             SELECT(columns);
             FROM(tableName);
         }}.toString();
+    }
+
+    /**
+     * 根据某一属性查询
+     * @param req 查询封装对象
+     * @return sql
+     */
+    public String seek(QueryReq req){
+        String select = rename(req.select, getFieldsAndCols());
+
+
+       log.info("seek.select--------> " + select);
+        String sql = new SQL(){{
+
+        }}.toString();
+        log.info("findOneBy.sql-----> " + sql);
+        return sql;
     }
 
     public String update(final Object group){
