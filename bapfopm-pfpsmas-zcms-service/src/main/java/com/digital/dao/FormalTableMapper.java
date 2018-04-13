@@ -3,6 +3,7 @@ package com.digital.dao;
 import com.digital.dao.sqlMapper.FormalTableSql;
 import com.digital.entity.FormalTableInfo;
 import com.digital.util.Common;
+import com.digital.util.search.QueryReq;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Mapper
 public interface FormalTableMapper {
-
+    static final String RESULT_MAP =  "com.digital.entity.allOfFormalTableInfo";
     //插入正式表
     @InsertProvider(type = FormalTableSql.class,method = "insert")
 //    @Insert("insert into dm_xzqh values(#{uniqueKey},#{zoningCode},#{divisionName},#{divisionAbbreviation}," +
@@ -40,10 +41,14 @@ public interface FormalTableMapper {
      * @return 所有的子级区划
      */
     @SelectProvider(type = FormalTableSql.class, method = "findSubordinateZoning")
-    @ResultMap("com.digital.entity.allOfFormalTableInfo")
+    @ResultMap(RESULT_MAP)
     List<FormalTableInfo> findSubordinateZoning(String zoningCode);
 
 
     @Update("update dm_xzqh set XYBZ='N',YXBZ='N' where XZQH_DM = ")
     int updateFormalZoningStatus(String zoningCode);
+
+    /*@SelectProvider(type = FormalTableSql.class, method = "seek")
+    @ResultMap(RESULT_MAP)
+    List<FormalTableInfo> seek(QueryReq req);*/
 }

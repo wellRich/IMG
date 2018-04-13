@@ -5,15 +5,10 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import com.digital.util.search.QueryReq;
+import com.digital.util.search.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.LoggerFactory;
-
-import com.digital.util.search.BaseEntity;
-import com.digital.util.search.Column;
-import com.digital.util.search.Table;
-
 
 
 /**
@@ -114,17 +109,38 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     }
 
     /**
-     * 根据某一属性查询
+     * 根据指定的若干条件查询若干字段查询
      * @param req 查询封装对象
      * @return sql
      */
     public String seek(QueryReq req){
-        String select = rename(req.select, getFieldsAndCols());
-
-
-       log.info("seek.select--------> " + select);
+        List<QueryFilter> filters = req.search;
         String sql = new SQL(){{
+            FROM(getTableName());
+            if(req.select != null && !"".equals(req.select)){
+                SELECT(rename(req.select, getFieldsAndCols()));
+            }else {
+                SELECT("*");
+            }
 
+            for(int i = 0; i < req.search.size();){
+                QueryFilter filter = filters.get(i);
+                if(i == 0){
+                    WHERE(filter.toSql());
+                }else {
+                    if(filter.getLogic().equals(QueryFilter.LOGIC_AND)){
+                        AND();
+                        WHERE(filter.toSql());
+                    }else {
+                        OR();
+                        WHERE(filter.toSql());
+                    }
+                }
+
+                if(req.sort != null){
+                    ORDER_BY(rename(req.sort, getFieldsAndCols()));
+                }
+            }
         }}.toString();
         log.info("findOneBy.sql-----> " + sql);
         return sql;

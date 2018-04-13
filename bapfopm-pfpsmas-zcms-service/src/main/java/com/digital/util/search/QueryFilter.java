@@ -1,5 +1,7 @@
 package com.digital.util.search;
 
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,8 @@ import java.io.Serializable;
  * @version 1.0, 2018/4/13
  */
 public class QueryFilter implements Serializable {
+    protected static final org.slf4j.Logger log = LoggerFactory.getLogger(QueryFilter.class);
+
     public static final String OPR_IS = "=";
     public static final String OPR_IS_NOT = "NOT";
     public static final String OPR_IS_NULL = "IS NULL";
@@ -21,17 +25,34 @@ public class QueryFilter implements Serializable {
     public static final String OPR_LIKE = " LIKE ";
     public static final String OPR_MATCH = "MATCH";
     public static final String OPR_CONTAINS = "CONTAINS";
+    public static final String OPR_NOT_CONTAINS = "NOT CONTAINS";
 
     public static final String LOGIC_AND = "AND";
     public static final String LOGIC_OR = "OR";
+
     protected String field;
     protected Object value;
-    protected String operator;
+    protected String operator = OPR_IS;
+    protected String logic = LOGIC_AND;
+
+    public QueryFilter(String field, Object value, String operator, String logic) {
+        this.field = field;
+        this.value = value;
+        this.operator = operator;
+        this.logic = logic;
+    }
+
 
     public QueryFilter(String field, Object value, String operator) {
         this.field = field;
         this.value = value;
         this.operator = operator;
+    }
+
+
+    public QueryFilter(String field, Object value) {
+        this.field = field;
+        this.value = value;
     }
 
     public String toString() {
@@ -42,9 +63,69 @@ public class QueryFilter implements Serializable {
         return sb.toString();
     }
 
-    public QueryFilter(String field, Object value) {
-        this(field, value, "is");
+    /**
+     * 转化成sql子句
+     * @return
+     */
+    public String toSql(){
+        StringBuilder sql = new StringBuilder();
+        switch (this.operator){
+            case OPR_IS:
+                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                break;
+            case OPR_IS_NOT:
+                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                break;
+            case OPR_LESS_THAN:
+                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                break;
+            case OPR_MORE_THAN:
+                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                break;
+            case OPR_IN:
+                sql.append(" ").append(field).append(" ").append(operator).append(" (").append(value).append(")");
+                break;
+            case OPR_NOT_IN:
+                sql.append(" ").append(field).append(" ").append(operator).append(" (").append(value).append(")");
+                break;
+            case OPR_IS_NULL:
+                sql.append(" ").append(field).append(" ").append(operator);
+                break;
+            case OPR_IS_NOT_NULL:
+                sql.append(" ").append(field).append(" ").append(operator);
+                break;
+            case OPR_LIKE:
+                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                break;
+            case OPR_BETWEEN:
+                try {
+                    Object[] objects = (Object[])value;
+                    sql.append(" ").append(field).append(" ").append(operator).append(" '").append(objects[0]).append(" AND ").append(objects);
+                }catch (Exception ex){
+                    log.error("QueryFilter.toSql---> " + ex.getMessage());
+                }
+
+                break;
+            case OPR_CONTAINS:
+                sql.append(" ").append(operator).append("(").append(field).append(", ").append("('").append(value).append("')");
+                break;
+
+            case OPR_NOT_CONTAINS:
+                sql.append(" ").append(operator).append("(").append(field).append(", ").append("('").append(value).append("')");
+                break;
+
+            case OPR_MATCH:
+                sql.append(" ").append(operator).append("('").append(field).append("')").append("AGAINST('").append(value).append("')");
+                break;
+                default:
+                    log.warn("未定义的操作符[" + operator + "]");
+                    return value.toString();
+
+        }
+        return sql.toString();
     }
+
+
 
     public String getField() {
         return this.field;
@@ -68,5 +149,13 @@ public class QueryFilter implements Serializable {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getLogic() {
+        return logic;
+    }
+
+    public void setLogic(String logic) {
+        this.logic = logic;
     }
 }

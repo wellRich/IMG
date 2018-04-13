@@ -8,16 +8,24 @@ import java.util.*;
  * @version 1.0, 2018/4/13
  */
 public class QueryReq {
-    public static final int DEFAULT_PAGE_SIZE = 10;
+    //public static final int DEFAULT_PAGE_SIZE = 10;
+
+    //需要查询的字段
     public String select;
-    public Integer limit;
+   /* public Integer limit;
     public Integer offset = 0;
-    public Integer total;
+    public Integer total;*/
+
+   //排序
     public String sort;
+
+    //查询条件
     public List<QueryFilter> search = new ArrayList();
-    public String searchLogic = "AND";
+    //public String searchLogic = "AND";
+
+    //默认查询条件，未用上
     public List<QueryFilter> restrictions = new ArrayList();
-    public Map extraData = new HashMap();
+    //public Map extraData = new HashMap();
 
     public QueryReq() {
     }
@@ -25,35 +33,35 @@ public class QueryReq {
     public QueryReq(String sort) {
         this.sort = sort;
     }
-
+/*
     public QueryReq(String sort, Integer limit) {
         this.sort = sort;
         this.limit = limit;
-    }
+    }*/
 
     public QueryReq(String sort, String select) {
         this.sort = sort;
         this.select = select;
     }
 
-    public QueryReq(Integer limit, String select) {
+  /*  public QueryReq(Integer limit, String select) {
         this.limit = limit;
         this.select = select;
-    }
+    }*/
 
-    public QueryReq(String sort, Integer limit, String select) {
+   /* public QueryReq(String sort, Integer limit, String select) {
         this.sort = sort;
-        this.limit = limit;
+        //this.limit = limit;
         this.select = select;
-    }
+    }*/
 
-    public QueryReq(String sort, Integer limit, Integer offset, Integer total, String select) {
+  /*  public QueryReq(String sort, Integer limit, Integer offset, Integer total, String select) {
         this.sort = sort;
-        this.limit = limit;
+      *//*  this.limit = limit;
         this.offset = offset;
-        this.total = total;
+        this.total = total;*//*
         this.select = select;
-    }
+    }*/
 
     public String getSelect() {
         return this.select;
@@ -64,16 +72,16 @@ public class QueryReq {
         return this;
     }
 
-    public Integer getLimit() {
+   /* public Integer getLimit() {
         return this.limit;
     }
 
     public QueryReq setLimit(Integer limit) {
         this.limit = limit;
         return this;
-    }
+    }*/
 
-    public Integer getOffset() {
+   /* public Integer getOffset() {
         return this.offset;
     }
 
@@ -89,7 +97,7 @@ public class QueryReq {
     public QueryReq setTotal(Integer total) {
         this.total = total;
         return this;
-    }
+    }*/
 
     public String getSort() {
         return this.sort;
@@ -100,16 +108,16 @@ public class QueryReq {
         return this;
     }
 
-    public String getSearchLogic() {
+    /*public String getSearchLogic() {
         return this.searchLogic;
     }
 
     public QueryReq setSearchLogic(String searchLogic) {
         this.searchLogic = searchLogic;
         return this;
-    }
+    }*/
 
-    public Map getExtraData() {
+    /*public Map getExtraData() {
         return this.extraData;
     }
 
@@ -117,7 +125,7 @@ public class QueryReq {
         this.extraData = extraData;
         return this;
     }
-
+*/
     public QueryReq addFilter(String field, Object value, String operator) {
         return this.addFilter(new QueryFilter(field, value, operator));
     }
@@ -153,27 +161,27 @@ public class QueryReq {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("select=>").append(this.select);
-        sb.append(", limit=>").append(this.limit);
+       /* sb.append(", limit=>").append(this.limit);
         sb.append(", offset=>").append(this.offset);
         sb.append(", total=>").append(this.total);
-        sb.append(", searchLogic=>").append(this.searchLogic);
+        sb.append(", searchLogic=>").append(this.searchLogic);*/
         sb.append(", search=>").append(this.search);
         sb.append(", restrictions=>").append(this.restrictions);
-        sb.append(", extraData=>").append(this.extraData);
+        //sb.append(", extraData=>").append(this.extraData);
         return sb.toString();
     }
 
     private boolean exists(List<QueryFilter> bucket, String field) {
-        Iterator var3 = bucket.iterator();
+        Iterator queryFilterIterator = bucket.iterator();
 
-        QueryFilter f;
+        QueryFilter queryFilter;
         do {
-            if (!var3.hasNext()) {
+            if (!queryFilterIterator.hasNext()) {
                 return false;
             }
 
-            f = (QueryFilter)var3.next();
-        } while(!f.getField().equals(field));
+            queryFilter = (QueryFilter)queryFilterIterator.next();
+        } while(!queryFilter.getField().equals(field));
 
         return true;
     }
