@@ -7,7 +7,7 @@ import org.apache.tools.ant.util.StringUtils;
 import java.util.Map;
 
 /**
- * @Description: TODO 变更申请单的sql   方法名 与相应的mapper中方法名相同
+ * 变更申请单的sql   方法名 与相应的mapper中方法名相同
  * @author guoyka
  * @version 2018/3/16
  */
@@ -97,7 +97,7 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
             if(statuses.length > 0){
                 WHERE(getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
             }
-        }}.toString() +  " LIMIT " + limit + " OFFSET " + offset;;
+        }}.toString() +  " LIMIT " + limit + " OFFSET " + offset;
         log.info("pageSeekByStatuses.sql--------------> " + sql);
         return sql;
     }

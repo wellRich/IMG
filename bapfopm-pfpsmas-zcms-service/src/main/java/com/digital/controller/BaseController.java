@@ -2,6 +2,7 @@ package com.digital.controller;
 
 import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,7 @@ import java.util.Map;
  */
 @Controller
 public class BaseController {
+	protected static final org.slf4j.Logger log = LoggerFactory.getLogger(BaseController.class);
 
     @ExceptionHandler(value = RuntimeException.class)
     @ResponseStatus(HttpStatus.OK)

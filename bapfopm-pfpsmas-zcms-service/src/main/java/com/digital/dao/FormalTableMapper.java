@@ -4,6 +4,8 @@ import com.digital.dao.sqlMapper.FormalTableSql;
 import com.digital.entity.FormalTableInfo;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * @Description: TODO
  * @Author: zhanghpj
@@ -31,6 +33,14 @@ public interface FormalTableMapper {
     String findZoningKey(String zoningCode);
 
 
+    /**
+     * 获取指定区划的子级区划
+     * @param zoningCode 区划代码
+     * @return 所有的子级区划
+     */
+    @SelectProvider(type = FormalTableSql.class, method = "findSubordinateZoning")
+    @ResultMap("com.digital.entity.allOfFormalTableInfo")
+    List<FormalTableInfo> findSubordinateZoning(String zoningCode);
 
 
     @Update("update dm_xzqh set XYBZ='N',YXBZ='N' where XZQH_DM = ")

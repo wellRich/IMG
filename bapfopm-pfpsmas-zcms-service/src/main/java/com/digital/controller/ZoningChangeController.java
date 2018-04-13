@@ -178,7 +178,7 @@ public class ZoningChangeController {
             result.put(Integer.valueOf(assigningCode) + 1, zoningCodeChangeApi.findSubordinateZoning(zoningCode));
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, result).toString();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("getSubordinateZoning -----> " + ex.getMessage());
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
     }

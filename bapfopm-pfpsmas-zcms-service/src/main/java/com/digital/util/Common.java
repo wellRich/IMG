@@ -56,7 +56,7 @@ public class Common {
     public static final String XZQH_CLZT_CLCG = "30";//处理成功
     public static final String XZQH_CLZT_CLSB = "31";//处理失败
 
-    public static final String ORMAP_PACKAGE = "com.padis.business.common.data.dm";
+    public static final String ENTITY_PACKAGE = "com.digital.entity";
 
     public static final String NATION_ZONING_CODE = "000000000000000";
 

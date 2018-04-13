@@ -43,6 +43,22 @@ public class FormalTableSql extends EntitySql<FormalTableInfo>{
 
 
 
+    //获取下一级区划预览数据
+    public String findSubordinateZoning(String zoningCode){
+        String sql = new SQL(){{
+            FROM(getTableName());
+            SELECT(getColumns());
+            WHERE(getColumnByField("superiorZoningCode") + "=#{zoningCode}");
+            AND();
+            WHERE(getColumnByField("chooseSign") + "='Y' AND "
+                    + getColumnByField("usefulSign") + "= 'Y'");
+        }}.toString();
+        log.info("findSubordinateZoning.sql--------> " + sql);
+        return sql;
+    }
+
+
+
 
 
     /*public String insetFormatTableData(FormalTableInfo tableInfo){
