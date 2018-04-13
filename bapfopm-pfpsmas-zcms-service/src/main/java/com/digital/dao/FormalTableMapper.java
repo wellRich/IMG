@@ -48,7 +48,7 @@ public interface FormalTableMapper {
     @Update("update dm_xzqh set XYBZ='N',YXBZ='N' where XZQH_DM = ")
     int updateFormalZoningStatus(String zoningCode);
 
-    /*@SelectProvider(type = FormalTableSql.class, method = "seek")
-    @ResultMap(RESULT_MAP)
-    List<FormalTableInfo> seek(QueryReq req);*/
+    @SelectProvider(type = FormalTableSql.class, method = "seek")
+    @ResultMap("com.digital.entity.allOfFormalTableInfo")
+    List<FormalTableInfo> seek(QueryReq req);
 }

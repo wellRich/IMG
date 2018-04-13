@@ -114,15 +114,19 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
      * @return sql
      */
     public String seek(QueryReq req){
+
         List<QueryFilter> filters = req.search;
         String sql = new SQL(){{
             FROM(getTableName());
             if(req.select != null && !"".equals(req.select)){
+                log.info("seek.1---> " + System.currentTimeMillis());
                 SELECT(rename(req.select, getFieldsAndCols()));
+                log.info("seek.2---> " + System.currentTimeMillis());
             }else {
                 SELECT("*");
             }
 
+            log.info("seek.3---> " + System.currentTimeMillis());
             for(int i = 0; i < req.search.size();){
                 QueryFilter filter = filters.get(i);
                 if(i == 0){
@@ -136,13 +140,14 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
                         WHERE(filter.toSql());
                     }
                 }
+                log.info("seek.4---> " + System.currentTimeMillis());
 
                 if(req.sort != null){
                     ORDER_BY(rename(req.sort, getFieldsAndCols()));
                 }
             }
         }}.toString();
-        log.info("findOneBy.sql-----> " + sql);
+        log.info("seek.sql-----> " + sql);
         return sql;
     }
 
@@ -210,17 +215,6 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         return fieldsAndCols.get(fieldName);
     }
 
-    /**
-     * 通过若干属性查询
-      * @param queryReq 查询请求
-     */
-    public String seek(Object queryReq){
-        String sql = new SQL(){{
-
-        }}.toString();
-        log.info("seek.sql--------> " + sql);
-        return sql;
-    }
 
     public String delete(Object primaryKey){
         String sql;
