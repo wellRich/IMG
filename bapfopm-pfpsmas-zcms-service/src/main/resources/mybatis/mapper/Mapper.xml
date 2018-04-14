@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='com.digital.entity'>
+    <resultMap type='com.digital.entity.FormalTableInfo' id='allOf.FormalTableInfo'>
+        <id property='uniqueKey' column='UNIQUE_KEY' javaType='String'/>
+        <result property='zoningCode' column='XZQH_DM' javaType='String'/>
+        <result property='divisionName' column='XZQH_MC' javaType='String'/>
+        <result property='divisionAbbreviation' column='XZQH_JC' javaType='String'/>
+        <result property='divisionFullName' column='XZQH_QC' javaType='String'/>
+        <result property='assigningCode' column='JCDM' javaType='String'/>
+        <result property='levelCode' column='JBDM' javaType='String'/>
+        <result property='superiorZoningCode' column='SJ_XZQH_DM' javaType='String'/>
+        <result property='chooseSign' column='XYBZ' javaType='String'/>
+        <result property='usefulSign' column='YXBZ' javaType='String'/>
+        <result property='subordinateRelations' column='DWLSGX_DM' javaType='String'/>
+        <result property='validityStart' column='YXQ_Q' javaType='String'/>
+        <result property='validityStup' column='YXQ_Z' javaType='String'/>
+        <result property='virtualNode' column='XNJD_BZ' javaType='String'/>
+        <result property='oldZoningCode' column='OLD_XZQH_DM' javaType='String'/>
+        <result property='accessCode' column='QX_JGDM' javaType='String'/>
+        <result property='enterOneCode' column='LRR_DM' javaType='String'/>
+        <result property='createDate' column='LRSJ' javaType='String'/>
+        <result property='updaterCode' column='XGR_DM' javaType='String'/>
+        <result property='lastUpdate' column='XGSJ' javaType='String'/>
+        <result property='type' column='XZQHLX_DM' javaType='String'/>
+    </resultMap>
+    <resultMap type='com.digital.entity.HistoricalZoningChange' id='allOf.HistoricalZoningChange'>
+        <id property='seq' column='MXBXH' javaType='Integer'/>
+        <result property='groupSeq' column='GROUPXH' javaType='Integer'/>
+        <result property='originalZoningCode' column='YSXZQH_DM' javaType='String'/>
+        <result property='originalZoningName' column='YSXZQH_MC' javaType='String'/>
+        <result property='targetZoningCode' column='MBXZQH_DM' javaType='String'/>
+        <result property='targetZoningName' column='MBXZQH_MC' javaType='String'/>
+        <result property='changeType' column='BGLX_DM' javaType='String'/>
+        <result property='creatorCode' column='LRR_DM' javaType='String'/>
+        <result property='createDate' column='LRSJ' javaType='String'/>
+    </resultMap>
+    <resultMap type='com.digital.entity.PreviewDataInfo' id='allOf.PreviewDataInfo'>
+        <id property='index' column='ID' javaType='Integer'/>
+        <result property='uniqueKey' column='UNIQUE_KEY' javaType='String'/>
+        <result property='zoningCode' column='XZQH_DM' javaType='String'/>
+        <result property='divisionName' column='XZQH_MC' javaType='String'/>
+        <result property='divisionAbbreviation' column='XZQH_JC' javaType='String'/>
+        <result property='divisionFullName' column='XZQH_QC' javaType='String'/>
+        <result property='assigningCode' column='JCDM' javaType='String'/>
+        <result property='levelCode' column='JBDM' javaType='String'/>
+        <result property='superiorZoningCode' column='SJ_XZQH_DM' javaType='String'/>
+        <result property='chooseSign' column='XYBZ' javaType='String'/>
+        <result property='usefulSign' column='YXBZ' javaType='String'/>
+        <result property='subordinateRelations' column='DWLSGX_DM' javaType='String'/>
+        <result property='validityStart' column='YXQ_Q' javaType='String'/>
+        <result property='validityStup' column='YXQ_Z' javaType='String'/>
+        <result property='virtualNode' column='XNJD_BZ' javaType='String'/>
+        <result property='oldZoningCode' column='OLD_XZQH_DM' javaType='String'/>
+        <result property='accessCode' column='QX_JGDM' javaType='String'/>
+        <result property='enterOneCode' column='LRR_DM' javaType='String'/>
+        <result property='createDate' column='LRSJ' javaType='String'/>
+        <result property='updaterCode' column='XGR_DM' javaType='String'/>
+        <result property='lastUpdate' column='XGSJ' javaType='String'/>
+        <result property='type' column='XZQHLX_DM' javaType='String'/>
+    </resultMap>
+    <resultMap type='com.digital.entity.ZCCDetail' id='allOf.ZCCDetail'>
+        <id property='seq' column='MXBXH' javaType='Integer'/>
+        <result property='groupSeq' column='GROUPXH' javaType='Integer'/>
+        <result property='originalZoningCode' column='YSXZQH_DM' javaType='String'/>
+        <result property='originalZoningName' column='YSXZQH_MC' javaType='String'/>
+        <result property='changeType' column='BGLX_DM' javaType='String'/>
+        <result property='currentZoningCode' column='MBXZQH_DM' javaType='String'/>
+        <result property='currentZoningName' column='MBXZQH_MC' javaType='String'/>
+        <result property='status' column='CLZT_DM' javaType='String'/>
+        <result property='result' column='CLJG' javaType='String'/>
+        <result property='notes' column='BZ' javaType='String'/>
+        <result property='creatorCode' column='LRR_DM' javaType='String'/>
+        <result property='creatorDate' column='LRSJ' javaType='String'/>
+        <result property='creatorDeptCode' column='LRJG_DM' javaType='String'/>
+        <result property='updaterCode' column='XGR_DM' javaType='String'/>
+        <result property='lastUpdate' column='XGSJ' javaType='String'/>
+        <result property='updaterDeptCode' column='XGJG_DM' javaType='String'/>
+        <result property='orderNum' column='PXH' javaType='Integer'/>
+        <result property='ringFlag' column='RINGFLAG' javaType='Integer'/>
+    </resultMap>
+    <resultMap type='com.digital.entity.ZCCGroup' id='allOf.ZCCGroup'>
+        <id property='seq' column='GROUPXH' javaType='Integer'/>
+        <result property='serialNumber' column='BH' javaType='Long'/>
+        <result property='name' column='GROUPMC' javaType='String'/>
+        <result property='creatorCode' column='LRR_DM' javaType='String'/>
+        <result property='createDate' column='LRSJ' javaType='String'/>
+        <result property='creatorDeptCode' column='LRJG_DM' javaType='String'/>
+        <result property='requestSeq' column='SQDXH' javaType='Integer'/>
+        <result property='orderNum' column='PXH' javaType='String'/>
+    </resultMap>
+    <resultMap type='com.digital.entity.ZCCRequest' id='allOf.ZCCRequest'>
+        <id property='seq' column='SQDXH' javaType='Integer'/>
+        <result property='name' column='SQDMC' javaType='String'/>
+        <result property='status' column='SQDZT_DM' javaType='String'/>
+        <result property='levelCode' column='SBXZQH_DM' javaType='String'/>
+        <result property='creatorCode' column='LRR_DM' javaType='String'/>
+        <result property='createDate' column='LRSJ' javaType='String'/>
+        <result property='creatorDeptCode' column='LRJG_DM' javaType='String'/>
+        <result property='updaterCode' column='XGR_DM' javaType='String'/>
+        <result property='lastUpdate' column='XGSJ' javaType='String'/>
+        <result property='updaterDeptCode' column='XGJG_DM' javaType='String'/>
+        <result property='approvalOpinion' column='SPYJ' javaType='String'/>
+        <result property='verifierCode' column='SPR_DM' javaType='String'/>
+        <result property='notes' column='BZ' javaType='String'/>
+    </resultMap>
+</mapper>
