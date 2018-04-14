@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace='com.digital.entity'>
-    <resultMap type='com.digital.entity.FormalTableInfo' id='allOf.FormalTableInfo'>
+    <resultMap type='com.digital.entity.FormalTableInfo' id='allOfFormalTableInfo'>
         <id property='uniqueKey' column='UNIQUE_KEY' javaType='String'/>
         <result property='zoningCode' column='XZQH_DM' javaType='String'/>
         <result property='divisionName' column='XZQH_MC' javaType='String'/>
@@ -25,7 +25,7 @@
         <result property='lastUpdate' column='XGSJ' javaType='String'/>
         <result property='type' column='XZQHLX_DM' javaType='String'/>
     </resultMap>
-    <resultMap type='com.digital.entity.HistoricalZoningChange' id='allOf.HistoricalZoningChange'>
+    <resultMap type='com.digital.entity.HistoricalZoningChange' id='allOfHistoricalZoningChange'>
         <id property='seq' column='MXBXH' javaType='Integer'/>
         <result property='groupSeq' column='GROUPXH' javaType='Integer'/>
         <result property='originalZoningCode' column='YSXZQH_DM' javaType='String'/>
@@ -36,7 +36,7 @@
         <result property='creatorCode' column='LRR_DM' javaType='String'/>
         <result property='createDate' column='LRSJ' javaType='String'/>
     </resultMap>
-    <resultMap type='com.digital.entity.PreviewDataInfo' id='allOf.PreviewDataInfo'>
+    <resultMap type='com.digital.entity.PreviewDataInfo' id='allOfPreviewDataInfo'>
         <id property='index' column='ID' javaType='Integer'/>
         <result property='uniqueKey' column='UNIQUE_KEY' javaType='String'/>
         <result property='zoningCode' column='XZQH_DM' javaType='String'/>
@@ -60,7 +60,7 @@
         <result property='lastUpdate' column='XGSJ' javaType='String'/>
         <result property='type' column='XZQHLX_DM' javaType='String'/>
     </resultMap>
-    <resultMap type='com.digital.entity.ZCCDetail' id='allOf.ZCCDetail'>
+    <resultMap type='com.digital.entity.ZCCDetail' id='allOfZCCDetail'>
         <id property='seq' column='MXBXH' javaType='Integer'/>
         <result property='groupSeq' column='GROUPXH' javaType='Integer'/>
         <result property='originalZoningCode' column='YSXZQH_DM' javaType='String'/>
@@ -80,7 +80,7 @@
         <result property='orderNum' column='PXH' javaType='Integer'/>
         <result property='ringFlag' column='RINGFLAG' javaType='Integer'/>
     </resultMap>
-    <resultMap type='com.digital.entity.ZCCGroup' id='allOf.ZCCGroup'>
+    <resultMap type='com.digital.entity.ZCCGroup' id='allOfZCCGroup'>
         <id property='seq' column='GROUPXH' javaType='Integer'/>
         <result property='serialNumber' column='BH' javaType='Long'/>
         <result property='name' column='GROUPMC' javaType='String'/>
@@ -90,7 +90,7 @@
         <result property='requestSeq' column='SQDXH' javaType='Integer'/>
         <result property='orderNum' column='PXH' javaType='String'/>
     </resultMap>
-    <resultMap type='com.digital.entity.ZCCRequest' id='allOf.ZCCRequest'>
+    <resultMap type='com.digital.entity.ZCCRequest' id='allOfZCCRequest'>
         <id property='seq' column='SQDXH' javaType='Integer'/>
         <result property='name' column='SQDMC' javaType='String'/>
         <result property='status' column='SQDZT_DM' javaType='String'/>

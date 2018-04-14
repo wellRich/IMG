@@ -41,7 +41,7 @@ class Method {
                     if(clazz.isAnnotationPresent(Table.class)){
                         String primaryKey = clazz.getAnnotation(Table.class).primaryKey()
                         Field[] fields = clazz.getDeclaredFields()
-                        resultMap(type: className, id: "allOf" + className.substring(className.lastIndexOf("."))){
+                        resultMap(type: className, id: "allOf" + className.substring(className.lastIndexOf(".")+1)){
                             for (Field field: fields){
                                 if(Modifier.isStatic(field.getModifiers())){
                                     println "${field.getName()}是静态属性，忽略忽略！"
