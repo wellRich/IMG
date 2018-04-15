@@ -1,5 +1,6 @@
 package com.digital.groovy
 
+import com.digital.dao.sqlMapper.ZCCDetailSql
 import com.digital.util.search.Column
 import com.digital.util.search.Table
 import groovy.xml.StreamingMarkupBuilder
@@ -95,5 +96,10 @@ class Method {
                 return entityNames
             }
         }
+    }
+
+    @Test
+    void testRename(){
+        println new ZCCDetailSql().rename("kk121kk121212kk", [kk: '$$'])
     }
 }

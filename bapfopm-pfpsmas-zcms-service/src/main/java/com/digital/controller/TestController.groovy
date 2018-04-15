@@ -26,6 +26,7 @@ class TestController {
         EntitySql sql = new PreviewDataInfoSql<PreviewDataInfo>()
         QueryReq req = new QueryReq( "uniqueKey", "uniqueKey,zoningCode,divisionName")
         req.addFilter(new QueryFilter("zoningCode", "370102%", QueryFilter.OPR_LIKE))
+        formalTableMapper.findAll();
         return formalTableMapper.seek(req)
     }
 }

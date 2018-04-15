@@ -102,10 +102,12 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     }
 
     public String findAll(){
-        return new SQL(){{
+        String sql =  new SQL(){{
             SELECT(columns);
             FROM(tableName);
         }}.toString();
+        log.info("findAll.sql----------> " + sql);
+        return sql;
     }
 
     /**
@@ -120,6 +122,8 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
             FROM(getTableName());
             if(req.selectFields == null || req.selectFields.equals("")){
                 SELECT("*");
+            }else {
+                SELECT(req.selectFields);
             }
 
             for(int i = 0; i < filters.size(); i ++){
@@ -144,7 +148,6 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
 
         log.info("seek.sql-----> " + sql);
         String ss = rename(sql, fieldsAndCols);
-
         log.info("seek.ss-----> " + ss);
         return sql;
     }

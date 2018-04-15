@@ -51,4 +51,8 @@ public interface FormalTableMapper {
     @SelectProvider(type = FormalTableSql.class, method = "seek")
     @ResultMap("com.digital.entity.allOfFormalTableInfo")
     List<FormalTableInfo> seek(QueryReq req);
+
+    @SelectProvider(type = FormalTableSql.class, method = "findAll")
+    @ResultMap("com.digital.entity.allOfFormalTableInfo")
+    List<FormalTableInfo> findAll();
 }
