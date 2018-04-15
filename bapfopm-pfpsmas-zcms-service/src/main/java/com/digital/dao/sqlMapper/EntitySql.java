@@ -88,34 +88,6 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     }
 
 
-    protected EntitySql(Class<T> clazz) {
-        this.clazz = clazz;
-        Table table = clazz.getAnnotation(Table.class);
-        this.tableName = table.name();
-        this.primaryField = table.primaryKey();
-        Field[] fields = clazz.getDeclaredFields();
-        int size = fields.length;
-        Field field;
-        String colName;
-        String fieldName;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            field = fields[i];
-            fieldName = field.getName();
-            if(fields[i].isAnnotationPresent(Column.class)){
-                colName = field.getAnnotation(Column.class).name();
-                if(!this.primaryField.equals(field.getName())){//过滤有问题
-                    this.fiesAndColsExcPrimary.put(fieldName, colName);
-                }
-                this.fieldsAndCols.put(fieldName, colName);
-                sb.append(colName).append(i < size - 1 ? "," : "");
-            }
-        }
-        this.columns = sb.toString();
-        this.columnsExcPrimary = StringUtils.join(fiesAndColsExcPrimary.keySet(), ",");
-    }
-
-
     public abstract Class<T> init();
 
     //需要修改
@@ -142,42 +114,41 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
      * @return sql
      */
     public String seek(QueryReq req){
-        EntitySql<T> entitySql = this;
+        EntitySql s = this;
         List<QueryFilter> filters = req.search;
         String sql = new SQL(){{
             FROM(getTableName());
-            if(req.selectFields != null && !"".equals(req.selectFields)){
-                SELECT(replace(req.selectFields));
-            }else {
+            if(req.selectFields == null || req.selectFields.equals("")){
                 SELECT("*");
             }
 
             for(int i = 0; i < filters.size(); i ++){
                 QueryFilter filter = filters.get(i);
                 if(i == 0){
-                    WHERE(filter.toSql(entitySql));
+                    WHERE(filter.toSqlPart());
                 }else {
                     if(filter.getLogic().equals(QueryFilter.LOGIC_AND)){
                         AND();
-                        WHERE(filter.toSql(entitySql));
+                        WHERE(filter.toSqlPart());
                     }else {
                         OR();
-                        WHERE(filter.toSql(entitySql));
+                        WHERE(filter.toSqlPart());
                     }
                 }
 
                 if(req.sort != null){
-                    ORDER_BY(replace(req.sort));
+                    ORDER_BY(req.sort);
                 }
             }
         }}.toString();
+
         log.info("seek.sql-----> " + sql);
+        String ss = rename(sql, fieldsAndCols);
+
+        log.info("seek.ss-----> " + ss);
         return sql;
     }
 
-    private String replace(String str){
-        return  rename(str, fieldsAndCols);
-    }
 
     public String update(final Object group){
         String sql;
