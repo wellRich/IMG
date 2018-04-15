@@ -59,6 +59,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
 
     private Class<T> clazz;
 
+
     protected EntitySql() {
         clazz = init();
         Table table = clazz.getAnnotation(Table.class);
@@ -83,12 +84,39 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
             }
         }
         this.columns = sb.toString();
-        //fieldsAndCols.forEach((k, v) -> System.out.println("fieldsAndCols===== k--------> " + k + ", v ----> " + v));
-        //this.columnsExcPrimary = this.columns.replace(getColumnByField(getPrimaryField()) + ",", "");
         this.columnsExcPrimary = StringUtils.join(fiesAndColsExcPrimary.keySet(), ",");
     }
 
-    protected abstract Class<T> init();
+
+    protected EntitySql(Class<T> clazz) {
+        this.clazz = clazz;
+        Table table = clazz.getAnnotation(Table.class);
+        this.tableName = table.name();
+        this.primaryField = table.primaryKey();
+        Field[] fields = clazz.getDeclaredFields();
+        int size = fields.length;
+        Field field;
+        String colName;
+        String fieldName;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            field = fields[i];
+            fieldName = field.getName();
+            if(fields[i].isAnnotationPresent(Column.class)){
+                colName = field.getAnnotation(Column.class).name();
+                if(!this.primaryField.equals(field.getName())){//过滤有问题
+                    this.fiesAndColsExcPrimary.put(fieldName, colName);
+                }
+                this.fieldsAndCols.put(fieldName, colName);
+                sb.append(colName).append(i < size - 1 ? "," : "");
+            }
+        }
+        this.columns = sb.toString();
+        this.columnsExcPrimary = StringUtils.join(fiesAndColsExcPrimary.keySet(), ",");
+    }
+
+
+    public abstract Class<T> init();
 
     //需要修改
     public String insert(final Object entity){
@@ -114,41 +142,41 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
      * @return sql
      */
     public String seek(QueryReq req){
-
+        EntitySql<T> entitySql = this;
         List<QueryFilter> filters = req.search;
         String sql = new SQL(){{
             FROM(getTableName());
-            if(req.select != null && !"".equals(req.select)){
-                log.info("seek.1---> " + System.currentTimeMillis());
-                SELECT(rename(req.select, getFieldsAndCols()));
-                log.info("seek.2---> " + System.currentTimeMillis());
+            if(req.selectFields != null && !"".equals(req.selectFields)){
+                SELECT(replace(req.selectFields));
             }else {
                 SELECT("*");
             }
 
-            log.info("seek.3---> " + System.currentTimeMillis());
-            for(int i = 0; i < req.search.size();){
+            for(int i = 0; i < filters.size(); i ++){
                 QueryFilter filter = filters.get(i);
                 if(i == 0){
-                    WHERE(filter.toSql());
+                    WHERE(filter.toSql(entitySql));
                 }else {
                     if(filter.getLogic().equals(QueryFilter.LOGIC_AND)){
                         AND();
-                        WHERE(filter.toSql());
+                        WHERE(filter.toSql(entitySql));
                     }else {
                         OR();
-                        WHERE(filter.toSql());
+                        WHERE(filter.toSql(entitySql));
                     }
                 }
-                log.info("seek.4---> " + System.currentTimeMillis());
 
                 if(req.sort != null){
-                    ORDER_BY(rename(req.sort, getFieldsAndCols()));
+                    ORDER_BY(replace(req.sort));
                 }
             }
         }}.toString();
         log.info("seek.sql-----> " + sql);
         return sql;
+    }
+
+    private String replace(String str){
+        return  rename(str, fieldsAndCols);
     }
 
     public String update(final Object group){
@@ -250,6 +278,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         log.info("batchDelete.sql----------> " + sql);
         return sql;
     }
+
 
     private boolean isEntity(Object obj){
         return obj.getClass().equals(clazz);

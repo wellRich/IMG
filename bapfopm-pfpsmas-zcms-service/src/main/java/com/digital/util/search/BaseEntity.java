@@ -29,4 +29,10 @@ public interface BaseEntity<T extends Serializable> {
         }
     }
 
+    public Class<T> init();
+
+    default Class<? extends Serializable> getEntity(Class<T> tClass) throws InstantiationException, IllegalAccessException {
+            return tClass.newInstance().getClass();
+         }
+
 }

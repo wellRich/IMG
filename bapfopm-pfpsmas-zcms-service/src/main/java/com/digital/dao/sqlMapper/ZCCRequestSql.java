@@ -14,7 +14,7 @@ import java.util.Map;
 public class ZCCRequestSql extends EntitySql<ZCCRequest> {
 
     @Override
-    protected Class<ZCCRequest> init() {
+    public Class<ZCCRequest> init() {
         return ZCCRequest.class;
     }
 

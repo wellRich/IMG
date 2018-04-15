@@ -37,7 +37,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/zoningChangeManager")
-public class ZoningChangeController {
+public class ZoningChangeController extends BaseController {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(ZoningChangeController.class);
 
 

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ZCCGroupSql extends EntitySql<ZCCGroup> {
     @Override
-    protected Class<ZCCGroup> init() {
+    public Class<ZCCGroup> init() {
         return ZCCGroup.class;
     }
 

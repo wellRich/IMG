@@ -12,7 +12,7 @@ import com.digital.entity.HistoricalZoningChange;
  */
 public class HistoricalZoningChangeSql extends EntitySql<HistoricalZoningChange> {
     @Override
-    protected Class<HistoricalZoningChange> init() {
+    public Class<HistoricalZoningChange> init() {
         return HistoricalZoningChange.class;
     }
 

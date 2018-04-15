@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
     @Override
-    protected Class<PreviewDataInfo> init() {
+    public Class<PreviewDataInfo> init() {
         return PreviewDataInfo.class;
     }
 

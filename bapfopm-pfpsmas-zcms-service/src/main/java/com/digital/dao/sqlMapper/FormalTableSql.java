@@ -20,7 +20,7 @@ public class FormalTableSql extends EntitySql<FormalTableInfo>{
     private static final Logger logger = LoggerFactory.getLogger(FormalTableSql.class);
 
     @Override
-    protected Class<FormalTableInfo> init() {
+    public Class<FormalTableInfo> init() {
         return FormalTableInfo.class;
     }
 

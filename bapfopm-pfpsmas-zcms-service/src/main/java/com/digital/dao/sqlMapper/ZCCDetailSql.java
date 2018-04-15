@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ZCCDetailSql extends EntitySql<ZCCDetail>  {
     @Override
-    protected Class<ZCCDetail> init() {
+    public Class<ZCCDetail> init() {
         return ZCCDetail.class;
     }
 

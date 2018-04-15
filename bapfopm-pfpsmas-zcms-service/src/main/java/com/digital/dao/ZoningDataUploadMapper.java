@@ -34,7 +34,7 @@ public interface ZoningDataUploadMapper {
     /*
      * 检查ZipFile是否已经存在
      * */
-    @Select("select ZIPXH,WJM from xzqh_jzbgzip where WJM like #{fileName}%")
+    @Select("selectFields ZIPXH,WJM from xzqh_jzbgzip where WJM like #{fileName}%")
     @Results({
             @Result(column = "ZIPXH",property = "fileSquence",javaType =Integer.class ),
             @Result(column = "WJM",property = "fileName",javaType = String.class),

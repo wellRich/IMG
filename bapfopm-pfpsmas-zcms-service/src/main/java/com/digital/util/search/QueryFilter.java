@@ -1,8 +1,10 @@
 package com.digital.util.search;
 
+import com.digital.dao.sqlMapper.EntitySql;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 查询过滤条件
@@ -10,7 +12,7 @@ import java.io.Serializable;
  * @author guoyka
  * @version 1.0, 2018/4/13
  */
-public class QueryFilter implements Serializable {
+public class QueryFilter<T> implements Serializable {
     protected static final org.slf4j.Logger log = LoggerFactory.getLogger(QueryFilter.class);
 
     public static final String OPR_IS = "=";
@@ -30,7 +32,13 @@ public class QueryFilter implements Serializable {
     public static final String LOGIC_AND = "AND";
     public static final String LOGIC_OR = "OR";
 
+    //所要用于查询的字段或者表达式
+    //考虑使用表达式{},把属性框起来，解析也许更快
     protected String field;
+
+    //将条件中的实体属性，转换成对应数据库的字段
+    private String condition = null;
+
     protected Object value;
     protected String operator = OPR_IS;
     protected String logic = LOGIC_AND;
@@ -67,65 +75,84 @@ public class QueryFilter implements Serializable {
      * 转化成sql子句
      * @return
      */
-    public String toSql(){
+    public String toSql(EntitySql entitySql){
         StringBuilder sql = new StringBuilder();
+        if(condition == null){
+            translateField(entitySql);
+        }
         switch (this.operator){
             case OPR_IS:
-                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                sql.append(" ").append(condition).append(" ").append(operator).append(" '").append(value).append("'");
                 break;
             case OPR_IS_NOT:
-                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                sql.append(" ").append(condition).append(" ").append(operator).append(" '").append(value).append("'");
                 break;
             case OPR_LESS_THAN:
-                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                sql.append(" ").append(condition).append(" ").append(operator).append(" '").append(value).append("'");
                 break;
             case OPR_MORE_THAN:
-                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                sql.append(" ").append(condition).append(" ").append(operator).append(" '").append(value).append("'");
                 break;
             case OPR_IN:
-                sql.append(" ").append(field).append(" ").append(operator).append(" (").append(value).append(")");
+                sql.append(" ").append(condition).append(" ").append(operator).append(" (").append(value).append(")");
                 break;
             case OPR_NOT_IN:
-                sql.append(" ").append(field).append(" ").append(operator).append(" (").append(value).append(")");
+                sql.append(" ").append(condition).append(" ").append(operator).append(" (").append(value).append(")");
                 break;
             case OPR_IS_NULL:
-                sql.append(" ").append(field).append(" ").append(operator);
+                sql.append(" ").append(condition).append(" ").append(operator);
                 break;
             case OPR_IS_NOT_NULL:
-                sql.append(" ").append(field).append(" ").append(operator);
+                sql.append(" ").append(condition).append(" ").append(operator);
                 break;
             case OPR_LIKE:
-                sql.append(" ").append(field).append(" ").append(operator).append(" '").append(value).append("'");
+                sql.append(" ").append(condition).append(" ").append(operator).append(" '").append(value).append("'");
                 break;
             case OPR_BETWEEN:
                 try {
                     Object[] objects = (Object[])value;
-                    sql.append(" ").append(field).append(" ").append(operator).append(" '").append(objects[0]).append(" AND ").append(objects);
+                    sql.append(" ").append(condition).append(" ").append(operator).append(" '").append(objects[0]).append(" AND ").append(objects);
                 }catch (Exception ex){
                     log.error("QueryFilter.toSql---> " + ex.getMessage());
                 }
 
                 break;
             case OPR_CONTAINS:
-                sql.append(" ").append(operator).append("(").append(field).append(", ").append("('").append(value).append("')");
+                sql.append(" ").append(operator).append("(").append(condition).append(", ").append("('").append(value).append("')");
                 break;
 
             case OPR_NOT_CONTAINS:
-                sql.append(" ").append(operator).append("(").append(field).append(", ").append("('").append(value).append("')");
+                sql.append(" ").append(operator).append("(").append(condition).append(", ").append("('").append(value).append("')");
                 break;
 
             case OPR_MATCH:
-                sql.append(" ").append(operator).append("('").append(field).append("')").append("AGAINST('").append(value).append("')");
+                sql.append(" ").append(operator).append("('").append(condition).append("')").append("AGAINST('").append(value).append("')");
                 break;
-                default:
-                    log.warn("未定义的操作符[" + operator + "]");
-                    return value.toString();
+            default:
+                log.warn("未定义的操作符[" + operator + "]");
+                return value.toString();
 
         }
         return sql.toString();
     }
 
 
+    public String getCondition() {
+        return condition;
+    }
+
+    public void translateField(EntitySql<?> entitySql) {
+        String target = field;
+        Map<String, String> fieldsAndCols = entitySql.getFieldsAndCols();
+        //field是实体的属性
+        if(fieldsAndCols.containsKey(target)){
+            this.condition = fieldsAndCols.get(target);
+        }
+        //field是表达式或者不属于实体的属性
+        else {
+            this.condition = entitySql.rename(target, fieldsAndCols);
+        }
+    }
 
     public String getField() {
         return this.field;

@@ -1,5 +1,8 @@
 package com.digital.util.search;
 
+import com.digital.dao.sqlMapper.EntitySql;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -7,17 +10,22 @@ import java.util.*;
  * @author guoyka
  * @version 1.0, 2018/4/13
  */
-public class QueryReq {
+public class QueryReq implements Serializable{
     //public static final int DEFAULT_PAGE_SIZE = 10;
 
-    //需要查询的字段
-    public String select;
+    private EntitySql entitySql;
+
+    //需要查询的属性
+    //考虑使用表达式{},把属性框起来，解析也许更快
+    public String selectFields;
+
    /* public Integer limit;
     public Integer offset = 0;
     public Integer total;*/
 
    //排序
     public String sort;
+
 
     //查询条件
     public List<QueryFilter> search = new ArrayList();
@@ -39,40 +47,41 @@ public class QueryReq {
         this.limit = limit;
     }*/
 
-    public QueryReq(String sort, String select) {
+    public QueryReq(String sort, String selectFields) {
         this.sort = sort;
-        this.select = select;
+        this.selectFields = selectFields;
     }
 
-  /*  public QueryReq(Integer limit, String select) {
+
+  /*  public QueryReq(Integer limit, String selectFields) {
         this.limit = limit;
-        this.select = select;
+        this.selectFields = selectFields;
     }*/
 
-   /* public QueryReq(String sort, Integer limit, String select) {
+   /* public QueryReq(String sort, Integer limit, String selectFields) {
         this.sort = sort;
         //this.limit = limit;
-        this.select = select;
+        this.selectFields = selectFields;
     }*/
 
-  /*  public QueryReq(String sort, Integer limit, Integer offset, Integer total, String select) {
+  /*  public QueryReq(String sort, Integer limit, Integer offset, Integer total, String selectFields) {
         this.sort = sort;
       *//*  this.limit = limit;
         this.offset = offset;
         this.total = total;*//*
-        this.select = select;
+        this.selectFields = selectFields;
     }*/
 
-    public String getSelect() {
-        return this.select;
+    public String getSelectFields() {
+        return this.selectFields;
     }
 
-    public QueryReq setSelect(String select) {
-        this.select = select;
+    public QueryReq setSelectFields(String selectFields) {
+        this.selectFields = selectFields;
         return this;
     }
 
-   /* public Integer getLimit() {
+    /* public Integer getLimit() {
         return this.limit;
     }
 
@@ -138,7 +147,6 @@ public class QueryReq {
         if (!this.exists(this.search, filter.getField())) {
             this.search.add(filter);
         }
-
         return this;
     }
 
@@ -160,7 +168,7 @@ public class QueryReq {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("select=>").append(this.select);
+        sb.append("selectFields=>").append(this.selectFields);
        /* sb.append(", limit=>").append(this.limit);
         sb.append(", offset=>").append(this.offset);
         sb.append(", total=>").append(this.total);
