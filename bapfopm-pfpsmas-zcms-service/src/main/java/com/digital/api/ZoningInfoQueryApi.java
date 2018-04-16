@@ -22,6 +22,14 @@ public interface ZoningInfoQueryApi {
     Map<String, List<FormalTableInfo>> findSubordinateZoning(String zoningCode);
 
 
+    /**
+     * 获取祖上、自身、子级区划数据
+     * @param zoningCode 登录用户所属的区划代码
+     * @return  [级次代码：所有的子级区划]
+     */
+    Map<String, List<FormalTableInfo>> findAncestorsAndSubsByZoningCode(String zoningCode);
+
+
     //////////////////////////////变更对照查询///////////////////////////////////////////////
 
 

@@ -356,7 +356,7 @@ public class Common {
         }
     }
 
-    //用于取得上级与上上级的区划代码，加上自身称之为父系区划代码
+    //用于取得上级与上上级的区划代码，加上自身称之为祖系区划代码
     public static List<String> getPaternalCodes(String zoningCode){
         if (zoningCode == null || zoningCode.equals("")) {
             throw new RuntimeException("传入的区划代码为空！");
@@ -368,7 +368,7 @@ public class Common {
             System.out.println("length-----------> " + length);
             switch (length) {
                 case 0:
-                    zoningCodes.add(0, "000000000000000");
+                    zoningCodes.add(0, Common.NATION_ZONING_CODE);
                     break;
                 //省级
                 case 2:
@@ -376,17 +376,20 @@ public class Common {
                     break;
                 //市级
                 case 4:
+                    zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 2)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 3)));
                     zoningCodes.add(addZeroAtTail(zoningCode));
                     break;
                 //县级
                 case 6:
+                    zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 2)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 3)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 5)));
                     zoningCodes.add(addZeroAtTail(zoningCode));
                     break;
                 //乡镇级
                 case 9:
+                    zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 2)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 3)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 5)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 7)));
@@ -394,6 +397,7 @@ public class Common {
                     break;
                 //村级
                 case 12:
+                    zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 2)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 3)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 5)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 7)));
@@ -401,8 +405,9 @@ public class Common {
                     zoningCodes.add(addZeroAtTail(zoningCode));
                     break;
 
-                //村级
+                //组级
                 case 15:
+                    zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 2)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 3)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 5)));
                     zoningCodes.add(addZeroAtTail(zoningCode.substring(0, 7)));

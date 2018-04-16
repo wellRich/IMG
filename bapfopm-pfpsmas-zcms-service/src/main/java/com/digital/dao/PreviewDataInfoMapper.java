@@ -35,7 +35,7 @@ public interface PreviewDataInfoMapper {
     PreviewDataInfo get(Object key);
 
 
-    @SelectProvider(type = PreviewDataInfoSql.class, method = "findAllByZoningCode")
+    @SelectProvider(type = PreviewDataInfoSql.class, method = "findAncestorsAndSubsByZoningCode")
     @Results(id = "findAll", value = {
             @Result(column = "XZQH_DM", property = "zoningCode", javaType = String.class),
             @Result(column = "XZQH_MC", property = "divisionName", javaType = String.class),
@@ -58,7 +58,7 @@ public interface PreviewDataInfoMapper {
             @Result(column = "XZQHLX_DM", property = "type", javaType = String.class),
             @Result(column = "LRR_DM", property = "enterOneCode", javaType = String.class)
     })
-    List<PreviewDataInfo> findAllByZoningCode(String zoningCode);
+    List<PreviewDataInfo> findAncestorsAndSubsByZoningCode(String zoningCode);
 
     @SelectProvider(type = PreviewDataInfoSql.class, method = "findFamilyZoning")
    /* @Results({

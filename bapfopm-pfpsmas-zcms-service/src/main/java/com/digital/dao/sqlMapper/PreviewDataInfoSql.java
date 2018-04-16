@@ -82,45 +82,38 @@ public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
 
     //初始化时使用
     //获取父系以及下一级区划预览数据
-    public String findAllByZoningCode(String zoningCode) {
-
-        int level = Integer.valueOf(Common.getAssigningCode(zoningCode));
+    public String findAncestorsAndSubsByZoningCode(String zoningCode) {
+        int assigningCode = Integer.valueOf(Common.getAssigningCode(zoningCode));
 
         //去0后的区划代码
         String code = Common.removeZeroOfTailing(zoningCode);
 
-        //父系区划代码
-        List<String> codes = Common.getPaternalCodes(zoningCode);
-
-        log.info("findAllByZoningCode.level----> " + level);
-
-        log.info("findAllByZoningCode.code----> " + code);
+        //祖系区划代码
+        List<String> ancestralCodes = Common.getPaternalCodes(zoningCode);
         String sql;
-        if (level < 6) {
-            StringBuilder tempCode = new StringBuilder();
-            int size = codes.size();
-            for (int i = 0; i < size; i++) {
-                tempCode.append("'");
-                tempCode.append(codes.get(i));
-                tempCode.append("'");
-                tempCode.append(i == size - 1 ? "" : ",");
-            }
-            sql = new SQL() {{
-                FROM(entitySql.getTableName());
-                SELECT(entitySql.getColumns());
-                WHERE(entitySql.getColumnByField("zoningCode") + " LIKE '" + code + "%' AND JCDM = " + (level + 1));
+
+        //组以上级别的的区划
+        StringBuilder tempCode = new StringBuilder();
+        int size = ancestralCodes.size();
+        for (int i = 0; i < size; i++) {
+            tempCode.append("'");
+            tempCode.append(ancestralCodes.get(i));
+            tempCode.append("'");
+            tempCode.append(i == size - 1 ? "" : ",");
+        }
+        log.info("findAncestorsAndSubsByZoningCode.tempCode----> " + tempCode);
+        sql = new SQL() {{
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
+            if(assigningCode < Common.GROUP_LEVEL){
+                WHERE(entitySql.getColumnByField("zoningCode") + " LIKE '" + code + "%' AND JCDM = " + (assigningCode + 1));
                 OR();
                 WHERE(entitySql.getColumnByField("zoningCode") + " IN ( " + tempCode.toString() + ")");
-            }}.toString();
-        } else {
-            sql = new SQL() {{
-                FROM(entitySql.getTableName());
-                SELECT(entitySql.getColumns());
-                WHERE(entitySql.getColumnByField("zoningCode") + " = '" + zoningCode.trim() + "'");
-            }}.toString();
-        }
-
-        log.info("findAllByZoningCode.sql-----------> " + sql);
+            }else {
+                WHERE(entitySql.getColumnByField("zoningCode") + " IN ( " + tempCode.toString() + ")");
+            }
+        }}.toString();
+        log.info("findAncestorsAndSubsByZoningCode.sql-----------> " + sql);
         return sql;
     }
 
@@ -220,6 +213,8 @@ public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
     public String batchDelete(Collection<?> keys) {
         return entitySql.batchDelete(keys);
     }
+
+
 
 
 

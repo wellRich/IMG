@@ -1,6 +1,8 @@
 package com.digital.controller;
 
+import com.digital.api.ZoningCodeChangeApi;
 import com.digital.api.ZoningInfoQueryApi;
+import com.digital.util.Common;
 import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,42 @@ public class QueryZoningDataController extends BaseController {
 
 	@Autowired
 	ZoningInfoQueryApi zoningInfoQueryApi;
+
+	@Autowired
+	ZoningCodeChangeApi zoningCodeChangeApi;
+
+	/**
+	 * 初始化区划预览数据的预览界面
+	 * @return json
+	 */
+	@RequestMapping(value = "/initPreviewZoningData", method = RequestMethod.GET)
+	@ResponseBody
+	public Object initPreviewZoningData(){
+		try{
+			String zoningCode = Common.NATION_ZONING_CODE;
+			return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findPreviewByZoningCode(zoningCode)).toString();
+		}catch (Exception e) {
+			log.error("checkFormalZoning.error--> " + e.getMessage());
+			return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+		}
+	}
+
+
+	/**
+	 * 初始化区划正式数据的预览界面
+	 * @return json
+	 */
+	@RequestMapping(value = "/initFormalZoningData", method = RequestMethod.GET)
+	@ResponseBody
+	public Object initFormalZoningData(){
+		try{
+			String zoningCode = Common.NATION_ZONING_CODE;
+			return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningInfoQueryApi.findAncestorsAndSubsByZoningCode(zoningCode)).toString();
+		}catch (Exception e) {
+			log.error("checkFormalZoning.error--> " + e.getMessage());
+			return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+		}
+	}
 
 	/**
 	 * 取得子级区划数据

@@ -182,7 +182,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     @Override
     public Map<String, List<Map>> findPreviewByZoningCode(String zoningCode) throws IllegalAccessException {
         log.info("findPreviewByZoningCode.zoningCode-------> " + zoningCode);
-        List<PreviewDataInfo> previewDataInfos = previewDataInfoMapper.findAllByZoningCode(zoningCode);
+        List<PreviewDataInfo> previewDataInfos = previewDataInfoMapper.findAncestorsAndSubsByZoningCode(zoningCode);
         Map<String, List<Map>> result = new HashMap<>();
         for (PreviewDataInfo dataInfo : previewDataInfos) {
             if (result.containsKey(dataInfo.getAssigningCode())) {

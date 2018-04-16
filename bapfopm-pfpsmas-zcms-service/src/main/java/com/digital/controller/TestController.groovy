@@ -1,6 +1,7 @@
 package com.digital.controller
 
 import com.digital.dao.FormalTableMapper
+import com.digital.dao.PreviewDataInfoMapper
 import com.digital.dao.sqlMapper.EntitySql
 import com.digital.dao.sqlMapper.PreviewDataInfoSql
 import com.digital.entity.FormalTableInfo
@@ -13,14 +14,15 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
-import javax.inject.Inject;
-
-
 @Controller
 @RequestMapping("/test")
 class TestController {
-    @Inject
+    @Autowired
     FormalTableMapper formalTableMapper
+
+    @Autowired
+    PreviewDataInfoMapper previewDataInfoMapper
+
 
     @RequestMapping("/seek")
     @ResponseBody
@@ -30,4 +32,14 @@ class TestController {
         formalTableMapper.seek(req)
         return formalTableMapper.seek(req)
     }
+
+
+    @RequestMapping("/testAncestralAndSub")
+    @ResponseBody
+    def testAncestralAndSub(){
+       return previewDataInfoMapper.findAncestorsAndSubsByZoningCode("371481001400401");
+    }
+
+
+
 }

@@ -214,7 +214,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
     public String findByIds(String ids){
         String sql = new SQL(){{
             FROM(tableName);
-            SELECT("*");
+            SELECT(getColumns());
             WHERE(getColumnByField(getPrimaryField()) + "  IN (" + ids + ")");
         }}.toString();
         log.info("findByIds.sql ---> " + sql);
@@ -232,7 +232,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
         String sql = new SQL(){{
             FROM(getTableName());
             if(req.selectFields == null || req.selectFields.equals("")){
-                SELECT("*");
+                SELECT(getColumns());
             }else {
                 SELECT(req.selectFields);
             }

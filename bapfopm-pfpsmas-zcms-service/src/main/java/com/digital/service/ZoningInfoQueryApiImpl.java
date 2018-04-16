@@ -39,4 +39,14 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
 
         return ImmutableMap.of(assigningCode, formalTableInfos);
     }
+
+    /**
+     * 获取祖上、自身、子级区划数据
+     * @param zoningCode 登录用户所属的区划代码
+     * @return  [级次代码：所有的子级区划]
+     */
+    @Override
+    public Map<String, List<FormalTableInfo>> findAncestorsAndSubsByZoningCode(String zoningCode) {
+        return null;
+    }
 }
