@@ -119,10 +119,16 @@ public class ImportTemporaryController extends BaseController {
             }
             List<ContrastTemporary> temporaryList = (List<ContrastTemporary>) checkedMap.get("temporaryList");
             //导入预览数据表
-            boolean result = importFormalTableApi.ImprotFormalT(fileInfo, temporaryList);
-            if (result) {
-                return new RtnData().toString();
+            try{
+                boolean result = importFormalTableApi.ImprotFormalT(fileInfo, temporaryList);
+                if (result) {
+                    return new RtnData().toString();
+                }
+            }catch (RuntimeException e){
+                zoningDataUploadApi.updateTypeCode(fileSquence,Common.XZQH_JZBGZT_SQDSQSB);
+                return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, e.getMessage()).toString();
             }
+
         }
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "导入正式表的过程中，发现逻辑校验出错的数据，详情请查看错误页面").toString();
 

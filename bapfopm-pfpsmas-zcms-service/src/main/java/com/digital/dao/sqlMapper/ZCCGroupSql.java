@@ -1,24 +1,22 @@
 package com.digital.dao.sqlMapper;
 
 import com.digital.entity.ZCCGroup;
+import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryReq;
 import org.apache.ibatis.jdbc.SQL;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+
 /**
- * 〈一句话功能简述〉
+ * 变更对照组的sqlProvider
  * 〈功能详细描述〉
  *
- * @author [作者]
+ * @author guoyka
  * @version 2018/3/16
- * @see [相关类/方法]
- * @since [产品/模块版本]
- 
  */
-public class ZCCGroupSql extends EntitySql<ZCCGroup> {
-    @Override
-    public Class<ZCCGroup> init() {
-        return ZCCGroup.class;
-    }
+public class ZCCGroupSql implements BaseDao<ZCCGroup> {
 
     /**
      * 获取变更组的最大编号
@@ -27,8 +25,8 @@ public class ZCCGroupSql extends EntitySql<ZCCGroup> {
     public String getMaxSerialNumber(String zoningCode){
         log.info("getMaxSerialNumber.zoningCode---------> " + zoningCode);
         String sql = new SQL(){{
-            String columnName = getColumnByField("serialNumber");
-            FROM(getTableName());
+            String columnName = entitySql.getColumnByField("serialNumber");
+            FROM(entitySql.getTableName());
             SELECT("MAX(" + columnName + ")");
             WHERE( columnName + " like '"+ zoningCode + "%'");
         }}.toString();
@@ -59,9 +57,57 @@ public class ZCCGroupSql extends EntitySql<ZCCGroup> {
     /**
      * 查找变更对照组，按编号倒序排列
      * @param ids 以“,”分隔的id
-     * @return
+     * @return string
      */
+    @Override
     public String findByIds(String ids){
-        return super.findByIds(ids) + " ORDER BY BH DESC";
+        return entitySql.findByIds(ids) + " ORDER BY BH DESC";
     }
+
+    private static final Logger log = LoggerFactory.getLogger(ZCCGroupSql.class);
+
+
+    private static EntitySql entitySql = new EntitySql() {
+        @Override
+        public Class init() {
+            return ZCCGroup.class;
+        }
+    };
+
+
+    @Override
+    public String insert(Object o) {
+        return entitySql.insert(o);
+    }
+
+    @Override
+    public String update(Object o) {
+        return entitySql.update(o);
+    }
+
+    @Override
+    public String delete(Object o) {
+        return entitySql.delete(o);
+    }
+
+    @Override
+    public String findAll() {
+        return entitySql.findAll();
+    }
+
+    @Override
+    public String seek(QueryReq req) {
+        return entitySql.seek(req);
+    }
+
+    @Override
+    public String get(Object o) {
+        return entitySql.get(o);
+    }
+
+    @Override
+    public String batchDelete(Collection<?> keys) {
+        return entitySql.batchDelete(keys);
+    }
+
 }

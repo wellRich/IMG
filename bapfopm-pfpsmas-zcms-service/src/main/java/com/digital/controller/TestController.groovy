@@ -11,22 +11,23 @@ import com.digital.util.search.QueryResp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseBody
+
+import javax.inject.Inject;
 
 
 @Controller
 @RequestMapping("/test")
 class TestController {
-    @Autowired
+    @Inject
     FormalTableMapper formalTableMapper
 
     @RequestMapping("/seek")
     @ResponseBody
     def testSeek(){
-        EntitySql sql = new PreviewDataInfoSql<PreviewDataInfo>()
         QueryReq req = new QueryReq( "uniqueKey", "uniqueKey,zoningCode,divisionName")
         req.addFilter(new QueryFilter("zoningCode", "370102%", QueryFilter.OPR_LIKE))
-        formalTableMapper.findAll();
+        formalTableMapper.seek(req)
         return formalTableMapper.seek(req)
     }
 }

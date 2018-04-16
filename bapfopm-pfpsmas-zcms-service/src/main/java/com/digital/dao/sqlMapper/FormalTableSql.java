@@ -1,11 +1,13 @@
 package com.digital.dao.sqlMapper;
 
-import com.digital.entity.FormalTableInfo;
+import java.util.Collection;
+import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
+import com.digital.entity.FormalTableInfo;
+import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryReq;
 
 /**
  * @Description: TODO
@@ -15,15 +17,60 @@ import java.util.Map;
  * @Since
  * @Deprecated
  */
-public class FormalTableSql extends EntitySql<FormalTableInfo>{
+
+public class FormalTableSql implements BaseDao<FormalTableInfo> {
 
     private static final Logger logger = LoggerFactory.getLogger(FormalTableSql.class);
 
+
+    private static EntitySql entitySql = new EntitySql() {
+        @Override
+        public Class init() {
+            return FormalTableInfo.class;
+        }
+    };
+
+
+
     @Override
-    public Class<FormalTableInfo> init() {
-        return FormalTableInfo.class;
+    public String findByIds(String ids) {
+        return entitySql.findByIds(ids);
     }
 
+    @Override
+    public String insert(Object o) {
+        return entitySql.insert(o);
+    }
+
+    @Override
+    public String update(Object o) {
+        return entitySql.update(o);
+    }
+
+    @Override
+    public String delete(Object o) {
+        return entitySql.delete(o);
+    }
+
+    @Override
+    public String findAll() {
+        return entitySql.findAll();
+    }
+
+    @Override
+    public String seek(QueryReq req) {
+        return entitySql.seek(req);
+    }
+
+    @Override
+    public String get(Object o) {
+        return entitySql.get(o);
+    }
+
+    @Override
+    public String batchDelete(Collection<?> keys) {
+        return entitySql.batchDelete(keys);
+    }
 
     /*
     * 根据行政区划代码查询key
@@ -42,58 +89,18 @@ public class FormalTableSql extends EntitySql<FormalTableInfo>{
 
 
 
-
     //获取下一级区划预览数据
     public String findSubordinateZoning(String zoningCode){
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
-            WHERE(getColumnByField("superiorZoningCode") + "=#{zoningCode}");
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
+            WHERE(entitySql.getColumnByField("superiorZoningCode") + "=#{zoningCode}");
             AND();
-            WHERE(getColumnByField("chooseSign") + "='Y' AND "
-                    + getColumnByField("usefulSign") + "= 'Y'");
+            WHERE(entitySql.getColumnByField("chooseSign") + "='Y' AND "
+                    + entitySql.getColumnByField("usefulSign") + "= 'Y'");
         }}.toString();
-        log.info("findSubordinateZoning.sql--------> " + sql);
+        entitySql.log.info("findSubordinateZoning.sql--------> " + sql);
         return sql;
     }
-
-
-
-
-
-    /*public String insetFormatTableData(FormalTableInfo tableInfo){
-        String sql = new SQL(){
-            {
-                INSERT_INTO("dm_xzqh");
-                VALUES("UNIQUE_KEY",tableInfo.getUniqueKey());
-                VALUES("XZQH_DM",tableInfo.getZoningCode());
-                VALUES("XZQH_MC",tableInfo.getDivisionName());
-                VALUES("XZQH_JC",tableInfo.getDivisionAbbreviation());
-                VALUES("XZQH_QC",tableInfo.getDivisionFullName());
-                VALUES("JCDM",tableInfo.getAssigningCode());
-                VALUES("JBDM",tableInfo.getLevelCode());
-                VALUES("SJ_XZQH_DM",tableInfo.getSuperiorZoningCode());
-                VALUES("XYBZ",tableInfo.getChooseSign());
-                VALUES("YXBZ",tableInfo.getUsefulSign());
-                VALUES("DWLSGX_DM",tableInfo.getSubordinateRelations());
-                VALUES("YXQ_Q",tableInfo.getValidityStart());
-                VALUES("YXQ_Z",tableInfo.getValidityStup());
-                VALUES("XNJD_BZ",tableInfo.getVirtualNode());
-                VALUES("OLD_XZQH_DM",tableInfo.getOldZoningCode());
-                VALUES("QX_JGDM",tableInfo.getAccessCode());
-                VALUES("LRR_DM",tableInfo.getEnterOneCode());
-                VALUES("LRSJ",tableInfo.getCreateDate());
-                VALUES("XGR_DM",tableInfo.getUpdaterCode());
-                VALUES("XGSJ",tableInfo.getLastUpdate());
-                VALUES("XZQHLX_DM",tableInfo.getType());
-                VALUES("VERSION","'"+tableInfo.getVersion()+"'");
-            }
-        }.toString();
-
-        logger.info("insetFormatTableData>>:"+sql);
-        return sql;
-    }*/
-
-
 
 }

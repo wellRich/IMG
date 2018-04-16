@@ -1,9 +1,14 @@
 package com.digital.dao.sqlMapper;
 
 import com.digital.entity.ZCCDetail;
+import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryReq;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,16 +21,11 @@ import java.util.List;
  * @since [产品/模块版本]
  
  */
-public class ZCCDetailSql extends EntitySql<ZCCDetail>  {
-    @Override
-    public Class<ZCCDetail> init() {
-        return ZCCDetail.class;
-    }
-
-
+public class ZCCDetailSql implements BaseDao<ZCCDetail> {
+    
     public String deleteByGroupSeqs(List<Integer> seqList){
         String sql = new SQL(){{
-            DELETE_FROM(getTableName());
+            DELETE_FROM(entitySql.getTableName());
             WHERE("GROUPXH in (" + StringUtils.join(seqList, ",")+ ")" );
         }}.toString();
         log.info("deleteByGroupSeqs.sql--------> " + sql);
@@ -35,8 +35,8 @@ public class ZCCDetailSql extends EntitySql<ZCCDetail>  {
     //查找若干对照组下的变更对照明细
     public String pageSeekByGroups(String seqStr, int offset, int limit){
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
             WHERE("GROUPXH in (" + seqStr + ")" );
         }}.toString() + " LIMIT " + limit + " OFFSET " + offset;;
         log.info("pageSeekByGroups.sql--------> " + sql);
@@ -46,26 +46,66 @@ public class ZCCDetailSql extends EntitySql<ZCCDetail>  {
     //统计若干对照组下的变更对照明细数量
     public String countByGroups(String seqStr){
         String sql = new SQL(){{
-            FROM(getTableName());
+            FROM(entitySql.getTableName());
             SELECT("COUNT(*)");
             WHERE("GROUPXH in (" + seqStr + ")" );
         }}.toString();
         log.info("countByGroups.sql----------> " + sql);
         return sql;
     }
+    
+         
 
-   /* public String findByApplicationNum(Integer applicationNum){
-        String sql = new SQL(){
-            {
-              SELECT("M.MXBXH","M.GROUPXH","M.YSXZQH_DM","M.YSXZQH_MC","M.BGLX_DM","M.MBXZQH_DM","M.MBXZQH_MC","M.BZ","M.LRR_DM","M.LRJG_DM");
-              FROM("XZQH_BGMXB M","XZQH_BGGROUP G");
-              WHERE("M.GROUPXH=G.GROUPXH");
-              AND();
-              WHERE("G.SQDXH="+applicationNum);
-            }
-        }.toString();
-        return sql;
-    }*/
+    private static final Logger log = LoggerFactory.getLogger(ZCCDetailSql.class);
 
+
+    private static EntitySql entitySql = new EntitySql() {
+        @Override
+        public Class init() {
+            return ZCCDetail.class;
+        }
+    };
+
+
+
+    @Override
+    public String findByIds(String ids) {
+        return entitySql.findByIds(ids);
+    }
+
+    @Override
+    public String insert(Object o) {
+        return entitySql.insert(o);
+    }
+
+    @Override
+    public String update(Object o) {
+        return entitySql.update(o);
+    }
+
+    @Override
+    public String delete(Object o) {
+        return entitySql.delete(o);
+    }
+
+    @Override
+    public String findAll() {
+        return entitySql.findAll();
+    }
+
+    @Override
+    public String seek(QueryReq req) {
+        return entitySql.seek(req);
+    }
+
+    @Override
+    public String get(Object o) {
+        return entitySql.get(o);
+    }
+
+    @Override
+    public String batchDelete(Collection<?> keys) {
+        return entitySql.batchDelete(keys);
+    }
 
 }

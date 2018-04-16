@@ -13,8 +13,6 @@ import java.util.*;
 public class QueryReq implements Serializable{
     //public static final int DEFAULT_PAGE_SIZE = 10;
 
-    private EntitySql entitySql;
-
     //需要查询的属性
     //考虑使用表达式{},把属性框起来，解析也许更快
     public String selectFields;

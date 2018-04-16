@@ -2,9 +2,14 @@ package com.digital.dao.sqlMapper;
 
 import com.digital.util.Common;
 import com.digital.entity.PreviewDataInfo;
+import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryReq;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.jdbc.SQL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,23 +19,19 @@ import java.util.List;
  * @author guoyka
  * @version 2018/3/21
  */
-public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
-    @Override
-    public Class<PreviewDataInfo> init() {
-        return PreviewDataInfo.class;
-    }
+public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
 
     /**
      * 根据级别代码查找自身及子孙区划数据
-     * @param levelCode
+     * @param levelCode 区划级别代码
      * @return String
      */
     public String findFamilyZoning(String levelCode, String columns){
         String sql = new SQL(){{
-            FROM(getTableName());
+            FROM(entitySql.getTableName());
             SELECT(columns);
-            WHERE(getColumnByField("levelCode") + " LIKE '" + levelCode.trim() + "%'");
-            ORDER_BY(getColumnByField("levelCode") + " DESC");
+            WHERE(entitySql.getColumnByField("levelCode") + " LIKE '" + levelCode.trim() + "%'");
+            ORDER_BY(entitySql.getColumnByField("levelCode") + " DESC");
         }}.toString();
         log.info("findFamilyZoning.sql -------------->" + sql);
         return sql;
@@ -38,21 +39,21 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
 
     /**
      * 根据区划代码查找同一父级下的同级区划
-     * @param zoningCode
-     * @return
+     * @param zoningCode 区划代码
+     * @return string
      */
     public String findBrothersByCode(String zoningCode){
         String superZoningCode = Common.getSuperiorZoningCode(zoningCode);
         String assignCode = Common.getAssigningCode(zoningCode);
 
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
-            WHERE(getColumnByField("superiorZoningCode") + "=" + superZoningCode );
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
+            WHERE(entitySql.getColumnByField("superiorZoningCode") + "=" + superZoningCode );
             AND();
-            WHERE(getColumnByField("assigningCode") + "=" + assignCode);
+            WHERE(entitySql.getColumnByField("assigningCode") + "=" + assignCode);
             AND();
-            WHERE(getColumnByField("zoningCode") + "!=" + zoningCode);
+            WHERE(entitySql.getColumnByField("zoningCode") + "!=" + zoningCode);
         }}.toString();
         log.info("findBrothersByCode.sql---------> " + sql);
         return sql;
@@ -69,11 +70,11 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
         //取得上级区划的级别代码
         String superAssignCode = Common.getSuperAssignCode(zoningCode);
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT("COUNT(" + getColumnByField("divisionName") + ")");
-            WHERE(getColumnByField("superiorZoningCode") + "='" + superAssignCode + "'");
+            FROM(entitySql.getTableName());
+            SELECT("COUNT(" + entitySql.getColumnByField("divisionName") + ")");
+            WHERE(entitySql.getColumnByField("superiorZoningCode") + "='" + superAssignCode + "'");
             AND();
-            WHERE(getColumnByField("divisionName") + "='" + zoningName + "'");
+            WHERE(entitySql.getColumnByField("divisionName") + "='" + zoningName + "'");
         }}.toString();
         log.info("findBrothersByCodeAndName.sql---------> " + sql);
         return sql;
@@ -105,17 +106,17 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
                 tempCode.append(i == size - 1 ? "" : ",");
             }
             sql = new SQL() {{
-                FROM(getTableName());
-                SELECT(getColumns());
-                WHERE(getColumnByField("zoningCode") + " LIKE '" + code + "%' AND JCDM = " + (level + 1));
+                FROM(entitySql.getTableName());
+                SELECT(entitySql.getColumns());
+                WHERE(entitySql.getColumnByField("zoningCode") + " LIKE '" + code + "%' AND JCDM = " + (level + 1));
                 OR();
-                WHERE(getColumnByField("zoningCode") + " IN ( " + tempCode.toString() + ")");
+                WHERE(entitySql.getColumnByField("zoningCode") + " IN ( " + tempCode.toString() + ")");
             }}.toString();
         } else {
             sql = new SQL() {{
-                FROM(getTableName());
-                SELECT(getColumns());
-                WHERE(getColumnByField("zoningCode") + " = '" + zoningCode.trim() + "'");
+                FROM(entitySql.getTableName());
+                SELECT(entitySql.getColumns());
+                WHERE(entitySql.getColumnByField("zoningCode") + " = '" + zoningCode.trim() + "'");
             }}.toString();
         }
 
@@ -125,14 +126,12 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
 
 
 
-
-
     //获取下一级区划预览数据
     public String findSubordinateZoning(String zoningCode){
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
-            WHERE(getColumnByField("superiorZoningCode") + "=#{zoningCode}");
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
+            WHERE(entitySql.getColumnByField("superiorZoningCode") + "=#{zoningCode}");
         }}.toString();
         log.info("findSubordinateZoning.sql--------> " + sql);
         return sql;
@@ -142,8 +141,8 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
     //根据区划代码查找有效的区划预览数据
     public String findValidOneByZoningCode(String zoningCode){
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
             WHERE("XYBZ = 'Y' AND YXBZ = 'Y' AND XZQH_DM =" + zoningCode);
         }}.toString();
         log.info("findValidOneByZoningCode.sql-------------> " + sql);
@@ -160,12 +159,92 @@ public class PreviewDataInfoSql extends EntitySql<PreviewDataInfo> {
      */
     public String updateFullName(String oldFullName, String newFullName, String levelCode){
         String sql = new SQL(){{
-            UPDATE(getTableName());
-            SET(getColumnByField("divisionFullName") +
-                    " = REPLACE(" + getColumnByField("divisionFullName") + ", '" + oldFullName + "', '" + newFullName +"')" );
-            WHERE(getColumnByField("levelCode") + " LIKE '" + levelCode + "%'");
+            UPDATE(entitySql.getTableName());
+            SET(entitySql.getColumnByField("divisionFullName") +
+                    " = REPLACE(" + entitySql.getColumnByField("divisionFullName") + ", '" + oldFullName + "', '" + newFullName +"')" );
+            WHERE(entitySql.getColumnByField("levelCode") + " LIKE '" + levelCode + "%'");
         }}.toString();
         log.info("updateFullName.sql---------> " + sql);
+        return sql;
+    }
+
+
+    private static final Logger log = LoggerFactory.getLogger(PreviewDataInfoSql.class);
+
+
+    private static EntitySql entitySql = new EntitySql() {
+        @Override
+        public Class init() {
+            return PreviewDataInfo.class;
+        }
+    };
+
+
+
+    @Override
+    public String findByIds(String ids) {
+        return entitySql.findByIds(ids);
+    }
+
+    @Override
+    public String insert(Object o) {
+        return entitySql.insert(o);
+    }
+
+    @Override
+    public String update(Object o) {
+        return entitySql.update(o);
+    }
+
+    @Override
+    public String delete(Object o) {
+        return entitySql.delete(o);
+    }
+
+    @Override
+    public String findAll() {
+        return entitySql.findAll();
+    }
+
+    @Override
+    public String seek(QueryReq req) {
+        return entitySql.seek(req);
+    }
+
+    @Override
+    public String get(Object o) {
+        return entitySql.get(o);
+    }
+
+    @Override
+    public String batchDelete(Collection<?> keys) {
+        return entitySql.batchDelete(keys);
+    }
+
+
+
+    /**
+     * @description 用zoningCode查询预览数据 TODO 最后需要重构这个方法
+     * @method  findPreviewDataInfoByZoningCode
+     * @params String zoningCode
+     * @return String sql
+     * @exception
+     */
+    public String findPreviewDataInfoByZoningCode(String zoningCode){
+        String sql = new SQL(){
+            {
+                SELECT("group_concat(UNIQUE_KEY)",
+                        "XZQH_DM","XZQH_MC","XZQH_JC","XZQH_QC",
+                        "JCDM","JBDM","XYBZ","YXBZ",
+                        "DWLSGX_DM","SJ_XZQH_DM","YXQ_Q","YXQ_Z",
+                        "XNJD_BZ","OLD_XZQH_DM","QX_JGDM","LRR_DM","LRSJ","XGR_DM","XGSJ","XZQHLX_DM");
+                FROM("dm_xzqh_ylsj");
+                WHERE("XZQH_DM ="+zoningCode);
+                AND();
+                WHERE("XYBZ ='Y' and YXBZ = 'Y'");
+            }
+        }.toString();
+        log.info("findPreviewDataInfoByZoningCode.sql---------> " + sql);
         return sql;
     }
 }

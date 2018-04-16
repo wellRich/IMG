@@ -40,13 +40,15 @@ public interface ZoningCodeChangeApi {
      */
 
     Object findZCCReqByZoningCode(String zoningCode, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
+
+
     /**
      * 根据区划级别代码查询申请单
      * 不分页
-     * @param zoningCode
-     * @return
+     * @param levelCode 级别代码
+     * @return list
      */
-    List<ZCCRequest> findZCCReqByLevelCode(String zoningCode);
+    List<ZCCRequest> findZCCReqByLevelCode(String levelCode);
 
 
     /**

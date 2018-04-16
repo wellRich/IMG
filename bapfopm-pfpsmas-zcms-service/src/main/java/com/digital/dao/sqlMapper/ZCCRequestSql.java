@@ -1,22 +1,22 @@
 package com.digital.dao.sqlMapper;
 
 import com.digital.entity.ZCCRequest;
+import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryReq;
 import org.apache.ibatis.jdbc.SQL;
 import org.apache.tools.ant.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
- * 变更申请单的sql   方法名 与相应的mapper中方法名相同
+ * 变更申请单的sqlProvider
  * @author guoyka
  * @version 2018/3/16
  */
-public class ZCCRequestSql extends EntitySql<ZCCRequest> {
-
-    @Override
-    public Class<ZCCRequest> init() {
-        return ZCCRequest.class;
-    }
+public class ZCCRequestSql implements BaseDao<ZCCRequest> {
 
     /**
      * 统计查询
@@ -25,9 +25,9 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
      */
     public String countByLevelCode(String levelCode){
         String sql = new SQL(){{
-            FROM(getTableName());
+            FROM(entitySql.getTableName());
             SELECT("count(*)");
-            WHERE(getColumnByField("levelCode")  + " LIKE '"  + levelCode + "%'");
+            WHERE(entitySql.getColumnByField("levelCode")  + " LIKE '"  + levelCode + "%'");
         }}.toString();
         log.info("countByZoningCode.sql----------> " + sql);
         return sql;
@@ -40,9 +40,9 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
      */
     public String countByStatuses(String  statuses){
         String sql = new SQL(){{
-            FROM(getTableName());
+            FROM(entitySql.getTableName());
             SELECT("count(*)");
-            WHERE(getColumnByField("status") + " IN (" + statuses + ")");
+            WHERE(entitySql.getColumnByField("status") + " IN (" + statuses + ")");
         }}.toString();
         log.info("countByZoningCode.sql----------> " + sql);
         return sql;
@@ -57,14 +57,14 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
      */
     public String countByZoningCodeAndStatus(String levelCode, String ... statuses){
         String sql = new SQL(){{
-            FROM(getTableName());
+            FROM(entitySql.getTableName());
             SELECT("count(*)");
             if(statuses.length > 0){
-                WHERE(getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
+                WHERE(entitySql.getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
             }else {
-                WHERE(getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
+                WHERE(entitySql.getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
                 AND();
-                WHERE(getColumnByField("levelCode") + " = '" + levelCode + "'");
+                WHERE(entitySql.getColumnByField("levelCode") + " = '" + levelCode + "'");
             }
         }}.toString();
         log.info("countByZoningCode.sql----------> " + sql);
@@ -74,10 +74,10 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
 
     public String pageSeekByLevelCode(String levelCode, int offset, int pageSize){
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
-            WHERE(getColumnByField("levelCode")  + " LIKE '"  + levelCode + "%'");
-            ORDER_BY(getColumnByField("createDate") + " DESC");
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
+            WHERE(entitySql.getColumnByField("levelCode")  + " LIKE '"  + levelCode + "%'");
+            ORDER_BY(entitySql.getColumnByField("createDate") + " DESC");
         }}.toString() + " LIMIT " + pageSize + " OFFSET " + offset;
         log.info("pageSeekByLevelCode.sql----------> " + sql);
         return sql;
@@ -92,10 +92,10 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
      */
     public String pageSeekByStatuses(int offset, int limit, String ... statuses){
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
             if(statuses.length > 0){
-                WHERE(getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
+                WHERE(entitySql.getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
             }
         }}.toString() +  " LIMIT " + limit + " OFFSET " + offset;
         log.info("pageSeekByStatuses.sql--------------> " + sql);
@@ -110,14 +110,14 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
      */
     public String findByLevelCodeAndStatuses(String levelCode, String ... statuses){
         String sql = new SQL(){{
-            FROM(getTableName());
-            SELECT(getColumns());
+            FROM(entitySql.getTableName());
+            SELECT(entitySql.getColumns());
             if(statuses.length > 0){
-                WHERE(getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
+                WHERE(entitySql.getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
                 AND();
-                WHERE(getColumnByField("levelCode") + " = '" + levelCode + "'");
+                WHERE(entitySql.getColumnByField("levelCode") + " = '" + levelCode + "'");
             }else {
-                WHERE(getColumnByField("levelCode") + " = '" + levelCode + "'");
+                WHERE(entitySql.getColumnByField("levelCode") + " = '" + levelCode + "'");
             }
         }}.toString();
         log.info("findOneByLevelCodeAndStatuses.sql----------> " + sql);
@@ -136,5 +136,56 @@ public class ZCCRequestSql extends EntitySql<ZCCRequest> {
         String sql = findByLevelCodeAndStatuses(levelCode, statuses) + " LIMIT " + pageSize + " OFFSET " + offset;
         log.info("findOneByLevelCodeAndStatuses.sql----------> " + sql);
         return sql;
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(ZCCRequestSql.class);
+
+
+    private static EntitySql entitySql = new EntitySql() {
+        @Override
+        public Class init() {
+            return ZCCRequest.class;
+        }
+    };
+
+
+    @Override
+    public String findByIds(String ids) {
+        return entitySql.findByIds(ids);
+    }
+
+    @Override
+    public String insert(Object o) {
+        return entitySql.insert(o);
+    }
+
+    @Override
+    public String update(Object o) {
+        return entitySql.update(o);
+    }
+
+    @Override
+    public String delete(Object o) {
+        return entitySql.delete(o);
+    }
+
+    @Override
+    public String findAll() {
+        return entitySql.findAll();
+    }
+
+    @Override
+    public String seek(QueryReq req) {
+        return entitySql.seek(req);
+    }
+
+    @Override
+    public String get(Object o) {
+        return entitySql.get(o);
+    }
+
+    @Override
+    public String batchDelete(Collection<?> keys) {
+        return entitySql.batchDelete(keys);
     }
 }

@@ -1,6 +1,7 @@
 package com.digital.util.search;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import java.util.Map;
  * @since [产品/模块版本]
  
  */
-public interface BaseEntity<T extends Serializable> {
+public interface BaseDao<T extends Serializable> {
 
 
     default  String rename(String json, Map<String, String> renameMap) {
@@ -28,5 +29,15 @@ public interface BaseEntity<T extends Serializable> {
             return json;
         }
     }
+
+    String insert(Object o);
+    String update(Object o);
+    String delete(Object o);
+    String get(Object o);
+    String seek(QueryReq req);
+    String findByIds(String ids);
+    String findAll();
+    String batchDelete(Collection<?> keys);
+
 
 }

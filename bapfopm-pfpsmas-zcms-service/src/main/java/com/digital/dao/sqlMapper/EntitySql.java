@@ -13,15 +13,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * CRUD的默认实现SqlProvider
- * 〈功能详细描述〉
  *
- * @author [作者]
+ * @author guoyka
  * @version 2018/3/17
- * @see [相关类/方法]
- * @since [产品/模块版本]
- 
  */
-public abstract class EntitySql<T extends Serializable> implements BaseEntity<T> {
+public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
     protected static final org.slf4j.Logger log = LoggerFactory.getLogger(ZCCGroupSql.class);
 
     /**
@@ -60,7 +56,38 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     private Class<T> clazz;
 
 
-    protected EntitySql() {
+    public abstract Class<T> init();
+
+    protected  EntitySql(Class<T> clazz){
+        log.info("entitySql有参构造器构造器被调用.clazz------------》 " + clazz);
+        this.clazz = clazz;
+        Table table = clazz.getAnnotation(Table.class);
+        this.tableName = table.name();
+        this.primaryField = table.primaryKey();
+        Field[] fields = clazz.getDeclaredFields();
+        int size = fields.length;
+        Field field;
+        String colName;
+        String fieldName;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            field = fields[i];
+            fieldName = field.getName();
+            if(fields[i].isAnnotationPresent(Column.class)){
+                colName = field.getAnnotation(Column.class).name();
+                if(!this.primaryField.equals(field.getName())){//过滤有问题
+                    this.fiesAndColsExcPrimary.put(fieldName, colName);
+                }
+                this.fieldsAndCols.put(fieldName, colName);
+                sb.append(colName).append(i < size - 1 ? "," : "");
+            }
+        }
+        this.columns = sb.toString();
+        this.columnsExcPrimary = StringUtils.join(fiesAndColsExcPrimary.keySet(), ",");
+    }
+
+    protected  EntitySql() {
+        log.info("entitySql无参构造器被调用------------》 " + this);
         clazz = init();
         Table table = clazz.getAnnotation(Table.class);
         this.tableName = table.name();
@@ -88,8 +115,6 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     }
 
 
-    public abstract Class<T> init();
-
     //需要修改
     public String insert(final Object entity){
         String sql = new SQL(){{
@@ -100,123 +125,6 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         log.info("insert.sql----> " + sql);
         return sql;
     }
-
-    public String findAll(){
-        String sql =  new SQL(){{
-            SELECT(columns);
-            FROM(tableName);
-        }}.toString();
-        log.info("findAll.sql----------> " + sql);
-        return sql;
-    }
-
-    /**
-     * 根据指定的若干条件查询若干字段查询
-     * @param req 查询封装对象
-     * @return sql
-     */
-    public String seek(QueryReq req){
-        EntitySql s = this;
-        List<QueryFilter> filters = req.search;
-        String sql = new SQL(){{
-            FROM(getTableName());
-            if(req.selectFields == null || req.selectFields.equals("")){
-                SELECT("*");
-            }else {
-                SELECT(req.selectFields);
-            }
-
-            for(int i = 0; i < filters.size(); i ++){
-                QueryFilter filter = filters.get(i);
-                if(i == 0){
-                    WHERE(filter.toSqlPart());
-                }else {
-                    if(filter.getLogic().equals(QueryFilter.LOGIC_AND)){
-                        AND();
-                        WHERE(filter.toSqlPart());
-                    }else {
-                        OR();
-                        WHERE(filter.toSqlPart());
-                    }
-                }
-
-                if(req.sort != null){
-                    ORDER_BY(req.sort);
-                }
-            }
-        }}.toString();
-
-        log.info("seek.sql-----> " + sql);
-        String ss = rename(sql, fieldsAndCols);
-        log.info("seek.ss-----> " + ss);
-        return sql;
-    }
-
-
-    public String update(final Object group){
-        String sql;
-        if(group == null){
-            throw  new RuntimeException("传入对象不存在！");
-        }else {
-            if(isEntity(group)){
-                sql = new SQL(){{
-                    UPDATE(tableName);
-                    getFiesAndColsExcPrimary().forEach((k, v) -> SET(v + "=#{" + k + "}"));
-                    WHERE(getColumnByField(primaryField) + "=#{" + primaryField + "}");
-                }}.toString();
-            }else if(group instanceof Map){
-                Map temp = (Map)group;
-                if(temp.containsKey(primaryField)){
-                    sql = new SQL(){{
-                        UPDATE(tableName);
-                        temp.forEach((k, v) ->{
-                            SET(getColumnByField(k.toString()) + "=#{" + k + "}");
-                        });
-                        WHERE(getColumnByField(primaryField) + "=#{" + primaryField + "}");
-                    }}.toString();
-                }else {
-                    throw new RuntimeException("未传入主键值！");
-                }
-            }else {
-                throw new IllegalArgumentException("只接收实体对象或者[属性-属性值]结构的map对象");
-            }
-            log.info("update.sql-------> " + sql);
-            return sql;
-        }
-    }
-
-    //通过主键获取对象
-    public String get(Object primaryKey) {
-        String sql = new SQL() {{
-            FROM(tableName);
-            SELECT(columns);
-            WHERE(getColumnByField(getPrimaryField()) + "=" + primaryKey);
-        }}.toString();
-        log.info("getByPrimaryKey.sql------------> " + sql);
-        return sql;
-    }
-
-
-    /**
-     * 通过若干主键获取对象集合
-     * @param ids 以“,”分隔的id
-     * @return sql
-     */
-    public String findByIds(String ids){
-        String sql = new SQL(){{
-            FROM(tableName);
-            SELECT("*");
-            WHERE(getColumnByField(getPrimaryField()) + "  IN (" + ids + ")");
-        }}.toString();
-        log.info("findByIds.sql ---> " + sql);
-        return sql;
-    }
-
-    //通过字段名获取数据列名
-    protected String getColumnByField(String fieldName){
-        return fieldsAndCols.get(fieldName);
-    }
-
 
     public String delete(Object primaryKey){
         String sql;
@@ -253,6 +161,121 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
         return sql;
     }
 
+    public String update(final Object group){
+        String sql;
+        if(group == null){
+            throw  new RuntimeException("传入对象不存在！");
+        }else {
+            if(isEntity(group)){
+                sql = new SQL(){{
+                    UPDATE(tableName);
+                    getFiesAndColsExcPrimary().forEach((k, v) -> SET(v + "=#{" + k + "}"));
+                    WHERE(getColumnByField(primaryField) + "=#{" + primaryField + "}");
+                }}.toString();
+            }else if(group instanceof Map){
+                Map temp = (Map)group;
+                if(temp.containsKey(primaryField)){
+                    sql = new SQL(){{
+                        UPDATE(tableName);
+                        temp.forEach((k, v) ->{
+                            SET(getColumnByField(k.toString()) + "=#{" + k + "}");
+                        });
+                        WHERE(getColumnByField(primaryField) + "=#{" + primaryField + "}");
+                    }}.toString();
+                }else {
+                    throw new RuntimeException("未传入主键值！");
+                }
+            }else {
+                throw new IllegalArgumentException("只接收实体对象或者[属性-属性值]结构的map对象");
+            }
+            log.info("update.sql-------> " + sql);
+            return sql;
+        }
+    }
+
+
+    //通过主键获取对象
+    public String get(Object primaryKey) {
+        String sql = new SQL() {{
+            FROM(tableName);
+            SELECT(columns);
+            WHERE(getColumnByField(getPrimaryField()) + "=" + primaryKey);
+        }}.toString();
+        log.info("getByPrimaryKey.sql------------> " + sql);
+        return sql;
+    }
+
+
+    /**
+     * 通过若干主键获取对象集合
+     * @param ids 以“,”分隔的id
+     * @return sql
+     */
+    public String findByIds(String ids){
+        String sql = new SQL(){{
+            FROM(tableName);
+            SELECT("*");
+            WHERE(getColumnByField(getPrimaryField()) + "  IN (" + ids + ")");
+        }}.toString();
+        log.info("findByIds.sql ---> " + sql);
+        return sql;
+    }
+
+
+    /**
+     * 根据指定的若干条件查询若干字段查询
+     * @param req 查询封装对象
+     * @return sql
+     */
+    public String seek(QueryReq req){
+        List<QueryFilter> filters = req.search;
+        String sql = new SQL(){{
+            FROM(getTableName());
+            if(req.selectFields == null || req.selectFields.equals("")){
+                SELECT("*");
+            }else {
+                SELECT(req.selectFields);
+            }
+
+            for(int i = 0; i < filters.size(); i ++){
+                QueryFilter filter = filters.get(i);
+                if(i == 0){
+                    WHERE(filter.toSqlPart());
+                }else {
+                    if(filter.getLogic().equals(QueryFilter.LOGIC_AND)){
+                        AND();
+                        WHERE(filter.toSqlPart());
+                    }else {
+                        OR();
+                        WHERE(filter.toSqlPart());
+                    }
+                }
+
+                if(req.sort != null){
+                    ORDER_BY(req.sort);
+                }
+            }
+        }}.toString();
+        sql = rename(sql, fieldsAndCols);
+        log.info("seek.sql-----> " + sql);
+        return sql;
+    }
+
+
+    public String findAll(){
+        String sql =  new SQL(){{
+            SELECT(columns);
+            FROM(tableName);
+        }}.toString();
+        log.info("findAll.sql----------> " + sql);
+        return sql;
+    }
+
+
+    //通过字段名获取数据列名
+    protected String getColumnByField(String fieldName){
+        return fieldsAndCols.get(fieldName);
+    }
 
     private boolean isEntity(Object obj){
         return obj.getClass().equals(clazz);
@@ -261,7 +284,6 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     public String getTableName() {
         return tableName;
     }
-
 
     public Map<String, String> getFieldsAndCols() {
         return fieldsAndCols;
@@ -286,4 +308,5 @@ public abstract class EntitySql<T extends Serializable> implements BaseEntity<T>
     public Class<T> getClazz() {
         return clazz;
     }
+
 }
