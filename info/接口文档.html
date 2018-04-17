@@ -1993,12 +1993,13 @@ function openct(e) {
 </tr>
 </tbody>
 </table>
-<h2>9.2 服务名称：初始化区划正式数据</h2>
-<h3>9.2.1 服务访问地址:</h3>
+<h2>9.2 服务名称：获取下级区划预览数据，同2.2</h2>
+<h2>9.3 服务名称：初始化区划正式数据</h2>
+<h3>9.3.1 服务访问地址:</h3>
 <p>IP:8251/zoningChangeManager/initFormalZoningData</p>
-<h3>9.2.2 服务方法</h3>
+<h3>9.3.2 服务方法</h3>
 <p>GET</p>
-<h3>9.2.3 请求参数：</h3>
+<h3>9.3.3 请求参数：</h3>
 <table>
 <thead>
 <tr>
@@ -2021,7 +2022,91 @@ function openct(e) {
 </tr>
 </tbody>
 </table>
-<h3>9.2.4 响应</h3>
+<h3>9.3.4 响应</h3>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>参数</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>rtnCode</td>
+	<td>String</td>
+	<td>是</td>
+	<td>返回码</td>
+</tr>
+<tr>
+	<td>2</td>
+	<td>rntMessage</td>
+	<td>String</td>
+	<td>是</td>
+	<td>返回信息</td>
+</tr>
+<tr>
+	<td>3</td>
+	<td>responseData</td>
+	<td>object</td>
+	<td>是</td>
+	<td>响应数据</td>
+</tr>
+</tbody>
+</table>
+<p><strong>responseData的结构：</strong></p>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>属性</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>previewData</td>
+	<td>number</td>
+	<td>是</td>
+	<td>预览数据，以级次代码为键，相应的预览列表数据作为值，数据结构参考2.1.4</td>
+</tr>
+</tbody>
+</table>
+<h2>9.4 服务名称：获取下级区划正式数据</h2>
+<h3>9.4.1 服务访问地址:</h3>
+<p>IP:8251/zoningChangeManager/checkFormalZoning</p>
+<h3>9.4.2 服务方法</h3>
+<p>GET</p>
+<h3>9.4.3 请求参数：</h3>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>参数</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>参数说明</th>
+	<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>zoningCode</td>
+	<td>String</td>
+	<td>是</td>
+	<td>登录人区划代码</td>
+	<td>无</td>
+</tr>
+</tbody>
+</table>
+<h3>9.4.4 响应</h3>
 <table>
 <thead>
 <tr>
