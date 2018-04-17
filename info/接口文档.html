@@ -317,8 +317,8 @@ img {
     ele_span.appendChild(ele_a);
     ele_p.appendChild(ele_span);
 
-    var ele_ol = document.createElement("ol");
-    ele_ol.style.cssText = "display:none;margin-left:14px;padding-left:14px;line-height:160%;";
+    var ele_ol = document.createElement("ul");
+    ele_ol.style.cssText = "list-style-type:none;display:none;margin-left:14px;padding-left:14px;line-height:160%;";
     ele_ol.setAttribute("id", "outline_ol");
     outline.appendChild(ele_ol);
     var div1 = document.createElement("div");
@@ -351,7 +351,7 @@ img {
 
       if (h > old_h) {
 
-        ele_ols = document.createElement("ol");
+        ele_ols = document.createElement("ul");
         ele_Current = ele_ol;
         if(ele_Current && ol_cnt > 0){
           var temp = ol_cnt;
@@ -369,7 +369,7 @@ img {
             ol_cnt--;
           }
         } else {
-          ele_ols = document.createElement("ol");
+          ele_ols = document.createElement("ul");
           ele_Current = ele_ol;
           if(ele_Current && ol_cnt > 0){
             var temp = ol_cnt;
@@ -1697,7 +1697,7 @@ function openct(e) {
 <blockquote>
 <p>审核不通过只能单条操作，通过的可以批量</p>
 </blockquote>
-<h2>6.2 服务名称：撤销一个申请单</h2>
+<h2>6.2 服务名称：省级审核</h2>
 <h3>6.2.1 服务访问地址:</h3>
 <p>IP:8251/zoningChangeManager/provincialCheck</p>
 <h3>6.2.2 服务方法</h3>
@@ -1910,7 +1910,173 @@ function openct(e) {
 </table>
 <h1>9 模块：区划代码预览</h1>
 <h2>9.1 服务名称：初始化区划预览数据</h2>
+<h3>9.1.1 服务访问地址:</h3>
+<p>IP:8251/queryZoningData/initPreviewZoningData</p>
+<h3>9.1.2 服务方法</h3>
+<p>GET</p>
+<h3>9.1.3 请求参数：</h3>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>参数</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>参数说明</th>
+	<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>zoningCode</td>
+	<td>String</td>
+	<td>是</td>
+	<td>登录人区划代码</td>
+	<td>000000000000000</td>
+</tr>
+</tbody>
+</table>
+<h3>9.1.4 响应</h3>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>参数</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>rtnCode</td>
+	<td>String</td>
+	<td>是</td>
+	<td>返回码</td>
+</tr>
+<tr>
+	<td>2</td>
+	<td>rntMessage</td>
+	<td>String</td>
+	<td>是</td>
+	<td>返回信息</td>
+</tr>
+<tr>
+	<td>3</td>
+	<td>responseData</td>
+	<td>object</td>
+	<td>是</td>
+	<td>响应数据</td>
+</tr>
+</tbody>
+</table>
+<p><strong>responseData的结构：</strong></p>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>属性</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>previewData</td>
+	<td>number</td>
+	<td>是</td>
+	<td>预览数据，以级次代码为键，相应的预览列表数据作为值，数据结构参考2.1.4</td>
+</tr>
+</tbody>
+</table>
 <h2>9.2 服务名称：初始化区划正式数据</h2>
+<h3>9.2.1 服务访问地址:</h3>
+<p>IP:8251/zoningChangeManager/initFormalZoningData</p>
+<h3>9.2.2 服务方法</h3>
+<p>GET</p>
+<h3>9.2.3 请求参数：</h3>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>参数</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>参数说明</th>
+	<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>zoningCode</td>
+	<td>String</td>
+	<td>是</td>
+	<td>登录人区划代码</td>
+	<td>000000000000000</td>
+</tr>
+</tbody>
+</table>
+<h3>9.2.4 响应</h3>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>参数</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>rtnCode</td>
+	<td>String</td>
+	<td>是</td>
+	<td>返回码</td>
+</tr>
+<tr>
+	<td>2</td>
+	<td>rntMessage</td>
+	<td>String</td>
+	<td>是</td>
+	<td>返回信息</td>
+</tr>
+<tr>
+	<td>3</td>
+	<td>responseData</td>
+	<td>object</td>
+	<td>是</td>
+	<td>响应数据</td>
+</tr>
+</tbody>
+</table>
+<p><strong>responseData的结构：</strong></p>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>属性</th>
+	<th>数据类型</th>
+	<th>是否必须</th>
+	<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>previewData</td>
+	<td>number</td>
+	<td>是</td>
+	<td>预览数据，以级次代码为键，相应的预览列表数据作为值，数据结构参考2.1.4</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
