@@ -2,6 +2,8 @@ package com.digital.dao.sqlMapper;
 
 import java.util.Collection;
 import java.util.Map;
+
+import com.digital.util.search.QueryFilter;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,6 +103,17 @@ public class FormalTableSql implements BaseDao<FormalTableInfo> {
         }}.toString();
         entitySql.log.info("findSubordinateZoning.sql--------> " + sql);
         return sql;
+    }
+
+
+    @Override
+    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
+        return entitySql.pageSeek(req, pageIndex, pageSize);
+    }
+
+    @Override
+    public String countBy(String field, QueryFilter... filters) {
+        return entitySql.countBy(field, filters);
     }
 
 }

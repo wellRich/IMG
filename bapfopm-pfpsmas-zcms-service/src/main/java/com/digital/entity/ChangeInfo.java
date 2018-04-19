@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public class ChangeInfo implements Cloneable{
 
+    private String uniqueKey;
     private Integer requestSeq;//申请表序号（申请表主键）
     private Integer groupSeq;//变更组序号（变更表主键）
     private String originalZoningCode;//原区划代码
@@ -36,6 +37,7 @@ public class ChangeInfo implements Cloneable{
     }
 
     public ChangeInfo(Map<String, String> param) {
+        this.uniqueKey = param.get("uniqueKey");
         this.changeType = param.get("changeType");
         this.creatorCode = param.get("creatorCode");
         this.groupSeq = Integer.valueOf(param.get("groupSeq"));
@@ -51,6 +53,7 @@ public class ChangeInfo implements Cloneable{
     }
 
     public ChangeInfo(LinkedTreeMap<String, String> param) {
+        this.uniqueKey = param.get("uniqueKey");
         this.changeType = param.get("changeType");
         this.creatorCode = param.get("creatorCode");
         this.groupSeq = Integer.valueOf(param.get("groupSeq"));
@@ -114,7 +117,13 @@ public class ChangeInfo implements Cloneable{
                 + ", targetZoningCode is " + targetZoningCode + ", hashCode = " + this.hashCode();
     }*/
 
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
 
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
+    }
 
     public Date getCreatorDate() {
         return creatorDate;
@@ -215,7 +224,7 @@ public class ChangeInfo implements Cloneable{
 
     //获取原区划的级别代码
     public String getOriginalLevelCode() {
-        if(originalLevelCode != null){
+        /*if(originalLevelCode != null){
             return originalLevelCode;
         }else {
             if(changeType.equals(Common.ADD)){
@@ -224,7 +233,9 @@ public class ChangeInfo implements Cloneable{
                 buildOriginalLevelCode();
                 return originalLevelCode;
             }
-        }
+        }*/
+        buildOriginalLevelCode();
+        return originalLevelCode;
     }
 
     public void setOriginalLevelCode(String originalLevelCode) {

@@ -1,0 +1,697 @@
+<div id="rzc-shangchuan" ms-controller="rzc_shangchuan" data-router="#!/rzc/rzc_shangchuan">
+	<div class="sc-nav">
+		<a ms-repeat-el="data.navbar" class="qydmsc-a" ms-href="{{el.routerPath}}">
+			<img ms-src="{{el.imgPath}}" class="ico3" alt="" />
+			<span>{{$index+1}}.{{el.name}}</span>
+		</a>
+
+	</div>
+	<div class="cursor">
+		<div class="c-q">
+			<span class="c-query">上传文件</span>
+
+			<div class="main-top">
+
+				<div class="top1">{{data.fileName}}</div>
+				<input type="button" value="浏览" class="liu">
+				<form id="form">
+					<input type="file" class="upload-file" id="upload_file" name="file" ms-on-change="getFileName()">
+				</form>
+			</div>
+
+			<input type="button" value="上传" class="r-query" ms-on-click="sendFile()" />
+			<input type="button" value="重置" class="r-query" />
+		</div>
+	</div>
+	<div class="subject-content">
+		<div class="upload-results">
+			<table class="results-show">
+				<caption>
+					<span class="upload-show">上传结果展示</span>
+					<i class="delete-rule" title="删除约束" ms-on-click="showPrompt()"></i>
+					<input type="button" class="r-dele" value="删除" ms-on-click="showDeletePrompt()">
+					<input type="button" class="r-uploaded" value="已上传">
+
+				</caption>
+				<thead>
+					<tr>
+						<th class="tb-xz th-xz">选择</th>
+						<th class="tb-xz th-qhdm">区划代码</th>
+						<th class="tb-xz th-rq">日期</th>
+						<th class="tb-xz th-wjm">文件名</th>
+						<th class="tb-xz th-zt">状态</th>
+						<th class="tb-xz th-scsj">上传时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ms-repeat-el="data.upload">
+						<td class="tb-xz th-xz">
+							<input type="radio" id="fileSquence" name="name" class="tu-left" ms-data-filesquence="el.fileSquence" ms-data-statuscode="el.statusCode">
+							<label for="fileSquence"></label>
+							<!-- 白框 -->
+						</td>
+						<td class="tb-xz th-qhdm">
+							<em>{{el.zoningCode}}</em>
+						</td>
+						<td class="tb-xz th-rq">
+							<em>{{el.date}}</em>
+						</td>
+						<td class="tb-xz th-wjm">
+							<em>{{el.fileName}}</em>
+						</td>
+						<td class="tb-xz th-zt">
+							<i class="ico4"></i>
+							<em>{{el.statusCode | signConversion(el.statusCode)}}</em>
+						</td>
+						<td class="tb-xz th-scsj">
+							<em>{{el.enterTime}}</em>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="no" ms-if="!data.upload.length"> 无显示记录</div>
+		</div>
+	</div>
+
+	<!-- 分页 -->
+	<div class="paging">
+		<ul class="pagination">
+			<li class="previous">
+				<a href="javascript:;" ms-on-click="getPreviousDate()">上一页</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageNum}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageNum+1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageNum+2}}</a>
+			</li>
+			<li>
+				<a href="javascript:;">...</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageCount-1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageCount}}</a>
+			</li>
+			<li class="next">
+				<a href="javascript:;" ms-on-click="getNextDate()">下一页</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="drlsb">
+		<!-- <input type="button" value="下一步" class="bttn"> -->
+		<a href="#!/rzc/rzc_linshi" class="abig bttn re-upload">下一步</a>
+	</div>
+
+	<!-- 提示框 上传成功-->
+	<div class="mask" ms-if="data.maskToggle"></div>
+	<div class="dialog" ms-if="data.uploadToggle">
+		<div class="dialog-top">
+			<span>
+				<em>提示</em>
+			</span>
+		</div>
+		<span class="cuo" ms-on-click="hiddenPrompt(data.uploadToggle)"></span>
+		<div class="dialog-bottom">
+			<div class="dialog-bottom-text">
+				<span class="span-big">
+					<i></i>文件上传成功</span>
+			</div>
+			<div class="dialog-bottom-button">
+				<input type="button" class="button center" value="完成" ms-on-click="hiddenPrompt()"/>
+			</div>
+		</div>
+	</div>
+
+	<!-- 提示框 删除-->
+	<div class="dialog" ms-if="data.deleteFileToggle">
+		<div class="dialog-top">
+			<span>
+				<em>提示</em>
+			</span>
+		</div>
+		<span class="cuo" ms-on-click="hiddenPrompt()"></span>
+		<div class="dialog-bottom">
+			<div class="dialog-bottom-text">
+				<span class="span-big">
+					<i></i>想好了吗?确定要删除吗?</span>
+			</div>
+			<div class="dialog-bottom-button">
+				<input type="button" class="button" value="确认删除" ms-on-click="deleteUploadFile()"/>
+				<input type="button" class="button" value="我再看看" />
+			</div>
+		</div>
+	</div>
+
+	<!-- 删除约束 -->
+	<div ms-if="data.deleteRuleToggle" class="delete-pre">
+		<pre>
+<h4>可被删除上传文件的文件状态:</h4>
+已上传、导入临时表成功、导入临时表失败、逻辑校验成功、逻辑校验失败、对照表生成失败
+
+<h4>不可被删除上传文件的文件状态:</h4>
+导入临时表中、逻辑校验中、对照表生成中、对照表生成成功
+
+<span style="color:red">再次点击按钮可关闭此提示框</span>
+		</pre>
+	</div>
+
+</div>
+
+<style lang="less">
+	input[type="radio"] {
+		width: 22px;
+		height: 22px;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	label {
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		border-radius: 5px;
+		margin-left: -26px;
+		display: inline-flex;
+	}
+
+	input:checked+label {
+		background: url('./src/modules/rzc/img/collect.png');
+		background-size: cover;
+		background-position: center;
+	}
+
+	.mask {
+		width: 100%;
+		height: 100%;
+		background: url('./src/modules/rzc/img/zhezhao.png');
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 290;
+	}
+
+	.dialog {
+		width: 800px;
+		height: 500px;
+		position: relative;
+		left: 50%;
+		transform: translate(-53%, -83%);
+		z-index: 300;
+	}
+
+	.dialog .dialog-top {
+		width: 100px;
+		height: 100px;
+		background: url('./src/modules/rzc/img/prompt.png');
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%);
+		z-index: 301;
+	}
+
+	.dialog .dialog-top span {
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		text-align: center;
+		line-height: 100px;
+		font-size: 18px;
+		font-weight: bolder;
+	}
+
+	.dialog .cuo {
+		width: 20px;
+		height: 20px;
+		background: url('./src/modules/rzc/img/cuo.png');
+		position: absolute;
+		right: 5%;
+		top: 16%;
+		transform: translate(-50%);
+		z-index: 301;
+		cursor: pointer;
+	}
+
+
+	.dialog .dialog-bottom {
+		width: 773px;
+		height: 423px;
+		background: url('./src/modules/rzc/img/dialog.png');
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-49%, -49%);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text {
+		width: 100%;
+		position: absolute;
+		top: 100px;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text i {
+		width: 22px;
+		height: 29px;
+		display: inline-block;
+		background: url('./src/modules/rzc/img/prompt-picture.png') no-repeat;
+		margin-right: 30px;
+		transform: translateY(7px);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text .span-big {
+		width: 100%;
+		display: inline-block;
+		text-align: center;
+		font-size: 18px;
+		font-weight: bolder;
+
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text .span-small {
+		width: 100%;
+		padding-top: 20px;
+		display: inline-block;
+		text-align: center;
+		font-size: 14px;
+		color: #c1c1c1;
+		transform: translateX(26px);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button {
+		width: 304px;
+		height: 40px;
+		position: absolute;
+		top: 232px;
+		left: 50%;
+		transform: translate(-50%);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button .button {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		border: none;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button .center {
+		transform: translate(80%);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button .button:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button :nth-child(1) {
+		margin-right: 60px;
+	}
+
+
+	#rzc-shangchuan {
+		width: 100%;
+		height: auto;
+		z-index: 0;
+	}
+
+	#rzc-shangchuan a {
+		text-decoration: none;
+	}
+
+	#rzc-shangchuan .sc-nav {
+		width: 94%;
+		height: 54px;
+		background: none;
+		margin-left: 6%;
+		padding-top: 20px;
+	}
+
+	#rzc-shangchuan .sc-nav .qydmsc-a {
+		width: 15%;
+		height: 32px;
+		display: inline-block;
+		line-height: 32px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		margin-left: -10px;
+		position: relative;
+
+	}
+
+	#rzc-shangchuan .sc-nav .qydmsc-a span {
+		width: 100%;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+		z-index: 1;
+	}
+
+	#rzc-shangchuan .sc-nav .qydmsc-a .ico3 {
+		width: 100%;
+		height: 32px;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+	}
+
+	#rzc-shangchuan .cursor {
+		width: 100%;
+		height: 40px;
+		margin-top: 20px;
+	}
+
+	#rzc-shangchuan .cursor .c-q {
+		width: 93%;
+		margin: 0px 3% 0px 3%;
+		text-align: center;
+	}
+
+	#rzc-shangchuan .cursor .c-query {
+		line-height: 40px;
+		font-size: 18px;
+		color: #ffffff;
+		display: inline-block;
+		float: left;
+		padding-left: 6%;
+	}
+
+	#rzc-shangchuan .cursor .main-top {
+		width: 50%;
+		height: 40px;
+		margin-left: 20px;
+		float: left;
+		position: relative;
+	}
+
+	#rzc-shangchuan .cursor .top1 {
+		width: 85%;
+		height: 40px;
+		background: url('./src/modules/rzc/img/input-long.png') no-repeat;
+		background-size: cover;
+		border-right: none;
+		float: left;
+		color: #558487;
+		font-size: 14px;
+		font-style: italic;
+		line-height: 37px;
+		text-align: left;
+		padding-left: 20px;
+	}
+
+	#rzc-shangchuan .cursor .liu {
+		width: 15%;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button-black.png') no-repeat;
+		background-size: 100% 110%;
+		line-height: 37px;
+		font-size: 16px;
+		color: #fff;
+		text-align: center;
+		z-index: 1;
+		display: inline-block;
+		position: absolute;
+		right: 4px;
+		border: none;
+	}
+
+	#rzc-shangchuan .cursor .upload-file {
+		width: 15%;
+		width: 0%\9;
+		height: 40px;
+		float: left;
+		border: 1px solid #03ccce;
+		line-height: 51px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		z-index: 1;
+		line-height: 40px;
+		position: absolute;
+		right: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	#rzc-shangchuan .cursor .cq-input {
+		width: 15%;
+		height: 40px;
+		margin-left: 50px;
+		border: 1px solid #00FFFF;
+	}
+
+	#rzc-shangchuan .cursor .r-query {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		line-height: 37px;
+		font-size: 16px;
+		color: #ffffff;
+		display: inline-block;
+		text-align: center;
+		-webkit-box-sizing: border-box;
+		margin-left: 30px;
+		border: none;
+	}
+
+	#rzc-shangchuan .cursor .r-query:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rzc-shangchuan .subject-content {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 34px 3% 0px 3%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results {
+		box-shadow: 5px 5px 17px #333;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show {
+		width: 100%;
+		text-align: center;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show caption {
+		position: relative;
+		height: 50px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 2%;
+		text-align: left;
+		background: url('./src/modules/rzc/img/form-title_03.png');
+		background-size: cover;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show caption .upload-show {
+		width: 15%;
+		float: left;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show caption .r-uploaded {
+		width: 7%;
+		height: 33px;
+		background: url('./src/modules/rzc/img/little-button.png') no-repeat;
+		background-size: 100% 100%;
+		float: right;
+		font-size: 14px;
+		line-height: 31px;
+		color: #fff;
+		border: none;
+		border-radius: 16px;
+		margin-top: 9px;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show caption .r-uploaded:hover {
+		background: url('./src/modules/rzc/img/little-button-hover.png') no-repeat;
+		background-size: 100% 100%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show caption .r-dele {
+		width: 7%;
+		height: 33px;
+		background: #848484;
+		float: right;
+		font-size: 14px;
+		line-height: 31px;
+		color: #fff;
+		border: none;
+		border-radius: 16px;
+		margin-right: 5%;
+		margin-left: 2%;
+		margin-top: 9px;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .tb-xz {
+		width: 15%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rzc/img/tu1.png') no-repeat;
+		border-color: transparent;
+	}
+
+	/* #rzc-shangchuan .subject-content .upload-results .results-show .tb-xz .tu-left {
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		display: inline-block;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-top: 4px;
+	} */
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .th-xz {
+		width: 10%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .th-qhdm {
+		width: 10%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .th-rq {
+		width: 20%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .th-wjm {
+		width: 20%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .th-zt {
+		width: 20%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .th-scsj {
+		width: 20%;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .th-zt .ico4 {
+		width: 12px;
+		height: 12px;
+		background: url('./src/modules/rzc/img/ludian.png') no-repeat;
+		display: inline-block;
+	}
+
+	#rzc-shangchuan .paging {
+		width: 97%;
+		height: 40px;
+		background: none;
+		margin-top: 16px;
+	}
+
+	#rzc-shangchuan .paging>ul {
+		margin: 0 0;
+		float: right;
+	}
+
+	#rzc-shangchuan .paging>ul a {
+		border: none;
+		color: #fff;
+	}
+
+	#rzc-shangchuan .paging .pagination .previous>a:first-child {
+		color: #fff;
+		border: none;
+		background-color: #19313e;
+	}
+
+	#rzc-shangchuan .paging .pagination .next>a:last-child {
+		color: #fff;
+		border: none;
+		background-color: #19313e;
+	}
+
+
+	#rzc-shangchuan .paging .pagination>li>a:hover {
+		background-color: #19313e;
+	}
+
+	#rzc-shangchuan .drlsb {
+		width: 100%;
+		height: 55px;
+		background: none;
+		margin-top: 16px;
+		-webkit-box-sizing: border-box;
+		text-align: center;
+	}
+
+	#rzc-shangchuan .drlsb .bttn {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		border: 1px solid #4d91a4;
+		margin-right: 35px;
+		border: none;
+	}
+
+	#rzc-shangchuan .drlsb .bttn:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rzc-shangchuan table,
+	tr,
+	td,
+	tbody {
+		border: none;
+	}
+
+	#rzc-shangchuan .subject-content .upload-results .results-show .tb-xz {
+		line-height: 0px;
+	}
+
+	#rzc-shangchuan .abig {
+		width: 120px;
+		height: 40px;
+		display: inline-block;
+		cursor: pointer;
+	}
+
+	#rzc-shangchuan .no {
+		height: 85px;
+		width: 100%;
+		text-align: center;
+		color: #fff;
+		font-size: 14px;
+		line-height: 85px;
+		background: url('./src/modules/rzc/img/xiaotu_03.png');
+	}
+
+	#rzc-shangchuan .delete-rule {
+		width: 33px;
+		height: 33px;
+		display: inline-block;
+		position: absolute;
+		right: 9px;
+		top: 9px;
+		background: url('./src/modules/rzc/img/delete.png');
+		background-size: contain;
+		cursor: pointer;
+	}
+
+	#rzc-shangchuan .delete-pre {
+		position: absolute;
+		top: 200px;
+		left: 542px;
+	}
+</style>

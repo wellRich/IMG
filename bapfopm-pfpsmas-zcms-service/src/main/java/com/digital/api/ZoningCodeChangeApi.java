@@ -122,6 +122,16 @@ public interface ZoningCodeChangeApi {
     List<PreviewDataInfo> findBrothersByCode(String zoningCode);
 
 
+    /**
+     * 获取上级区划
+     * 登录用户区划的子孙区划中级次高一级的区划，排除原父级区划
+     * @param  zoningCode 区划代码
+     * @param  ownZoningCode 登录人所属的区划代码
+     * @return      list
+     */
+    List<PreviewDataInfo> findZoningesOfUncle(String zoningCode, String ownZoningCode);
+
+
     ///////////////////////////////////////////////////////////////////
     /*
      * 维护变更对照申请
@@ -153,7 +163,7 @@ public interface ZoningCodeChangeApi {
      * @param pageIndex 页码
      * @param pageSize 每页显示数量
      */
-    QueryResp<ZCCDetail> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize, int total);
+    QueryResp<?> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize, int total) throws IllegalAccessException;
 
 
     /**
@@ -193,14 +203,12 @@ public interface ZoningCodeChangeApi {
 
     /**
      * 添加变更对照组
-     〈功能详细描述〉
      * @param groupInfoMap 变更组信息
      */
     int addZCCGroup(ZCCGroup groupInfoMap);
 
     /**
      * 添加变更对照组
-     〈功能详细描述〉
      * @param group 变更组信息
      * @param levelCode 区划级别代码
      */

@@ -44,6 +44,8 @@ public class LogicCheckSql {
                 FROM("dm_xzqh_ylsj");
                 if (!StringUtil.isEmpty(zoningCode))
                 WHERE("XZQH_DM=" + zoningCode);
+                AND();
+                WHERE("XYBZ = 'Y' and YXBZ = 'Y'");
                 if (!StringUtil.isEmpty(divisionName)) {
                     AND();
                     WHERE("XZQH_MC=" + divisionName);

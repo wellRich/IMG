@@ -18,4 +18,6 @@ import java.util.List;
 public interface ImportFormalTableApi {
 
     boolean ImprotFormalT(FocusChangeFileInfo fileInfo, List<ContrastTemporary> temporaryList);
+
+    void importformalTable();
 }

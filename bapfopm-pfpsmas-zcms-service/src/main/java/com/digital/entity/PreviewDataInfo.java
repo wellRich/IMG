@@ -340,4 +340,31 @@ public class PreviewDataInfo implements Serializable {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "PreviewDataInfo{" +
+                "index=" + index +
+                ", uniqueKey='" + uniqueKey + '\'' +
+                ", zoningCode='" + zoningCode + '\'' +
+                ", divisionName='" + divisionName + '\'' +
+                ", divisionAbbreviation='" + divisionAbbreviation + '\'' +
+                ", divisionFullName='" + divisionFullName + '\'' +
+                ", assigningCode='" + assigningCode + '\'' +
+                ", levelCode='" + levelCode + '\'' +
+                ", superiorZoningCode='" + superiorZoningCode + '\'' +
+                ", chooseSign='" + chooseSign + '\'' +
+                ", usefulSign='" + usefulSign + '\'' +
+                ", subordinateRelations='" + subordinateRelations + '\'' +
+                ", validityStart='" + validityStart + '\'' +
+                ", validityStup='" + validityStup + '\'' +
+                ", virtualNode='" + virtualNode + '\'' +
+                ", oldZoningCode='" + oldZoningCode + '\'' +
+                ", accessCode='" + accessCode + '\'' +
+                ", enterOneCode='" + enterOneCode + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", updaterCode='" + updaterCode + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

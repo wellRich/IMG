@@ -1,0 +1,298 @@
+<div id="rsozc-shenhe">
+	<div class="sc-nav">
+			<a class="qydmsc-a" href="javascript:;">
+				<img src="./src/modules/rsozc/img/gray.png" class="ico3" alt=""/> <span>1.区划代码预览</span>
+			</a>
+			<a class="qydmsc-a" href="javascript:;">
+				<img src="./src/modules/rsozc/img/blue.png" class="ico3" alt=""/> <span>2.国家审核</span>
+			</a>
+			<a class="qydmsc-a" href="javascript:;">
+				<img src="./src/modules/rsozc/img/black.png" class="ico3" alt=""/> <span>3.发布区划</span>
+			</a>
+	</div>
+	<div class="submission-zoning">
+		<div class="upload-results">
+			<table class="results-show">
+				<caption>已提交变更对照表的区划</caption>
+				<thead>
+					<tr>
+						<th class="tb-xz">选择</th>
+						<th class="tb-xz">区划代码</th>
+						<th class="tb-xz">区划名称</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="tb-xz">
+							<input type="radio" id="fileSquence" name="name" class="tu-left left">
+							<label for="fileSquence" class="radio-label"></label>
+						</td>
+						<td class="tb-xz"><em>310000000000000</em></td>
+						<td class="tb-xz"><em>江苏省(119未上报,112已上报.未确认)</em></td>
+					</tr>
+					<tr>
+						<td class="tb-xz">
+							<input type="radio" id="fileSquence" name="name" class="tu-left left">
+							<label for="fileSquence" class="radio-label"></label>
+						</td>
+						<td class="tb-xz"><em>310000000000000</em></td>
+						<td class="tb-xz"><em>江苏省(119未上报,112已上报.未确认)</em></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="drlsb">
+		<input type="button" value="审核通过"  class="bttn">
+		<input type="button" value="全部审核完成"  class="bttn modify">
+	</div>
+	<div class="unsubmitted-zoning">
+		<div class="upload-results">
+			<table class="results-show">
+				<caption>未提交变更对照表的区划</caption>
+				<thead>
+					<tr>
+						<th class="tb-zz">区划代码</th>
+						<th class="tb-zz">区划名称</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- <tr>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">310000</td>
+					</tr> -->
+				</tbody>
+			</table>
+			<div class="no">无显示记录</div>
+		</div>
+	</div>
+ </div>
+
+
+ <style lang="less">
+	input[type="radio"] {
+		width: 22px;
+		height: 22px;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	.radio-label{
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		border-radius: 5px;
+		margin-left: -26px;
+		display: inline-flex;
+		margin-bottom: 0px;
+    	padding-bottom: 3px;
+	}
+	
+
+	input:checked+label {
+		background: url('./src/modules/rsozc/img/collect.png');
+		background-size: cover;
+		background-position: center;
+	}
+
+	#rsozc-shenhe {
+		width: 100%;
+		height: auto;
+		background: none;
+	}
+
+	#rsozc-shenhe a{
+		text-decoration: none;
+	}
+	#rsozc-shenhe .sc-nav {
+		width: 94%;
+		height: 54px;
+		background: none;
+		margin-left: 6%;
+		padding-top: 20px;
+		background: none;
+	}
+
+	#rsozc-shenhe .sc-nav .qydmsc-a {
+		width: 15%;
+		height: 32px;
+		display: inline-block;
+		line-height: 32px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		margin-left: -10px;    
+		position: relative;
+
+	}
+
+	#rsozc-shenhe .sc-nav .qydmsc-a span{
+		width: 100%;
+		display: inline-block;
+		z-index: 9999;
+		position: absolute;
+		left: 0;
+	}
+
+	#rsozc-shenhe .sc-nav .qydmsc-a .ico3{
+		width: 100%; 
+		height: 32px;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+	}
+	
+	#rsozc-shenhe .submission-zoning {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 20px 3% 0px 3%; 
+	}
+
+	#rsozc-shenhe .submission-zoning .upload-results .results-show{
+		width: 100%;
+		text-align: center;
+	}
+
+	#rsozc-shenhe .submission-zoning .upload-results .results-show caption{
+		height: 50px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 25px;
+		background:url('./src/modules/rsozc/img/form-title_03.png');
+		background-size: cover;
+		text-align: left;
+	}
+
+	#rsozc-shenhe .submission-zoning .upload-results .results-show .tb-xz{
+		width: 12%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rsozc/img/tu1.png') no-repeat;
+	}
+
+	#rsozc-shenhe .submission-zoning .upload-results .results-show .tb-xz .tu-left{
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		display: inline-block;
+		border-radius: 5px;
+	}
+
+	#rsozc-shenhe .submission-zoning .upload-results .results-show .tb-xz .left{
+		width: 16px;
+		height: 16px;
+		border: 1px solid #fff;
+		display: inline-block;
+		border-radius: 5px;
+		margin-bottom: -3px;
+	}
+
+	#rsozc-shenhe .submission-zoning .upload-results .results-show .tb-xz .all{
+		font-size: 14px;
+		color: #fff;
+		display: inline-block;
+		border-radius: 5px;
+		margin-left: 10px;
+	}
+
+	#rsozc-shenhe .paging{
+		width: 100%;
+		height: 40px;
+		background: none;
+		margin-top: 20px;
+	}
+
+	#rsozc-shenhe .paging .pagination>li>a:hover{
+		background-color: #19313e;
+	}
+	
+	#rsozc-shenhe .drlsb{
+		width: 100%;
+		height: 40px;
+		background: none;
+		margin-top: 20px;
+		-webkit-box-sizing: border-box;
+		text-align: center;
+	}
+
+	#rsozc-shenhe .drlsb .bttn{
+		width: 120px;
+		height: 40px;
+		background:url('./src/modules/rsozc/img/button.png') no-repeat;
+    	background-size: 100% 100%;
+		background-position: center;
+		font-size: 18px;
+		color: #fff;
+		line-height: 37px;
+		border:none;
+	}
+
+	#rsozc-shenhe .drlsb .bttn:hover {
+		background: url('./src/modules/rsozc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rsozc-shenhe .drlsb .modify{
+		margin-left: 30px;
+	}
+
+	#rsozc-shenhe .unsubmitted-zoning {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 20px 3% 0px 3%; 
+	}
+
+	#rsozc-shenhe .unsubmitted-zoning .upload-results .results-show{
+		width: 100%;
+		text-align: center;
+	}
+
+	#rsozc-shenhe .unsubmitted-zoning .upload-results .results-show .tb-zz{
+		height: 50px;
+		font-size: 14px;
+		color: #fff;
+		line-height: 50px;
+		text-align: center;
+		background: url('./src/modules/rsozc/img/tu1.png') no-repeat;
+	} 
+	#rsozc-shenhe .unsubmitted-zoning .upload-results .results-show .err{
+		border-right:none;
+	}
+	#rsozc-shenhe .unsubmitted-zoning .upload-results .no{
+		height: 85px;
+		width: 100%;
+		text-align: center;
+		color: #fff;
+		font-size: 14px;
+		line-height: 85px;
+		background: url('./src/modules/rsozc/img/tu1.png') ;
+	}
+
+	#rsozc-shenhe .unsubmitted-zoning .upload-results .results-show .tb-xz{
+		width: 12%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rsozc/img/tu1.png');
+	}
+
+	#rsozc-shenhe .unsubmitted-zoning .upload-results .results-show caption{
+		height: 50px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 25px;
+		background:url('./src/modules/rsozc/img/form-title_03.png') ;
+		background-size: cover;
+		text-align: left;
+	}
+</style>

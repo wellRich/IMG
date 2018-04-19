@@ -58,6 +58,28 @@ public final class QueryResp<T>{
     public QueryResp() {
     }
 
+
+    /**
+     * 使用分页查询
+     * @param pageIndex 当前页码
+     * @param pageSize 每页数量
+     * @param total 总数
+     * @param req 查询封装
+     * @param mapper 实现或者继承BaseMapper的mybatis Mapper
+     * @param <T> 泛型
+     * @return 分页查询结果的封装对象
+     */
+    public static <T> QueryResp<T> buildQueryResp( int pageIndex, int pageSize, int total, QueryReq req, BaseMapper<T> mapper){
+        QueryResp<T> resp = new QueryResp<T>(pageIndex, pageSize);
+        resp.query(() -> mapper.pageSeek(req, pageIndex, pageSize));
+        if (total == 0){
+            resp.count(() -> mapper.countBy(null, req.search.toArray(new QueryFilter[]{})));
+        }else {
+            resp.setTotalRecord(total);
+        }
+        return resp;
+    }
+
     public QueryResp(int pageIndex, int pageSize) {
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
@@ -69,7 +91,6 @@ public final class QueryResp<T>{
     }
 
     public void count(Supplier<Integer> count){
-        System.out.println("QueryResp.count -----> " + count.get());
         setTotalRecord(count.get());
     }
 

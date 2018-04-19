@@ -62,7 +62,7 @@ public class QueryTemporaryController {
             return new RtnData(String.valueOf(count),temporaryList).toString();
         }
 
-        return new RtnData(Constants.RTN_QUERY_ISEMPTY).toString();
+        return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_QUERY_ISEMPTY).toString();
     }
 
     /*
@@ -82,7 +82,7 @@ public class QueryTemporaryController {
         //将数据写入到txt中
         FileUtil.writerTxt(temporaryList,txtName);
 
-        response.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("GBK");
         response.setHeader("content-type", "text/plain");
         response.setContentType("text/plain");
         response.setHeader("Content-Disposition", "attachment;filename=" + txtName.substring(txtName.lastIndexOf(File.separator)));

@@ -4,8 +4,6 @@ package com.digital.dao.sqlMapper;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.function.Supplier;
-
 import com.digital.util.search.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
@@ -19,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @version 2018/3/17
  */
 public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
-    protected static final org.slf4j.Logger log = LoggerFactory.getLogger(ZCCGroupSql.class);
+    protected static final org.slf4j.Logger log = LoggerFactory.getLogger(EntitySql.class);
 
     /**
      * 表名称
@@ -30,8 +28,6 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
      * 表格主键对应的实体属性名称
      */
     private String primaryField;
-
-
 
     /**
      * 众列名称，以逗号分割的字符串
@@ -71,6 +67,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
         String colName;
         String fieldName;
         StringBuilder sb = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
             field = fields[i];
             fieldName = field.getName();
@@ -78,13 +75,16 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
                 colName = field.getAnnotation(Column.class).name();
                 if(!this.primaryField.equals(field.getName())){//过滤有问题
                     this.fiesAndColsExcPrimary.put(fieldName, colName);
+                    stringBuilder.append(colName).append(i < size - 1 ? "," : "");
                 }
                 this.fieldsAndCols.put(fieldName, colName);
                 sb.append(colName).append(i < size - 1 ? "," : "");
             }
         }
         this.columns = sb.toString();
-        this.columnsExcPrimary = StringUtils.join(fiesAndColsExcPrimary.keySet(), ",");
+
+        this.columnsExcPrimary = stringBuilder.toString();
+        log.info("去除主键之后的列名:------------>:"+columnsExcPrimary);
     }
 
     protected  EntitySql() {
@@ -99,6 +99,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
         String colName;
         String fieldName;
         StringBuilder sb = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
             field = fields[i];
             fieldName = field.getName();
@@ -106,13 +107,14 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
                 colName = field.getAnnotation(Column.class).name();
                 if(!this.primaryField.equals(field.getName())){//过滤有问题
                     this.fiesAndColsExcPrimary.put(fieldName, colName);
+                    stringBuilder.append(colName).append(i < size - 1 ? "," : "");
                 }
                 this.fieldsAndCols.put(fieldName, colName);
                 sb.append(colName).append(i < size - 1 ? "," : "");
             }
         }
         this.columns = sb.toString();
-        this.columnsExcPrimary = StringUtils.join(fiesAndColsExcPrimary.keySet(), ",");
+        this.columnsExcPrimary = stringBuilder.toString();
     }
 
 
@@ -123,17 +125,22 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
            // getFiesAndColsExcPrimary().forEach((k, v) -> VALUES(v, "#{" + k + "}"));
             getFieldsAndCols().forEach((k, v) -> VALUES(v, "#{" + k + "}"));
         }}.toString();
-        log.info("insert.sql----> " + sql);
+        log.info("entitySql.insert.sql----> " + sql);
         return sql;
     }
 
-    public String delete(Object primaryKey){
+    /**
+     * 删除实例对象
+     * @param obj 可以是主键、实例对象
+     * @return
+     */
+    public String delete(Object obj){
         String sql;
-        if(primaryKey == null){
+        if(obj == null){
             log.error("操作的对象为空！");
             throw new RuntimeException("对象为空！");
         }else {
-            if(isEntity(primaryKey)){
+            if(isEntity(obj)){
                 sql =  new SQL(){{
                     DELETE_FROM(getTableName());
                     WHERE(getColumnByField(getPrimaryField()) + "=#{" + getPrimaryField() + "}");
@@ -141,10 +148,10 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             }else {
                 sql = new SQL(){{
                     DELETE_FROM(getTableName());
-                    WHERE(getColumnByField(getPrimaryField()) + "=" + primaryKey);
+                    WHERE(getColumnByField(getPrimaryField()) + "=" + obj);
                 }}.toString();
             }
-            log.info("deleteRequest.sql--------------> " + sql);
+            log.info("entitySql.delete.sql--------------> " + sql);
             return sql;
         }
     }
@@ -158,10 +165,18 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             DELETE_FROM(getTableName());
             WHERE(getColumnByField("seq") + " IN (#{" + StringUtils.join(keys, ",")  + "})");
         }}.toString();
-        log.info("batchDelete.sql----------> " + sql);
+        log.info("entitySql.batchDelete.sql----------> " + sql);
         return sql;
     }
 
+    /**
+     * 更新实例对象
+     * 如果传入map，则据键值对修改对象，
+     * 如果传入是一个已在的实例，则会将此实例的所有属性更新至数据库，
+     * 建议使用map作为参数
+     * @param group 包含主键的map：[keyName: value] 或者 实例对象
+     * @return sql
+     */
     public String update(final Object group){
         String sql;
         if(group == null){
@@ -189,7 +204,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             }else {
                 throw new IllegalArgumentException("只接收实体对象或者[属性-属性值]结构的map对象");
             }
-            log.info("update.sql-------> " + sql);
+            log.info("entitySql.update.sql-------> " + sql);
             return sql;
         }
     }
@@ -202,7 +217,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             SELECT(columns);
             WHERE(getColumnByField(getPrimaryField()) + "=" + primaryKey);
         }}.toString();
-        log.info("getByPrimaryKey.sql------------> " + sql);
+        log.info("entitySql.get.sql------------> " + sql);
         return sql;
     }
 
@@ -218,7 +233,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             SELECT(getColumns());
             WHERE(getColumnByField(getPrimaryField()) + "  IN (" + ids + ")");
         }}.toString();
-        log.info("findByIds.sql ---> " + sql);
+        log.info("entitySql.findByIds.sql ---> " + sql);
         return sql;
     }
 
@@ -228,17 +243,21 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
      * @param filters 过滤条件
      * @return sql
      */
-    public String countBy(String field, Collection<QueryFilter> filters){
+    public String countBy(String field, QueryFilter ... filters){
         String sql = new SQL(){{
             FROM(tableName);
             if(field != null && "".equals(field)){
-                SELECT("count(" + field + ")");
+                if(getColumnByField(field) == null){
+                    SELECT("count(" + primaryField + ")");
+                }else {
+                    SELECT("count(" + field + ")");
+                }
             }else {
                 SELECT("count(" + primaryField + ")");
             }
             parseFilters(this, filters);
         }}.toString();
-        log.info("countBy.sql------> " + sql);
+        log.info("entitySql.countBy.sql------> " + sql);
         return rename(sql, getFieldsAndCols());
     }
 
@@ -247,11 +266,25 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
      * @param req 查询封装对象
      * @param pageIndex 当前在页码
      * @param pageSize 每页大小
-     * @param totalRecord 数据总量
      * @return sql
      */
-    public String pageSeek(QueryReq req, int pageIndex, int pageSize, int totalRecord){
-        return null;
+    public String pageSeek(QueryReq req, int pageIndex, int pageSize){
+        List<QueryFilter> filters = req.search;
+        int offset = (pageIndex - 1) * pageSize;
+        String sql = new SQL() {{
+            FROM(getTableName());
+            if (req.selectFields == null || req.selectFields.equals("")) {
+                SELECT(getColumns());
+            } else {
+                SELECT(req.selectFields);
+            }
+            parseFilters(this, filters.toArray(new QueryFilter[]{}));
+            if (req.sort != null) {
+                ORDER_BY(req.sort);
+            }
+        }}.toString() +  " LIMIT " + pageSize + " OFFSET " + offset;
+        log.info("entitySql.pageSeek.sql----------> " + sql);
+        return rename(sql, getFieldsAndCols());
     }
 
     /**
@@ -268,17 +301,17 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             } else {
                 SELECT(req.selectFields);
             }
-            parseFilters(this, filters);
+            parseFilters(this, filters.toArray(new QueryFilter[]{}));
             if (req.sort != null) {
                 ORDER_BY(req.sort);
             }
         }}.toString();
         sql = rename(sql, fieldsAndCols);
-        log.info("seek.sql-----> " + sql);
+        log.info("entitySql.seek.sql-----> " + sql);
         return sql;
     }
 
-    private void parseFilters(SQL sql, Collection<QueryFilter>  queryFilters){
+    private void parseFilters(SQL sql, QueryFilter ... queryFilters){
         sql.WHERE("1 = 1");
         for(QueryFilter filter: queryFilters){
             if(filter.getLogic().equals(QueryFilter.LOGIC_AND)){
@@ -296,7 +329,7 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             SELECT(columns);
             FROM(tableName);
         }}.toString();
-        log.info("findAll.sql----------> " + sql);
+        log.info("entitySql.findAll.sql----------> " + sql);
         return sql;
     }
 

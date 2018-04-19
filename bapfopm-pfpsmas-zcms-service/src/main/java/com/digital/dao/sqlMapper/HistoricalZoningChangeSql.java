@@ -2,6 +2,7 @@ package com.digital.dao.sqlMapper;
 
 import com.digital.entity.HistoricalZoningChange;
 import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryFilter;
 import com.digital.util.search.QueryReq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,15 @@ public class HistoricalZoningChangeSql implements BaseDao<HistoricalZoningChange
 
 
 
+    @Override
+    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
+        return entitySql.pageSeek(req, pageIndex, pageSize);
+    }
+
+    @Override
+    public String countBy(String field, QueryFilter... filters) {
+        return entitySql.countBy(field, filters);
+    }
 
 
 }

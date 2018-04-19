@@ -43,15 +43,29 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
     @Autowired
     ZCCDetailMapper zccDetailMapper;
 
+    /**
+     * 获取子级区划
+     * @param zoningCode 区划代码
+     * @return map [级次代码： 区划数据]
+     */
     @Override
-    public Map<String, List<FormalTableInfo>> findSubordinateZoning(String zoningCode) {
+    public Map<String, List<?>> findSubordinateZoning(String zoningCode)  throws IllegalAccessException {
 
         //获取级次代码
         String assigningCode = Common.getAssigningCode(zoningCode);
 
-        List<FormalTableInfo> formalTableInfos = formalTableMapper.findSubordinateZoning(zoningCode);
+        //获取被操作的区划的级别代码
+        String levelCode = Common.getLevelCode(zoningCode);
+        List result = new ArrayList();
+        for(FormalTableInfo info: formalTableMapper.findSubordinateZoning(zoningCode)){
+            Map<String, Object> cell = info.toMap();
 
-        return ImmutableMap.of(assigningCode, formalTableInfos);
+            //给子级区划数据中添加父级的级别代码
+            cell.put("superLevelCode", levelCode);
+            result.add(cell);
+        }
+        String subAssigningCode = (Integer.valueOf(assigningCode) + 1) + "";
+        return ImmutableMap.of(subAssigningCode, result);
     }
 
     /**
@@ -68,7 +82,6 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
 
         //祖系区划代码
         List<String> ancestralCodes = Common.getPaternalCodes(zoningCode);
-        String sql;
 
         //组以上级别的的区划
         String processedCodes = StringUtil.insertSingleQuotationMarks(ancestralCodes);
@@ -118,9 +131,7 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
         queryReq.search = filters;
         resp.query(() -> zccDetailMapper.seek(queryReq));
         if(total == 0){
-            QueryReq req = new QueryReq("count(*)");
-            req.search = filters;
-            resp.count(() -> zccDetailMapper.countBy(filters));
+            resp.count(() -> zccDetailMapper.countBy(null, filters.toArray(new QueryFilter[]{})));
         }else {
             resp.setTotalRecord(total);
         }
@@ -128,23 +139,13 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
     }
 
 
-    public Page pageHelperTest(String groupSeq, int pageNum, int pageSize, int total) {
-        Page<ZCCDetail> page = PageHelper.startPage(pageNum, pageSize);
-        //List<ZCCDetail> zccDetails = PageHelper.startPage(pageNum, pageSize);
-        List<QueryFilter> filters = new ArrayList<QueryFilter>() {{
-            add(new QueryFilter("groupSeq", groupSeq));
-        }};
-        if (total == 0) {
-            page.setTotal(zccDetailMapper.countByGroups(groupSeq));
-        } else {
-            page.setTotal(total);
-        }
-        page.doSelectPage(() -> zccDetailMapper.seek(new QueryReq() {{
-            search = filters;
-        }}));
-
-        page.forEach(e -> System.out.println("e----------> " + e.getCurrentZoningCode()));
-        return page;
+    public QueryResp<ZCCDetail> pageTest(String groupSeq, int pageNum, int pageSize, int total) {
+        QueryResp<ZCCDetail> resp = QueryResp.buildQueryResp(pageNum, pageSize, total, new QueryReq() {{
+            search = new ArrayList<QueryFilter>() {{
+                add(new QueryFilter("groupSeq", groupSeq));
+            }};
+        }}, zccDetailMapper);
+        return resp;
     }
 
 

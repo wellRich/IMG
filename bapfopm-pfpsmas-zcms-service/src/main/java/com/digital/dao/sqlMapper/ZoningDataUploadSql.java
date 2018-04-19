@@ -82,7 +82,7 @@ public class ZoningDataUploadSql {
                     SET("JZBGZT_DM=" + statusCode);
                 }
                 if (!StringUtil.isEmpty(note)) {
-                    SET("BZ=" + note);
+                    SET("BZ= '" + note+"'");
                 }
                 WHERE("ZIPXH="+fileSquence);
             }

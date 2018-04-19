@@ -1,0 +1,230 @@
+<div id="rzc-jiekou" ms-controller="rzc_jiekou">
+    <div class="containers-left">
+        <div class="c-shang">
+            <div class="choice-font">选择</div>
+            <div class="reset-font">重置</div>
+        </div>
+        <div class="interface-address">
+            <div class="interface-address-left">接口地址:</div>
+            <div class="tu-right"></div>
+            <div class="tu-left"></div>
+            <!-- 白框 -->
+            <div class="interface-address-one actived">接口地址1:</div>
+            <div class="interface-address-tu">
+                <img src="./src/modules/rzc/img/arrow.png" class="arrow">
+            </div>
+        </div>
+        <div class="interface-address-two">
+            <div class="tu-right"></div>
+            <div class="tu-left"></div>
+            <!-- 白框 -->
+            <div class="address-two actived">接口地址2:</div>
+        </div>
+        <div class="interface-address-two">
+            <div class="tu-right"></div>
+            <div class="tu-left"></div>
+            <!-- 白框 -->
+            <div class="address-two actived">接口地址3:</div>
+        </div>
+        <div class="c-shang bao">
+            <div class="choice-font">选择</div>
+            <div class="reset-font">重置</div>
+        </div>
+        <div class="interface-address">
+            <div class="interface-address-left">报文类型:</div>
+            <div class="tu-right"></div>
+            <div class="tu-left"></div>
+            <!-- 白框 -->
+            <div class="interface-address-one actived">报文类型1:</div>
+            <div class="interface-address-tu">
+                <img src="./src/modules/rzc/img/arrow.png" class="arrow">
+            </div>
+        </div>
+        <div class="interface-address-two two">
+            <div class="tu-right"></div>
+            <div class="tu-left"></div>
+            <!-- 白框 -->
+            <div class="address-two actived">报文类型2:</div>
+        </div>
+    </div>
+    <div class="containers-right">
+        <div class="right">
+            <input type="button" class="cr-connect" value="连接">
+            <input type="button" class="cr-connect reset" value="重置">
+        </div>
+    </div>
+</div>
+
+<style lang="less">
+    #rzc-jiekou {
+        width: 100%;
+        height: auto;
+        background: none;
+    }
+
+    #rzc-jiekou .containers-left {
+        width: 60%;
+        height: auto;
+        float: left;
+        margin-top: 78px;
+        margin-left: 10%;
+    }
+
+    #rzc-jiekou .containers-left .actived {
+        color: #00ffff;
+    }
+
+    #rzc-jiekou .containers-left .c-shang {
+        width: 100%;
+        height: 12px;
+        background: none;
+    }
+
+    #rzc-jiekou .containers-left .bao {
+        margin-top: 114px;
+    }
+
+    #rzc-jiekou .containers-left .c-shang .choice-font {
+        float: right;
+        margin-left: 50px;
+        line-height: 18px;
+        font-size: 18px;
+        color: #ffffff;
+    }
+
+    #rzc-jiekou .containers-left .c-shang .reset-font {
+        float: right;
+        line-height: 18px;
+        font-size: 18px;
+        color: #ffffff;
+    }
+
+    #rzc-jiekou .containers-left .interface-address {
+        width: 100%;
+        height: 52px;
+        background: none;
+        margin-top: 40px;
+    }
+
+    #rzc-jiekou .containers-left .interface-address .interface-address-left {
+        float: left;
+        line-height: 52px;
+        font-size: 24px;
+        color: #ffffff;
+    }
+
+    #rzc-jiekou .containers-left .interface-address .interface-address-tu {
+        float: right;
+        margin-right: 64%;
+        margin-top: -6%;
+    }
+
+    #rzc-jiekou .containers-left .interface-address .interface-address-tu .arrow {
+        width: 88px;
+        height: 52px;
+    }
+
+    #rzc-jiekou .containers-left .interface-address .interface-address-one {
+        float: right;
+        line-height: 52px;
+        font-size: 24px;
+        color: #ffffff;
+        margin-right: 17%;
+    }
+
+    #rzc-jiekou .containers-left .interface-address .tu-left {
+        width: 34px;
+        height: 34px;
+        background: #ffffff;
+        border: 1px solid #00ffff;
+        display: inline-block;
+        float: right;
+        margin-top: 15px;
+    }
+
+    #rzc-jiekou .containers-left .interface-address .tu-right {
+        width: 34px;
+        height: 34px;
+        background: #00ffff;
+        border: 1px solid #00ffff;
+        display: inline-block;
+        margin-left: 54px;
+        float: right;
+        margin-top: 15px;
+    }
+
+    #rzc-jiekou .containers-left .interface-address-two {
+        margin-top: 74px;
+        width: 100%;
+        height: 36px;
+        background: none;
+    }
+
+    #rzc-jiekou .containers-left .two {
+        margin-bottom: 70px;
+    }
+
+    #rzc-jiekou .containers-left .interface-address-two .address-two {
+        float: right;
+        line-height: 24px;
+        font-size: 24px;
+        color: #ffffff;
+        margin-right: 17%;
+    }
+
+    #rzc-jiekou .containers-left .interface-address-two .tu-left {
+        width: 34px;
+        height: 34px;
+        background: #ffffff;
+        border: 1px solid #00ffff;
+        display: inline-block;
+        float: right;
+    }
+
+    #rzc-jiekou .containers-left .interface-address-two .tu-right {
+        width: 34px;
+        height: 34px;
+        background: #00ffff;
+        border: 1px solid #00ffff;
+        float: right;
+        margin-left: 54px;
+        display: inline-block;
+    }
+
+    #rzc-jiekou .containers-right {
+        width: 10%;
+        height: auto;
+
+        float: left;
+        margin-top: 297px;
+        margin-left: 12%;
+    }
+
+    #rzc-jiekou .containers-right .right {
+        width: 100%;
+        height: 149px;
+        background: none;
+    }
+
+    #rzc-jiekou .containers-right .right .cr-connect {
+        width: 120px;
+        height: 40px;
+        background: url('./src/modules/rzc/img/button.png') no-repeat;
+    	background-size: 100% 100%;
+        line-height: 37px;
+        font-size: 16px;
+        color: #ffffff;
+        display: inline-block;
+        text-align: center;
+        border: none;
+    }
+
+    #rzc-jiekou .containers-right .right .cr-connect:hover {
+		background: url(./src/modules/rzc/img/button-hover.png) no-repeat;
+		background-size: 100% 100%;
+	}
+
+    #rzc-jiekou .containers-right .right .reset {
+        margin-top: 68px;
+    }
+</style>

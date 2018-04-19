@@ -201,6 +201,27 @@ public class ZoningChangeController extends BaseController {
     }
 
 
+
+    /**
+     * 获取上级区划，称叔伯区划
+     * 在登录人所在区划的子孙区划中，找出级次高一级的非原父级的区划
+     * @param zoningCode 当前操作的区划的区划代码
+     * @return
+     */
+    @RequestMapping(value = "/getUnclesZoning", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUnclesZoning(@Param(value = "zoningCode") String zoningCode) {
+        try {
+            String ownZoningCode = "370102000000000";
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZoningesOfUncle(zoningCode, ownZoningCode)).toString();
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        }
+    }
+
+
+
     /**
      * 添加变更对照明细
      *
@@ -238,6 +259,7 @@ public class ZoningChangeController extends BaseController {
             , @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex
             , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         try {
+            log.info("zoningChangeManager.checkDetails.seq ======> " + seq);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.pageSeekByGroups(seq, pageIndex, pageSize, total)).toString();
         } catch (Exception ex) {
             log.error(ex.getMessage());

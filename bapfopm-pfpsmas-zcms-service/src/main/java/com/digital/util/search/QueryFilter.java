@@ -16,7 +16,7 @@ public class QueryFilter implements Serializable {
     protected static final org.slf4j.Logger log = LoggerFactory.getLogger(QueryFilter.class);
 
     public static final String OPR_IS = "=";
-    public static final String OPR_IS_NOT = "NOT";
+    public static final String OPR_IS_NOT = "!=";
     public static final String OPR_IS_NULL = "IS NULL";
     public static final String OPR_IS_NOT_NULL = "IS NOT NULL";
     public static final String OPR_IN = "IN";

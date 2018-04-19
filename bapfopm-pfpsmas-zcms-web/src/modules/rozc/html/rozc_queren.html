@@ -1,0 +1,288 @@
+<div id="rozc-queren" ms-controller="rozc_queren">
+	<div class="sc-nav">
+		<a ms-repeat-el="data.navbar" class="qydmsc-a" ms-href="{{el.routerPath}}">
+			<img ms-src="{{el.imgPath}}" class="ico3" alt="" />
+			<span>{{$index+1}}.{{el.name}}</span>
+		</a>
+	</div>
+	<div class="adjustment-instructions">
+		<div class="upload-results">
+			<table class="results-show">
+				<thead>
+					<tr>
+						<th class="tb-zz">调整说明</th>
+						<th class="tb-zz">原区划代码</th>
+						<th class="tb-zz">原区划名称</th>
+						<th class="tb-zz">调整类型</th>
+						<th class="tb-zz">现区划名称</th>
+						<th class="tb-zz">现区划代码</th>
+						<th class="tb-zz err">提交时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					 <!-- <tr>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">全国</td>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">310000</td>
+					</tr>  -->
+				</tbody>
+			</table>
+			<div class="no">无显示记录</div>
+		</div>
+	</div>
+	<div class="drlsb">
+		<input type="button" value="驳回"  class="bttn">
+		<input type="button" value="全省确认"  class="bttn refresh">
+		<input type="button" value="刷新"  class="bttn refresh">
+	</div>
+	<div class="unsubmitted-zoning">
+		<div class="upload-results">
+			<table class="results-show">
+				<caption>未提交变更对照表的区划</caption>
+				<thead>
+					<tr>
+						<th class="tb-xz">区划代码</th>
+						<th class="tb-xz">区划名称</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">北京市东城区</td>
+					</tr>
+					<tr>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">北京市东城区</td>
+					</tr>
+					<tr>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">北京市东城区</td>
+					</tr>
+					<tr>
+						<td class="tb-xz">310000</td>
+						<td class="tb-xz">北京市东城区</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- 分页 -->
+	<div class="paging">
+		<ul class="pagination">
+			<li class="previous">
+				<a href="javascript:;">上一页</a>
+			</li>
+			<li>
+				<a href="javascript:;">1</a>
+			</li>
+			<li>
+				<a href="javascript:;">2</a>
+			</li>
+			<li>
+				<a href="javascript:;">3</a>
+			</li>
+			<li>
+				<a href="javascript:;">4</a>
+			</li>
+			<li>
+				<a href="javascript:;">5</a>
+			</li>
+			<li class="next">
+				<a href="javascript:;">下一页</a>
+			</li>
+		</ul>
+	</div>
+ </div>
+
+ <style lang="less">
+	#rozc-queren {
+		width: 100%;
+		height: auto;
+	}
+
+	#rozc-queren a{
+		text-decoration: none;
+	}
+	#rozc-queren .sc-nav {
+		width: 94%;
+		height: 54px;
+		background: none;
+		margin-left: 6%;
+		padding-top: 20px;
+	}
+
+	#rozc-queren .sc-nav .qydmsc-a {
+		width: 15%;
+		height: 32px;
+		display: inline-block;
+		line-height: 32px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		margin-left: -10px;    
+		position: relative;
+
+	}
+
+	#rozc-queren .sc-nav .qydmsc-a span{
+		width: 100%;
+		display: inline-block;
+		z-index: 9999;
+		position: absolute;
+		left: 0;
+	}
+
+	#rozc-queren .sc-nav .qydmsc-a .ico3{
+		width: 100%; 
+		height: 32px;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+	}
+	
+	#rozc-queren .unsubmitted-zoning {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 30px 3% 17px 3%; 
+	}
+
+	#rozc-queren .unsubmitted-zoning .upload-results .results-show{
+		width: 100%;
+		text-align: center;
+	}
+
+	#rozc-queren .unsubmitted-zoning .upload-results .results-show caption{
+		height: 50px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 25px;		
+		background:url('./src/modules/rozc/img/form-title_03.png');
+		background-size: cover;
+		text-align: left;
+	}
+
+	#rozc-queren .unsubmitted-zoning .upload-results .results-show .tb-xz{
+		width: 12%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rozc/img/tu1.png') no-repeat;
+	}
+	
+	#rozc-queren .drlsb{
+		width: 100%;
+		height: 40px;
+		background: none;
+		margin-top: 10px;
+		-webkit-box-sizing: border-box;
+		text-align: center;
+	}
+
+	#rozc-queren .drlsb .bttn{
+		width: 120px;
+		height: 40px;
+		background:url('./src/modules/rozc/img/button.png') no-repeat;
+    	background-size: 100% 100%;
+		background-position: center;
+		font-size: 18px;
+		color: #fff;
+		line-height: 37px;
+		border: none;
+	}
+	#rozc-queren .drlsb .bttn:hover {
+		background: url('./src/modules/rozc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rozc-queren .drlsb .refresh{
+		margin-left: 30px;
+	}
+
+	#rozc-queren .adjustment-instructions {
+		width: 92%;
+		height: auto;
+		background: none;
+		margin: 30px 4% 17px 4%; 
+	}
+
+	#rozc-queren .adjustment-instructions .upload-results .results-show{
+		width: 100%;
+		text-align: center;
+	}
+
+	#rozc-queren .adjustment-instructions .upload-results .results-show .tb-zz{
+		height: 50px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		text-align: center;
+	} 
+
+	#rozc-queren .adjustment-instructions .upload-results .results-show thead{
+		background: url('./src/modules/rozc/img/form-title_03.png');
+		background-size: cover;
+	}
+
+	#rozc-queren .adjustment-instructions .upload-results .results-show .err{
+		border-right:none;
+	}
+	#rozc-queren .adjustment-instructions .upload-results .no{
+		height: 85px;
+		width: 100%;
+		text-align: center;
+		color: #fff;
+		font-size: 14px;
+		line-height: 85px;
+		background: url('./src/modules/rozc/img/tu1.png') no-repeat;
+	}
+
+	#rozc-queren .adjustment-instructions .upload-results .results-show .tb-xz{
+		width: 12%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rozc/img/tu1.png') no-repeat;
+	}
+
+	#rozc-queren .paging {
+		width: 97%;
+		height: 40px;
+		background: none;
+		margin-top: 16px;
+	}
+	#rozc-queren .paging>ul {
+		margin:0 0;
+		float: right;
+	}
+	#rozc-queren .paging>ul a{
+		border:none; 
+		color:#fff;
+	}
+	#rozc-queren .paging .pagination .previous >a:first-child{
+		color:#fff; 
+		border:none; 
+		background-color: #19313e; 
+	} 
+	#rozc-queren .paging .pagination .next >a:last-child{
+		color:#fff; 
+		border:none; 
+		background-color: #19313e;
+	} 
+
+	#rozc-queren .paging .pagination>li>a:hover {
+		background-color: #19313e;
+		color: #fff;
+	}
+
+</style>
+

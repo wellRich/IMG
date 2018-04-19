@@ -2,27 +2,26 @@ package com.digital.service;
 
 import com.digital.api.ImportFormalTableApi;
 import com.digital.api.ZoningCodeChangeApi;
-import com.digital.dao.ZCCDetailMapper;
-import com.digital.dao.ZCCGroupMapper;
-import com.digital.dao.ZCCRequestMapper;
-import com.digital.dao.ZoningDataUploadMapper;
-import com.digital.entity.ChangeInfo;
-import com.digital.entity.ZCCDetail;
-import com.digital.entity.ZCCGroup;
-import com.digital.entity.ZCCRequest;
+import com.digital.dao.*;
+import com.digital.entity.*;
 import com.digital.entity.province.ContrastTemporary;
 import com.digital.entity.province.FocusChangeFileInfo;
 import com.digital.util.Common;
 import com.digital.util.ListUtil;
 import com.digital.util.StringUtil;
-import com.google.common.collect.ImmutableMap;
+import com.digital.util.search.QueryFilter;
+import com.digital.util.search.QueryReq;
+import com.digital.util.search.QueryResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @Description: TODO
@@ -53,6 +52,14 @@ public class ImportFormalTableApiImpl implements ImportFormalTableApi {
 
     @Autowired
     private ZCCRequestMapper zccRequestMapper;
+
+    @Autowired
+    private PreviewDataInfoMapper previewDataInfoMapper;
+    @Autowired
+    private HistoricalDataMapper historicalDataMapper;
+
+    @Autowired
+    private FormalTableMapper formalTableMapper;
 
 
 
@@ -123,10 +130,7 @@ public class ImportFormalTableApiImpl implements ImportFormalTableApi {
             list = ListUtil.getList(temporaryList,entry.getKey());
             ZCCDetail zccDetail = new ZCCDetail();
             list.forEach(v->{
-                ImmutableMap.of("", "");
-                new HashMap<String, Object>(){{
-                    put(",", 0);
-                }};
+                zccDetail.setSeq(0);
                 zccDetail.setGroupSeq(zccGroup.getSeq());
                 zccDetail.setChangeType(v.getTypeCode());
                 zccDetail.setOrderNum(v.getOrderNum());
@@ -191,6 +195,44 @@ public class ImportFormalTableApiImpl implements ImportFormalTableApi {
 
         //3、删除变更申请单
         zccRequestMapper.delete(seq);
+
+    }
+
+
+    /*
+    * 导入正式表
+    * */
+    public void importformalTable(){
+        //获取预览表中最终版数据
+        QueryReq queryReq1 = new QueryReq();
+        queryReq1.addFilter(new QueryFilter("chooseSign","Y")).addFilter(new QueryFilter("usefulSign","Y"));
+        List<PreviewDataInfo> previewDataInfoList = previewDataInfoMapper.findPreviewDataByUseful(queryReq1);
+        //查看历史数据表中最高版本号
+        QueryReq queryReq = new QueryReq(null,"max(version)");
+        int maxVersion = historicalDataMapper.findMaxVersion(queryReq);
+        // 将其数据导入到历史数据表中、版本号+1
+        HistoricalDataInfo historicalDataInfo = new HistoricalDataInfo();
+        historicalDataInfo.setVersion(maxVersion+1);
+        previewDataInfoList.forEach(v->{
+            historicalDataInfo.PreviewDataToHistoricalDataInfo(v);
+            int result = historicalDataMapper.insertIntoHistorical(historicalDataInfo);
+            if (result==0){
+                logger.error("添加历史数据的过程追中出错！！");
+                throw new RuntimeException("出错数据为："+v.getUniqueKey());
+            }
+        });
+        //导入成功时清空 正式数据表 （成功与否 可以判断导入的条数）
+        formalTableMapper.delete();
+        //导入到正式表中
+        FormalTableInfo formalTableInfo = new FormalTableInfo();
+        previewDataInfoList.forEach(v->{
+            formalTableInfo.previewDataToForaml(v);
+            int result = formalTableMapper.insertFormatTableData(formalTableInfo);
+            if (result==0){
+                logger.error("添加正式数据的过程追中出错！！");
+                throw new RuntimeException("出错数据为："+v.getUniqueKey());
+            }
+        });
 
     }
 

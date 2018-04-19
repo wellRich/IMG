@@ -67,11 +67,6 @@ public class ZCCDetailSql implements BaseDao<ZCCDetail> {
         }
     };
 
-
-    public String countBy(Collection<QueryFilter> filters){
-        return entitySql.countBy(null, filters);
-    }
-
     @Override
     public String findByIds(String ids) {
         return entitySql.findByIds(ids);
@@ -110,6 +105,18 @@ public class ZCCDetailSql implements BaseDao<ZCCDetail> {
     @Override
     public String batchDelete(Collection<?> keys) {
         return entitySql.batchDelete(keys);
+    }
+
+
+    @Override
+    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
+        return entitySql.pageSeek(req, pageIndex, pageSize);
+    }
+
+    @Override
+    public String countBy(String field, QueryFilter... filters) {
+        System.out.println("come in detail");
+        return entitySql.countBy(field, filters);
     }
 
 }

@@ -1,9 +1,14 @@
 package com.digital.dao;
 
+import com.digital.dao.sqlMapper.ZCCDetailSql;
 import com.digital.dao.sqlMapper.ZCCRequestSql;
 import com.digital.entity.ZCCRequest;
+import com.digital.util.search.BaseMapper;
+import com.digital.util.search.QueryFilter;
+import com.digital.util.search.QueryReq;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,23 +18,11 @@ import java.util.List;
  * @see ZCCRequest
  */
 @Mapper
-public interface ZCCRequestMapper{
+public interface ZCCRequestMapper extends BaseMapper<ZCCRequest>{
+    String RESULT_MAP = "com.digital.entity.allOfZCCRequest";
 
-
-    @SelectProvider(type = ZCCRequestSql.class, method = "get")
-    @Results(id= "findAll",value = {
-            @Result(property = "seq", column = "SQDXH", javaType = Integer.class),
-            @Result(property = "name", column = "SQDMC", javaType = String.class),
-            @Result(property = "status", column = "SQDZT_DM", javaType = String.class),
-            @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
-            @Result(property = "creatorCode", column = "LRR_DM", javaType = String.class),
-            @Result(property = "createDate", column = "LRSJ", javaType = String.class),
-            @Result(property = "creatorDeptCode", column = "LRJG_DM", javaType = String.class),
-            @Result(property = "updaterCode", column = "XGR_DM", javaType = String.class),
-            @Result(property = "approvalOpinion", column = "SPYJ", javaType = String.class),
-            @Result(property = "verifierCode", column = "SPR_DM", javaType = String.class),
-            @Result(property = "notes", column = "BZ", javaType = String.class)
-    })
+    @SelectProvider(type = ZCCRequestSql.class, method = BaseMapper.GET)
+    @ResultMap(RESULT_MAP)
     ZCCRequest get(Object seq);
 
 
@@ -39,14 +32,7 @@ public interface ZCCRequestMapper{
     * @return 返回申请单列表
     */
     @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{levelCode, jdbcType=CHAR} ORDER BY LRSJ ")
-   /* @Results(value = {
-            @Result(property = "seq", column = "SQDXH", javaType = Integer.class),
-            @Result(property = "name", column = "SQDMC", javaType = String.class),
-            @Result(property = "status", column = "SQDZT_DM", javaType = String.class),
-            @Result(property = "levelCode", column = "SBXZQH_DM", javaType = String.class),
-            @Result(property = "notes", column = "BZ", javaType = String.class)
-    })*/
-    @ResultMap("findAll")//引用*Mapper.xml的配置，可以做一个工具生成该xml，使用实体类的信息来生成
+    @ResultMap(RESULT_MAP)
     List<ZCCRequest> findAllByLevelCode(@Param(value = "levelCode") String zoningCode);
 
     /**
@@ -56,9 +42,7 @@ public interface ZCCRequestMapper{
      * @return 申请单实例
      */
     @SelectProvider(type = ZCCRequestSql.class, method = "findByLevelCodeAndStatuses")
-    @ResultMap("findAll")
-    //@Select("SELECT SBXZQH_DM, SQDMC FROM xzqh_bgsqd WHERE SQDZT_DM IN (#{statuses}) AND SBXZQH_DM = #{levelCode}")
-    //List<ZCCRequest> findByLevelCodeAndStatuses(@Param("levelCode")String levelCode, @Param("statuses")String ... statuses);
+    @ResultMap(RESULT_MAP)
     List<ZCCRequest> findByLevelCodeAndStatuses(String levelCode, String ... statuses);
 
     /**
@@ -97,7 +81,7 @@ public interface ZCCRequestMapper{
      * @return
      */
     @SelectProvider(type = ZCCRequestSql.class, method = "pageSeekByLevelCode")
-    @ResultMap(value = "findAll")
+    @ResultMap(RESULT_MAP)
     List<ZCCRequest> pageSeekByLevelCode(String levelCode, int offset, int limit);
 
     /**
@@ -110,7 +94,7 @@ public interface ZCCRequestMapper{
      * @return 区划列表
      */
     @SelectProvider(type = ZCCRequestSql.class, method = "pageSeekByLevelCodeAndStatuses")
-    @ResultMap(value = "findAll")
+    @ResultMap(RESULT_MAP)
     List<ZCCRequest> pageSeekByLevelCodeAndStatuses(String levelCode, int offset, int pageSize, String ... statuses);
 
     /**
@@ -120,12 +104,12 @@ public interface ZCCRequestMapper{
      * @return 申请单列表
      */
     @Select("SELECT SQDXH, SQDMC, SQDZT_DM, SBXZQH_DM, BZ FROM XZQH_BGSQD WHERE SBXZQH_DM = #{levelCode} and SQDZT_DM < #{status}")
-    @ResultMap(value = "findAll")
+    @ResultMap(RESULT_MAP)
     List<ZCCRequest> findAllByZoningCodeAndStatus(@Param(value = "levelCode") String zoningCode, @Param(value = "status") String status);
 
 
     @SelectProvider(type = ZCCRequestSql.class, method = "pageSeekByStatuses")
-    @ResultMap(value = "findAll")
+    @ResultMap(RESULT_MAP)
     List<ZCCRequest> pageSeekByStatuses(int offset, int limit, String ... statuses);
 
     /**
@@ -133,7 +117,7 @@ public interface ZCCRequestMapper{
      * @param obj map对象或者ZCCRequest对象
      * @return 申请单主键值
      */
-    @InsertProvider(type = ZCCRequestSql.class, method = "insert")
+    @InsertProvider(type = ZCCRequestSql.class, method = BaseMapper.INSERT)
     @SelectKey(before = false, resultType = Integer.class, keyColumn = "SQDXH", keyProperty = "seq", statement = "SELECT LAST_INSERT_ID()")
     @Options(useGeneratedKeys = true,keyProperty = "seq",keyColumn = "SQDXH")
     int insert(Object obj);
@@ -145,7 +129,7 @@ public interface ZCCRequestMapper{
     * @param zccRequest 申请单对象或者map
      *@return 被修改的数量
     */
-    @UpdateProvider(type = ZCCRequestSql.class, method = "update")
+    @UpdateProvider(type = ZCCRequestSql.class, method = BaseMapper.UPDATE)
     int update(Object zccRequest);
 
     /**
@@ -153,7 +137,35 @@ public interface ZCCRequestMapper{
      * @param seq 申请单序号
      * @return 被删除的数量
      */
-    @DeleteProvider(type = ZCCRequestSql.class, method = "delete")
-    int delete(Integer seq);
+    @DeleteProvider(type = ZCCRequestSql.class, method = BaseMapper.DELETE)
+    @Override
+    int delete(Object seq);
 
+    @DeleteProvider(type = ZCCRequestSql.class, method = BaseMapper.BATCH_DELETE)
+    @Override
+    int batchDelete(Collection<?> keys);
+
+    @SelectProvider(type = ZCCRequestSql.class, method = BaseMapper.FIND_BY_IDS)
+    @ResultMap(RESULT_MAP)
+    @Override
+    List<ZCCRequest> findByIds(String ids);
+
+    @SelectProvider(type = ZCCRequestSql.class, method = BaseMapper.FIND_ALL)
+    @ResultMap(RESULT_MAP)
+    @Override
+    List<ZCCRequest> findAll();
+
+    @SelectProvider(type = ZCCRequestSql.class, method = BaseMapper.PAGE_SEEK)
+    @Override
+    @ResultMap(RESULT_MAP)
+    List<ZCCRequest> pageSeek(QueryReq req, int pageNum, int pageSize);
+
+    @SelectProvider(type = ZCCRequestSql.class, method = BaseMapper.SEEK)
+    @Override
+    @ResultMap(RESULT_MAP)
+    List<ZCCRequest> seek(QueryReq req);
+
+    @SelectProvider(type = ZCCRequestSql.class, method = BaseMapper.COUNT_BY)
+    @Override
+    int countBy(String field, QueryFilter... filters);
 }

@@ -31,7 +31,7 @@ public class ListUtil {
             boolean check;
             try{
                 Long mun = (Long)x.getClass().getMethod("getGroupNum").invoke(x);
-                if (groupNum==mun){
+                if (groupNum.longValue()==mun.longValue()){
                     resultList.add(x);
                 }
             }catch (Exception e){

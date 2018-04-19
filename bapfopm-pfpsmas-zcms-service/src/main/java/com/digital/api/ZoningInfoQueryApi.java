@@ -24,7 +24,7 @@ public interface ZoningInfoQueryApi {
      * @param zoningCode 区划代码
      * @return [级次代码：所有的子级区划]
      */
-    Map<String, List<FormalTableInfo>> findSubordinateZoning(String zoningCode);
+    Map<String, List<?>> findSubordinateZoning(String zoningCode)  throws IllegalAccessException ;
 
 
     /**

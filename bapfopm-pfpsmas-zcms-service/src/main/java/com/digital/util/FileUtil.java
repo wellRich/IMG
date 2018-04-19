@@ -1,11 +1,13 @@
 package com.digital.util;
 
 import com.digital.entity.province.ContrastTemporary;
+import org.apache.commons.io.input.BOMInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +55,7 @@ public class FileUtil {
         FileInputStream inputStream = null;
         BufferedInputStream bis =null;
         ZipInputStream zis = null;
+        UnicodeBOMInputStream uin = null;
         try {
             zip = new ZipFile(filePath);
 
@@ -73,14 +76,16 @@ public class FileUtil {
                     String count = "0";
                     List<String> zoningList = new ArrayList<>();
                     List<String> changeList = new ArrayList<>();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(zip.getInputStream(entry), "GBK"));
+                    uin = new UnicodeBOMInputStream(zip.getInputStream(entry));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(uin, "UTF-8"));
+                    uin.skipBOM();
                     String line = null;
                     //读取文件内容并对文件内容进行大致校验
                     while ((line = reader.readLine()) != null) {
                         if (line.trim().length() <= 0)
                             continue;
                         String[] str = line.split(",");
-                        if (index == 1){
+                        if (index == 1 && line.length()>0){
                             count = line.trim();
                         }else if (index == 2){
                             if (txtName.substring(txtName.lastIndexOf("/")+1).contains("_BGDZB_")) {
@@ -127,7 +132,17 @@ public class FileUtil {
 
                         index++;
                     }
-                    if (index-3 != Integer.parseInt(count)){
+
+                   if (StringUtil.isBlank(count)){
+                        logger.error("wock ybksge made");
+                   }else{
+                       System.out.println(count);
+                       String str = String.valueOf(index-3).trim();
+                       System.out.println(str);
+                       boolean check = str.equals(count.trim());
+                       logger.info("=========="+check);
+                   }
+                    if ((index-3) != Integer.parseInt(count)){
                         resultMap.put("check",false);
                         resultMap.put("message",txtName.substring(txtName.lastIndexOf("/")+1)+"给出的数据量和实际条数不符合，请检查！");
                         return resultMap;
@@ -154,6 +169,7 @@ public class FileUtil {
                 bis.close();
                 assert zis != null;
                 zis.close();
+                uin.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -173,13 +189,13 @@ public class FileUtil {
         try {
             File file =  buildFile(filePath,false);
             //"调整编号,调整说明,原区划名称,原区划代码,调整类型,现区划名称,现区划代码,错误信息"
-            FileUtils.writeStringToFile(file,QHDM_BGDZB_TITLE+"\r\n","UTF-8");
+            FileUtils.writeStringToFile(file,QHDM_BGDZB_TITLE+"\r\n","GBK");
             for (ContrastTemporary temporary : temporaryList) {
                 FileUtils.writeStringToFile(file,temporary.getGroupNum()+sign+temporary.getGroupName()+sign+
                         temporary.getOriginalName()+sign+temporary.getOriginalCode()+sign+
                         temporary.getTypeCode()+sign+
                         temporary.getNowName()+sign+temporary.getNowCode()+sign+
-                        (StringUtil.isEmpty(temporary.getErrorMessage())?"无":temporary.getErrorMessage())+"\r\n","UTF-8",true);
+                        (StringUtil.isEmpty(temporary.getErrorMessage())?"无":temporary.getErrorMessage())+"\r\n","GBK",true);
             }
         } catch (IOException e) {
             logger.info("文件创建失败");

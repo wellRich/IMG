@@ -2,6 +2,7 @@ package com.digital.dao.sqlMapper;
 
 import com.digital.entity.ZCCGroup;
 import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryFilter;
 import com.digital.util.search.QueryReq;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
@@ -110,4 +111,15 @@ public class ZCCGroupSql implements BaseDao<ZCCGroup> {
         return entitySql.batchDelete(keys);
     }
 
+
+    @Override
+    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
+        return entitySql.pageSeek(req, pageIndex, pageSize);
+    }
+
+    @Override
+    public String countBy(String field, QueryFilter... filters) {
+        System.out.println("come in group");
+        return entitySql.countBy(field, filters);
+    }
 }

@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.digital.util.search.QueryFilter;
+import com.digital.util.search.QueryReq;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,16 +104,11 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     }
 
     private QueryResp<ZCCRequest> pageSeekByZoningCode(String levelCode, Integer pageIndex, Integer pageSize, Integer totalRecord){
-        QueryResp<ZCCRequest> resp = new QueryResp<>(pageIndex, pageSize);
-        resp.query(() -> zccRequestMapper.pageSeekByLevelCode(levelCode, resp.getOffset(), pageSize));
-        if (totalRecord == 0) {
-            resp.count(() -> zccRequestMapper.countByLevelCode(levelCode));
-        }else {
-            resp.setTotalRecord(totalRecord);
-        }
+        QueryResp<ZCCRequest> resp = QueryResp.buildQueryResp(pageIndex, pageSize, totalRecord, new QueryReq(){{
+            addFilter("levelCode", levelCode + "%", QueryFilter.OPR_LIKE);
+        }}, zccRequestMapper);
         return resp;
     }
-
 
 
     @Override
@@ -252,12 +249,49 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return PreviewDataInfo
      */
     public PreviewDataInfo findOneByZoningCode(String zoningCode){
-        //return previewDataInfoMapper.get(zoningCode);
         return  previewDataInfoMapper.findValidOneByZoningCode(zoningCode);
     }
 
+      /**
+     * 根据区划代码查找同一父级下的同级区划
+     * @param zoningCode 区划代码
+     * @return List
+     */
     public List<PreviewDataInfo> findBrothersByCode(String zoningCode){
         return previewDataInfoMapper.findBrothersByCode(zoningCode);
+    }
+
+
+
+    /**
+     * 获取上级区划
+     * 登录用户区划的子孙区划中级次高一级的区划，排除原父级区划
+     * @param  zoningCode 区划代码
+     * @param  ownZoningCode 登录人所属的区划代码
+     * @return      list
+     */
+    public List<PreviewDataInfo> findZoningesOfUncle(String zoningCode, String ownZoningCode){
+
+        //1、获取登录用户所属区划的级别代码，
+        //用于将区划范围圈定在所属区划的子孙区划中
+        String ownLevelCode = Common.getLevelCode(ownZoningCode);
+
+        //2、获取操作的区划的级次
+        Integer assigningCode = Integer.valueOf(Common.getAssigningCode(zoningCode));
+
+        //3、上级区划的级次
+        Integer superiorAssigningCode = assigningCode - 1;
+
+        //4、获取父级区划
+        String superiorZoningCode = Common.getSuperiorZoningCode(zoningCode);
+
+        //5、拼装查询条件
+        QueryReq req = new QueryReq("zoningCode,index,divisionName");
+        req.addFilter("levelCode", ownLevelCode + "%", QueryFilter.OPR_LIKE);
+        req.addFilter("zoningCode", superiorZoningCode, QueryFilter.OPR_IS_NOT);
+        req.addFilter("assigningCode", superiorAssigningCode);
+        return previewDataInfoMapper.seek(req);
+
     }
 
     /**
@@ -565,20 +599,28 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return 变更对照明细列表
      */
     @Override
-    public QueryResp<ZCCDetail> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize, int total) {
-        QueryResp<ZCCDetail> detailQueryResp = new QueryResp<>(pageIndex, pageSize);
-        String seqStr = StringUtils.join(zccGroupMapper.findByRequestSeq(requestSeq).stream().map(group -> group.getSeq()).collect(Collectors.toList()), ",");
+    public QueryResp<?> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize, int total)  throws IllegalAccessException {
+        Map<Integer, String> groupSeqAndName = new HashMap<>();
+        String seqStr = StringUtils.join(zccGroupMapper.findByRequestSeq(requestSeq).stream().map(e -> {
+            groupSeqAndName.put(e.getSeq(), e.getName());
+            return e.getSeq();
+        }).collect(Collectors.toList()), ",");
+        QueryResp<?> resp = new QueryResp<>(pageIndex, pageSize);
         log.info("pageSeekByGroups.seqStr--------> " + seqStr);
         if(seqStr == null || "".equals(seqStr)){
-            return detailQueryResp;
+            return resp;
         }else {
-            detailQueryResp.query(() -> zccDetailMapper.pageSeekByGroups(seqStr, detailQueryResp.getOffset(), pageSize));
-            if(total == 0){
-                detailQueryResp.count(() -> zccDetailMapper.countByGroups(seqStr));
-            }else {
-                detailQueryResp.setTotalRecord(total);
+            resp = QueryResp.buildQueryResp(pageIndex, pageSize, total, new QueryReq(){{
+                addFilter("groupSeq", seqStr, QueryFilter.OPR_IN);
+            }}, zccDetailMapper);
+            List details = new ArrayList();
+            for(ZCCDetail obj:(List<ZCCDetail>) resp.getDataList()){
+                Map cell = obj.toMap();
+                cell.put("notes", groupSeqAndName.get(obj.getGroupSeq()));
+                details.add(cell);
             }
-            return detailQueryResp;
+            resp.setDataList(details);
+            return resp;
         }
     }
 

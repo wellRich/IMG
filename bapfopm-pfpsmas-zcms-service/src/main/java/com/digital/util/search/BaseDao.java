@@ -35,6 +35,8 @@ public interface BaseDao<T extends Serializable> {
     String delete(Object o);
     String get(Object o);
     String seek(QueryReq req);
+    String pageSeek(QueryReq req, int pageIndex, int pageSize);
+    String countBy(String field, QueryFilter ... filters);
     String findByIds(String ids);
     String findAll();
     String batchDelete(Collection<?> keys);

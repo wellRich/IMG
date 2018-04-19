@@ -4,6 +4,7 @@ import com.digital.util.Common;
 import com.digital.entity.PreviewDataInfo;
 import com.digital.util.StringUtil;
 import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryFilter;
 import com.digital.util.search.QueryReq;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.jdbc.SQL;
@@ -70,15 +71,26 @@ public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
 
         //取得上级区划的级别代码
         String superAssignCode = Common.getSuperAssignCode(zoningCode);
-        String sql = new SQL(){{
-            FROM(entitySql.getTableName());
-            SELECT("COUNT(" + entitySql.getColumnByField("divisionName") + ")");
-            WHERE(entitySql.getColumnByField("superiorZoningCode") + "='" + superAssignCode + "'");
-            AND();
-            WHERE(entitySql.getColumnByField("divisionName") + "='" + zoningName + "'");
-        }}.toString();
-        log.info("findBrothersByCodeAndName.sql---------> " + sql);
-        return sql;
+
+        String sql1 = new SQL(){
+            {
+              SELECT(entitySql.getColumnByField("divisionName")+" as dm");
+              FROM(entitySql.getTableName());
+                WHERE(entitySql.getColumnByField("superiorZoningCode") + "='" + superAssignCode + "'");
+                AND();
+                WHERE(entitySql.getColumnByField("divisionName") + "='" + zoningName + "'");
+                GROUP_BY(entitySql.getColumnByField("zoningCode"));
+            }
+        }.toString();
+
+        String sql2 = new SQL(){
+            {
+                SELECT("count(name.dm)");
+                FROM("("+sql1+") as name");
+            }
+        }.toString();
+        log.info("findBrothersByCodeAndName.sql---------> " + sql2);
+        return sql2;
     }
 
     //初始化时使用
@@ -129,7 +141,8 @@ public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
     public String findValidOneByZoningCode(String zoningCode){
         String sql = new SQL(){{
             FROM(entitySql.getTableName());
-            SELECT(entitySql.getColumns());
+            String COLUMNS = entitySql.getColumnsExcPrimary().replace("UNIQUE_KEY","group_concat(UNIQUE_KEY) as UNIQUE_KEY");
+            SELECT(COLUMNS);
             WHERE("XYBZ = 'Y' AND YXBZ = 'Y' AND XZQH_DM =" + zoningCode);
         }}.toString();
         log.info("findValidOneByZoningCode.sql-------------> " + sql);
@@ -206,9 +219,15 @@ public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
         return entitySql.batchDelete(keys);
     }
 
+    @Override
+    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
+        return entitySql.pageSeek(req, pageIndex, pageSize);
+    }
 
-
-
+    @Override
+    public String countBy(String field, QueryFilter... filters) {
+        return entitySql.countBy(field, filters);
+    }
 
     /**
      * @description 用zoningCode查询预览数据 TODO 最后需要重构这个方法
@@ -220,7 +239,7 @@ public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
     public String findPreviewDataInfoByZoningCode(String zoningCode){
         String sql = new SQL(){
             {
-                SELECT("group_concat(UNIQUE_KEY)",
+                SELECT("group_concat(UNIQUE_KEY) as UNIQUE_KEY",
                         "XZQH_DM","XZQH_MC","XZQH_JC","XZQH_QC",
                         "JCDM","JBDM","XYBZ","YXBZ",
                         "DWLSGX_DM","SJ_XZQH_DM","YXQ_Q","YXQ_Z",

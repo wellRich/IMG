@@ -2,6 +2,7 @@ package com.digital.dao.sqlMapper;
 
 import com.digital.entity.ZCCRequest;
 import com.digital.util.search.BaseDao;
+import com.digital.util.search.QueryFilter;
 import com.digital.util.search.QueryReq;
 import org.apache.ibatis.jdbc.SQL;
 import org.apache.tools.ant.util.StringUtils;
@@ -187,5 +188,15 @@ public class ZCCRequestSql implements BaseDao<ZCCRequest> {
     @Override
     public String batchDelete(Collection<?> keys) {
         return entitySql.batchDelete(keys);
+    }
+
+    @Override
+    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
+        return entitySql.pageSeek(req, pageIndex, pageSize);
+    }
+
+    @Override
+    public String countBy(String field, QueryFilter... filters) {
+        return entitySql.countBy(field, filters);
     }
 }

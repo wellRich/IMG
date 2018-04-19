@@ -1,0 +1,651 @@
+<div id="rzc-luru" ms-controller="rzc_luru">
+	<div class="sc-nav">
+		<a ms-repeat-el="data.navbar" class="qydmsc-a" ms-href="{{el.routerPath}}">
+			<img ms-src="{{el.imgPath}}" class="ico3" alt="" />
+			<span>{{$index+1}}.{{el.name}}</span>
+		</a>
+	</div>
+
+	<!-- 各级区划展示 -->
+	<div class="change-detail">
+		<div class="left" ms-repeat-el="data.codeRank">
+			<table>
+				<tr class="conts" ms-repeat-el="$val">
+					<td ms-data-zoningcode="el.zoningCode" ms-data-assigningcode="el.assigningCode" 
+					ms-data-originalzoningname = "el.divisionName"	
+					ms-on-click="getSubordinateZoning()"> 
+						{{el.divisionName}} {{el.levelCode | substrCode(el.levelCode,el.superLevelCode)}}
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	
+	<!-- <div class="hr_2"></div> -->
+
+	<!-- 区划变更组 -->
+	<div class="adjust-content">
+		<div class="ac-left">
+			<div class="adjust">
+				<span class="a-adjust">调整说明</span>
+				<input type="text" class="a-tet" id="requestName" ms-duplex="data.requestName">
+
+				<!-- <input type="text" class="a-tet" id="requestName" 
+				ms-attr-value="data.requestName" ms-change="changeRequestName()"> -->
+			</div>
+			<div class="zoning-code">
+				<span class="a-adjust">原区划代码</span>
+				<span class="xing">*</span>
+
+				<input type="text" class="a-tet num" readonly 
+					ms-repeat-el="data.originalZoningCodeArray" ms-duplex="el"/>
+				
+			</div>
+			<div class="zoning-name">
+				<span class="a-adjust">原区划名称</span>
+				<span class="xing">*</span>
+				<input type="text" class="a-tet tuo" ms-duplex="data.originalZoningName" readonly/>
+			</div>
+			<div class="adjust remarks">
+				<span class="a-adjust">备注</span>
+
+				<input type="text" class="a-tet" id="notes" ms-duplex="data.notes">
+
+				<!-- <input type="text" class="a-tet" id="notes" 
+				ms-attr-value="data.notes" ms-change="changeNotes()"> -->
+			</div>
+
+		</div>
+		<div class="ac-left">
+			<div class="adjust">
+				<!-- 白框 -->
+				 <input type="checkbox" id="fileSquence" name="name" class="tu-left"> 
+				 <label for="fileSquence"></label> 
+				 <span class="zi">重用变更</span>	 
+				<div class="btn-group">
+					<ul class="nav nav-tabs">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+								{{data.adjustment_type}}
+								<i class="ico2"></i>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="11">新增</a>
+								</li>
+								<li>
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="21">变更</a>
+								</li>
+								<li>
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="31">并入</a>
+								</li>
+								<li>
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="41">迁移</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<span class="xing">*</span>
+					<span class="sele">调整类型</span>
+				</div>
+			</div>
+
+			<div class="zoning-code">
+				<span class="a-adjust">现区划代码</span>
+				<span class="xing">*</span>
+
+				<input type="text" class="a-tet num"  
+				ms-repeat-el="data.targetZoningCodeArray" ms-duplex="el" ms-data-level="$index+1"
+				ms-attr-readonly="true" ms-attr-maxLength="{{maxLengths[$index]}}" />
+
+				<img src="./src/modules/rzc/img/calendar.png" alt="" class="icon-img" ms-if="data.iconToggle">
+			</div>
+
+			<div class="zoning-name">
+				<span class="a-adjust">现区划名称</span>
+				<span class="xing">*</span>
+
+				<input type="text" class="a-tet tuo change" id="targetZoningName" 
+				ms-duplex="data.targetZoningName" />
+
+				<!-- <input type="text" class="a-tet tuo change" id="targetZoningName" 
+				ms-attr-value="data.targetZoningName" ms-change="changeTargetZoningName()" /> -->
+			</div>
+			
+		</div>
+	</div>
+
+	<div class="drlsb">
+		<input type="button" value="保存明细" class="bttn" ms-on-click="getSaveChangeDetail()">
+		<input type="button" value="删除" class="bttn del">
+	</div>
+	<div class="error-message">
+		<div class="upload-results">
+			<table class="results-show">
+				<thead>
+					<tr>
+						<th class="tb-zz">
+							<input type="checkbox" id="fileSquenceAll" name="name" class="tu-left">
+							<label for="fileSquenceAll"></label>
+							<!-- 白框 -->
+						</th>
+						<th class="tb-zz th-yqhdm">原区划代码</th>
+						<th class="tb-zz th-yqhmc">原区划名称</th>
+						<th class="tb-zz th-tzlx">调整类型</th>
+						<th class="tb-zz th-yqhdm">现区划代码</th>
+						<th class="tb-zz th-yqhmc">现区划名称</th>
+						<th class="tb-zz th-yqhdm">备注</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ms-repeat-el="data.details">
+						<td class="tb-xz">
+							<!-- 白框 -->
+							<input type="checkbox" id="fileSquence" name="name" class="tu-left">
+							<label for="fileSquence"></label>
+						</td>
+						<td class="tb-xz th-yqhdm">
+							<em>{{el.originalZoningCode}}</em>
+						</td>
+						<td class="tb-xz th-yqhmc">
+							<em>{{el.originalZoningName}}</em>
+						</td>
+						<td class="tb-xz th-tzlx">
+							<em>{{el.changeType | typeCodeConversion(el.changeType)}}</em>
+						</td>
+						<td class="tb-xz th-yqhdm">
+							<em>{{el.targetZoningCode}}</em>
+						</td>
+						<td class="tb-xz th-yqhmc">
+							<em>{{el.targetZoningName}}</em>
+						</td>
+						<td class="tb-xz th-yqhdm">
+							<em>{{el.notes}}</em>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="no" ms-if="!data.details.length">无显示记录</div>
+		</div>
+	</div>
+	<div class="drlsb two">
+		<input type="button" value="提交" class="bttn" ms-on-click="getSubmitDetails()">
+		<input type="button" value="删除" class="bttn del">
+	</div>
+	
+</div>
+
+<!-- 校验 提示信息 -->
+
+<!-- <div class="hint-information">
+	<span class="message">*您还未选择区划代码,请选择</span>
+</div> -->
+
+<style lang="less">
+	.hint-information{
+		position: absolute;
+		top: 61%;
+    	right: 33%;
+	}
+	.hint-information .message{
+		font-size: 16px;
+		color: red;
+		text-align: center;
+	}
+	input[type="checkbox"] {
+		width: 22px;
+		height: 22px;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	label {
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		border-radius: 5px;
+		margin-left: -26px;
+		display: inline-flex;
+	}
+
+
+	input:checked+label {
+		background: url('./src/modules/rzc/img/collect.png');
+		background-size: cover;
+		background-position: center;
+	}
+
+	#rzc-luru {
+		width: 100%;
+		height: auto;
+	}
+
+	#rzc-luru a {
+		text-decoration: none;
+	}
+
+	#rzc-luru .sc-nav {
+		width: 94%;
+		height: 54px;
+		background: none;
+		margin-left: 6%;
+		padding-top: 20px;
+	}
+
+	#rzc-luru .sc-nav .qydmsc-a {
+		width: 15%;
+		height: 32px;
+		display: inline-block;
+		line-height: 32px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		margin-left: -10px;
+		position: relative;
+
+	}
+
+	#rzc-luru .sc-nav .qydmsc-a span {
+		width: 100%;
+		display: inline-block;
+		z-index: 1;
+		position: absolute;
+		left: 0;
+	}
+
+	#rzc-luru .sc-nav .qydmsc-a .ico3 {
+		width: 100%;
+		height: 32px;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+	}
+
+	#rzc-luru .change-detail {
+		width: 100%;
+		height: 202px;
+		background: none;
+		margin-top: 20px;
+	}
+
+	#rzc-luru .change-detail .left {
+		width: 13%;
+		height: 180px;
+		float: left;
+		overflow-y: auto;
+		margin-left: 3%;
+		margin-left: 3%\9;
+		background: url('./src/modules/rzc/img/xiaotu_03.png');
+	}
+
+	#rzc-luru .change-detail .left .conts {
+		width: 100%;
+		font-size: 14px;
+		color: #fff;
+		line-height: 30px;
+		cursor: pointer;
+	}
+
+	#rzc-luru .change-detail .left .conts:hover{
+		text-shadow: 1px 1px 1px #f00;
+	}
+
+
+	#rzc-luru .change-detail .left tr td {
+		padding-left: 17px;
+	}
+
+	#rzc-luru .hr_2 {
+		width: 94%;
+		height: 10px;
+		border-top: 1px solid #468994;
+		border-bottom: 1px solid #468994;
+		margin: 20px 3% 0px 3%;
+	}
+
+	#rzc-luru .adjust-content {
+		width: 100%;
+		height: 225px;
+		background: none;
+		margin-top: 20px;
+	}
+
+	#rzc-luru .adjust-content .ac-left {
+		width: 47%;
+		height: 225px;
+		float: left;
+		margin-left: 2%;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust {
+		width: 100%;
+		height: 37px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .tu-left {
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		border-radius: 5px;
+		float: left;
+		margin-left: 7%;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .zi {
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		margin-left: 2%; 
+	} 
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group {
+		width: 62%;
+		float: right;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .sele {
+		line-height: 37px;
+		font-size: 16px;
+		color: #ffffff;
+		float: right;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .xing {
+		float: right;
+		width: 7px;
+		height: 7px;
+		text-align: center;
+		color: red;
+		margin-left: 2%;
+		line-height: 37px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs {
+		width: 66%;
+		border: 1px solid #14eae3;
+		float: right;
+		margin-left: 5%;
+		margin-right: 8px;
+		margin-top: 0px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li {
+		width: 100%;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li a {
+		padding: 8px 15px;
+		margin-right: 0px;
+		width: 100%;
+		background-color: transparent;
+		border: 1px solid transparent;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li a .ico2 {
+		width: 17px;
+		height: 11px;
+		background: url('./src/modules/rzc/img/jiantou.png') no-repeat;
+		position: absolute;
+		top: 14px;
+		right: 15px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li a:hover {
+		color: #fff;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li .dropdown-menu {
+		width: 100%;
+		background: url('./src/modules/rzc/img/select-s.png') no-repeat;
+		background-size: 103% 117%;
+		background-position: -3px 0px;
+		text-align: center;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li .dropdown-menu li {
+		background: #000;
+		opacity: 0.55;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li .dropdown-menu li:hover {
+		opacity: 1;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .btn-group .nav-tabs li .dropdown-menu a {
+		background: #000;
+		color: #fff;
+	}
+
+
+	#rzc-luru .adjust-content .ac-left .adjust .a-adjust {
+		width: 17%;
+		height: 37px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		text-align: right;
+		float: left;
+		display: inline-block;
+	}
+
+	#rzc-luru .adjust-content .ac-left .adjust .a-tet {
+		width: 76%;
+		height: 37px;
+		float: left;
+		margin-left: 5%;
+		border: 1px solid #e0fffd;
+		background-color: transparent;
+		padding-left: 15px;
+	}
+	#rzc-luru .adjust-content .ac-left .adjust  #requestName{
+		margin-left: 5%;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-code {
+		width: 100%;
+		height: 37px;
+		margin-top: 20px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-code .a-adjust {
+		width: 17%;
+		height: 37px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		text-align: right;
+		float: left;
+		display: inline-block;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-code .xing {
+		float: left;
+		width: 7px;
+		height: 7px;
+		text-align: center;
+		color: red;
+		margin-left: 2%;
+		line-height: 37px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-code .num {
+		width: 9%;
+		height: 37px;
+		float: left;
+		margin-left: 2%;
+		border: 1px solid #e0fffd;
+		font-size: 12px;
+		color: #999;
+		line-height: 37px;
+		text-align: center;
+		background-color: transparent;
+	}
+	#rzc-luru .adjust-content .ac-left .zoning-code .icon-img{
+		width: 34px;
+		height: 34px;
+		margin-left: 2%;
+		cursor: pointer;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-name {
+		width: 100%;
+		height: 37px;
+		margin-top: 20px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-name .a-adjust {
+		width: 17%;
+		height: 37px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		text-align: right;
+		float: left;
+		display: inline-block;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-name .xing {
+		float: left;
+		width: 7px;
+		height: 7px;
+		text-align: center;
+		color: red;
+		margin-left: 2%;
+		line-height: 37px;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-name .tuo {
+		width: 76%;
+		height: 37px;
+		float: left;
+		margin-left: 2%;
+		border: 1px solid #e0fffd;
+		padding-left: 15px;
+		background-color: transparent;
+		color: #999;
+	}
+
+	#rzc-luru .adjust-content .ac-left .zoning-name .change{
+		color: #fff;
+	}
+
+	#rzc-luru .adjust-content .ac-left .remarks {
+		margin-top: 20px;
+	}
+
+	#rzc-luru .drlsb {
+		width: 100%;
+		height: 40px;
+		background: none;
+		margin-top: 20px;
+		-webkit-box-sizing: border-box;
+		text-align: center;
+	}
+
+	#rzc-luru .two {
+		margin-top: 20px;
+		margin-bottom: 100px;
+	}
+
+	#rzc-luru .drlsb .bttn {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		border: none;
+	}
+
+	#rzc-luru .drlsb .bttn:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rzc-luru .drlsb .del {
+		margin-left: 33px;
+	}
+
+	#rzc-luru .error-message {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 20px 3% 17px 3%;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show {
+		width: 100%;
+		text-align: center;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show thead{
+		background: url('./src/modules/rzc/img/form-title_03.png');
+		background-size: cover;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show .tb-zz {
+		height: 50px;
+		font-size: 14px;
+		color: #fff;
+		/* line-height: 50px; */
+		text-align: center;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show .tb-zz .tu-left {
+		width: 24px;
+		height: 24px;
+		border: 1px solid #fff;
+		background: none;
+		border-radius: 5px;
+		margin: 0 auto;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show .th-yqhdm {
+		width: 15%;
+	}
+	
+	#rzc-luru .error-message .upload-results .results-show>thead>tr>td:first-child{
+		width:54px;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show>tbody>tr>td:first-child{
+		width:54px;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show .th-yqhmc {
+		width: 20%;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show .th-tzlx {
+		width: 10%;
+	}
+
+	#rzc-luru .error-message .upload-results .results-show .err {
+		border-right: none;
+	}
+
+	#rzc-luru .error-message .upload-results .no {
+		height: 85px;
+		width: 100%;
+		text-align: center;
+		color: #fff;
+		font-size: 14px;
+		line-height: 85px;
+		background: url('./src/modules/rzc/img/xiaotu_03.png');
+	}
+
+	#rzc-luru .error-message .upload-results .results-show .tb-xz {
+		width: 12%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rzc/img/tu1.png') no-repeat;
+	}
+</style>

@@ -4,6 +4,7 @@ import com.digital.api.ImportFormalTableApi;
 import com.digital.api.ImportTemporaryApi;
 import com.digital.dao.PreviewDataInfoMapper;
 import com.digital.entity.PreviewDataInfo;
+import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,10 +31,22 @@ public class FormalTableController extends BaseController {
     private ImportFormalTableApi importFormalTableApi;
 
 
+    /**
+     * @description 导入到正式表
+     * @method  importformalTable
+     * @params
+     * @return
+     * @exception
+     */
     @RequestMapping(value = "/import/formalTable",method = RequestMethod.GET)
     @ResponseBody
-    public void test(@RequestParam("zoningCode")String zoningCode){
-
+    public String importformalTable(){
+        try{
+            importFormalTableApi.importformalTable();
+            return new RtnData().toString();
+        }catch (RuntimeException e){
+            return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_MESSAGE_ERROR,e.getMessage()).toString();
+        }
     }
 
 

@@ -4,6 +4,9 @@ import com.digital.util.search.Column;
 import com.digital.util.search.Table;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: TODO
@@ -152,7 +155,39 @@ public class FormalTableInfo implements Serializable{
 
 
 
+    public void previewDataToForaml(PreviewDataInfo previewData){
+        this.uniqueKey = previewData.getUniqueKey();
+        this.zoningCode = previewData.getZoningCode();
+        this.divisionName = previewData.getDivisionName();
+        this.divisionAbbreviation = previewData.getDivisionAbbreviation();
+        this.divisionFullName = previewData.getDivisionFullName();
+        this.assigningCode = previewData.getAssigningCode();
+        this.levelCode = previewData.getLevelCode();
+        this.superiorZoningCode = previewData.getSuperiorZoningCode();
+        this.chooseSign = previewData.getChooseSign();
+        this.usefulSign = previewData.getUsefulSign();
+        this.subordinateRelations = previewData.getSubordinateRelations();
+        this.validityStart = previewData.getValidityStart();
+        this.validityStup = previewData.getValidityStup();
+        this.virtualNode = previewData.getVirtualNode();
+        this.oldZoningCode = previewData.getOldZoningCode();
+        this.accessCode = previewData.getAccessCode();
+        this.enterOneCode = previewData.getEnterOneCode();
+        this.createDate = previewData.getCreateDate();
+        this.updaterCode = previewData.getUpdaterCode();
+        this.lastUpdate = previewData.getLastUpdate();
+        this.type = previewData.getType();
+    }
 
+
+    public Map<String, Object> toMap() throws IllegalAccessException{
+        Map<String, Object> map = new HashMap<>();
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (Field field: fields){
+            map.put(field.getName(), field.get(this));
+        }
+        return map;
+    }
 
 
 
@@ -323,4 +358,30 @@ public class FormalTableInfo implements Serializable{
         this.uniqueKey = uniqueKeys;
     }
 
+    @Override
+    public String toString() {
+        return "FormalTableInfo{" +
+                "uniqueKey='" + uniqueKey + '\'' +
+                ", zoningCode='" + zoningCode + '\'' +
+                ", divisionName='" + divisionName + '\'' +
+                ", divisionAbbreviation='" + divisionAbbreviation + '\'' +
+                ", divisionFullName='" + divisionFullName + '\'' +
+                ", assigningCode='" + assigningCode + '\'' +
+                ", levelCode='" + levelCode + '\'' +
+                ", superiorZoningCode='" + superiorZoningCode + '\'' +
+                ", chooseSign='" + chooseSign + '\'' +
+                ", usefulSign='" + usefulSign + '\'' +
+                ", subordinateRelations='" + subordinateRelations + '\'' +
+                ", validityStart='" + validityStart + '\'' +
+                ", validityStup='" + validityStup + '\'' +
+                ", virtualNode='" + virtualNode + '\'' +
+                ", oldZoningCode='" + oldZoningCode + '\'' +
+                ", accessCode='" + accessCode + '\'' +
+                ", enterOneCode='" + enterOneCode + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", updaterCode='" + updaterCode + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }
