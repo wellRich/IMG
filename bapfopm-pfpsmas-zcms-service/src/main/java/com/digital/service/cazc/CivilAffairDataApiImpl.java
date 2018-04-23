@@ -5,12 +5,15 @@ import com.digital.api.cazc.CivilAffairDataApi;
 import com.digital.dao.cazc.CivilAffairDataMapper;
 import com.digital.entity.cazc.CivilAffairDataUpload;
 import com.digital.entity.cazc.CivilAffairZoningCode;
+import org.apache.ibatis.annotations.Insert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhangwei
@@ -34,6 +37,17 @@ public class CivilAffairDataApiImpl implements CivilAffairDataApi {
     @Override
     public int checkCivilAffairZipName(String fileName) {
         return civilAffairDataMapper.checkCivilAffairZipName(fileName);
+    }
+
+    /**
+     * 修改zip状态
+     * @param zipXh
+     * @param status
+     * @return
+     */
+    @Override
+    public int updateCivilAffairZipStatus(int zipXh, int status) {
+        return civilAffairDataMapper.updateCivilAffairZipStatus(zipXh, status);
     }
 
     /**
@@ -61,12 +75,21 @@ public class CivilAffairDataApiImpl implements CivilAffairDataApi {
 
     /**
      * @description 将民政区划的数据插入到数据库中
-     * @param civilAffairZoningCodes
+     * @param lists
      * @return int
      */
     @Override
-    public int insertCivilAffairDate(List<CivilAffairZoningCode> civilAffairZoningCodes) {
-        return civilAffairDataMapper.insertCivilAffairDate(civilAffairZoningCodes);
+    @Transactional
+    public int insertCivilAffairDate(List<List<CivilAffairZoningCode>> lists,int civilAffairZoningCodeSize,int zipXh) throws  RuntimeException{
+        //清空民政区划数据
+        deleteCivilAffairZoningCode();
+       int resultSum = 0;
+        for (int i = 0; i < lists.size(); i++) {
+          int  num = civilAffairDataMapper.insertCivilAffairDate(lists.get(i));
+            resultSum = resultSum + num;
+        }
+        updateCivilAffairZipStatus(zipXh,22); //22表示数据导入成功
+        return resultSum;
     }
 
     /**
@@ -88,5 +111,21 @@ public class CivilAffairDataApiImpl implements CivilAffairDataApi {
         return  civilAffairDataMapper.downCivilAffairZoningCode(superiorZoningCode);
     }
 
+    /**
+     * 民政区划数据与行政区划区划数据比较
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Map<String,Object>> selectCYDate(String id) {
+        return  civilAffairDataMapper.selectCYDate(id);
+    }
+
+    /**
+     * 清空民政区划数据
+     */
+   public void deleteCivilAffairZoningCode(){
+       civilAffairDataMapper.deleteCivilAffairZoningCode();
+    }
 
 }

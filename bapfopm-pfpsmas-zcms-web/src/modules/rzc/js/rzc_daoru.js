@@ -1,4 +1,4 @@
-define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,_rzc_daoru) {
+define(['avalon','jquery','bootstrap', 'ajaxConfig', 'text!./rzc_daoru.js'], function (avalon,_rzc_daoru) {
   avalon.templateCache._rzc_daoru = _rzc_daoru;
 
   var rzc_daoru_vm = avalon.define({
@@ -12,7 +12,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
 
       //  查询信息
       totalCount: "", //  总条数
-      pageSize: 4,  //  每页条数
+      pageSize: 11,  //  每页条数
       pageCount: 0,  //  总页数
       pageNum: 1,   //  当前页数
 
@@ -44,12 +44,12 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
       //  只能兼容到ie10
       if(rzc_daoru_vm.data.fileName) {
         var fileName = rzc_daoru_vm.data.fileName;
-        //    QHDM_370000_20180211.zip
-        var rex = /QHDM\_\d{6}\_\d{8}\.zip/;
+        //    mzqhdm_20170403.zip
+        var rex = /mzqhdm\_\d{8}\.zip/;
         if (!rex.test(fileName)) {
-          alert('请选择正确文件');
+          alert('欧尼酱,大笨蛋,文件选错了啦!!!');
         }else{
-          codeUpload("#form");
+          zipFileUpload("#form");
           rzc_daoru_vm.data.fileName = "";
         }
       }else{
@@ -87,7 +87,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
       var pageCount = rzc_daoru_vm.data.pageCount;
 
       pageNum = (pageNum === pageCount) ? pageNum : pageNum + 1;
-      selectCivilAffairZip();
+      selectCivilAffairZip(rzc_daoru_vm.data.pageSize, rzc_daoru_vm.data.pageNum);
       rzc_daoru_vm.data.pageNum = pageNum;
     },
 
@@ -101,7 +101,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
       var pageSize = rzc_daoru_vm.data.pageSize;
 
       pageNum = (pageNum === 1) ? pageNum : pageNum - 1;
-      selectCivilAffairZip();
+      selectCivilAffairZip(rzc_daoru_vm.data.pageSize, rzc_daoru_vm.data.pageNum);
       rzc_daoru_vm.data.pageNum = pageNum;
     },
 
@@ -145,7 +145,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
   })
 
   //  初始加载,就应显示已上传文件信息
-  selectCivilAffairZip();
+  selectCivilAffairZip(rzc_daoru_vm.data.pageSize, rzc_daoru_vm.data.pageNum);
 
 
   /**
@@ -167,11 +167,11 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
    * 文件上传接口
    * @param {string} formId 表单ID
    */
-  function codeUpload(formId) {
+  function zipFileUpload(formId) {
     var formObj = $(formId)[0];
     var formData = new FormData(formObj);
     $.ajax({
-      url: 'http://localhost:8251/zoning/upload/zipFile',
+      url: 'http://'+ ip +':'+ port +'/civilAffair/upload/zipFlie',
       type: 'POST',
       data: formData,
       // 告诉jQuery不要去处理发送的数据
@@ -183,36 +183,34 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
         if (res.rtnCode === "000000") {
           rzc_daoru_vm.data.uploadToggle = true;
           //  重新刷新数据
-          selectCivilAffairZip();    
+          selectCivilAffairZip(rzc_daoru_vm.data.pageSize, rzc_daoru_vm.data.pageNum);    
         }
       }
     })
   }
 
-
   /**
    * 上传文件查询接口
-   * @param {number} zoningCode 区划代码
-   * @param {number} pageNum 当前页码
    * @param {number} pageSize 每页显示条数
+   * @param {number} pageNum 当前页码
    */
-  function selectCivilAffairZip() {
-    console.log(11);
+  function selectCivilAffairZip(pageSize, pageNum) {
+    pageSize = pageSize || 10;
+    pageNum = pageNum || 1;
     $.ajax({
-      url: 'http://localhost:8251/civilAffair/selectCivilAffairZip',
+      url: 'http://'+ ip +':'+ port +'/civilAffair/selectCivilAffairZip',
       type: 'POST',
       data:{
-        pageSize: 1,
-        pageIndex: 1,
-        totalRecord: 1,
+        pageSize: pageSize,
+        pageNum: pageNum,
       },
       success: function (da) {
         var res = JSON.parse(da);
         console.log(res);
-        
-        
-          // rzc_daoru_vm.data.upload = res;
-          // rzc_daoru_vm.data.pageCount = pagination(rzc_daoru_vm.data.totalCount, rzc_daoru_vm.data.pageSize);
+        if(res instanceof Array){
+          rzc_daoru_vm.data.upload = res;
+        }
+
       }
     })
   }
@@ -223,7 +221,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
    */
   function checkFileStatus(fileSquence) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/query/fileStatusCode?fileSquence=' + fileSquence,
+      url: 'http://'+ ip +':'+ port +'/zoning/query/fileStatusCode?fileSquence=' + fileSquence,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -247,7 +245,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
    */
   function deleteFileInfo(fileSquence) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/delete/zipFile?fileSquence=' + fileSquence,
+      url: 'http://'+ ip +':'+ port +'/zoning/delete/zipFile?fileSquence=' + fileSquence,
       type: 'GET',
       success: function (da) {
         res = JSON.parse(da);
@@ -255,7 +253,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_daoru.js'], function (avalon,
 
         if (res.rtnCode === "000000") {
           //  重新刷新数据
-          selectCivilAffairZip();              
+          selectCivilAffairZip(rzc_daoru_vm.data.pageSize, rzc_daoru_vm.data.pageNum);              
         }
       }
     })

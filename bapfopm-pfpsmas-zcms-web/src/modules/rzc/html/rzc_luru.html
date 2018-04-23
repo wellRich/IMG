@@ -60,8 +60,8 @@
 		<div class="ac-left">
 			<div class="adjust">
 				<!-- 白框 -->
-				 <input type="checkbox" id="fileSquence" name="name" class="tu-left"> 
-				 <label for="fileSquence"></label> 
+				 <input type="checkbox" id="ringFlag" name="name" value="1"  ms-on-click="reusing(this)" class="tu-left">
+				 <label for="ringFlag"></label>
 				 <span class="zi">重用变更</span>	 
 				<div class="btn-group">
 					<ul class="nav nav-tabs">
@@ -70,18 +70,28 @@
 								{{data.adjustment_type}}
 								<i class="ico2"></i>
 							</a>
+							<!--<ul class="dropdown-menu" ms-each="data.changeTypes" >
+                                <li>
+                                    <a href="javascript:;" onclick="adjustmentTypeToggle()"  ms-attr-data-value="{{el.value}}">{{el.label}}</a>
+                                </li>
+							</ul>-->
+
 							<ul class="dropdown-menu">
-								<li>
-									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="11">新增</a>
+								<li ms-css-display="{{data.changeTypes['11'].display}}">
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()"
+									   ms-data-value="11">新增</a>
 								</li>
-								<li>
-									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="21">变更</a>
+								<li ms-css-display="{{data.changeTypes['21'].display}}">
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()"
+									   ms-data-value="21">变更</a>
 								</li>
-								<li>
-									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="31">并入</a>
+								<li ms-css-display="{{data.changeTypes['31'].display}}">
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()"
+									   ms-data-value="31">并入</a>
 								</li>
-								<li>
-									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="41">迁移</a>
+								<li ms-css-display="{{data.changeTypes['41'].display}}">
+									<a href="javascript:;" ms-on-click="adjustmentTypeToggle()"
+									   ms-data-value="41">迁移</a>
 								</li>
 							</ul>
 						</li>
@@ -97,9 +107,10 @@
 
 				<input type="text" class="a-tet num"  
 				ms-repeat-el="data.targetZoningCodeArray" ms-duplex="el" ms-data-level="$index+1"
-				ms-attr-readonly="true" ms-attr-maxLength="{{maxLengths[$index]}}" />
+				ms-attr-readonly="true" ms-attr-maxLength="{{data.maxLengths[$index]}}" />
 
-				<img src="./src/modules/rzc/img/calendar.png" alt="" class="icon-img" ms-if="data.iconToggle">
+				<!-- 这个图标是日历，换个别的什么 -->
+				<img src="./src/modules/rzc/img/calendar.png" ms-on-click="findZoning()" ms-if="data.iconToggle" alt="" class="icon-img">
 			</div>
 
 			<div class="zoning-name">
@@ -174,8 +185,50 @@
 		<input type="button" value="提交" class="bttn" ms-on-click="getSubmitDetails()">
 		<input type="button" value="删除" class="bttn del">
 	</div>
-	
+
+
+	<!-- 弹出框，用于并入、迁移时选择目标区划 -->
+    <div class="modal-mask"  ms-if="data.isShowDialog">
+	    <div class="modal-box" ms-blur="hiddenDialog()">
+	        <div class="modal-header">
+				<h3><span><b style="color: black">请选择目标区划</b></span></h3>
+				<!--<i><b style="color: black" ms-on-click="hiddenDialog()">X</b></i>-->
+	        </div>
+			<div class="modal-body" style="background-color: wheat">
+				<div class="input-group">
+					<input type="text" id="searchZoning" ms-duplex="data.searchValue" class="form-control input-sm" placeholder="使用区划名进行查询...">
+					<span class="input-group-addon" ms-on-click="findInTree()">
+						<i class="fa fa-search"></i>
+					</span>
+				</div>
+				<ul id="treeDemo" class="ztree"></ul>
+			</div>
+	        <div class="modal-footer">
+	            <input type="button" class="btn btn-primary" value="确认" ms-on-click="selectTargetZoning()" />
+				<input type="button" class="btn " value="取消" ms-on-click="hiddenDialog()" />
+	        </div>
+	    </div>
+	</div>
+
+
+	<!-- <div class="modal-mask">
+	    <div class="modal-box">
+	        <div class="modal-header">
+	            <h3>请选择目标区划</h3>
+	            <i class="fa fa-times"  ms-on-click="hiddenDialog()"></i>
+	        </div>
+	        <div class="modal-body">
+	            <slot name="content"></slot>
+	        </div>
+	        <div class="modal-footer">
+	            <input type="button" class="btn" value="确认" ms-on-click="getAddZoningChangeRequest()" />
+				<input type="button" class="btn btn-primary" value="取消" ms-on-click="hiddenDialog()" />
+	        </div>
+	    </div>
+	</div> -->
+
 </div>
+
 
 <!-- 校验 提示信息 -->
 
@@ -184,6 +237,17 @@
 </div> -->
 
 <style lang="less">
+
+    ul.ztree {
+        margin-top: 10px;
+        border: 1px solid #617775;
+        background: #f0f6e4;
+        /*width: 220px;*/
+        height: 460px;
+        overflow-y: scroll;
+        overflow-x: auto;
+    }
+
 	.hint-information{
 		position: absolute;
 		top: 61%;

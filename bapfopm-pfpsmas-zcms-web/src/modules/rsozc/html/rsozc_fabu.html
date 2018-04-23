@@ -1,15 +1,12 @@
-<div id="rsozc-fabu">
+<div id="rsozc-fabu" ms-controller="rsozc_fabu">
+
 	<div class="sc-nav">
-			<a class="qydmsc-a" href="javascript:;">
-				<img src="./src/modules/rsozc/img/gray.png" class="ico3" alt=""/> <span>1.区划代码预览</span>
-			</a>
-			<a class="qydmsc-a" href="javascript:;">
-				<img src="./src/modules/rsozc/img/gray.png" class="ico3" alt=""/> <span>2.国家审核</span>
-			</a>
-			<a class="qydmsc-a" href="javascript:;">
-				<img src="./src/modules/rsozc/img/blue.png" class="ico3" alt=""/> <span>3.发布区划</span>
-			</a>
+		<a ms-repeat-el="data.navbar" class="qydmsc-a" ms-href="{{el.routerPath}}">
+			<img ms-src="{{el.imgPath}}" class="ico3" alt="" />
+			<span>{{$index+1}}.{{el.name}}</span>
+		</a>
 	</div>
+
 	<div class="cursor">
 		<div class="c-q">
 			<label class="c-query" for="zoningCode">六位区划代码</label>
@@ -17,15 +14,17 @@
 			<label class="c-query data" for="date">日期(YYYYMMDD)</label>
 			<!-- 时间插件 4.9-->
 			<div class="input-append date timepicker" id="datetimepicker" data-date-format="dd-mm-yyyy">
-				<input class="input-back cq-input" id="date" size="16" type="text"  readonly>
-				<span class="add-on" id="arrow"><i class="icon-th" ></i></span>
+				<input class="input-back cq-input" id="date" size="16" type="text" readonly>
+				<span class="add-on" id="arrow">
+					<i class="icon-th"></i>
+				</span>
 			</div>
 			<img src="./src/modules/rzc/img/calendar.png" alt="" class="cq-img">
 		</div>
 	</div>
 	<div class="drlsb">
-		<input type="button" value="查询"  class="bttn">
-		<input type="button" value="重置"  class="bttn refresh">
+		<input type="button" value="查询" class="bttn">
+		<input type="button" value="重置" class="bttn refresh">
 	</div>
 	<div class="uploading-file">
 		<div class="upload-results">
@@ -40,24 +39,48 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td class="tb-xz"><em>20180228全国各省区划数据和变更对照表</em></td>
-						<td class="tb-xz"><em>16938.54</em></td>
-						<td class="tb-xz"><em>2018-02-52 15:52:00</em></td>
+						<td class="tb-xz">
+							<em>20180228全国各省区划数据和变更对照表</em>
+						</td>
+						<td class="tb-xz">
+							<em>16938.54</em>
+						</td>
+						<td class="tb-xz">
+							<em>2018-02-52 15:52:00</em>
+						</td>
 					</tr>
 					<tr>
-						<td class="tb-xz"><em>20180228全国各省区划数据和变更对照表</em></td>
-						<td class="tb-xz"><em>16938.54</em></td>
-						<td class="tb-xz"><em>2018-02-52 15:52:00</em></td>
+						<td class="tb-xz">
+							<em>20180228全国各省区划数据和变更对照表</em>
+						</td>
+						<td class="tb-xz">
+							<em>16938.54</em>
+						</td>
+						<td class="tb-xz">
+							<em>2018-02-52 15:52:00</em>
+						</td>
 					</tr>
 					<tr>
-						<td class="tb-xz"><em>20180228全国各省区划数据和变更对照表</em></td>
-						<td class="tb-xz"><em>16938.54</em></td>
-						<td class="tb-xz"><em>2018-02-52 15:52:00</em></td>
+						<td class="tb-xz">
+							<em>20180228全国各省区划数据和变更对照表</em>
+						</td>
+						<td class="tb-xz">
+							<em>16938.54</em>
+						</td>
+						<td class="tb-xz">
+							<em>2018-02-52 15:52:00</em>
+						</td>
 					</tr>
 					<tr>
-						<td class="tb-xz"><em>20180228全国各省区划数据和变更对照表</em></td>
-						<td class="tb-xz"><em>16938.54</em></td>
-						<td class="tb-xz"><em>2018-02-52 15:52:00</em></td>
+						<td class="tb-xz">
+							<em>20180228全国各省区划数据和变更对照表</em>
+						</td>
+						<td class="tb-xz">
+							<em>16938.54</em>
+						</td>
+						<td class="tb-xz">
+							<em>2018-02-52 15:52:00</em>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -90,20 +113,21 @@
 		</ul>
 	</div>
 	<div class="drlsb">
-		<input type="button" value="刷新"  class="bttn">
+		<input type="button" value="刷新" class="bttn">
 	</div>
- </div>
+</div>
 
- <style lang="less">
+<style lang="less">
 	#rsozc-fabu {
 		width: 100%;
 		height: auto;
 		background: none;
 	}
 
-	#rsozc-fabu a{
+	#rsozc-fabu a {
 		text-decoration: none;
 	}
+
 	#rsozc-fabu .sc-nav {
 		width: 94%;
 		height: 54px;
@@ -121,12 +145,12 @@
 		font-size: 16px;
 		color: #ffffff;
 		text-align: center;
-		margin-left: -10px;    
+		margin-left: -10px;
 		position: relative;
 
 	}
 
-	#rsozc-fabu .sc-nav .qydmsc-a span{
+	#rsozc-fabu .sc-nav .qydmsc-a span {
 		width: 100%;
 		display: inline-block;
 		z-index: 9999;
@@ -134,38 +158,38 @@
 		left: 0;
 	}
 
-	#rsozc-fabu .sc-nav .qydmsc-a .ico3{
-		width: 100%; 
+	#rsozc-fabu .sc-nav .qydmsc-a .ico3 {
+		width: 100%;
 		height: 32px;
 		display: inline-block;
 		position: absolute;
 		left: 0;
 	}
-	
+
 	#rsozc-fabu .uploading-file {
 		width: 94%;
 		height: auto;
 		background: none;
-		margin: 20px 3% 0px 3%; 
+		margin: 20px 3% 0px 3%;
 	}
 
-	#rsozc-fabu .uploading-file .upload-results .results-show{
+	#rsozc-fabu .uploading-file .upload-results .results-show {
 		width: 100%;
 		text-align: center;
 	}
 
-	#rsozc-fabu .uploading-file .upload-results .results-show caption{
+	#rsozc-fabu .uploading-file .upload-results .results-show caption {
 		height: 50px;
 		font-size: 16px;
 		color: #fff;
 		line-height: 50px;
 		padding-left: 25px;
-		background:url('./src/modules/rsozc/img/form-title_03.png');
+		background: url('./src/modules/rsozc/img/form-title_03.png');
 		background-size: cover;
 		text-align: left;
 	}
 
-	#rsozc-fabu .uploading-file .upload-results .results-show .tb-xz{
+	#rsozc-fabu .uploading-file .upload-results .results-show .tb-xz {
 		width: 12%;
 		height: 30px;
 		font-size: 14px;
@@ -173,8 +197,8 @@
 		text-align: center;
 		background: url('./src/modules/rsozc/img/tu1.png') no-repeat;
 	}
-	
-	#rsozc-fabu .drlsb{
+
+	#rsozc-fabu .drlsb {
 		width: 100%;
 		height: 40px;
 		background: none;
@@ -183,11 +207,11 @@
 		text-align: center;
 	}
 
-	#rsozc-fabu .drlsb .bttn{
+	#rsozc-fabu .drlsb .bttn {
 		width: 120px;
 		height: 40px;
-		background:url('./src/modules/rsozc/img/button.png') no-repeat;
-    	background-size: 100% 100%;
+		background: url('./src/modules/rsozc/img/button.png') no-repeat;
+		background-size: 100% 100%;
 		background-position: center;
 		font-size: 18px;
 		color: #fff;
@@ -201,7 +225,7 @@
 		background-position: center;
 	}
 
-	#rsozc-fabu .drlsb .refresh{
+	#rsozc-fabu .drlsb .refresh {
 		margin-left: 30px;
 	}
 
@@ -211,30 +235,34 @@
 		background: none;
 		margin-top: 16px;
 	}
+
 	#rsozc-fabu .paging>ul {
-		margin:0 0;
+		margin: 0 0;
 		float: right;
 	}
-	#rsozc-fabu .paging>ul a{
-		border:none; 
-		color:#fff;
+
+	#rsozc-fabu .paging>ul a {
+		border: none;
+		color: #fff;
 	}
-	#rsozc-fabu .paging .pagination .previous >a:first-child{
-		color:#fff; 
-		border:none; 
-		background-color: #19313e; 
-	} 
-	#rsozc-fabu .paging .pagination .next >a:last-child{
-		color:#fff; 
-		border:none; 
+
+	#rsozc-fabu .paging .pagination .previous>a:first-child {
+		color: #fff;
+		border: none;
 		background-color: #19313e;
-	} 
+	}
+
+	#rsozc-fabu .paging .pagination .next>a:last-child {
+		color: #fff;
+		border: none;
+		background-color: #19313e;
+	}
 
 	#rsozc-fabu .paging .pagination>li>a:hover {
 		background-color: #19313e;
 		color: #fff;
 	}
-	
+
 	#rsozc-fabu .cursor {
 		width: 100%;
 		height: 54px;
@@ -348,21 +376,25 @@
 		background-position: center;
 	}
 
-	
+
 	/**
 		*	时间插件样式
 		**/
-	.datetimepicker thead tr:first-child th.prev{
-		background: url("./src/modules/rsozc/img/arrowleft1.png")  no-repeat;
-		background-position:center;
+
+	.datetimepicker thead tr:first-child th.prev {
+		background: url("./src/modules/rsozc/img/arrowleft1.png") no-repeat;
+		background-position: center;
 
 	}
-	.datetimepicker thead tr:first-child th.next{
+
+	.datetimepicker thead tr:first-child th.next {
 		background: url("./src/modules/rsozc/img/arrowright1.png") no-repeat;
-		background-position:center;
+		background-position: center;
 	}
-	.dropdown-menu, .elfinder-button-menu, .elfinder-contextmenu{
+
+	.dropdown-menu,
+	.elfinder-button-menu,
+	.elfinder-contextmenu {
 		margin-top: 36px;
 	}
-
 </style>

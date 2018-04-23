@@ -6,6 +6,7 @@ import com.digital.dao.ZCCDetailMapper;
 import com.digital.entity.FormalTableInfo;
 import com.digital.entity.ZCCDetail;
 import com.digital.util.Common;
+import com.digital.util.EntityHelper;
 import com.digital.util.StringUtil;
 import com.digital.util.search.QueryFilter;
 import com.digital.util.search.QueryReq;
@@ -56,9 +57,9 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
 
         //获取被操作的区划的级别代码
         String levelCode = Common.getLevelCode(zoningCode);
-        List result = new ArrayList();
+        List<Map> result = new ArrayList<>();
         for(FormalTableInfo info: formalTableMapper.findSubordinateZoning(zoningCode)){
-            Map<String, Object> cell = info.toMap();
+            Map<String, Object> cell = EntityHelper.toMap(info);
 
             //给子级区划数据中添加父级的级别代码
             cell.put("superLevelCode", levelCode);
@@ -85,6 +86,8 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
 
         //组以上级别的的区划
         String processedCodes = StringUtil.insertSingleQuotationMarks(ancestralCodes);
+
+
         QueryReq req = new QueryReq();
         if(assigningCode < Common.GROUP_LEVEL){
             req.addFilter("zoningCode", code + "%", QueryFilter.OPR_LIKE);
@@ -93,12 +96,14 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
         }else {
             req.addFilter("zoningCode", processedCodes, QueryFilter.OPR_IN);
         }
+        List<FormalTableInfo> infoList = formalTableMapper.seek(req);
+        log.info("findAncestorsAndSubsByZoningCode.seek(req).size-------------> " + infoList.size());
         Map<String, List<FormalTableInfo>> result = new HashMap<>();
-        for(FormalTableInfo info: formalTableMapper.seek(req)){
-            if(result.containsKey(info.getAccessCode())){
+        for(FormalTableInfo info: infoList){
+            if(result.containsKey(info.getAssigningCode())){
                 result.get(info.getAssigningCode()).add(info);
             }else {
-                List cell = new ArrayList();
+                List<FormalTableInfo> cell = new ArrayList<>();
                 cell.add(info);
                 result.put(info.getAssigningCode(), cell);
             }
@@ -137,16 +142,5 @@ public class ZoningInfoQueryApiImpl implements ZoningInfoQueryApi{
         }
         return resp;
     }
-
-
-    public QueryResp<ZCCDetail> pageTest(String groupSeq, int pageNum, int pageSize, int total) {
-        QueryResp<ZCCDetail> resp = QueryResp.buildQueryResp(pageNum, pageSize, total, new QueryReq() {{
-            search = new ArrayList<QueryFilter>() {{
-                add(new QueryFilter("groupSeq", groupSeq));
-            }};
-        }}, zccDetailMapper);
-        return resp;
-    }
-
 
 }

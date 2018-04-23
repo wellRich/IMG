@@ -91,15 +91,25 @@ public class ZCCRequestSql implements BaseDao<ZCCRequest> {
      * @param statuses 若干状态
      * @return sql
      */
-    public String pageSeekByStatuses(int offset, int limit, String ... statuses){
+    public String pageSeekByStatusesAndLevelCode(String  levelCode, int offset, int limit, String ... statuses){
         String sql = new SQL(){{
             FROM(entitySql.getTableName());
+
             SELECT(entitySql.getColumns());
+
+            WHERE(" 1 = 1");
+
+            if(levelCode != null){
+                AND();
+                WHERE(entitySql.getColumnByField("levelCode") + " LIKE '" + levelCode + "%'");
+            }
+
             if(statuses.length > 0){
+                AND();
                 WHERE(entitySql.getColumnByField("status") + " IN (" + org.apache.commons.lang.StringUtils.join(statuses, ",") + ")");
             }
         }}.toString() +  " LIMIT " + limit + " OFFSET " + offset;
-        log.info("pageSeekByStatuses.sql--------------> " + sql);
+        log.info("pageSeekByStatusesAndLevelCode.sql--------------> " + sql);
         return sql;
     }
 

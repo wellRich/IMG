@@ -1,4 +1,4 @@
-define(['avalon','jquery','bootstrap', 'text!./rozc_queren.js'], function (avalon,_rozc_queren) {
+define(['avalon','jquery','bootstrap', 'ajaxConfig', 'text!./rozc_queren.js'], function (avalon,_rozc_queren) {
   avalon.templateCache._rozc_queren = _rozc_queren;
 
   var rozc_queren_vm = avalon.define({
@@ -21,6 +21,8 @@ define(['avalon','jquery','bootstrap', 'text!./rozc_queren.js'], function (avalo
           imgPath: "./src/modules/rzc/img/blue.png"
         },
       ],
+
+      
     }
   })
 

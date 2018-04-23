@@ -1,13 +1,10 @@
 package com.digital.entity;
 
+import java.io.Serializable;
 import com.digital.util.Common;
 import com.digital.util.search.Column;
 import com.digital.util.search.Table;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 行政区划代码变更申请单
@@ -34,7 +31,7 @@ public class ZCCRequest implements Serializable {
      * 申请单状态
      * */
     @Column(name = "SQDZT_DM")
-    private String status = Common.XZQH_SQDZT_WTJ;
+    private String status;
 
     /*
      * 上报区划的区划的级别代码
@@ -42,7 +39,11 @@ public class ZCCRequest implements Serializable {
     @Column(name = "SBXZQH_DM")
     private String levelCode;
 
-
+    /*
+     * 上报区划的区划的简称
+     * */
+    @Column(name = "ZONING_NAME")
+    private String zoningName;
 
     /*
      * 录入人代码
@@ -105,16 +106,6 @@ public class ZCCRequest implements Serializable {
         return "“序号：" + seq + ", 说明：" + notes + "”";
     }
 
-    public Map<String, Object> toMap() throws IllegalAccessException{
-        Map<String, Object> map = new HashMap<>();
-        Field[] fields = this.getClass().getDeclaredFields();
-        for (Field field: fields){
-            map.put(field.getName(), field.get(this));
-        }
-        return map;
-    }
-
-
     public Integer getSeq() {
         return seq;
     }
@@ -145,6 +136,14 @@ public class ZCCRequest implements Serializable {
 
     public void setLevelCode(String levelCode) {
         this.levelCode = levelCode;
+    }
+
+    public String getZoningName() {
+        return zoningName;
+    }
+
+    public void setZoningName(String zoningName) {
+        this.zoningName = zoningName;
     }
 
     public String getNotes() {

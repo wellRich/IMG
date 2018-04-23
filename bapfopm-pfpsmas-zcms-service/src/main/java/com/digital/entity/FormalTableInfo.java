@@ -1,12 +1,8 @@
 package com.digital.entity;
 
+import java.io.Serializable;
 import com.digital.util.search.Column;
 import com.digital.util.search.Table;
-
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Description: TODO
@@ -153,8 +149,6 @@ public class FormalTableInfo implements Serializable{
     public String type = "11";
 
 
-
-
     public void previewDataToForaml(PreviewDataInfo previewData){
         this.uniqueKey = previewData.getUniqueKey();
         this.zoningCode = previewData.getZoningCode();
@@ -178,18 +172,6 @@ public class FormalTableInfo implements Serializable{
         this.lastUpdate = previewData.getLastUpdate();
         this.type = previewData.getType();
     }
-
-
-    public Map<String, Object> toMap() throws IllegalAccessException{
-        Map<String, Object> map = new HashMap<>();
-        Field[] fields = this.getClass().getDeclaredFields();
-        for (Field field: fields){
-            map.put(field.getName(), field.get(this));
-        }
-        return map;
-    }
-
-
 
     public String getZoningCode() {
         return zoningCode;

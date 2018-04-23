@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd15f617-6aef-4656-8d79-063b8c3b5527" name="Default" comment="" />
+    <list default="true" id="bd15f617-6aef-4656-8d79-063b8c3b5527" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../info/开发笔记.md" afterPath="$PROJECT_DIR$/../../info/开发笔记.md" />
+      <change beforePath="$PROJECT_DIR$/../../info/接口文档.md" afterPath="$PROJECT_DIR$/../../info/接口文档.md" />
+    </list>
     <ignored path="$PROJECT_DIR$/web应用/adp/applications/padis/WEB-INF/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +29,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WhbgdzbService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbService.java">
+      <file leaf-file-name="BgsqqrManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgsqqr/BgsqqrManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2717">
-              <caret line="157" column="21" lean-forward="false" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="21" />
+            <state relative-caret-position="342">
+              <caret line="140" column="67" lean-forward="true" selection-start-line="140" selection-start-column="67" selection-end-line="140" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GjshManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/gjsh/GjshManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="229" column="24" lean-forward="true" selection-start-line="229" selection-start-column="24" selection-end-line="229" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -39,38 +52,78 @@
       <file leaf-file-name="WhbgdzbManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5510">
-              <caret line="311" column="29" lean-forward="false" selection-start-line="311" selection-start-column="29" selection-end-line="311" selection-end-column="29" />
+            <state relative-caret-position="4771">
+              <caret line="286" column="35" lean-forward="true" selection-start-line="286" selection-start-column="35" selection-end-line="286" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MoveCheckXzqhImp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
+      <file leaf-file-name="JlbgdzbManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/jlbgdzb/JlbgdzbManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+            <state relative-caret-position="995">
+              <caret line="113" column="23" lean-forward="false" selection-start-line="113" selection-start-column="23" selection-end-line="113" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XzqhbgCommon.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java">
+      <file leaf-file-name="Common.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/Common.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9234">
-              <caret line="501" column="22" lean-forward="false" selection-start-line="501" selection-start-column="22" selection-end-line="501" selection-end-column="22" />
+            <state relative-caret-position="311">
+              <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BgdzcxManager.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzcx/BgdzcxManager.java">
+      <file leaf-file-name="SqdscManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sqdsc/SqdscManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="76" column="9" lean-forward="false" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+            <state relative-caret-position="-3356">
+              <caret line="101" column="84" lean-forward="false" selection-start-line="101" selection-start-column="84" selection-end-line="101" selection-end-column="84" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BgsqspManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgsqsp/BgsqspManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1285">
+              <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BgdzblrManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="310" column="18" lean-forward="false" selection-start-line="310" selection-start-column="18" selection-end-line="310" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TjbgdzbManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/tjbgdzb/TjbgdzbManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="173">
+              <caret line="73" column="24" lean-forward="true" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CxbgdzbManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/cxbgdzb/CxbgdzbManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="653">
+              <caret line="81" column="40" lean-forward="false" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -156,7 +209,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1" />
     <option name="width" value="1386" />
     <option name="height" value="788" />
@@ -502,6 +555,13 @@
               <item name="行政区划" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
               <item name="lgywsjsc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -539,7 +599,84 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
               <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
+              <item name="bgdzblr" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
+              <item name="cxbgdzb" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
+              <item name="jlbgdzb" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
+              <item name="tjbgdzb" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgdzgl" type="462c0819:PsiDirectoryNode" />
+              <item name="whbgdzb" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
               <item name="bgsqqr" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="bgsqsp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="gjsh" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
+              <item name="行政区划" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="xzqhwh" type="462c0819:PsiDirectoryNode" />
+              <item name="zxbg" type="462c0819:PsiDirectoryNode" />
+              <item name="qhdmxz" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="行政区划" type="b2602c69:ProjectViewProjectNode" />
@@ -729,14 +866,15 @@
       <workItem from="1523523543510" duration="598000" />
       <workItem from="1523951445141" duration="1628000" />
       <workItem from="1524033306872" duration="1810000" />
+      <workItem from="1524469508848" duration="4318000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="195032000" />
+    <option name="totallyTimeSpent" value="199350000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -747,17 +885,17 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295129" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2299427" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27148998" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295129" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -785,27 +923,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/qhdmcx/QhdmcxManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgqkhzcx/abglxcx/AbglxcxManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/ICheckXzqh.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="83" lean-forward="false" selection-start-line="15" selection-start-column="76" selection-end-line="15" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sqdsc/SqdscService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1387">
@@ -869,13 +986,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sqdsc/SqdscManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1558">
-          <caret line="104" column="42" lean-forward="false" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/jlbgdzb/JlbgdzbService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2223">
@@ -883,31 +993,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/tjbgdzb/TjbgdzbManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1729">
-          <caret line="100" column="24" lean-forward="false" selection-start-line="100" selection-start-column="24" selection-end-line="100" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/jlbgdzb/JlbgdzbManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1900">
-          <caret line="113" column="23" lean-forward="false" selection-start-line="113" selection-start-column="23" selection-end-line="113" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/qhdmxz/QhdmxzService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1418">
           <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/cxbgdzb/CxbgdzbManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1368">
-          <caret line="81" column="40" lean-forward="false" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -995,27 +1084,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/Common.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3762">
-          <caret line="209" column="4" lean-forward="false" selection-start-line="209" selection-start-column="4" selection-end-line="217" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="103" column="36" lean-forward="false" selection-start-line="103" selection-start-column="36" selection-end-line="103" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2774">
-          <caret line="165" column="31" lean-forward="false" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web应用/adp/applications/padis/work/xzqhwh/zxbg/bgdzgl/bgdzblr/js/tjxzqhGrid.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1041,15 +1109,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3128">
           <caret line="198" column="22" lean-forward="false" selection-start-line="198" selection-start-column="22" selection-end-line="198" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2717">
-          <caret line="157" column="21" lean-forward="false" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1081,10 +1140,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sqdcx/SqdcxManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+        <state relative-caret-position="287">
+          <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/lgywsjsc/LgywsjscManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2355">
+          <caret line="28" column="6" lean-forward="false" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/batch/ExpxzqhBatch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1252">
+          <caret line="58" column="13" lean-forward="false" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzcx/BgdzcxManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="76" column="9" lean-forward="false" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1097,58 +1178,125 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sqdcx/SqdcxManager.java">
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        <state relative-caret-position="629">
+          <caret line="501" column="22" lean-forward="false" selection-start-line="501" selection-start-column="22" selection-end-line="501" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgsqqr/BgsqqrManager.java">
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/MoveCheckXzqhImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+        <state relative-caret-position="629">
+          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/lgywsjsc/LgywsjscManager.java">
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2355">
-          <caret line="28" column="6" lean-forward="false" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+        <state relative-caret-position="0">
+          <caret line="157" column="21" lean-forward="false" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/batch/ExpxzqhBatch.java">
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/qhdmxz/QhdmxzManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1252">
-          <caret line="58" column="13" lean-forward="false" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
+        <state relative-caret-position="-1349">
+          <caret line="40" column="13" lean-forward="false" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
+          <folding>
+            <marker date="1523609165643" expanded="true" signature="5034:5121" ph="select XZQH_... v_dm_xzqh" />
+            <marker date="1523609165643" expanded="true" signature="7705:7795" ph="select XZQH_... v_dm_xzqh" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="96" column="38" lean-forward="false" selection-start-line="96" selection-start-column="38" selection-end-line="96" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/bgdzblr/BgdzblrManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="310" column="18" lean-forward="false" selection-start-line="310" selection-start-column="18" selection-end-line="310" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/tjbgdzb/TjbgdzbManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="73" column="24" lean-forward="true" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/cxbgdzb/CxbgdzbManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="653">
+          <caret line="81" column="40" lean-forward="false" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/sqdsc/SqdscManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3356">
+          <caret line="101" column="84" lean-forward="false" selection-start-line="101" selection-start-column="84" selection-end-line="101" selection-end-column="84" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/whbgdzb/WhbgdzbManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5510">
-          <caret line="311" column="29" lean-forward="false" selection-start-line="311" selection-start-column="29" selection-end-line="311" selection-end-column="29" />
+        <state relative-caret-position="4771">
+          <caret line="286" column="35" lean-forward="true" selection-start-line="286" selection-start-column="35" selection-end-line="286" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/XzqhbgCommon.java">
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzgl/jlbgdzb/JlbgdzbManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9234">
-          <caret line="501" column="22" lean-forward="false" selection-start-line="501" selection-start-column="22" selection-end-line="501" selection-end-column="22" />
+        <state relative-caret-position="995">
+          <caret line="113" column="23" lean-forward="false" selection-start-line="113" selection-start-column="23" selection-end-line="113" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgdzcx/BgdzcxManager.java">
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/common/Common.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="76" column="9" lean-forward="false" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+        <state relative-caret-position="311">
+          <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgsqsp/BgsqspManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1285">
+          <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/bgsqqr/BgsqqrManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="140" column="67" lean-forward="true" selection-start-line="140" selection-start-column="67" selection-end-line="140" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/padis/business/xzqhwh/zxbg/gjsh/GjshManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="229" column="24" lean-forward="true" selection-start-line="229" selection-start-column="24" selection-end-line="229" selection-end-column="24" />
           <folding />
         </state>
       </provider>

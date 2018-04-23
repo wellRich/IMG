@@ -1,4 +1,4 @@
-define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_yulan.js'], function (avalon, _rozc_yulan) {
+define(['avalon', 'jquery', 'bootstrap', 'ajaxConfig', 'text!./rozc_yulan.js'], function (avalon, _rozc_yulan) {
   avalon.templateCache._rozc_yulan = _rozc_yulan;
 
   var rozc_yulan_vm = avalon.define({
@@ -136,7 +136,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_yulan.js'], function (aval
   function initPreviewZoningData(zoningCode) {
     // console.log(zoningCode);
     $.ajax({
-      url: 'http://localhost:8251/queryZoningData/initPreviewZoningData?zoningCode=' + zoningCode,
+      url: 'http://'+ ip +':'+ port +'/queryZoningData/initPreviewZoningData?zoningCode=' + zoningCode,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -157,7 +157,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_yulan.js'], function (aval
    */
   function subordinateZoning(zoningCode) {
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/getSubordinateZoning?zoningCode=' + zoningCode,
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/getSubordinateZoning?zoningCode=' + zoningCode,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -176,7 +176,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_yulan.js'], function (aval
    */
   function initFormalZoningData(zoningCode) {
     $.ajax({
-      url: 'http://localhost:8251/queryZoningData/initFormalZoningData?zoningCode=' + zoningCode,
+      url: 'http://'+ ip +':'+ port +'/queryZoningData/initFormalZoningData?zoningCode=' + zoningCode,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -197,7 +197,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_yulan.js'], function (aval
    */
   function checkFormalZoning(zoningCode) {
     $.ajax({
-      url: 'http://localhost:8251/queryZoningData/checkFormalZoning?zoningCode=' + zoningCode,
+      url: 'http://'+ ip +':'+ port +'/queryZoningData/checkFormalZoning?zoningCode=' + zoningCode,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);

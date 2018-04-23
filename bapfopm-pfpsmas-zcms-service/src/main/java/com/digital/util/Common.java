@@ -61,6 +61,7 @@ public class Common {
 
     public static final String NATION_ZONING_CODE = "000000000000000";
 
+    //级次代码
     /*国家级*/
     public static final Integer NATION_LEVEL = 0;
 
@@ -83,141 +84,145 @@ public class Common {
     public static final Integer GROUP_LEVEL = 6;
 
     /**
-     * @description 获取该行政区划的上级行政区划
-     * @method  getSuperiorZoningCode
-     * @params [xzqh_dm：行政区划代码]
      * @return java.lang.String：上级行政区划代码
+     * @description 获取该行政区划的上级行政区划
+     * @method getSuperiorZoningCode
+     * @params [xzqh_dm：行政区划代码]
      */
-    public static String getSuperiorZoningCode(String xzqh_dm){
+    public static String getSuperiorZoningCode(String xzqh_dm) {
 
-        if(xzqh_dm==null||xzqh_dm.equals("")||xzqh_dm.length()!=15){
+        if (xzqh_dm == null || xzqh_dm.equals("") || xzqh_dm.length() != 15) {
             return "";
         }
-        String sjxzqhdm="";
-        if(xzqh_dm.substring(0, 2).equals("00")){
+        String sjxzqhdm = "";
+        if (xzqh_dm.substring(0, 2).equals("00")) {
             return "";
-        }else if(xzqh_dm.substring(2, 4).equals("00")){
+        } else if (xzqh_dm.substring(2, 4).equals("00")) {
             sjxzqhdm = "000000000000000";
-        }else if(xzqh_dm.substring(4, 6).equals("00")){
-            sjxzqhdm = xzqh_dm.substring(0, 2)+"0000000000000";
-        }else if(xzqh_dm.substring(6, 9).equals("000")){
-            sjxzqhdm = xzqh_dm.substring(0, 4)+"00000000000";
-        }else if(xzqh_dm.substring(9, 12).equals("000")){
-            sjxzqhdm = xzqh_dm.substring(0, 6)+"000000000";
-        }else if(xzqh_dm.substring(12, 15).equals("000")){
-            sjxzqhdm = xzqh_dm.substring(0, 9)+"000000";
-        }else{
-            sjxzqhdm = xzqh_dm.substring(0, 12)+"000";
+        } else if (xzqh_dm.substring(4, 6).equals("00")) {
+            sjxzqhdm = xzqh_dm.substring(0, 2) + "0000000000000";
+        } else if (xzqh_dm.substring(6, 9).equals("000")) {
+            sjxzqhdm = xzqh_dm.substring(0, 4) + "00000000000";
+        } else if (xzqh_dm.substring(9, 12).equals("000")) {
+            sjxzqhdm = xzqh_dm.substring(0, 6) + "000000000";
+        } else if (xzqh_dm.substring(12, 15).equals("000")) {
+            sjxzqhdm = xzqh_dm.substring(0, 9) + "000000";
+        } else {
+            sjxzqhdm = xzqh_dm.substring(0, 12) + "000";
         }
         return sjxzqhdm;
     }
 
     /**
      * 获取上次区划的级别代码
+     *
      * @param zoningCode
      * @return String 上次区划的级别代码
      */
-    public static String getSuperAssignCode(String zoningCode){
+    public static String getSuperAssignCode(String zoningCode) {
         return removeZeroOfTailing(getSuperiorZoningCode(zoningCode));
     }
 
     /**
-     * @description 根据行政区划代码获取相应级次代码
-     * @method  getAssigningCode
-     * @params [xzqh_dm：区划代码]
      * @return java.lang.String
-     * @exception
+     * @description 根据行政区划代码获取相应级次代码
+     * @method getAssigningCode
+     * @params zoningCode 区划代码
      */
-    public static String getAssigningCode(String xzqh_dm) {
+    public static String getAssigningCode(String zoningCode) {
 
-        if(xzqh_dm==null||xzqh_dm.equals("")||xzqh_dm.length()!=15){
+        if (zoningCode == null || zoningCode.equals("") || zoningCode.length() != 15) {
             return "";
         }
-        String jbdm="";
-        if(xzqh_dm.substring(0, 2).equals("00")){
-            return "0";
-        }else if(xzqh_dm.substring(2, 4).equals("00")){
-            jbdm = "1";
-        }else if(xzqh_dm.substring(4, 6).equals("00")){
-            jbdm = "2";
-        }else if(xzqh_dm.substring(6, 9).equals("000")){
-            jbdm = "3";
-        }else if(xzqh_dm.substring(9, 12).equals("000")){
-            jbdm = "4";
-        }else if(xzqh_dm.substring(12, 15).equals("000")){
-            jbdm = "5";
-        }else{
-            jbdm = "6";
+        String assigningCode = "";
+        String levelCode = getLevelCode(zoningCode);
+        int size = levelCode.length();
+        switch (size) {
+            case 0:
+                assigningCode = NATION_LEVEL.toString();
+                break;
+            case 2:
+                assigningCode = PROVINCE_LEVEL.toString();
+                break;
+            case 4:
+                assigningCode = CITY_LEVEL.toString();
+                break;
+            case 6:
+                assigningCode = COUNTY_LEVEL.toString();
+                break;
+            case 9:
+                assigningCode = TOWN_LEVEL.toString();
+                break;
+            case 12:
+                assigningCode = VILLAGE_LEVEL.toString();
+                break;
+            case 15:
+                assigningCode = GROUP_LEVEL.toString();
+                break;
+            default:
+                assigningCode = "";
+                break;
+
         }
-        return jbdm;
+        return assigningCode;
     }
+
 
     /**
      * 检测原区划代码是否与现区划代码相同
-     * @param originZoningCode 原区划代码
+     *
+     * @param originZoningCode  原区划代码
      * @param currentZoningCode 现区划代码
      * @return
      */
-    public static boolean hasSameZoningCode(String originZoningCode, String currentZoningCode){
-        boolean flag=false;
-        if(!originZoningCode.equals("")&&!currentZoningCode.equals("")){
-            if(originZoningCode.equals(currentZoningCode)){
-                flag=true;
+    public static boolean hasSameZoningCode(String originZoningCode, String currentZoningCode) {
+        boolean flag = false;
+        if (!originZoningCode.equals("") && !currentZoningCode.equals("")) {
+            if (originZoningCode.equals(currentZoningCode)) {
+                flag = true;
             }
         }
         return flag;
     }
 
     /**
-     *  获取区划代码中的级别代码
-     * @param xzqh_dm 区划代码
+     * 获取区划代码中的级别代码
+     *
+     * @param zoningCode 区划代码
      * @return 级别代码
      */
-    public static String getLevelCode(String xzqh_dm){
-        if(xzqh_dm==null||xzqh_dm.equals("")||xzqh_dm.length()!=15){
+    public static String getLevelCode(String zoningCode) {
+        if (zoningCode == null || zoningCode.equals("") || zoningCode.length() != 15) {
             return "";
         }
-        String jbdm="";
-        if(xzqh_dm.substring(0, 2).equals("00")){
-            return "";
-        }else if(xzqh_dm.substring(2, 4).equals("00")){
-            jbdm = xzqh_dm.substring(0, 2);
-        }else if(xzqh_dm.substring(4, 6).equals("00")){
-            jbdm = xzqh_dm.substring(0, 4);
-        }else if(xzqh_dm.substring(6, 9).equals("000")){
-            jbdm = xzqh_dm.substring(0, 6);
-        }else if(xzqh_dm.substring(9, 12).equals("000")){
-            jbdm = xzqh_dm.substring(0, 9);
-        }else if(xzqh_dm.substring(12, 15).equals("000")){
-            jbdm = xzqh_dm.substring(0, 12);
-        }else{
-            jbdm = xzqh_dm;
-        }
-        return jbdm;
+        return removeZeroOfTailing(zoningCode);
     }
+
 
     /**
      * 获取级别代码
      * 去除区划字符串尾部的0
-     * 获取有意义的区划代码
+     *
      * @param zoningCode 完整的区划代码
      * @return
      */
-    public static String removeZeroOfTailing(String zoningCode){
-        return zoningCode.replaceAll("000|000000|000000000|00000000000|0000000000000$", "");
+    public static String removeZeroOfTailing(String zoningCode) {
+        return zoningCode.replaceAll("000000000000000|0000000000000|00000000000|000000000|000000|000$", "");
     }
 
-    /** 给区划代码补齐0
+    /**
+     * 给区划代码补齐0
+     *
      * @param code 位数不足15位的区划代码
      * @return
      */
-    public static String addZeroAtTail(String code){
-        if(code == null || code.equals("")){
+    public static String addZeroAtTail(String code) {
+        if (code == null || code.equals("")) {
             throw new RuntimeException("传入的区划代码为空！");
-        }else {
+        } else {
             int num = 15 - code.length();
             StringBuilder vessel = new StringBuilder(code);
-            for(int i = 0; i < num; i ++){
+            for (int i = 0; i < num; i++) {
                 vessel.append("0");
             }
             return vessel.toString();
@@ -226,8 +231,9 @@ public class Common {
 
     /**
      * 用于取得上级与上上级的区划代码，加上自身称之为父系区划代码
+     *
      * @param zoningCode 区划代码
-     * @param level 级次
+     * @param level      级次
      * @return map
      */
     public static Map<Integer, String> getPaternalCodeMap(String zoningCode, int level) {
@@ -235,9 +241,9 @@ public class Common {
             throw new RuntimeException("传入的区划代码为空！");
         } else {
             int length = zoningCode.length();
-            if(length != 15){
+            if (length != 15) {
                 throw new RuntimeException("长度为" + length + "不合规范的区划代码");
-            }else {
+            } else {
                 Map<Integer, String> zoningCodeAndLevel = new HashMap<>();
                 switch (level) {
                     case 0:
@@ -293,6 +299,7 @@ public class Common {
 
     /**
      * 用于取得上级与上上级的区划代码，加上自身称之为父系区划代码
+     *
      * @param zoningCode 区划代码
      * @return map
      */
@@ -303,11 +310,9 @@ public class Common {
             String code = removeZeroOfTailing(zoningCode);
             int length = code.length();
             Map<Integer, String> zoningCodeAndLevel = new HashMap<>();
-            System.out.println("code-----------> " + code);
-            System.out.println("length-----------> " + length);
             switch (length) {
                 case 0:
-                    zoningCodeAndLevel.put(0, "000000000000000");
+                    zoningCodeAndLevel.put(0, Common.NATION_ZONING_CODE);
                     break;
                 //省级
                 case 2:
@@ -357,7 +362,7 @@ public class Common {
     }
 
     //用于取得上级与上上级的区划代码，加上自身称之为祖系区划代码
-    public static List<String> getPaternalCodes(String zoningCode){
+    public static List<String> getPaternalCodes(String zoningCode) {
         if (zoningCode == null || zoningCode.equals("")) {
             throw new RuntimeException("传入的区划代码为空！");
         } else {
@@ -368,7 +373,7 @@ public class Common {
             System.out.println("length-----------> " + length);
             switch (length) {
                 case 0:
-                    zoningCodes.add(0, Common.NATION_ZONING_CODE);
+                    zoningCodes.add(Common.NATION_ZONING_CODE);
                     break;
                 //省级
                 case 2:

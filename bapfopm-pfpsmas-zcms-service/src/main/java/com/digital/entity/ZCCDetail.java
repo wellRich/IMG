@@ -1,14 +1,10 @@
 package com.digital.entity;
 
+import java.io.Serializable;
 import com.digital.util.Common;
 import com.digital.util.JSONHelper;
 import com.digital.util.search.Column;
 import com.digital.util.search.Table;
-
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 行政区划变更对照表明细
@@ -141,15 +137,6 @@ public class ZCCDetail implements Serializable {
         }else {
             return "N/A";
         }
-    }
-
-    public Map<String, Object> toMap() throws IllegalAccessException{
-        Map<String, Object> map = new HashMap<>();
-        Field[] fields = this.getClass().getDeclaredFields();
-        for (Field field: fields){
-            map.put(field.getName(), field.get(this));
-        }
-        return map;
     }
 
     @Override

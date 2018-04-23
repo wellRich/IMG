@@ -106,7 +106,7 @@ public class QueryFilter implements Serializable {
             case OPR_BETWEEN:
                 try {
                     Object[] objects = (Object[])value;
-                    sql.append(" ").append(field).append(" ").append(operator).append(" '").append(objects[0]).append(" AND ").append(objects);
+                    sql.append(" ").append(field).append(" ").append(operator).append(" '").append(objects[0]).append("' AND '").append(objects[1]).append("'");
                 }catch (Exception ex){
                     log.error("QueryFilter.toSqlPart---> " + ex.getMessage());
                 }

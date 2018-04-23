@@ -1,4 +1,4 @@
-define(['avalon','jquery','bootstrap', 'text!./rzc_jianli.js'], function (avalon,$,_rzc_jianli) {
+define(['avalon','jquery','bootstrap', 'ajaxConfig', 'text!./rzc_jianli.js'], function (avalon,$,_rzc_jianli) {
   avalon.templateCache._rzc_jianli = _rzc_jianli;
 
   var rzc_jianli_vm = avalon.define({
@@ -79,7 +79,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_jianli.js'], function (avalon
    */
   function buildRequest(){
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/buildRequest',
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/buildRequest',
       type: 'GET',
       success: function(da){
         var res = JSON.parse(da);
@@ -106,7 +106,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_jianli.js'], function (avalon
     // console.log(zoningCode);
     total = total || 0;
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/ZoningChangeRequestList?zoningCode='+zoningCode
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/ZoningChangeRequestList?zoningCode='+zoningCode
       +'&pageSize='+pageSize+'&pageIndex='+pageIndex+'&total='+total,
       type: 'GET',
       success: function (da) {
@@ -125,7 +125,7 @@ define(['avalon','jquery','bootstrap', 'text!./rzc_jianli.js'], function (avalon
    */
   function addZoningChangeRequest(name,levelCode,notes){
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/addZoningChangeRequest',
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/addZoningChangeRequest',
       type: 'POST',
       data: {
         name: name,

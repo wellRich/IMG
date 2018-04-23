@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.digital.util.EntityHelper;
 import com.digital.util.search.QueryFilter;
 import com.digital.util.search.QueryReq;
 import org.apache.poi.ss.usermodel.*;
@@ -61,53 +62,23 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     private HistoricalZoningChangeMapper historicalZoningChangeMapper;
 
 
-    /**
-     * 通过区划代码查找申请单
-     * 数据用来初始化申请单创建页面
-     * @param levelCode 区划级别代码
-     * @param zoningName 区划名称
-     * @param pageSize 每页数据量
-     * @param pageIndex 请求的页码
-     * @param totalRecord 数据总量，首次查询为空，随后的查询，就从前台传来
-     * @return 申请单列表，分页
-     */
-    private Map<String, Object> findZCCReqByZoningLevelCode(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException {
-        QueryResp<ZCCRequest> queryResp = pageSeekByZoningCode(levelCode, pageIndex, pageSize, totalRecord);
-        Map<String, Object> objectMap = queryResp.toMap();
-        List respList = new ArrayList();
-        for (ZCCRequest zccRequest:queryResp.getDataList()){
-            Map cell = zccRequest.toMap();
-            cell.put("zoningName", zoningName);
-            respList.add(cell);
-        }
-        objectMap.put("dataList", respList);
-        return objectMap;
-    }
 
     /**
-     * 通过区划代码查找申请单
+     * 通过区划级别代码查找申请单
      * 数据用来初始化申请单创建页面
      * @param zoningCode 区划代码
      * @param pageIndex 请求的页码
      * @param pageSize 每页数据量
      * @param totalRecord 数据总量，首次查询为空，随后的查询，就从前台传来
-     * @return
+     * @return 分页封装对象QueryResp
      * @throws IllegalAccessException
      */
-    public Map<String, Object> findZCCReqByZoningCode(String zoningCode,  Integer pageIndex, Integer pageSize, Integer totalRecord)throws IllegalAccessException {
-        PreviewDataInfo info = previewDataInfoMapper.findValidOneByZoningCode(zoningCode);
-        if(info == null){
-            throw new RuntimeException("未找到登录人所属的区划代码[" + zoningCode +  "]对应和区划预览数据！");
-        } else {
-            return findZCCReqByZoningLevelCode(info.getLevelCode(), info.getDivisionName(), pageIndex, pageSize, totalRecord);
-        }
-    }
-
-    private QueryResp<ZCCRequest> pageSeekByZoningCode(String levelCode, Integer pageIndex, Integer pageSize, Integer totalRecord){
-        QueryResp<ZCCRequest> resp = QueryResp.buildQueryResp(pageIndex, pageSize, totalRecord, new QueryReq(){{
+    public QueryResp<ZCCRequest> findZCCReqByZoningCode(String zoningCode, Integer pageIndex, Integer pageSize, Integer totalRecord)throws IllegalAccessException {
+        String levelCode = Common.getLevelCode(zoningCode);
+        QueryResp<ZCCRequest> queryResp = QueryResp.buildQueryResp(pageIndex, pageSize, totalRecord, new QueryReq(){{
             addFilter("levelCode", levelCode + "%", QueryFilter.OPR_LIKE);
         }}, zccRequestMapper);
-        return resp;
+        return queryResp;
     }
 
 
@@ -115,6 +86,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     public int addZCCRequest(ZCCRequest req) {
         List<ZCCRequest> zccRequestList = findNotPassNationalCheckReq(req.getLevelCode());
         if(zccRequestList.size() == 0){
+            req.setStatus(Common.XZQH_SQDZT_WTJ);
             if(zccRequestMapper.insert(req) >  0){
                 return req.getSeq();
             }else {
@@ -134,16 +106,6 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      */
     public List<ZCCRequest> findNotPassNationalCheckReq(String levelCode) {
         return zccRequestMapper.findAllByZoningCodeAndStatus(levelCode, Common.XZQH_SQDZT_GJYSH);
-    }
-
-    /**
-     *  根据区划代码查找申请单
-     * @param zoningCode
-     * @return
-     */
-    @Override
-    public List<ZCCRequest> findZCCReqByLevelCode(String zoningCode) {
-        return zccRequestMapper.findAllByLevelCode(zoningCode);
     }
 
 
@@ -183,12 +145,13 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         Map<String, List<Map>> result = new HashMap<>();
         for (PreviewDataInfo dataInfo : previewDataInfos) {
             if (result.containsKey(dataInfo.getAssigningCode())) {
-                Map mapData = dataInfo.toMap();
+                log.info("findPreviewByZoningCode----> " + JSONHelper.toJSON(dataInfo));
+                Map mapData = EntityHelper.toMap(dataInfo);
                 mapData.put("superLevelCode", Common.getLevelCode(dataInfo.getSuperiorZoningCode()));
                 result.get(dataInfo.getAssigningCode()).add(mapData);
             } else {
                 List<Map> cell = new ArrayList<>();
-                Map mapData = dataInfo.toMap();
+                Map mapData = EntityHelper.toMap(dataInfo);
                 mapData.put("superLevelCode", Common.getLevelCode(dataInfo.getSuperiorZoningCode()));
                 cell.add(mapData);
                 result.put(dataInfo.getAssigningCode(), cell);
@@ -207,7 +170,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         List<Map> result = new ArrayList<>();
         String levelCode = Common.getLevelCode(zoningCode);
         for (PreviewDataInfo info: previewDataInfoMapper.findSubordinateZoning(zoningCode)){
-            Map cell = info.toMap();
+            Map cell = EntityHelper.toMap(info);
             cell.put("superLevelCode", levelCode);
             result.add(cell);
         }
@@ -615,36 +578,13 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
             }}, zccDetailMapper);
             List details = new ArrayList();
             for(ZCCDetail obj:(List<ZCCDetail>) resp.getDataList()){
-                Map cell = obj.toMap();
+                Map cell = EntityHelper.toMap(obj);
                 cell.put("notes", groupSeqAndName.get(obj.getGroupSeq()));
                 details.add(cell);
             }
             resp.setDataList(details);
             return resp;
         }
-    }
-
-    /**
-     * 初始化区划变更申请单维护界面
-     * @param levelCode 区划级别代码
-     * @param pageIndex 当前页码
-     * @param zoningName 区划名称
-     * @param pageSize 每页总数
-     * @param total 查询总数
-     * @return 分页查询对象
-     */
-    @Override
-    public Map<String, Object> initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer total) throws IllegalAccessException {
-        QueryResp<ZCCRequest> resp = pageSeekByLevelCodeAndStatuses(levelCode, pageIndex, pageSize, total);
-        Map<String, Object> result = resp.toMap();
-        List respList = new ArrayList();
-        for (ZCCRequest zccRequest : resp.getDataList()) {
-            Map cell = zccRequest.toMap();
-            cell.put("zoningName", zoningName);
-            respList.add(cell);
-        }
-        result.put("dataList", respList);
-        return result;
     }
 
 
@@ -1156,20 +1096,25 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
      * @return list
      */
     @Override
-    public QueryResp<ZCCRequest> findNotSubmitReq(Integer pageIndex, Integer pageSize, Integer total) {
-        QueryResp<ZCCRequest> resp = new QueryResp<>(pageIndex, pageSize);
+    public QueryResp<ZCCRequest> checkNotSubmitReq(String levelCode, Integer pageIndex, Integer pageSize, Integer total) {
+        /*QueryResp<ZCCRequest> resp = new QueryResp<>(pageIndex, pageSize);
 
-        /*
+        *//*
         未提交的申请单状态：未提交的、审批不通过的
-         */
-        resp.query(() -> zccRequestMapper.pageSeekByStatuses(resp.getOffset(), pageSize, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ));
+         *//*
+        resp.query(() -> zccRequestMapper.pageSeekByStatusesAndLevelCode(levelCode, resp.getOffset(), pageSize, Common.XZQH_SQDZT_SHBTG, Common.XZQH_SQDZT_WTJ));
 
         if(total == 0){
             resp.count(() -> zccRequestMapper.countByStatuses(Common.XZQH_SQDZT_SHBTG + "," +  Common.XZQH_SQDZT_WTJ));
         }else {
             resp.setTotalRecord(total);
-        }
-        return resp;
+        }*/
+        QueryReq req = new QueryReq("seq,levelCode,zoningName"){{
+            addFilter("status", Common.XZQH_SQDZT_SHBTG + "," +  Common.XZQH_SQDZT_WTJ, QueryFilter.OPR_IN);
+        }};
+
+        QueryResp<ZCCRequest> queryResp = QueryResp.buildQueryResp(pageIndex, pageSize, total, req, zccRequestMapper);
+        return queryResp;
     }
 
     /**

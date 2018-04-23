@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CivilAffairDataMapper {
@@ -34,7 +35,7 @@ public interface CivilAffairDataMapper {
      */
    // @InsertProvider(type = CivilAffairDataMapperSql.class,method = "insertCivilAffairZip")
     // @Options(useGeneratedKeys = true,keyProperty = "zipXh",keyColumn = "zipXh")
-    int insertCivilAffairZip(CivilAffairDataUpload fileInfo);
+    int insertCivilAffairZip(CivilAffairDataUpload fileInfo) throws  RuntimeException;
 
     /**
      * @description 上传民政区划，并记录基本信息
@@ -48,7 +49,7 @@ public interface CivilAffairDataMapper {
             @Result(property = "zipXh", column = "zipXh", javaType = Integer.class),
             @Result(property = "fileName", column = "WJM", javaType = String.class),
             @Result(property = "filePath", column = "WJLJ", javaType = String.class),
-            @Result(property = "status", column = "ZT_DM", javaType = String.class),
+            @Result(property = "status", column = "ZT_DM", javaType = Integer.class),
             @Result(property = "date", column = "RQ", javaType = String.class),
             @Result(property = "comment", column = "BZ", javaType = String.class),
             @Result(property = "enterOneCode", column = "LRR_DM", javaType = String.class),
@@ -68,6 +69,15 @@ public interface CivilAffairDataMapper {
     //@Options(useGeneratedKeys = true,keyProperty = "zipXh",keyColumn = "zipXh")
     //@ResultType(value = Integer.class)
     int  insertCivilAffairDate(List<CivilAffairZoningCode> civilAffairZoningCodes);
+
+    /**
+     * 修改上传文件状态
+     * @param zipXh
+     * @param status
+     * @return
+     */
+    @Update("UPDATE xzqh_mzsjzip SET zt_dm = #{status} WHERE zipXh=#{zipXh}")
+    int  updateCivilAffairZipStatus(@Param("zipXh") int zipXh,@Param("status") int status);
 
     /**
      * @description 民政区划数据预览
@@ -98,4 +108,17 @@ public interface CivilAffairDataMapper {
             @Result(property = "zoningName", column = "xzqh_mc", javaType = String.class)
     })
     List<CivilAffairZoningCode> downCivilAffairZoningCode(@Param("superiorZoningCode") String superiorZoningCode);
+
+    /**
+     * 民政区划数据与行政区划区划数据比较
+     * @param id
+     * @return
+     */
+    List<Map<String,Object>> selectCYDate(@Param("id") String id);
+
+    /**
+     * 清空民政区划数据
+     */
+    @Delete("delete from xzqh_mzsj")
+    void deleteCivilAffairZoningCode();
 }

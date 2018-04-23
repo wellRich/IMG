@@ -1,4 +1,4 @@
-define(['avalon', 'jquery', 'bootstrap','text!./rzc_chaxun.js'], function (avalon, $, _rzc_chaxun) {
+define(['avalon', 'jquery', 'bootstrap', 'ajaxConfig', 'text!./rzc_chaxun.js'], function (avalon, $, _rzc_chaxun) {
   avalon.templateCache._rzc_chaxun = _rzc_chaxun;
 
   var rzc_chaxun_vm = avalon.define({
@@ -282,7 +282,7 @@ define(['avalon', 'jquery', 'bootstrap','text!./rzc_chaxun.js'], function (avalo
     var date = date || "";
     var zoningCode = zoningCode || "000000";
     $.ajax({
-      url: 'http://localhost:8251/zoning/query/fileInfo?zoningCode='+ zoningCode 
+      url: 'http://'+ ip +':'+ port +'/zoning/query/fileInfo?zoningCode='+ zoningCode 
       +'&date=' + date + '&pageSize=' + pageSize + '&pageNum=' + pageNum,
       type: 'GET',
       success: function (da) {
@@ -311,7 +311,7 @@ define(['avalon', 'jquery', 'bootstrap','text!./rzc_chaxun.js'], function (avalo
    */
   function queryTemporaryData(fileSquence,zoningCode,errorStatus,typeCode,pageNum,pageSize){
     $.ajax({
-      url: 'http://localhost:8251/queryTemp/query/checkedData?fileSquence=' + fileSquence
+      url: 'http://'+ ip +':'+ port +'/queryTemp/query/checkedData?fileSquence=' + fileSquence
         + '&zoningCode=' + zoningCode + '&errorStatus=' + errorStatus + '&typeCode=' + typeCode
         + '&pageNum=' + pageNum + '&pageSize=' + pageSize,
       type: 'GET',
@@ -338,7 +338,7 @@ define(['avalon', 'jquery', 'bootstrap','text!./rzc_chaxun.js'], function (avalo
    */
   function checkAndImport(fileSquence){
     $.ajax({
-      url:'http://localhost:8251/importTemp/code/checkAndImport?fileSquence='+fileSquence,
+      url:'http://'+ ip +':'+ port +'/importTemp/code/checkAndImport?fileSquence='+fileSquence,
       type: 'GET',
       success: function(da){
         var res = JSON.parse(da);
@@ -355,7 +355,7 @@ define(['avalon', 'jquery', 'bootstrap','text!./rzc_chaxun.js'], function (avalo
    */
   function modifyTypeCode(fileSquence, typeCode) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/update/modifyTypeCode?fileSquence='+fileSquence
+      url: 'http://'+ ip +':'+ port +'/zoning/update/modifyTypeCode?fileSquence='+fileSquence
       +'&typeCode='+typeCode,
       type: 'GET',
       success: function (da) {
@@ -379,7 +379,7 @@ define(['avalon', 'jquery', 'bootstrap','text!./rzc_chaxun.js'], function (avalo
    * @param {string} errorStatus 错误标志状态码
    */
   function downloadChangeData(fileSquence,errorStatus){
-      window.location.href = 'http://localhost:8251/queryTemp/query/downloadData?fileSquence='+fileSquence
+      window.location.href = 'http://'+ ip +':'+ port +'/queryTemp/query/downloadData?fileSquence='+fileSquence
       +'&errorStatus='+errorStatus
   }
   avalon.scan(document.body);

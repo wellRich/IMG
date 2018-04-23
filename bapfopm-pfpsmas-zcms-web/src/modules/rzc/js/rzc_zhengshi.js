@@ -1,4 +1,4 @@
-define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_zhengshi.js'], function (avalon, _rzc_zhengshi) {
+define(['avalon', 'jquery', 'bootstrap', 'ajaxConfig', 'text!./rzc_zhengshi.js'], function (avalon, _rzc_zhengshi) {
   avalon.templateCache._rzc_zhengshi = _rzc_zhengshi;
 
   var rzc_zhengshi_vm = avalon.define({
@@ -140,7 +140,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_zhengshi.js'], function (av
    */
   function checkAndImport(fileSquence) {
     $.ajax({
-      url: 'http://localhost:8251/importTemp/code/checkAndImport?fileSquence=' + fileSquence,
+      url: 'http://'+ ip +':'+ port +'/importTemp/code/checkAndImport?fileSquence=' + fileSquence,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -157,7 +157,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_zhengshi.js'], function (av
    */
   function modifyTypeCode(fileSquence, typeCode) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/update/modifyTypeCode?fileSquence=' + fileSquence
+      url: 'http://'+ ip +':'+ port +'/zoning/update/modifyTypeCode?fileSquence=' + fileSquence
         + '&typeCode=' + typeCode,
       type: 'GET',
       success: function (da) {
@@ -186,7 +186,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_zhengshi.js'], function (av
     var date = date || "";
     var zoningCode = zoningCode || "000000";
     $.ajax({
-      url: 'http://localhost:8251/zoning/query/fileInfo?zoningCode=' + zoningCode 
+      url: 'http://'+ ip +':'+ port +'/zoning/query/fileInfo?zoningCode=' + zoningCode 
       + '&date=' + date + '&pageSize=' + pageSize + '&pageNum=' + pageNum,
       type: 'GET',
       success: function (da) {
@@ -210,7 +210,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_zhengshi.js'], function (av
  */
   function checkAndImport(fileSquence) {
     $.ajax({
-      url: 'http://localhost:8251/importTemp/code/checkAndImport?fileSquence=' + fileSquence,
+      url: 'http://'+ ip +':'+ port +'/importTemp/code/checkAndImport?fileSquence=' + fileSquence,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);

@@ -5,6 +5,7 @@
 			<span>{{$index+1}}.{{el.name}}</span>
 		</a>
 	</div>
+
 	<div class="examine-content">
 		<div class="upload-results">
 			<table class="results-show">
@@ -33,7 +34,6 @@
 							 ms-data-status="el.status" ms-on-click="getIsSelectAll()"/>
 							<label ms-attr-for="fileSquence-{{el.seq}}" class="checkbox-label"></label>
 							<span class="all">{{el.seq}}</span>
-							<!-- 白框 -->
 						</td>
 						<td class="tb-xz th-qhdm">
 							<em>{{el.levelCode}}</em>
@@ -102,8 +102,10 @@
 		<input type="button" value="审核不通过" class="bttn printing" 
 		ms-data-ispassed="false" ms-on-click="showPrompt()">
 
-		<input type="button" value="导出打印" class="bttn refresh">
+		<input type="button" value="导出打印" class="bttn refresh" 
+		ms-on-click="getExportExcel()">
 	</div>
+
 	<div class="adjustment-instructions">
 		<div class="upload-results">
 			<table class="results-show">
@@ -119,23 +121,52 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- <tr>
-						<td class="tb-xz">310000</td>
-						<td class="tb-xz">310000</td>
-						<td class="tb-xz">全国</td>
-						<td class="tb-xz">310000</td>
-						<td class="tb-xz">310000</td>
-						<td class="tb-xz">310000</td>
-						<td class="tb-xz">310000</td>
-						<td class="tb-xz">310000</td>
-					</tr> -->
+					<tr ms-repeat-el="data.details">
+						<td class="tb-xz">{{el.notes}}</td>
+						<td class="tb-xz">{{el.originalZoningCode}}</td>
+						<td class="tb-xz">{{el.originalZoningName}}</td>
+						<td class="tb-xz">{{el.changeType}}</td>
+						<td class="tb-xz">{{el.currentZoningCode}}</td>
+						<td class="tb-xz">{{el.currentZoningName}}</td>
+						<td class="tb-xz">{{el.creatorDate}}</td>
+					</tr>
 				</tbody>
 			</table>
-			<div class="no">无显示记录</div>
+			<div class="no" ms-if="!data.details.length">无显示记录</div>
 		</div>
 	</div>
 
-	<!-- 添加变更申请单提示框 -->
+	<!-- 分页 -->
+	<div class="paging">
+		<ul class="pagination">
+			<li class="previous">
+				<a href="javascript:;" ms-on-click="getPreviousDate()">上一页</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageIndex}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageIndex+1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageIndex+2}}</a>
+			</li>
+			<li>
+				<a href="javascript:;">...</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.totalPage-1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.totalPage}}</a>
+			</li>
+			<li class="next">
+				<a href="javascript:;" ms-on-click="getNextDate()">下一页</a>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 添加审批意见提示框 -->
 	<div class="mask" ms-if="data.isShowPrompt"></div>
 	<div class="dialog" ms-if="data.isShowPrompt">
 		<div class="dialog-top">
@@ -159,8 +190,8 @@
 			</div>
 		</div>
 	</div>
-</div>
 
+</div>
 
 <style lang="less">
 	input[type="checkbox"] {
@@ -435,7 +466,7 @@
 		display: inline-block;
 		border-radius: 5px;
 		margin-bottom: -3px;
-		margin-left: 45px;
+		margin-left: 6px;
 	}
 
 	#rozc-shenhe .examine-content .upload-results .results-show .tb-xz .all {

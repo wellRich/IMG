@@ -1,4 +1,4 @@
-define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_linshi.js'], function (avalon, $, _rzc_linshi) {
+define(['avalon', 'jquery', 'bootstrap', 'ajaxConfig', 'text!./rzc_linshi.js'], function (avalon, $, _rzc_linshi) {
   avalon.templateCache._rzc_linshi = _rzc_linshi;
 
   var rzc_linshi_vm = avalon.define({
@@ -108,7 +108,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_linshi.js'], function (aval
   //  上传文件查询接口  
   function queryFocusChangeFileInfo(pageNum, pageSize) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/query/fileInfo?zoningCode=370000&&date=&&pageSize=' + pageSize + '&&pageNum=' + pageNum,
+      url: 'http://'+ ip +':'+ port +'/zoning/query/fileInfo?zoningCode=370000&&date=&&pageSize=' + pageSize + '&&pageNum=' + pageNum,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -125,7 +125,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_linshi.js'], function (aval
   //  文件状态修改接口
   function modifyTypeCode(fileSquence, typeCode) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/update/modifyTypeCode?fileSquence='+fileSquence+'&typeCode='+typeCode,
+      url: 'http://'+ ip +':'+ port +'/zoning/update/modifyTypeCode?fileSquence='+fileSquence+'&typeCode='+typeCode,
       type: 'GET',
 
       success: function (da) {
@@ -144,7 +144,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_linshi.js'], function (aval
   //  导入临时表接口
   function importTemporary(fileSquence) {
     $.ajax({
-      url: 'http://localhost:8251/importTemp/code/decompression?instructionCode=1&fileSquence=' + fileSquence,
+      url: 'http://'+ ip +':'+ port +'/importTemp/code/decompression?instructionCode=1&fileSquence=' + fileSquence,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);

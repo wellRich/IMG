@@ -1,4 +1,4 @@
-define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_shangchuan.js'], function (avalon, $, _rzc_shangchuan) {
+define(['avalon', 'jquery', 'bootstrap', 'ajaxConfig', 'text!./rzc_shangchuan.js'], function (avalon, $, _rzc_shangchuan) {
   avalon.templateCache._rzc_shangchuan = _rzc_shangchuan;
 
   var rzc_shangchuan_vm = avalon.define({
@@ -192,8 +192,9 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_shangchuan.js'], function (
   function codeUpload(formId) {
     var formObj = $(formId)[0];
     var formData = new FormData(formObj);
+    console.log(formData);
     $.ajax({
-      url: 'http://localhost:8251/zoning/upload/zipFile',
+      url: 'http://'+ ip +':'+ port +'/zoning/upload/zipFile',
       type: 'POST',
       data: formData,
       // 告诉jQuery不要去处理发送的数据
@@ -221,7 +222,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_shangchuan.js'], function (
   function queryFocusChangeFileInfo(zoningCode, date, pageNum, pageSize) {
     date = date || "";
     $.ajax({
-      url: 'http://localhost:8251/zoning/query/fileInfo?zoningCode=' + zoningCode + '&date='+ date +'&pageSize='
+      url: 'http://'+ ip +':'+ port +'/zoning/query/fileInfo?zoningCode=' + zoningCode + '&date='+ date +'&pageSize='
         + pageSize + '&&pageNum=' + pageNum,
       type: 'GET',
       success: function (da) {
@@ -248,7 +249,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_shangchuan.js'], function (
    */
   function checkFileStatus(fileSquence) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/query/fileStatusCode?fileSquence=' + fileSquence,
+      url: 'http://'+ ip +':'+ port +'/zoning/query/fileStatusCode?fileSquence=' + fileSquence,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -272,7 +273,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_shangchuan.js'], function (
    */
   function deleteFileInfo(fileSquence) {
     $.ajax({
-      url: 'http://localhost:8251/zoning/delete/zipFile?fileSquence=' + fileSquence,
+      url: 'http://'+ ip +':'+ port +'/zoning/delete/zipFile?fileSquence=' + fileSquence,
       type: 'GET',
       success: function (da) {
         res = JSON.parse(da);
@@ -285,6 +286,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_shangchuan.js'], function (
       }
     })
   }
+  console.log(ip,port);
 
   avalon.scan(document.body);
 })

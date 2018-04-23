@@ -1,12 +1,6 @@
 package com.digital.util.search;
 
-import com.github.pagehelper.PageInfo;
-
-import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -45,15 +39,6 @@ public final class QueryResp<T>{
     实体数据
      */
     private List<T> dataList;
-
-    public Map<String, Object> toMap() throws IllegalAccessException{
-        Map<String, Object> map = new HashMap<>();
-        Field[] fields = this.getClass().getDeclaredFields();
-        for (Field field: fields){
-            map.put(field.getName(), field.get(this));
-        }
-        return map;
-    }
 
     public QueryResp() {
     }

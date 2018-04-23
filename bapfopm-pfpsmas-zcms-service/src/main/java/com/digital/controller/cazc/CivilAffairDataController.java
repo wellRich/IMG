@@ -11,6 +11,7 @@ import com.digital.util.RedisUtils;
 import com.digital.util.StringUtil;
 import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhangwei
@@ -77,6 +79,7 @@ public class CivilAffairDataController extends BaseController {
                     fileInfo.setComment("成功");
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
                     fileInfo.setEnterTime(new Date());
+                    fileInfo.setStatus(10);
                     //插入数据库
                     int num = civilaffairDataApi.insertCivilAffairZip(fileInfo);
                 }else
@@ -90,17 +93,22 @@ public class CivilAffairDataController extends BaseController {
     /**
      * 查询民政区划上传zip文件的信息
      * @param pageSize
-     * @param pageIndex
-     * @param totalRecord
      * @return
      */
     @RequestMapping(value = "/selectCivilAffairZip", method = RequestMethod.POST)
     @ResponseBody
-    public String selectCivilAffairZip(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageIndex") Integer pageIndex, @RequestParam("totalRecord") Integer totalRecord){
+    public String selectCivilAffairZip(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,pageSize);
         List<CivilAffairDataUpload>  list= civilaffairDataApi.selectCivilAffairZip();
-        //将查询结果转换成json字符串
-        String result = JSONHelper.toJSON(list);
-        System.out.println(result);
+        PageHelper.count(()->{
+            civilaffairDataApi.selectCivilAffairZip();
+        });
+
+        if (list.isEmpty()) {
+            //没有查到数据
+        }
+       // String result = new RtnData(String.valueOf(count),list).toString();
+        String result  =  JSONHelper.toJSON(list);
         return result;
     }
     /**
@@ -114,27 +122,34 @@ public class CivilAffairDataController extends BaseController {
     public String insertCivilAffairData(@RequestParam("zipXh") Integer zipXh,@RequestParam("filePath") String filePath){
            //判断是否有值 @RequestParam("filePath") String filePath
        //  String filePath = "E:/YLQHworkspace/upload/temp/mzqhdm_20170403.zip";
+       int num =  civilaffairDataApi.updateCivilAffairZipStatus(zipXh,20); //20表示处理中
+       if(num <= 0){
+           return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "状态修改失败！").toString();
+       }else
+       {
+           if (!StringUtil.isEmpty(filePath)) {
+               //文件内容校验
+               List<CivilAffairZoningCode> civilAffairZoningCodes = CivilAffairUtil.getContent(zipXh, filePath);
+               if (civilAffairZoningCodes.size() > 0) {
+                   //将list拆分成n份
+                   List<List<CivilAffairZoningCode>> lists = CivilAffairUtil.averageAssign(civilAffairZoningCodes, 100);
+                   try {
+                       //遍历拆分后的list,插入到民政区划数据中
+                       int resultNum =  civilaffairDataApi.insertCivilAffairDate(lists,civilAffairZoningCodes.size(),zipXh);
+                   }catch (RuntimeException e){
+                       logger.error("导入数据失败"+e);
+                       civilaffairDataApi.updateCivilAffairZipStatus(zipXh,21); //20表示数据导入失败
+                       return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "导入数据失败！").toString();
+                   }
 
-         String key = "civilAffairZoningCodes";
-           if(!StringUtil.isEmpty(filePath)){
-             //文件内容校验
-               List<CivilAffairZoningCode> civilAffairZoningCodes  =  CivilAffairUtil.getContent(zipXh,filePath);
-              if(civilAffairZoningCodes.size()>0){
-                  //将list拆分成n份
-                  List<List<CivilAffairZoningCode>> lists= CivilAffairUtil.averageAssign(civilAffairZoningCodes,100);
-                 //遍历拆分后的list
-                  System.out.println(new Date());
-                  for(int i = 0;i<lists.size();i++){
-                      civilaffairDataApi.insertCivilAffairDate(lists.get(i));
-                  }
-                  System.out.println(new Date());
-              }else{
-                  return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_MESSAGE_ERROR,"文件内容不符合规范！").toString();
-              }
-           }else{
-               return new RtnData(Constants.RTN_CODE_ERROR,Constants.RTN_MESSAGE_ERROR,"文件不存在或路径不正确！").toString();
+               } else {
+                   return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "文件内容不符合规范！").toString();
+               }
+           } else {
+               return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR, "文件不存在或路径不正确！").toString();
            }
-        return new RtnData(Constants.RTN_CODE_SUCCESS,Constants.RTN_MESSAGE_SUCCESS,"数据导入成功！").toString();
+           return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, "数据导入成功！").toString();
+       }
     }
 
     /**
@@ -167,5 +182,16 @@ public class CivilAffairDataController extends BaseController {
         }
     }
 
-
+    /**
+     * /**
+     * 民政区划数据与行政区划区划数据比较
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/selectCYDate",method = RequestMethod.GET)
+    @ResponseBody
+    public String selectCYDate(@RequestParam("id") String id){
+        List<Map<String,Object>> list = civilaffairDataApi.selectCYDate(id);
+         return JSONHelper.toJSON(list);
+    }
 }

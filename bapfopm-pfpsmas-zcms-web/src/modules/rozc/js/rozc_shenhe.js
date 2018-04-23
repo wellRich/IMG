@@ -1,4 +1,4 @@
-define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_shenhe.js'], function (avalon, _rozc_shenhe) {
+define(['avalon', 'jquery', 'bootstrap', 'ajaxConfig', 'text!./rozc_shenhe.js'], function (avalon, _rozc_shenhe) {
   avalon.templateCache._rozc_shenhe = _rozc_shenhe;
 
   var rozc_shenhe_vm = avalon.define({
@@ -166,7 +166,19 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_shenhe.js'], function (ava
       // console.log(msg);
 
       provincialCheck(seqStr,isPassed,msg);
-    }
+    },
+
+    /**
+     * 导出导出变更明细对照数据
+     */
+    getExportExcel: function(){
+      rozc_shenhe_vm.data.requestSeq = $('input[type=checkbox]:checked').data('requestseq');
+      console.log(rozc_shenhe_vm.data.requestSeq);
+
+        //  是否要查询有明细数据
+
+        exportExcel(rozc_shenhe_vm.data.requestSeq);   
+    },
   })
 
   /**
@@ -213,7 +225,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_shenhe.js'], function (ava
    */
   function buildRequest() {
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/buildRequest',
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/buildRequest',
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -240,7 +252,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_shenhe.js'], function (ava
     // console.log(zoningCode);
     total = total || 0;
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/ZoningChangeRequestList?zoningCode=' + zoningCode
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/ZoningChangeRequestList?zoningCode=' + zoningCode
         + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex + '&total=' + total,
       type: 'GET',
       success: function (da) {
@@ -259,16 +271,21 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_shenhe.js'], function (ava
    * @param 区划变更申请单序号 requestSeq 
    */
   function checkDetails(requestSeq){
+    rozc_shenhe_vm.data.details = [];
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/checkDetails?seq=' + requestSeq,
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/checkDetails?seq=' + requestSeq,
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
         console.log(res);
 
         if (res.rtnCode === "000000") {
-          rozc_shenhe_vm.data.details = res.responseData.dataList;
-          console.log(rozc_shenhe_vm.data.details);
+          if(res.responseData.dataList === null){
+            alert("欧尼酱,我看不到数据!!!")
+          }else{
+            rozc_shenhe_vm.data.details = res.responseData.dataList;
+            console.log(rozc_shenhe_vm.data.details);
+          } 
         }
       }
     })
@@ -281,9 +298,9 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_shenhe.js'], function (ava
    * @param {string} msg 审批意见
    */
   function provincialCheck(seqStr, isPassed, msg) {
-    msg = msg || "审核通过!"
+    msg = msg || "审核通过!";
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/provincialCheck?seqStr=' + seqStr
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/provincialCheck?seqStr=' + seqStr
         + '&isPassed=' + isPassed + '&msg=' + msg,
       type: 'GET',
       success: function (da) {
@@ -299,5 +316,13 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rozc_shenhe.js'], function (ava
         }
       }
     })
+  }
+
+  /**
+   * 导出变更明细对照数据接口  excel表格式
+   * @param 申请单序号 requestSeq 
+   */
+  function exportExcel(requestSeq){
+    window.location.href = 'http://'+ ip +':'+ port +'/zoningChangeManager/exportExcel?seq='+requestSeq 
   }
 })

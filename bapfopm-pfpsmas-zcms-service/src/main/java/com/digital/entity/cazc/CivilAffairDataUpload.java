@@ -27,7 +27,7 @@ public class CivilAffairDataUpload implements Serializable {
     /*
     状态
      */
-    private String status;
+    private Integer status;
     /*
     日期
      */
@@ -77,11 +77,11 @@ public class CivilAffairDataUpload implements Serializable {
         this.filePath = filePath;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

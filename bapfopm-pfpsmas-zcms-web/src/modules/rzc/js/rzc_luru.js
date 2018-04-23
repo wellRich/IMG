@@ -1,7 +1,16 @@
-define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon, _rzc_luru) {
+define(['avalon', 'jquery', 'zTreeCheck', 'zTreeSearch', 'bootstrap', 'ajaxConfig', 'text!./rzc_luru.js'], function(avalon, _rzc_luru, ztree) {
     avalon.templateCache._rzc_luru = _rzc_luru;
 
+    //gyk的函数命名空间
     var ZC = {};
+    ZC.ADD = '11', ZC.CHANGE = '21', ZC.MERGE = '31', ZC.MOVE = '41';
+    ZC.changeTypes = {
+        '11': {value: ZC.ADD, label: '新增', display: 'black'},
+        '21': {value: ZC.CHANGE, label: '变更', display: 'black'},
+        '31': {value: ZC.MERGE, label: '并入'},
+        '41': {value: ZC.MOVE, label: '迁移'}
+    };
+
     var rzc_luru_vm = avalon.define({
         $id: "rzc_luru",
         data: {
@@ -9,28 +18,25 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
                 name: "建立变更对照表",
                 routerPath: "#!/rzc/rzc_jianli",
                 imgPath: "./src/modules/rzc/img/gray.png"
-            },
-                {
-                    name: "录入变更明细",
-                    routerPath: "#!/rzc/rzc_luru",
-                    imgPath: "./src/modules/rzc/img/blue.png"
-                },
-                {
-                    name: "维护变更对照表",
-                    routerPath: "#!/rzc/rzc_weihu",
-                    imgPath: "./src/modules/rzc/img/black.png"
-                },
-                {
-                    name: "提交变更对照表",
-                    routerPath: "#!/rzc/rzc_tijiao",
-                    imgPath: "./src/modules/rzc/img/black.png"
-                },
-                {
-                    name: "撤销变更对照表",
-                    routerPath: "#!/rzc/rzc_chexiao",
-                    imgPath: "./src/modules/rzc/img/black.png"
-                },
-            ],
+            }, {
+                name: "录入变更明细",
+                routerPath: "#!/rzc/rzc_luru",
+                imgPath: "./src/modules/rzc/img/blue.png"
+            }, {
+                name: "维护变更对照表",
+                routerPath: "#!/rzc/rzc_weihu",
+                imgPath: "./src/modules/rzc/img/black.png"
+            }, {
+                name: "提交变更对照表",
+                routerPath: "#!/rzc/rzc_tijiao",
+                imgPath: "./src/modules/rzc/img/black.png"
+            }, {
+                name: "撤销变更对照表",
+                routerPath: "#!/rzc/rzc_chexiao",
+                imgPath: "./src/modules/rzc/img/black.png"
+            }, ],
+            //每组区划对应的长度
+            maxLengths: [2, 2, 2, 3, 3, 3],
 
             //  省,市,县,乡,村,组 各级区划
             codeRank: {
@@ -73,12 +79,28 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
 
             //  显隐开关
             iconToggle: false,
+
+            isShowDialog: false, //选择目标区划的模态框的显隐开头
+
+            searchValue: "",//用于对区划树进行模糊匹配的值
+
+            zTreeObj: {}, //选择目标区划的zTree实例对象
+
+            /**
+             * 用于控制变更类型下拉框中的待选项的显隐
+             */
+            changeTypeMap: {
+                '11': {value: ZC.ADD, label: '新增', display: 'black'},
+                '21': {value: ZC.CHANGE, label: '变更', display: 'black'},
+                '31': {value: ZC.MERGE, label: '并入', display: 'black'},
+                '41': {value: ZC.MOVE, label: '迁移', display: 'black'}
+            }
         },
 
         /**
          * 获取子级区划代码
          */
-        getSubordinateZoning: function () {
+        getSubordinateZoning: function() {
             rzc_luru_vm.data.subZoningCode = $(this).data('zoningcode');
             rzc_luru_vm.data.subAssigningCode = $(this).data('assigningcode');
 
@@ -97,7 +119,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
         /**
          * 调整类型变更显示
          */
-        adjustmentTypeToggle: function () {
+        adjustmentTypeToggle: function() {
             rzc_luru_vm.data.adjustment_type = $(this).text();
             rzc_luru_vm.data.changeType = $(this).data('value');
             var subAssigningCode = rzc_luru_vm.data.subAssigningCode;
@@ -110,24 +132,193 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
 
             //  判断区划变更类型  之后可以提取出来
             switch (rzc_luru_vm.data.changeType) {
-                case 11:
+                case ZC.ADD:
                     $('[data-level=' + (subAssigningCode + 1) + ']').attr('readonly', false)
-                        .css('color', '#fff')
+                        .css('color', '#fff');
                     break;
-                case 21:
+                case ZC.CHANGE:
                     $('[data-level=' + (subAssigningCode) + ']').attr('readonly', false)
-                        .css('color', '#fff')
+                        .css('color', '#fff');
                     break;
-                case 31:
-                    rzc_luru_vm.data.iconToggle = true
+                case ZC.MERGE:
+                    rzc_luru_vm.data.iconToggle = true;
+                    $('[data-level=' + (subAssigningCode) + ']').attr('readonly', false)
+                        .css('color', '#fff');
                     break;
-                case 41:
-                    rzc_luru_vm.data.iconToggle = true
+                case ZC.MOVE:
+                    rzc_luru_vm.data.iconToggle = true;
                     break;
                 default:
                     break;
             }
 
+        },
+
+        /**
+         * 重用变更
+         * 动态调整可选的变更类型，
+         * 重用变更时变更类型只能选择“变更”
+         * @param n dom对象
+         */
+        reusing: function(n){
+            console.log("n -----> ", n.checked);
+            if(n.checked){
+                console.log("'选择 重用' -----> ", '选择 重用');
+                rzc_luru_vm.data.ringFlag = 1;
+                rzc_luru_vm.data.changeTypes = [{value: ZC.CHANGE, label: '变更'}]
+            }else {
+                console.log("'取消 重用' -----> ", '取消 重用');
+                rzc_luru_vm.data.ringFlag = 0;
+                rzc_luru_vm.data.changeTypes = ZC.changeTypes;
+            }
+        },
+
+        //在区划树中查找、定位区划
+        // 查询条件为：通过区划名称（可以考虑增加区划代码为查询条件）区划，支持模糊匹配
+        findInTree: function(){
+
+            // 重写了zTreeSearch中的查询方法
+            // 清除高亮
+            var value = rzc_luru_vm.data.searchValue, zTreeObj = rzc_luru_vm.data.zTreeObj, allNodes = zTreeObj.transformToArray(zTreeObj.getNodes());
+            console.log("value -----> ", value);
+            for (var i in allNodes) {
+                allNodes[i].highlight = false;
+                zTreeObj.updateNode(allNodes[i]);
+            }
+            console.log("allNodes -----> ", allNodes);
+            if (value == '') return; // input '' wipe highlight
+
+
+            // 查询节点
+            var nodes = zTreeObj.getNodesByParamFuzzy('name', value);
+
+            console.log("nodes -----> ", nodes);
+
+            // 高亮显示匹配的节点，并展开
+            for (var i in nodes) {
+                nodes[i].highlight = true;
+                zTreeObj.updateNode(nodes[i]);
+                zTreeObj.expandNode(nodes[i].getParentNode(),true);
+
+                //定位到匹配的第一个节点
+                if (i == 0) {
+                    zTreeObj.selectNode(nodes[0]);
+                }
+            }
+        },
+
+        //选择一个区划作为并入或者迁移的目标
+        selectTargetZoning: function(){
+
+            // 1 获取选中的区划
+            var checkedZoning = rzc_luru_vm.data.zTreeObj.getCheckedNodes(true);
+
+            console.log(" selectTargetZoning.checkedZoning-----> ", checkedZoning);
+            if(checkedZoning.length > 0){
+
+                // 2 获取目标区划
+                // 区划树是单选的，所以取第一个即可
+                var targetZoning = checkedZoning[0];
+
+                // 3 填充现区划名称
+                rzc_luru_vm.data.targetZoningName = targetZoning.divisionName;
+
+                // 4 填充现区划代码
+
+                rzc_luru_vm.data.targetZoningCodeArray = sliceSpecifiedCode(targetZoning.zoningCode);
+
+                // 5 隐藏选择器
+                rzc_luru_vm.hiddenDialog();
+
+            }else {
+                rzc_luru_vm.hiddenDialog();
+            }
+        },
+
+        //加载待选择的并入、迁移的目标区划
+        findZoning: function(){
+            var checkedZoningCode =  rzc_luru_vm.data.originalZoningCode;
+            console.log('findZoning.code----->', checkedZoningCode);
+            if(checkedZoningCode !== '' && checkedZoningCode !== null){
+                // 变更类型不一样，展示的内容也不同
+                // 并入，获取同级区划，都是亲兄弟
+                if(rzc_luru_vm.data.changeType.toString() === ZC.MERGE){
+
+                    var subZoning = ZC.getSubZoning(ZC.getAssigningCode(checkedZoningCode));
+                    if(subZoning.length > 0){
+                        alert("将要进行并入操作的区划[" + checkedZoningCode + "]有下级区划，请将子级区划全部迁移至目标区划，再做本区划的并入操作！");
+                    }else {
+
+                        //1 获取操作区划、父级区划的级次代码
+                        var assigningCode = ZC.getAssigningCode(checkedZoningCode),
+
+                            //2 通过级次代码获取兄弟区划
+                            getOwnZoningCode = ZC.getOwnZoningCode,
+                            brothers = ZC.getZoningByAssCode(assigningCode).filter(function (e) {
+                                return e.zoningCode !== checkedZoningCode;
+                            }).map(function (e) {
+                                return ZC.translateZoningData(e, getOwnZoningCode);/*{
+                                    id: e.index,
+                                    divisionName: e.divisionName,
+                                    name: e.divisionName + ZC.getOwnZoningCode(e.zoningCode),
+                                    zoningCode: e.zoningCode
+                                }*/
+                            });
+
+
+                        //3 创建树
+                        ZC.buildZTree(brothers);
+
+                        var testData = [
+                            {
+                                id:1000,
+                                name: '老大',
+                                zoningCode: '69',
+                                children: brothers
+                            },
+                            {
+                                id:2000,
+                                name: '老二',
+                                zoningCode: '49',
+                                chkDisabled: true,
+                                children: [
+                                    {
+                                        id:1,
+                                        name: '燕京',
+                                        zoningCode: '1'
+                                    },
+                                    {
+                                        id:2,
+                                        name: '南京',
+                                        zoningCode: '2'
+                                    },
+                                    {
+                                        id:3,
+                                        name: '东京',
+                                        zoningCode: '3'
+                                    }
+                                ]
+                            },{
+                                id: 3000,
+                                name: '孤家寡人',
+                                zoningCode: '999'
+                            }
+                        ];
+                        //ZC.buildZTree(testData);
+
+                        //4 显示区划选择框
+                        rzc_luru_vm.showDialog();
+                    }
+                }
+                //迁移，获取叔伯区划，同根的（根——登录用户所在区划）
+                else if(rzc_luru_vm.data.changeType.toString() === ZC.MOVE){
+                    getUnclesZoning(checkedZoningCode);
+                    //显示区划选择框
+                    rzc_luru_vm.showDialog();
+                }
+            }else {
+               alert("请先选择将要操作的区划");
+            }
         },
 
         /**
@@ -151,14 +342,14 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
         /**
          * 保存变更明细
          */
-        getSaveChangeDetail: function () {
+        getSaveChangeDetail: function() {
             codeTransformation();
-            if (rzc_luru_vm.data.targetZoningCode !== "" && rzc_luru_vm.data.targetZoningName !== ""
-                && rzc_luru_vm.data.changeType !== "") {
+            if (rzc_luru_vm.data.targetZoningCode !== "" && rzc_luru_vm.data.targetZoningName !== "" &&
+                rzc_luru_vm.data.changeType !== "") {
                 var checkResult = ZC.checkAdd();
-                if(checkResult.success){
+                if (checkResult.success) {
                     saveChangeDetail();
-                }else {
+                } else {
                     alert(checkResult.msg);
                 }
             } else {
@@ -169,7 +360,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
         /**
          * 提交区划变更对照明细
          */
-        getSubmitDetails: function () {
+        getSubmitDetails: function() {
             var group = JSON.stringify(rzc_luru_vm.data.group.$model);
             var details = JSON.stringify(rzc_luru_vm.data.details.$model);
 
@@ -181,7 +372,19 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
             rzc_luru_vm.data.group = {};
             rzc_luru_vm.data.details = [];
         },
-        maxLengths: [2, 2, 2, 3, 3, 3]
+        /**
+         * 隐藏模态框
+         */
+        hiddenDialog: function() {
+            rzc_luru_vm.data.isShowDialog = false;
+        },
+
+        /**
+         * 显示模态框
+         */
+        showDialog: function() {
+            rzc_luru_vm.data.isShowDialog = true;
+        }
     })
 
     initAddDetails(rzc_luru_vm.data.zoningCode); //  页面数据初始化
@@ -204,6 +407,23 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
             }
         }
         return rzc_luru_vm.data.originalZoningCodeArray;
+    }
+
+    /**
+     * 切分指定的区划代码
+     * @param zoningCode
+     * @returns {Array}
+     */
+    function sliceSpecifiedCode(zoningCode) {
+        var zoningCodeArray = [];
+        for (var i = 0; i < 6; i++) {
+            if (i < 3) {
+                zoningCodeArray.push(zoningCode.substring(i * 2, (i + 1) * 2));
+            } else {
+                zoningCodeArray.push(zoningCode.substring((i - 1) * 3, i * 3));
+            }
+        }
+        return zoningCodeArray;
     }
 
     /**
@@ -292,9 +512,9 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
      */
     function buildRequest() {
         $.ajax({
-            url: 'http://localhost:8251/zoningChangeManager/buildRequest',
+            url: 'http://' + ip + ':' + port + '/zoningChangeManager/buildRequest',
             type: 'GET',
-            success: function (da) {
+            success: function(da) {
                 var res = JSON.parse(da);
                 rzc_luru_vm.data.zoningCode = res.responseData.zoningCode;
             }
@@ -308,9 +528,9 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
     function initAddDetails(zoningCode) {
         // console.log(zoningCode);
         $.ajax({
-            url: 'http://localhost:8251/zoningChangeManager/initAddDetails?zoningCode=' + zoningCode,
+            url: 'http://' + ip + ':' + port + '/zoningChangeManager/initAddDetails?zoningCode=' + zoningCode,
             type: 'GET',
-            success: function (da) {
+            success: function(da) {
                 var res = JSON.parse(da);
                 console.log(res);
                 if (res.rtnCode === "000000") {
@@ -339,9 +559,9 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
         rzc_luru_vm.data.targetZoningName = rzc_luru_vm.data.originalZoningName;
 
         $.ajax({
-            url: 'http://localhost:8251/zoningChangeManager/getSubordinateZoning?zoningCode=' + zoningCode,
+            url: 'http://' + ip + ':' + port + '/zoningChangeManager/getSubordinateZoning?zoningCode=' + zoningCode,
             type: 'GET',
-            success: function (da) {
+            success: function(da) {
                 var res = JSON.parse(da);
                 console.log(res.responseData);
                 var dataCode = res.responseData;
@@ -357,13 +577,34 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
      */
     function getBrothersZoning(zoningCode) {
         $.ajax({
-            url: 'http://localhost:8251/zoningChangeManager/getBrothersZoning?zoningCode=' + zoningCode,
+            url: 'http://' + ip + ':' + port + '/zoningChangeManager/getBrothersZoning?zoningCode=' + zoningCode,
             type: 'GET',
-            success: function (da) {
-                var res = JSON.parse(da);
+            success: function(da) {
+                var getOwnZoningCode = ZC.getOwnZoningCode;
+                ZC.buildZTree(JSON.parse(da).responseData.map(function (e) {
+                    return ZC.translateZoningData(e, getOwnZoningCode)
+                }));
             }
         })
     }
+
+    /**
+     * 获取上级区划接口
+     * @param 区划代码 zoningCode
+     */
+    function getUnclesZoning(zoningCode) {
+        $.ajax({
+            url: 'http://' + ip + ':' + port + '/zoningChangeManager/getUnclesZoning?zoningCode=' + zoningCode,
+            type: 'GET',
+            success: function(da) {
+                var getOwnZoningCode = ZC.getOwnZoningCode;
+                ZC.buildZTree(JSON.parse(da).responseData.map(function (e) {
+                    return ZC.translateZoningData(e, getOwnZoningCode)
+                }));
+            }
+        })
+    }
+
 
     /**
      * 提交区划变更对照明细接口
@@ -373,14 +614,14 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
      */
     function submitDetails(group, details, zoningCode) {
         $.ajax({
-            url: 'http://localhost:8251/zoningChangeManager/saveDetails',
+            url: 'http://' + ip + ':' + port + '/zoningChangeManager/saveDetails',
             type: 'POST',
             data: {
                 group: group,
                 details: details,
                 zoningCode: zoningCode,
             },
-            success: function (da) {
+            success: function(da) {
                 var res = JSON.parse(da);
                 console.log(res);
             }
@@ -392,80 +633,154 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
      * 点击保存明细时触发的校验
      * @param 区划信息 changeInfo
      */
-    ZC.checkAdd = function () {
+    ZC.checkAdd = function() {
         var changeInfo = {
-            originalZoningCode: rzc_luru_vm.data.originalZoningCode,
-            originalZoningName: rzc_luru_vm.data.originalZoningName,
-            targetZoningCode: rzc_luru_vm.data.targetZoningCode,
-            targetZoningName: rzc_luru_vm.data.targetZoningName,
-            changeType: rzc_luru_vm.data.changeType,
-            notes: rzc_luru_vm.data.notes,
-            level: rzc_luru_vm.data.level,
-            ringFlag: rzc_luru_vm.data.ringFlag,
-        }, req = "";
-        if(!/^3(\d){14}/.test(changeInfo.targetZoningCode)){
+                originalZoningCode: rzc_luru_vm.data.originalZoningCode,
+                originalZoningName: rzc_luru_vm.data.originalZoningName,
+                targetZoningCode: rzc_luru_vm.data.targetZoningCode,
+                targetZoningName: rzc_luru_vm.data.targetZoningName,
+                changeType: rzc_luru_vm.data.changeType,
+                notes: rzc_luru_vm.data.notes,
+                level: rzc_luru_vm.data.level,
+                ringFlag: rzc_luru_vm.data.ringFlag,
+            },
+            changeType = changeInfo.changeType.toString();
+        if (!/^3(\d){14}/.test(changeInfo.targetZoningCode)) {
             return {
-                msg:'现区划代码不是符合规范的15位阿拉伯数字',
+                msg: '现区划代码不是符合规范的15位阿拉伯数字',
                 success: false
             }
-        }else {
-            //获取同级区划
-            switch (changeInfo.changeType.toString()) {
-                //新增区划
-                case '11':
-                //return ZC.checkNameAndCode(changeInfo);
-                //变更
-                case '21':
-                //return ZC.checkNameAndCode(changeInfo);
+        } else {
 
-                //迁移
-                case '41':
+            if (changeType === ZC.ADD) {
+                return ZC.checkNameAndCode(changeInfo);
+            } else if (changeType === ZC.CHANGE) {
+                if (changeInfo.targetZoningCode === changeInfo.originalZoningCode && changeInfo.targetZoningName === changeInfo.originalZoningName) {
+                    return {
+                        success: false,
+                        msg: '无效的变更，原区划代码、原区划名称与现区划代码、现区划名称完全一致！'
+                    };
+                } else {
                     return ZC.checkNameAndCode(changeInfo);
-                //并入
-                case '31'://可以在选择并入对象时时做校验
-                default:
-                    break;
+                }
+            } else if (changeType === ZC.MERGE) {
+                //并入，可以在点击“选择并入对象”时，校验对象是否有子级区划
+                var targetAssCode = ZC.getAssigningCode(changeInfo.targetZoningCode),
+                    originalAssCode = ZC.getAssigningCode(changeInfo.originalZoningCode);
+                if (targetAssCode === originalAssCode) {
+                    return {
+                        success: false,
+                        msg: '并入的目标区划与原区划级次不一样！'
+                    };
+                } else {
+                    return {
+                        success: true,
+                        msg: '操作成功！'
+                    }
+                }
+            } else if (changeType === ZC.MOVE) {
+                return ZC.checkNameAndCode(changeInfo);
             }
         }
     };
+
+
+    //建立区划树，异步加载，做二级树，叶子节点是单选框
+    // 数据量可能有些大，需要做个分页
+    ZC.buildZTree = function (data, setting) {
+        console.log("buildZTree.data -----> ", data);
+        var zTreeTool = avalon.templateCache._rzc_luru.fn.zTree,
+            $search = $('#searchZoning');
+
+        //销毁可能存在的树
+        zTreeTool.destroy('treeDemo');
+
+        //新建树
+        rzc_luru_vm.data.zTreeObj = zTreeTool.init($("#treeDemo"), setting || {
+            check: {
+                enable: true,
+                chkStyle: "radio",
+                radioType: "all"
+            }
+        }, data);
+
+        //在搜索框，绑定enter键盘事件
+        $search.keyup(function(e) {
+            if(e.keyCode === 13){
+                rzc_luru_vm.findInTree();
+            }
+        });
+    };
+
+    ZC.translateZoningData = function(e, getOwnZoningCode) {
+        return {
+            name: e.divisionName + " " + getOwnZoningCode(e.zoningCode),
+            divisionName: e.divisionName,
+            id: e.index,
+            zoningCode: e.zoningCode
+        }
+    };
+
+
+    /**
+     * 获取本级区划代码
+     */
+    ZC.getOwnZoningCode = function(zoningCode){
+        var assigningCode = ZC.getAssigningCode(zoningCode);
+        if(assigningCode === ""){
+            return "";
+        }else if(assigningCode === "1"){
+            return zoningCode.substring(0, 2);
+        }else if(assigningCode === "2"){
+            return zoningCode.substring(2, 4);
+        }else if(assigningCode === "3"){
+            return zoningCode.substring(4, 6);
+        }else if(assigningCode === "4"){
+            return zoningCode.substring(6, 9);
+        }else if(assigningCode === "5"){
+            return zoningCode.substring(9, 12);
+        }else if(assigningCode === "6"){
+            return zoningCode.substring(12);
+        }else {
+            return "";
+        }
+    };
+
 
     /**
      *  校验区划代码与区划名称
      * @param changeInfo
      * @returns {{success: boolean, msg: string}}
      */
-    ZC.checkNameAndCode = function (changeInfo) {
+    ZC.checkNameAndCode = function(changeInfo) {
 
         //返回的结果
-        var checkResult = {success: true, msg: ''},
+        var checkResult = {
+                success: true,
+                msg: ''
+            },
             targetZoningCode = changeInfo.targetZoningCode,
-            targetZoningName = changeInfo.targetZoningName;
-        if(targetZoningCode === changeInfo.originalZoningCode){
-            checkResult.success = false;
-            checkResult.msg = '';
-            return  checkResult;
-        }else {
-            ZC.getZoningByAssCode(ZC.getAssigningCode(targetZoningCode)).forEach(function (e) {
+            targetZoningName = changeInfo.targetZoningName,
+            zoningData = ZC.getZoningByAssCode(ZC.getAssigningCode(targetZoningCode));
+        console.log("zoningData -----> ", zoningData);
+        zoningData.forEach(function(e) {
+            //排除区划自身
+            if (e.zoningCode !== changeInfo.originalZoningCode) {
 
-                //排除区划自身
-                if (e.originalZoningCode !== changeInfo.originalZoningCode) {
+                //区划校验
+                if (e.zoningCode === targetZoningCode) {
+                    checkResult.success = false;
+                    checkResult.msg = checkResult.msg + '区划代码[' + targetZoningCode + ']已经存在！';
 
-                    //区划校验
-                    if (e.targetZoningCode === targetZoningCode) {
-                        checkResult.success = false;
-                        checkResult.msg = checkResult.msg + '区划代码[' + targetZoningCode + ']已经存在！';
-
-                    }
-
-                    //名称校验
-                    if (e.targetZoningName === targetZoningName) {
-                        checkResult.success = false;
-                        checkResult.msg = checkResult.msg + '区划名称[' + targetZoningName + ']已经存在！';
-                    }
                 }
-            });
-        }
 
+                //名称校验
+                if (e.divisionName === targetZoningName) {
+                    checkResult.success = false;
+                    checkResult.msg = checkResult.msg + '区划名称[' + targetZoningName + ']已经存在！';
+                }
+            }
+        });
         return checkResult;
     };
 
@@ -474,17 +789,18 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
      * @param assigningCode
      * @returns {detail...}
      */
-    ZC.getZoningByAssCode = function (assigningCode) {
+    ZC.getZoningByAssCode = function(assigningCode) {
         var translateAssigningCodes = ["province",
             "city",
             "county",
             "township",
             "village",
-            "group"];
-        return rzc_luru_vm.data.codeRank[translateAssigningCodes[Number(assigningCode)]];
+            "group"
+        ];
+        return rzc_luru_vm.data.codeRank[translateAssigningCodes[Number(assigningCode) - 1]];
     };
 
-    ZC.getSubZoning = function (assigningCode) {
+    ZC.getSubZoning = function(assigningCode) {
         var subAssCode = Number(assigningCode) + 1;
         return ZC.getZoningByAssCode(subAssCode);
     };
@@ -495,23 +811,23 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
      * @params [xzqh_dm：行政区划代码]
      * @return java.lang.String：上级行政区划代码
      */
-    ZC.getSuperiorZoningCode = function (zoningCode) {
+    ZC.getSuperiorZoningCode = function(zoningCode) {
 
         if (zoningCode == null || zoningCode === "" || zoningCode.length != 15) {
             return "";
         }
         var superiorZoningCode = "";
-        if (zoningCode.substring(0, 2)===("00")) {
+        if (zoningCode.substring(0, 2) === ("00")) {
             return "";
-        } else if (zoningCode.substring(2, 4)===("00")) {
+        } else if (zoningCode.substring(2, 4) === ("00")) {
             superiorZoningCode = "000000000000000";
-        } else if (zoningCode.substring(4, 6)===("00")) {
+        } else if (zoningCode.substring(4, 6) === ("00")) {
             superiorZoningCode = zoningCode.substring(0, 2) + "0000000000000";
-        } else if (zoningCode.substring(6, 9)===("000")) {
+        } else if (zoningCode.substring(6, 9) === ("000")) {
             superiorZoningCode = zoningCode.substring(0, 4) + "00000000000";
-        } else if (zoningCode.substring(9, 12)===("000")) {
+        } else if (zoningCode.substring(9, 12) === ("000")) {
             superiorZoningCode = zoningCode.substring(0, 6) + "000000000";
-        } else if (zoningCode.substring(12, 15)===("000")) {
+        } else if (zoningCode.substring(12, 15) === ("000")) {
             superiorZoningCode = zoningCode.substring(0, 9) + "000000";
         } else {
             superiorZoningCode = zoningCode.substring(0, 12) + "000";
@@ -520,29 +836,30 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
     };
 
 
+
     /**
      *  根据行政区划代码获取相应级次代码
      * @method  getAssigningCode
      * @param  区划代码  zoningCode
      * @return java.lang.String
      */
-    ZC.getAssigningCode = function (zoningCode) {
+    ZC.getAssigningCode = function(zoningCode) {
 
-        if (zoningCode == null || zoningCode===("") || zoningCode.length != 15) {
+        if (zoningCode == null || zoningCode === ("") || zoningCode.length != 15) {
             return "";
         }
         var assigningCode = "";
-        if (zoningCode.substring(0, 2)===("00")) {
+        if (zoningCode.substring(0, 2) === ("00")) {
             return "0";
-        } else if (zoningCode.substring(2, 4)===("00")) {
+        } else if (zoningCode.substring(2, 4) === ("00")) {
             assigningCode = "1";
-        } else if (zoningCode.substring(4, 6)===("00")) {
+        } else if (zoningCode.substring(4, 6) === ("00")) {
             assigningCode = "2";
-        } else if (zoningCode.substring(6, 9)===("000")) {
+        } else if (zoningCode.substring(6, 9) === ("000")) {
             assigningCode = "3";
-        } else if (zoningCode.substring(9, 12)===("000")) {
+        } else if (zoningCode.substring(9, 12) === ("000")) {
             assigningCode = "4";
-        } else if (zoningCode.substring(12, 15)===("000")) {
+        } else if (zoningCode.substring(12, 15) === ("000")) {
             assigningCode = "5";
         } else {
             assigningCode = "6";
@@ -555,22 +872,22 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_luru.js'], function (avalon
      * @param zoningCode 区划代码
      * @return 级别代码
      */
-    ZC.getLevelCode = function (zoningCode) {
-        if (zoningCode == null || zoningCode===("") || zoningCode.length != 15) {
+    ZC.getLevelCode = function(zoningCode) {
+        if (zoningCode == null || zoningCode === ("") || zoningCode.length != 15) {
             return "";
         }
         var levelCode = "";
-        if (zoningCode.substring(0, 2)===("00")) {
+        if (zoningCode.substring(0, 2) === ("00")) {
             return "";
-        } else if (zoningCode.substring(2, 4)===("00")) {
+        } else if (zoningCode.substring(2, 4) === ("00")) {
             levelCode = zoningCode.substring(0, 2);
-        } else if (zoningCode.substring(4, 6)===("00")) {
+        } else if (zoningCode.substring(4, 6) === ("00")) {
             levelCode = zoningCode.substring(0, 4);
-        } else if (zoningCode.substring(6, 9)===("000")) {
+        } else if (zoningCode.substring(6, 9) === ("000")) {
             levelCode = zoningCode.substring(0, 6);
-        } else if (zoningCode.substring(9, 12)===("000")) {
+        } else if (zoningCode.substring(9, 12) === ("000")) {
             levelCode = zoningCode.substring(0, 9);
-        } else if (zoningCode.substring(12, 15)===("000")) {
+        } else if (zoningCode.substring(12, 15) === ("000")) {
             levelCode = zoningCode.substring(0, 12);
         } else {
             levelCode = zoningCode;

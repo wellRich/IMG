@@ -1,12 +1,9 @@
 package com.digital.entity;
 
-import com.digital.util.search.Column;
-import com.digital.util.search.Table;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+import com.digital.util.search.Column;
+import com.digital.util.search.Table;
 
 /**
  * @Description: TODO 区划数据预览数据
@@ -153,18 +150,6 @@ public class PreviewDataInfo implements Serializable {
      * */
     @Column(name = "XZQHLX_DM")
     private String type = "11";
-
-
-
-
-    public Map<String, Object> toMap() throws IllegalAccessException{
-        Map<String, Object> map = new HashMap<>();
-        Field[] fields = this.getClass().getDeclaredFields();
-        for (Field field: fields){
-            map.put(field.getName(), field.get(this));
-        }
-        return map;
-    }
 
     public String getUniqueKey() {
         return uniqueKey;

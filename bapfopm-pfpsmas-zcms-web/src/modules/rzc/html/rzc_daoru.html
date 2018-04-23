@@ -49,7 +49,7 @@
 							<em>{{el.fileName}}</em>
 						</td>
 						<td class="tb-xz th-bz">
-							<em>{{el.fileName}}</em>
+							<em>{{el.comment}}</em>
 						</td>
 					</tr>
 				</tbody>
@@ -86,10 +86,13 @@
 			</li>
 		</ul>
 	</div>
+
+	<!-- 功能按钮组 -->
 	<div class="drlsb">
 		<input type="button" value="删除" class="bttn" ms-on-click="deleteUploadFile()">
 		<input type="button" value="导入" class="bttn" ms-on-click="deleteUploadFile()">
 	</div>
+
 	<!-- 进度条 -->
 <!-- 
 	<div class="barline" id="probar">
@@ -121,8 +124,8 @@
 		};
 	</script> 
 -->
-</div>
-<!-- 提示框 上传成功-->
+
+	<!-- 提示框 上传成功-->
 <!-- <div class="mask"></div> -->
 <!-- <div class="dialog">
 	<div class="dialog-top">
@@ -141,6 +144,8 @@
 <!-- 提示框 删除-->
 <!-- <div class="mask"></div> -->
 <!-- <div class="dialog">
+</div>
+
 	<div class="dialog-top">
 		<span><em>提示</em></span>
 	</div>
@@ -179,7 +184,7 @@
 		background-position: center;
 	}
 
-	.mask{
+	.mask {
 		width: 100%;
 		height: 100%;
 		background: url('./src/modules/rzc/img/zhezhao.png');
@@ -189,7 +194,7 @@
 		z-index: 290;
 	}
 
-	.dialog{
+	.dialog {
 		width: 800px;
 		height: 500px;
 		position: relative;
@@ -198,7 +203,7 @@
 		z-index: 300;
 	}
 
-	.dialog .dialog-top{
+	.dialog .dialog-top {
 		width: 100px;
 		height: 100px;
 		background: url('./src/modules/rzc/img/prompt.png');
@@ -208,7 +213,7 @@
 		z-index: 301;
 	}
 
-	.dialog .dialog-top span{
+	.dialog .dialog-top span {
 		width: 100px;
 		height: 100px;
 		display: inline-block;
@@ -218,7 +223,7 @@
 		font-weight: bolder;
 	}
 
-	.dialog .dialog-bottom{
+	.dialog .dialog-bottom {
 		width: 773px;
 		height: 423px;
 		background: url('./src/modules/rzc/img/dialog.png');
@@ -228,41 +233,41 @@
 		transform: translate(-50%, -49%);
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-text{
+	.dialog .dialog-bottom .dialog-bottom-text {
 		width: 100%;
 		position: absolute;
 		top: 100px;
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-text i{
+	.dialog .dialog-bottom .dialog-bottom-text i {
 		width: 22px;
 		height: 29px;
 		display: inline-block;
-		background:	url('./src/modules/rzc/img/prompt-picture.png') no-repeat;
-		margin-right: 30px;	
+		background: url('./src/modules/rzc/img/prompt-picture.png') no-repeat;
+		margin-right: 30px;
 		transform: translateY(7px);
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-text .span-big{
+	.dialog .dialog-bottom .dialog-bottom-text .span-big {
 		width: 100%;
 		display: inline-block;
 		text-align: center;
-		font-size: 18px; 
+		font-size: 18px;
 		font-weight: bolder;
 
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-text .span-small{
+	.dialog .dialog-bottom .dialog-bottom-text .span-small {
 		width: 100%;
 		padding-top: 20px;
 		display: inline-block;
 		text-align: center;
-		font-size: 14px; 
+		font-size: 14px;
 		color: #c1c1c1;
 		transform: translateX(26px);
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-button{
+	.dialog .dialog-bottom .dialog-bottom-button {
 		width: 304px;
 		height: 40px;
 		position: absolute;
@@ -271,7 +276,7 @@
 		transform: translate(-50%);
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-button .button{
+	.dialog .dialog-bottom .dialog-bottom-button .button {
 		width: 120px;
 		height: 40px;
 		background: url('./src/modules/rzc/img/button.png') no-repeat;
@@ -279,12 +284,12 @@
 		border: none;
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-button .button:hover{
-		background: url('./src/modules/rzc/img/button-hover.png') no-repeat; 
+	.dialog .dialog-bottom .dialog-bottom-button .button:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
 		background-size: 100% 100%;
 	}
 
-	.dialog .dialog-bottom .dialog-bottom-button :nth-child(1){
+	.dialog .dialog-bottom .dialog-bottom-button :nth-child(1) {
 		margin-right: 60px;
 	}
 

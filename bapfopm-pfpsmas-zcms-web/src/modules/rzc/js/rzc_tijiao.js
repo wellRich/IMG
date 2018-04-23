@@ -1,4 +1,4 @@
-define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_tijiao.js'], function (avalon, _rzc_tijiao) {
+define(['avalon', 'jquery', 'bootstrap', 'ajaxConfig', 'text!./rzc_tijiao.js'], function (avalon, _rzc_tijiao) {
   avalon.templateCache._rzc_tijiao = _rzc_tijiao;
 
   var rzc_tijiao_vm = avalon.define({
@@ -132,7 +132,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_tijiao.js'], function (aval
    */
   function buildRequest() {
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/buildRequest',
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/buildRequest',
       type: 'GET',
       success: function (da) {
         var res = JSON.parse(da);
@@ -156,7 +156,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_tijiao.js'], function (aval
   function zoningChangeRequestList(zoningCode, pageSize, pageIndex, total){
     total = total || 0;
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/ZoningChangeRequestList?zoningCode=' + zoningCode
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/ZoningChangeRequestList?zoningCode=' + zoningCode
         + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex + '&total=' + total,
       type: 'GET',
       success: function (da) {
@@ -176,7 +176,7 @@ define(['avalon', 'jquery', 'bootstrap', 'text!./rzc_tijiao.js'], function (aval
    */
   function submitToCheck(requestSeq){
     $.ajax({
-      url: 'http://localhost:8251/zoningChangeManager/submitToCheck?seq='+requestSeq,
+      url: 'http://'+ ip +':'+ port +'/zoningChangeManager/submitToCheck?seq='+requestSeq,
       type: 'GET',
       success: function(da){
         var res = JSON.parse(da);

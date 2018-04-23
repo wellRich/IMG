@@ -95,7 +95,8 @@
 				<thead>
 					<tr>
 						<th class="tb-zz">
-							<input type="radio" id="fileSquenceAll" name="name" class="tu-left">
+							<input type="checkbox" id="fileSquenceAll" name="name" class="tu-left"
+							ms-on-click="getSelectAll()">
 							<label for="fileSquenceAll"></label>
 							<!-- 白框 -->
 						</th>
@@ -111,8 +112,9 @@
 					<tr ms-repeat-el="data.details">
 						<td class="tb-xz">
 							<!-- 白框 -->
-							<input type="radio" id="fileSquence" name="name" class="tu-left">
-							<label for="fileSquence"></label>
+							<input type="checkbox" name="fileCheck" class="tu-left" ms-attr-id="fileSquence-{{el.seq}}" 
+							ms-data-groupseq="el.groupSeq" ms-on-click="getFindGroup()">
+							<label for="fileSquence-{{el.seq}}"></label>
 						</td>
 						<td class="tb-xz th-yqhdm">{{el.originalZoningCode}}</td>
 						<td class="tb-xz th-yqhmc">{{el.originalZoningName}}</td>
@@ -127,7 +129,7 @@
 		</div>
 	</div>
 	<div class="drlsb two">
-		<input type="button" value="删除明细" class="bttn del">
+		<input type="button" value="删除明细" class="bttn del" ms-on-click="getDeleteDetails()">
 		<input type="button" value="刷新" class="bttn refresh" >
 	</div>
 
@@ -159,6 +161,14 @@
 
 <style lang="less">
 	input[type="radio"] {
+		width: 22px;
+		height: 22px;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	input[type="checkbox"] {
 		width: 22px;
 		height: 22px;
 		opacity: 0;
@@ -545,14 +555,18 @@
 		text-align: center;
 	}
 
+	#rzc-weihu .error-message .upload-results .results-show thead{
+		background: url('./src/modules/rzc/img/form-title_03.png');
+		background-size: cover;	
+	}
+
+
 	#rzc-weihu .error-message .upload-results .results-show .tb-zz {
 		height: 50px;
 		font-size: 14px;
 		color: #fff;
-		line-height: 50px;
+		/* line-height: 50px; */
 		text-align: center;
-		background: url('./src/modules/rzc/img/form-title_03.png');
-		background-size: cover;
 	}
 
 	#rzc-weihu .error-message .upload-results .results-show .err {

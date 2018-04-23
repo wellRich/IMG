@@ -41,7 +41,7 @@ public class QueryZoningDataController extends BaseController {
 		try{
 			return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findPreviewByZoningCode(zoningCode)).toString();
 		}catch (Exception e) {
-			log.error("checkFormalZoning.error--> " + e.getMessage());
+			log.error("initPreviewZoningData.error--> " + e.getMessage());
 			return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
 		}
 	}
@@ -57,7 +57,8 @@ public class QueryZoningDataController extends BaseController {
 		try{
 			return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningInfoQueryApi.findAncestorsAndSubsByZoningCode(zoningCode)).toString();
 		}catch (Exception e) {
-			log.error("checkFormalZoning.error--> " + e.getMessage());
+			e.printStackTrace();
+			log.error("initFormalZoningData.error--> " + e.getMessage());
 			return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
 		}
 	}

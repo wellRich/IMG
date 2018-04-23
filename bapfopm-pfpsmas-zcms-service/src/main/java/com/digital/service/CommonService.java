@@ -15,15 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.plugin.javascript.navig.LinkArray;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 区划代码变更
- * 保存预览数据、逻辑校验
+ * 〈一句话功能简述〉
+ * 〈功能详细描述〉
  *
  * @author guoyka
  * @version 2018/3/26

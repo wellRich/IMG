@@ -5,6 +5,7 @@ import com.digital.entity.cazc.CivilAffairDataUpload;
 import com.digital.entity.cazc.CivilAffairZoningCode;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhangwei
@@ -20,6 +21,15 @@ public interface CivilAffairDataApi {
      * @return int
      */
     int checkCivilAffairZipName(String fileName);
+
+    /**
+     * 修改文件状态
+     * @param zipXh
+     * @param status
+     * @return
+     */
+    int updateCivilAffairZipStatus(int zipXh,int status);
+
 
     /**
      * @description 上传民政区划，并记录基本信息
@@ -44,7 +54,7 @@ public interface CivilAffairDataApi {
      * @return  java.Lang.Integer
      * @exception
      */
-    int insertCivilAffairDate(List<CivilAffairZoningCode> civilAffairZoningCodes);
+    int insertCivilAffairDate(List<List<CivilAffairZoningCode>> lists,int civilAffairZoningCodeSize,int zipXh) throws  RuntimeException;
 
     /**
      * @description 民政区划查询预览
@@ -60,4 +70,18 @@ public interface CivilAffairDataApi {
      * @exception
      */
     List<CivilAffairZoningCode> downCivilAffairZoningCode(String superiorZoningCode);
+
+
+    /**
+     *
+     * 民政区划数据与行政区划区划数据比较
+     * @param id
+     * @return
+     */
+    List<Map<String,Object>> selectCYDate(String id);
+
+    /**
+     * 清空民政区划数据
+     */
+    void deleteCivilAffairZoningCode();
 }

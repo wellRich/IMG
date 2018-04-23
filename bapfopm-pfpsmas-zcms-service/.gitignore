@@ -1,52 +1,27 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Example user template template
-### Example user template
-
-# IntelliJ project files
-.idea
-*.iml
-out
-gen### Java template
-# Compiled class file
-*.class
-
-#groovy
-*.groovy
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-# config
-*.yml
-*.xml
-
-
-.idea/
-bapfopm-pfpsmas-zcms-service.iml
-pom.sublime-project
-pom.sublime-workspace
-run.bat
-setER.bat
-src/main/java/com/digital/controller/TestController.groovy
-src/main/java/com/digital/util/search/MyResults.java
-src/main/resources/mybatis/mapper/ZCCRequestMapper.xml
-src/main/resources/mybatis/mapper/
-src/test/java/com/digital/dao/
 target/
+log/
+.gitignore
+!.mvn/wrapper/maven-wrapper.jar
+*.bat
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/

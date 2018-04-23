@@ -257,8 +257,9 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
             }
             parseFilters(this, filters);
         }}.toString();
+        sql = rename(sql, getFieldsAndCols());
         log.info("entitySql.countBy.sql------> " + sql);
-        return rename(sql, getFieldsAndCols());
+        return sql;
     }
 
     /**
@@ -283,8 +284,9 @@ public abstract class EntitySql<T extends Serializable> implements BaseDao<T> {
                 ORDER_BY(req.sort);
             }
         }}.toString() +  " LIMIT " + pageSize + " OFFSET " + offset;
+        sql = rename(sql, getFieldsAndCols());
         log.info("entitySql.pageSeek.sql----------> " + sql);
-        return rename(sql, getFieldsAndCols());
+        return sql;
     }
 
     /**

@@ -108,9 +108,17 @@ public interface ZCCRequestMapper extends BaseMapper<ZCCRequest>{
     List<ZCCRequest> findAllByZoningCodeAndStatus(@Param(value = "levelCode") String zoningCode, @Param(value = "status") String status);
 
 
-    @SelectProvider(type = ZCCRequestSql.class, method = "pageSeekByStatuses")
+    /**
+     * 通过级别代码、申请单状态过滤查询变更申请单
+     * @param levelCode 级别代码
+     * @param offset 分页参数
+     * @param limit 分页参数
+     * @param statuses 若干状态代码
+     * @return 申请单列表
+     */
+    @SelectProvider(type = ZCCRequestSql.class, method = "pageSeekByStatusesAndLevelCode")
     @ResultMap(RESULT_MAP)
-    List<ZCCRequest> pageSeekByStatuses(int offset, int limit, String ... statuses);
+    List<ZCCRequest> pageSeekByStatusesAndLevelCode(String levelCode, int offset, int limit, String ... statuses);
 
     /**
      * 添加变更申请单

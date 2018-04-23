@@ -111,12 +111,13 @@ public class PreviewDataInfoSql implements BaseDao<PreviewDataInfo> {
         sql = new SQL() {{
             FROM(entitySql.getTableName());
             SELECT(entitySql.getColumns());
+            String targetCol = entitySql.getColumnByField("zoningCode");
             if(assigningCode < Common.GROUP_LEVEL){
-                WHERE(entitySql.getColumnByField("zoningCode") + " LIKE '" + code + "%' AND JCDM = " + (assigningCode + 1));
+                WHERE( targetCol + " LIKE '" + code + "%' AND JCDM = " + (assigningCode + 1));
                 OR();
-                WHERE(entitySql.getColumnByField("zoningCode") + " IN ( " + processedCodes + ")");
+                WHERE(targetCol + " IN ( " + processedCodes + ")");
             }else {
-                WHERE(entitySql.getColumnByField("zoningCode") + " IN ( " + processedCodes + ")");
+                WHERE(targetCol + " IN ( " + processedCodes + ")");
             }
         }}.toString();
         log.info("findAncestorsAndSubsByZoningCode.sql-----------> " + sql);

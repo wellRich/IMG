@@ -1,19 +1,13 @@
 package com.digital.controller;
 
 import com.digital.api.ZoningCodeChangeApi;
-import com.digital.dao.PreviewDataInfoMapper;
 import com.digital.entity.PreviewDataInfo;
 import com.digital.entity.ZCCRequest;
-import com.digital.service.ZoningCodeChangeApiImpl;
 import com.digital.util.Common;
-import com.digital.util.JSONHelper;
 import com.digital.util.StringUtil;
 import com.digital.util.resultData.Constants;
 import com.digital.util.resultData.RtnData;
-import com.digital.util.search.QueryResp;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.tools.ant.taskdefs.EchoXML;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +85,7 @@ public class ZoningChangeController extends BaseController {
             log.info("ZoningChangeRequestList.zoningCode----> " + zoningCode);
             return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findZCCReqByZoningCode(zoningCode, pageIndex, pageSize, total)).toString();
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("ZoningChangeRequestList---> " + e.getMessage());
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
         }
@@ -185,7 +179,7 @@ public class ZoningChangeController extends BaseController {
 
     /**
      * 获取同一父级下的同级区划，称同胞兄弟区划
-     *
+     * 这个接口貌似用不上了
      * @param zoningCode 当前操作的区划的区划代码
      * @return
      */
@@ -319,7 +313,7 @@ public class ZoningChangeController extends BaseController {
         } catch (Exception ex) {
             log.error(ex.getMessage());
             ex.printStackTrace();
-            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+            return new RtnData(Constants.RTN_CODE_ERROR, ex.getMessage()).toString();
         }
     }
 
@@ -390,6 +384,27 @@ public class ZoningChangeController extends BaseController {
     }
 
     /**
+     * 省级用户查看未提交的申请单的区划
+     * 展示区划名称与区划代码
+     */
+    @RequestMapping(value = "/provinceCheckNotSubmitReq", method = RequestMethod.GET)
+    @ResponseBody
+    public Object provinceCheckNotSubmitReq(@RequestParam(value = "total", defaultValue = "0") int total
+            , @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex
+            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        try {
+            String zoningCode = "370000000000000";
+            String levelCode = Common.getLevelCode(zoningCode);
+            log.info("listOfNotSubmitReq.levelCode-----> " + levelCode);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.checkNotSubmitReq(levelCode, pageIndex, pageSize, total)).toString();
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            ex.printStackTrace();
+            return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();
+        }
+    }
+
+    /**
      * 国家审核
      */
     @RequestMapping(value = "/nationalCheck", method = RequestMethod.GET)
@@ -406,15 +421,19 @@ public class ZoningChangeController extends BaseController {
 
 
     /**
-     * 国家查看未提交的省级申请单
+     * 国家用户查看未提交的申请单的区划
+     * 展示区划名称与区划代码
      */
-    @RequestMapping(value = "/listOfNotSubmitReq", method = RequestMethod.GET)
+    @RequestMapping(value = "/nationCheckNotSubmitReq", method = RequestMethod.GET)
     @ResponseBody
-    public Object listOfNotSubmitReq(@RequestParam(value = "total", defaultValue = "0") int total
+    public Object nationCheckNotSubmitReq(@RequestParam(value = "total", defaultValue = "0") int total
             , @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex
             , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         try {
-            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.findNotSubmitReq(pageIndex, pageSize, total)).toString();
+            String zoningCode = Common.NATION_ZONING_CODE;
+            String levelCode = Common.getLevelCode(zoningCode);
+            log.info("listOfNotSubmitReq.levelCode-----> " + levelCode);
+            return new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, zoningCodeChangeApi.checkNotSubmitReq(levelCode, pageIndex, pageSize, total)).toString();
         } catch (Exception ex) {
             log.error(ex.getMessage());
             ex.printStackTrace();

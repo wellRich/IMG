@@ -24,6 +24,9 @@
     <link href="./src/css/icons.css" rel="stylesheet">
     <link href="./src/css/bootstrap-datetimepicker.min.css" rel="stylesheet" >
 
+    <!-- gyk加入的模态框样式 -->
+	<link href="./src/css/modal_gyk.css" rel="stylesheet">
+
     <script src="./src/js/vendor/require/require.js" data-main="./main"></script>
 </head>
 
@@ -160,7 +163,7 @@
                     <!-- 二级菜单 -->
                     <ul class="list-unstyled menu-item" ms-if="el.subMenu.length">
                         <li ms-repeat-el="el.subMenu" class="menu-style">
-                            <a href="javascript:;">{{el.name}}</a>
+                            <a href="javascript:;" class="second-menu" >{{el.name}}</a>
                             <!-- 三级菜单 -->
                             <ul class="list-unstyled menu-item-child ">
                                 <li ms-repeat-el="el.subMenu">

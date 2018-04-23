@@ -38,17 +38,9 @@ public interface ZoningCodeChangeApi {
      * @param totalRecord 数据总量，首次查询为空，随后的查询，就从前台传来
      * @return 申请单列表，分页
      */
-
     Object findZCCReqByZoningCode(String zoningCode, Integer pageIndex, Integer pageSize, Integer totalRecord) throws IllegalAccessException;
 
 
-    /**
-     * 根据区划级别代码查询申请单
-     * 不分页
-     * @param levelCode 级别代码
-     * @return list
-     */
-    List<ZCCRequest> findZCCReqByLevelCode(String levelCode);
 
 
     /**
@@ -60,13 +52,14 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-     *  国家用户查看未提交的申请单
+     *  国家用户或者省级用户查看未提交的申请单
+     * @param levelCode 级别代码
      * @param pageIndex 页码
      * @param pageSize 每页大小
      * @param total 总数
      * @return list
      */
-    Object findNotSubmitReq(Integer pageIndex, Integer pageSize, Integer total);
+    Object checkNotSubmitReq(String levelCode, Integer pageIndex, Integer pageSize, Integer total);
 
 
     /*
@@ -81,25 +74,29 @@ public interface ZoningCodeChangeApi {
      */
     List<ZCCRequest> findWritableZCCRequests(String levelCode);
 
+
     /**
      * 根据区划代码查询区划预览数据
-     * @param zoningCode
-     * @return
+     * @param zoningCode 区划代码
+     * @return [级次代码: 相应的若干区划数据]
+     * @throws IllegalAccessException
      */
     Map findPreviewByZoningCode(String zoningCode) throws IllegalAccessException;
+
 
 
     /**
      * 获取下一级区划预览数据
      * @param zoningCode 代码
-     * @return 子级区划代码
+     * @return map，子级区划代码的键值对，加上父级的级别代码键值对[superiorLevelCode: '']
+     * @throws IllegalAccessException
      */
     List<?> findSubordinateZoning(String zoningCode) throws IllegalAccessException;
 
     /**
      * 通过区划代码查找区划预览数据
      * @param zoningCode 区划代码
-     * @return PreviewDataInfo
+     * @return 区划预览数据实体
      */
     PreviewDataInfo findOneByZoningCode(String zoningCode);
 
@@ -137,16 +134,6 @@ public interface ZoningCodeChangeApi {
      * 维护变更对照申请
      */
 
-    /**
-     * 初始化区划变更申请单维护界面
-     * @param levelCode 区划级别代码
-     * @param zoningName 区划名称
-     * @param pageIndex 当前页码
-     * @param pageSize 每页总数
-     * @param total 查询总数
-     * @return 分页查询对象
-     */
-    Object initMaintainZCCReq(String levelCode, String zoningName, Integer pageIndex, Integer pageSize, Integer total) throws IllegalAccessException;
 
     /**
      * 更新申请单
@@ -162,6 +149,8 @@ public interface ZoningCodeChangeApi {
      * @param requestSeq 申请单序号
      * @param pageIndex 页码
      * @param pageSize 每页显示数量
+     * @throws IllegalAccessException
+     * @return 分页封装对象
      */
     QueryResp<?> pageSeekByGroups(Integer requestSeq, int pageIndex, int pageSize, int total) throws IllegalAccessException;
 
@@ -170,13 +159,14 @@ public interface ZoningCodeChangeApi {
      * 导出指定申请单下的区划变更明细对照表
      * @param seq 申请单序号
      * @param response  响应
-     * @return 表格
+     * @return excel表格下载
      */
     void exportDetailsOfReq(Integer seq, HttpServletResponse response);
 
     /**
      * 删除明细数据
-     * 〈功能详细描述〉
+     * 对于申请单状态是10（未提交省级审核）与 21（审核不通过）的申请单，
+     * 可以删除申请单下的区划变更对照明细
      * @param groupSeqs 若干明细表序号
      */
     void deleteDetails(String groupSeqs);
