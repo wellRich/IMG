@@ -282,7 +282,7 @@ public class GjshManager {
 	
 	/**
 	 * <p>方法名称：</p>
-	 * <p>方法描述：</p>
+	 * <p>方法描述：查找国家未审核的申请单</p>
 	 * @return
 	 * @throws Exception
 	 * @author pengld
@@ -350,7 +350,7 @@ public class GjshManager {
 	
 	/**
 	 * <p>方法名称：</p>
-	 * <p>方法描述：</p>
+	 * <p>方法描述：查找未提交</p>
 	 * @return
 	 * @throws Exception
 	 * @author pengld
