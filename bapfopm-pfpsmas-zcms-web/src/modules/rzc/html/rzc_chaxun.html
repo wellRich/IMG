@@ -1,0 +1,1068 @@
+<div id="rzc-chaxun" ms-controller="rzc_chaxun">
+	<div class="sc-nav">
+		<a ms-repeat-el="data.navbar" class="qydmsc-a" ms-href="{{el.routerPath}}">
+			<img ms-src={{el.imgPath}} class="ico3" alt="" />
+			<span>{{$index+1}}.{{el.name}}</span>
+		</a>
+	</div>
+
+	<!-- 查询栏 -->
+	<div class="cursor">
+		<div class="c-q">
+			<label class="c-query" for="zoningCode">六位区划代码</label>
+			<input type="text" class="cq-input" maxlength="6" id="zoningCode" ms-duplex="zoningCode" ms-on-keydown="getqueryFocusChangeFileInfo()">
+			<label class="c-query data" for="date">日期(YYYYMMDD)</label>
+			<!-- 时间插件 4.9-->
+			<div class="input-append date timepicker" id="datetimepicker" data-date-format="dd-mm-yyyy">
+				<input class="input-back cq-input" id="date" size="16" type="text"  readonly>
+				<span class="add-on" id="arrow"><i class="icon-th" ></i></span>
+			</div>
+			<img src="./src/modules/rzc/img/calendar.png" alt="" class="cq-img">
+
+			<input type="button" value="查询" class="r-query" 
+			ms-on-click="getqueryFocusChangeFileInfo()">
+
+		</div>
+	</div>
+
+	<!-- 上传文件信息 -->
+	<div class="subject-content">
+		<div class="upload-results">
+			<table class="results-show">
+				<caption>上传文件信息</caption>
+				<thead>
+					<tr>
+						<th class="tb-xz">选择</th>
+						<th class="tb-xz">区划代码</th>
+						<th class="tb-xz">日期</th>
+						<th class="tb-xz">文件名</th>
+						<th class="tb-xz">状态</th>
+						<th class="tb-xz">上传时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ms-repeat-el="data.upload">
+						<td class="tb-xz">
+							<input type="radio" class="tu-left" name="fileSquence" id="fileSquence" 
+							ms-data-filesquence="el.fileSquence" ms-data-zoningcode="el.zoningCode"
+							ms-on-click="getZoningCode()">
+
+							<label for="fileSquence"></label>
+						</td>
+						<td class="tb-xz">
+							<em>{{el.zoningCode}}</em>
+						</td>
+						<td class="tb-xz">
+							<em>{{el.date}}</em>
+						</td>
+						<td class="tb-xz">
+							<em>{{el.fileName}}</em>
+						</td>
+						<td class="tb-xz">
+							<i class="ico4"></i>
+							<em>{{el.statusCode | signConversion(el.statusCode)}}</em>
+						</td>
+						<td class="tb-xz">
+							<em>{{el.enterTime}}</em>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+			<div class="no" ms-if="!data.upload.length"> 无显示记录</div>
+		</div>
+	</div>
+	<!-- 分页 -->
+	<div class="paging">
+		<ul class="pagination">
+			<li class="previous">
+				<a href="javascript:;" ms-on-click="getPreviousDate()">上一页</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageNum}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageNum+1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageNum+2}}</a>
+			</li>
+			<li>
+				<a href="javascript:;">...</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageCount-1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentDate()">{{data.pageCount}}</a>
+			</li>
+			<li class="next">
+				<a href="javascript:;" ms-on-click="getNextDate()">下一页</a>
+			</li>
+		</ul>
+	</div>
+	
+	<!-- 上传失败展示 -->
+	<!-- <div class="subject-content-fail">
+		<div class="upload-results">
+			<table class="results-show">
+				<caption>
+					<span class="upload-show">上传失败展示</span>
+					<input type="button" class="r-dele" value="编辑">
+				</caption>
+				<thead>
+					<tr>
+						<th class="tb-xz th-xz">选择</th>
+						<th class="tb-xz th-qhdm">区划代码</th>
+						<th class="tb-xz th-rq">日期</th>
+						<th class="tb-xz th-wjm">文件名</th>
+						<th class="tb-xz th-zt">状态</th>
+						<th class="tb-xz th-scsj">上传时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ms-repeat-el="data.upload">
+						<td class="tb-xz th-xz">
+							<div class="tu-left" ms-on-click="activeToggleChange()" 
+							ms-class="actived:data.isActive"></div>
+						</td>
+						<td class="tb-xz th-qhdm">
+							<em>{{el.quhua_code}}</em>
+						</td>
+						<td class="tb-xz th-rq">
+							<em>{{el.quhua_date}}</em>
+						</td>
+						<td class="tb-xz th-wjm">
+							<em>{{el.quhua_filename}}</em>
+						</td>
+						<td class="tb-xz th-zt">
+							<i class="ico4"></i>
+							<em>{{el.quhua_status}}</em>
+						</td>
+						<td class="tb-xz th-scsj">
+							<em>{{el.quhua_uploaddate}}</em>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div> -->
+	<!-- 变更区划代码 -->
+	<div class="change-code">
+		
+		<span class="c-query">变更区划代码</span>
+		<input type="text" class="cq-input" ms-duplex="data.temp_zoningCode" readonly />
+
+		<div class="btn-group">
+			<span class="sele" ms-data-errorstatus="data.temp_errorStatus">错误标志</span>
+			<ul class="nav nav-tabs">
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+						{{data.error_sign}}
+						<i class="ico2"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="javascript:;" ms-on-click="errorSignToggle()" ms-data-value="0">全部数据</a>
+						</li>
+						<li>
+							<a href="javascript:;" ms-on-click="errorSignToggle()" ms-data-value="1">错误数据</a>
+						</li>
+						<li>
+							<a href="javascript:;" ms-on-click="errorSignToggle()" ms-data-value="2">正确数据</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="btn-group">
+			<span class="sele" ms-data-typecode="data.temp_typeCode">变更类型</span>
+			<ul class="nav nav-tabs">
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+						{{data.adjustment_type}}
+						<i class="ico2"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="11">新增</a>
+						</li>
+						<li>
+							<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="21">变更</a>
+						</li>
+						<li>
+							<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="31">并入</a>
+						</li>
+						<li>
+							<a href="javascript:;" ms-on-click="adjustmentTypeToggle()" ms-data-value="41">迁移</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<input type="button" value="查询明细" class="r-query" ms-on-click="getTemporaryData()">
+	</div>
+	<!-- 变更明细信息 -->
+	<div class="change-information">
+		<div class="upload-results">
+			<table class="results-show">
+				<caption>
+					<span class="upload-show">变更明细信息</span>
+					<!-- <input type="button" class="r-dele" value="下载" ms-on-click="getDownloadChangeDat()"> -->
+				</caption>
+				<thead>
+					<tr>
+						<th class="tb-xz th-yqhdm">原区划代码</th>
+						<th class="tb-xz th-yqhmc">原区划名称</th>
+						<th class="tb-xz th-tzlx">调整类型</th>
+						<th class="tb-xz th-yqhdm">现区划代码</th>
+						<th class="tb-xz th-yqhmc">现区划名称</th>
+						<th class="tb-xz th-tzlx">状态</th>
+						<th class="tb-xz th-yqhdm">备注</th>
+						<th class="tb-xz th-yqhdm">错误信息</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ms-repeat-el="data.temporaryData">
+						<td class="tb-xz th-yqhdm">
+							<em>{{el.originalCode}}</em>
+						</td>
+						<td class="tb-xz th-yqhmc">
+							<em>{{el.originalName}}</em>
+						</td>
+						<td class="tb-xz th-tzlx">
+							<em>{{el.typeCode | typeCodeConversion(el.typeCode)}}</em>
+						</td>
+						<td class="tb-xz th-yqhdm">
+							<em>{{el.nowCode}}</em>
+						</td>
+						<td class="tb-xz th-yqhmc">
+							<em>{{el.nowName}}</em>
+						</td>
+						<td class="tb-xz th-tzlx">
+							<em>{{el.errorIdentification | errorStatusConversion(el.errorIdentification)}}</em>
+						</td>
+						<td class="tb-xz th-yqhdm">
+							<em>{{el.note | nulltransform}}</em>
+						</td>
+						<td class="tb-xz th-yqhdm">
+							<em>{{el.errorMessage | nulltransform}}</em>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+			<div class="no" ms-if="!data.temporaryData.length"> 无显示记录</div>
+		</div>
+	</div>
+	<!-- 分页 -->
+	<div class="paging">
+		<ul class="pagination">
+			<li class="previous">
+				<a href="javascript:;" ms-on-click="getPreviousTempDate()">上一页</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentTempDate()">{{data.temp_pageNum}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentTempDate()">{{data.temp_pageNum+1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentTempDate()">{{data.temp_pageNum+2}}</a>
+			</li>
+			<li>
+				<a href="javascript:;">...</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentTempDate()">{{data.temp_pageCount-1}}</a>
+			</li>
+			<li>
+				<a href="javascript:;" ms-on-click="getCurrentTempDate()">{{data.temp_pageCount}}</a>
+			</li>
+			<li class="next">
+				<a href="javascript:;" ms-on-click="getNextTempDate()">下一页</a>
+			</li>
+		</ul>
+	</div>
+	<!-- 按钮 -->
+	<div class="drlsb">
+		<!-- <a class="bttn" href="javascript:;" ms-on-click="getcheckAndImport()">校验并入库</a> -->
+		<a class="bttn" href="javascript:;" ms-on-click="getDownloadChangeDat()">下载</a>
+		<a class="bttn up" href="#!/rzc/rzc_shangchuan">重新上传</a>
+	</div>
+
+</div>
+<!-- 提示框 下载-->
+<!-- <div class="mask"></div>
+<div class="dialog">
+	<div class="dialog-top">
+		<span><em>提示</em></span>
+	</div>
+	<div class="dialog-bottom">
+		<div class="dialog-bottom-text">
+				<span class="span-big"><i></i>想好了吗?确定要下载吗?</span>
+		</div>
+		<div class="dialog-bottom-button">
+			<input type="button" class="button" value="确认下载" />
+			<input type="button" class="button" value="我再看看" />
+		</div>
+	</div>
+</div>     -->
+
+<script charset="utf-8" type="application/javascript">
+	$("#datetimepicker").datetimepicker(
+			{
+					format: 'yyyymmdd',
+					weekStart: 1,
+					autoclose: true,
+					minView: 'month',
+					todayBtn: 1,
+					language: 'zh-CN',
+					initialDate:new Date(),
+					todayHighlight:true,
+					forceParse: 0,
+					pickerPosition: "bottom-right"
+			}
+	);
+	$('.cq-img').click(function () {
+			$("#datetimepicker").datetimepicker('show')
+	});
+</script>
+
+<style lang="less">
+	input[type="radio"] {
+		width: 22px;
+		height: 22px;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	label {
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		border-radius: 5px;
+		margin-left: -26px;
+		display: inline-flex;
+	}
+
+	input:checked+label {
+		background: url('./src/modules/rzc/img/collect.png');
+		background-size: cover;
+		background-position: center;
+	}
+
+	.mask {
+		width: 100%;
+		height: 100%;
+		background: url('./src/modules/rzc/img/zhezhao.png');
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 290;
+	}
+
+	.dialog {
+		width: 800px;
+		height: 500px;
+		position: relative;
+		left: 50%;
+		transform: translate(-50%, -70%);
+		z-index: 300;
+	}
+
+	.dialog .dialog-top {
+		width: 100px;
+		height: 100px;
+		background: url('./src/modules/rzc/img/prompt.png');
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%);
+		z-index: 301;
+	}
+
+	.dialog .dialog-top span {
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		text-align: center;
+		line-height: 100px;
+		font-size: 18px;
+		font-weight: bolder;
+	}
+
+	.dialog .dialog-bottom {
+		width: 773px;
+		height: 423px;
+		background: url('./src/modules/rzc/img/dialog.png');
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -49%);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text {
+		width: 100%;
+		position: absolute;
+		top: 100px;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text i {
+		width: 22px;
+		height: 29px;
+		display: inline-block;
+		background: url('./src/modules/rzc/img/prompt-picture.png') no-repeat;
+		margin-right: 30px;
+		transform: translateY(7px);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text .span-big {
+		width: 100%;
+		display: inline-block;
+		text-align: center;
+		font-size: 18px;
+		font-weight: bolder;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text .span-small {
+		width: 100%;
+		padding-top: 20px;
+		display: inline-block;
+		text-align: center;
+		font-size: 14px;
+		color: #c1c1c1;
+		transform: translateX(26px);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button {
+		width: 304px;
+		height: 40px;
+		position: absolute;
+		top: 232px;
+		left: 50%;
+		transform: translate(-50%);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button .button {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		border: none;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button .button:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button :nth-child(1) {
+		margin-right: 60px;
+	}
+
+	#rzc-chaxun {
+		width: 100%;
+		height: auto;
+	}
+
+	#rzc-chaxun a {
+		text-decoration: none;
+	}
+
+	#rzc-chaxun .sc-nav {
+		width: 94%;
+		height: 54px;
+		background: none;
+		margin-left: 6%;
+		padding-top: 20px;
+	}
+
+	#rzc-chaxun .sc-nav .qydmsc-a {
+		width: 15%;
+		height: 32px;
+		display: inline-block;
+		line-height: 32px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		margin-left: -10px;
+		position: relative;
+	}
+
+	#rzc-chaxun .sc-nav .qydmsc-a span {
+		width: 100%;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+		z-index: 1;
+	}
+
+	#rzc-chaxun .sc-nav .qydmsc-a .ico3 {
+		width: 100%;
+		height: 32px;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+	}
+
+	#rzc-chaxun .cursor {
+		width: 100%;
+		height: 54px;
+		background: none;
+		margin-top: 20px;
+	}
+
+	#rzc-chaxun .cursor .c-q {
+		width: 93%;
+		margin: 0px 3% 0px 3%;
+		text-align: center;
+	}
+
+	#rzc-chaxun .cursor .c-q>label {
+		width: 0px;
+		height: 0px;
+		border: none;
+		border-radius: 0px;
+		margin-left: 5%;
+		display: inline;
+	}
+
+
+	#rzc-chaxun .cursor .data {
+		margin-left: 50px;
+	}
+
+	#rzc-chaxun .cursor .c-query {
+		line-height: 54px;
+		font-size: 18px;
+		color: #ffffff;
+	}
+
+	#rzc-chaxun .cursor .cq-input {
+		width: 15%;
+		height: 40px;
+		margin-left: 5%;
+		line-height: 40px;
+		background: url(./src/modules/rzc/img/input.png) no-repeat;
+		background-size: 100% 100%;
+		padding-left: 10px;
+		border: none;
+		color: #558487;
+		font-size: 14px;
+		font-style: italic;
+	}
+
+	#rzc-chaxun .cursor .input-append {
+		width: 15%;
+		height: 40px;
+		display: inline-block;
+		margin-left: 50px;
+	}
+
+	#rzc-chaxun .cursor .input-back {
+		width: 100%;
+		height: 40px;
+		line-height: 40px;
+		background: url(./src/modules/rzc/img/input.png) no-repeat;
+		background-size: 100% 100%;
+		padding-left: 10px;
+		border: none;
+		color: #558487;
+		font-size: 14px;
+		font-style: italic;
+	}
+
+	#rzc-chaxun .cursor .prev {
+		background: url("src/modules/rzc/img/arrowleft.png");
+		background-size: contain;
+	}
+
+	#rzc-chaxun .cursor .next {
+		background: url("src/modules/rzc/img/arrowright.png");
+		background-size: contain;
+	}
+
+	#rzc-chaxun .cursor .datetimepicker td,
+	.datetimepicker th {
+		width: 25px;
+	}
+
+
+	#rzc-chaxun .cursor .cq-img {
+		width: 34px;
+		height: 34px;
+		margin-top: -11px;
+		margin-left: 4px;
+		cursor: pointer;
+	}
+
+	#rzc-chaxun .cursor .r-query {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		line-height: 37px;
+		font-size: 16px;
+		color: #ffffff;
+		display: inline-block;
+		text-align: center;
+		border: none;
+		-webkit-box-sizing: border-box;
+		margin-left: 5%;
+	}
+
+	#rzc-chaxun .cursor .r-query:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rzc-chaxun .subject-content {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 20px 3% 0px 3%;
+	}
+
+	#rzc-chaxun .subject-content .upload-results .results-show {
+		width: 100%;
+		text-align: center;
+	}
+
+	#rzc-chaxun .subject-content .upload-results .results-show caption {
+		height: 50px;
+		background: rgba(0, 0, 0, 0.2);
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 2%;
+		text-align: left;
+		background: url('./src/modules/rzc/img/form-title_03.png');
+		background-size: cover;
+	}
+
+	#rzc-chaxun .subject-content .upload-results .results-show .tb-xz {
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rzc/img/tu1.png') no-repeat;
+	}
+
+	#rzc-chaxun .subject-content .upload-results .results-show tr th:first-child{
+		width: 100px;
+	}
+
+	#rzc-chaxun .subject-content .upload-results .results-show tr td:first-child{
+		width: 100px;
+	} 	
+
+	#rzc-chaxun .subject-content .upload-results .results-show .tb-xz .tu-left {
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		display: inline-block;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-top: 4px;
+	}
+
+	#rzc-chaxun .subject-content .upload-results .results-show .th-zt .ico4 {
+		width: 12px;
+		height: 12px;
+		background: url('./src/modules/rzc/img/ludian.png') no-repeat;
+		display: inline-block;
+	}
+
+	#rzc-chaxun .paging {
+		width: 97%;
+		height: 40px;
+		background: none;
+		margin-top: 16px;
+	}
+
+	#rzc-chaxun .paging>ul {
+		margin: 0 0;
+		float: right;
+	}
+
+	#rzc-chaxun .paging>ul a {
+		border: none;
+		color: #fff;
+	}
+
+	#rzc-chaxun .paging .pagination .previous>a:first-child {
+		color: #fff;
+		border: none;
+		background-color: #19313e;
+	}
+
+	#rzc-chaxun .paging .pagination .next>a:last-child {
+		color: #fff;
+		border: none;
+		background-color: #19313e;
+	}
+
+	#rzc-chaxun .paging .pagination>li>a:hover {
+		background-color: #19313e;
+	}
+
+	#rzc-chaxun .subject-content-fail {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 20px 3% 0px 3%;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show {
+		width: 100%;
+		text-align: center;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show caption {
+		height: 50px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 2%;
+		text-align: left;
+		position: relative;
+		background: url('./src/modules/rzc/img/form-title_03.png');
+		background-size: cover;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show caption .upload-show {
+		width: 15%;
+		float: left;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show caption .r-dele {
+		width: 7%;
+		height: 33px;
+		background: url('./src/modules/rzc/img/little-button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		font-size: 14px;
+		line-height: 31px;
+		color: #fff;
+		border: none;
+		border-radius: 16px;
+		margin-top: 9px;
+		position: absolute;
+		right: 42px;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show caption .r-dele:hover {
+		background: url('./src/modules/rzc/img/little-button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .tb-xz {
+		width: 15%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rzc/img/tu1.png') no-repeat;
+		border-color: transparent;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .tb-xz .tu-left {
+		width: 22px;
+		height: 22px;
+		border: 1px solid #fff;
+		display: inline-block;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-top: 4px;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .th-xz {
+		width: 10%;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .th-qhdm {
+		width: 10%;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .th-rq {
+		width: 20%;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .th-wjm {
+		width: 20%;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .th-zt {
+		width: 20%;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .th-scsj {
+		width: 20%;
+	}
+
+	#rzc-chaxun .subject-content-fail .upload-results .results-show .th-zt .ico4 {
+		width: 12px;
+		height: 12px;
+		background: url('./src/modules/rzc/img/ludian.png') no-repeat;
+		display: inline-block;
+	}
+
+	#rzc-chaxun .change-code {
+		width: 100%;
+		height: 54px;
+		margin-top: 16px;
+	}
+
+	#rzc-chaxun .change-code .c-query {
+		line-height: 54px;
+		font-size: 18px;
+		color: #ffffff;
+		padding-left: 3%;
+	}
+
+	#rzc-chaxun .change-code .cq-input {
+		width: 12%;
+		height: 40px;
+		margin-left: 2%;
+		border: none;
+		font-size: 16px;
+		color: #558487;
+		line-height: 40px;
+		background: url('./src/modules/rzc/img/input.png') no-repeat;
+		background-size: 100% 100%;
+		padding-left: 10px;
+	}
+
+	#rzc-chaxun .change-code .btn-group {
+		width: 25%;
+		height: 40px;
+		margin-left: 2%;
+	}
+
+	#rzc-chaxun .change-code .btn-group .sele {
+		line-height: 33px;
+		font-size: 18px;
+		color: #ffffff;
+		float: left;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs {
+		width: 65%;
+		border: 1px solid #14eae3;
+		float: left;
+		margin-left: 5%;
+		margin-top: -5px;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs li {
+		width: 100%;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs li a {
+		padding: 8px 15px;
+		margin-right: 0px;
+		width: 100%;
+		font-size: 15px;
+		color: #fff;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs li a .ico2 {
+		width: 17px;
+		height: 11px;
+		background: url('./src/modules/rzc/img/jiantou.png') no-repeat;
+		position: absolute;
+		top: 14px;
+		right: 15px;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs li a:hover {
+		color: #fff;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs li .dropdown-menu {
+		width: 100%;
+		background: url('./src/modules/rzc/img/select-s.png') no-repeat;
+		background-size: 103% 117%;
+		background-position: -3px 0px;
+		text-align: center;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs li .dropdown-menu li:hover {
+		background: url('./src/modules/rzc/img/hover.png') no-repeat;
+		background-size: 103% 117%;
+		background-position: -3px 0px;
+		width: 99%;
+	}
+
+	#rzc-chaxun .change-code .btn-group .nav-tabs li .dropdown-menu a {
+		font-size: 16px;
+		color: #c1c1c1;
+	}
+
+	#rzc-linshi .cursor .btn-group .nav-tabs li .dropdown-menu a:hover {
+		font-size: 16px;
+		color: #fff;
+	}
+
+	#rzc-chaxun .change-code .r-query {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		line-height: 37px;
+		font-size: 16px;
+		color: #ffffff;
+		display: inline-block;
+		text-align: center;
+		border: none;
+		-webkit-box-sizing: border-box;
+		margin-left: 2%;
+	}
+
+	#rzc-chaxun .change-code .r-query:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rzc-chaxun .change-information {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 16px 3% 0px 3%;
+	}
+
+	#rzc-chaxun .change-information .upload-results .results-show {
+		width: 100%;
+		text-align: center;
+	}
+
+	#rzc-chaxun .change-information .upload-results .results-show caption {
+		height: 50px;
+		background: rgba(0, 0, 0, 0.2);
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 2%;
+		text-align: left;
+		background: url('./src/modules/rzc/img/form-title_03.png');
+		background-size: cover;
+	}
+
+	#rzc-chaxun .change-information .upload-results .results-show .tb-xz {
+		/* width: 12%; */
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/rzc/img/tu1.png') no-repeat;
+	}
+
+	#rzc-chaxun .change-information .upload-results .results-show .th-yqhdm {
+		width: 11%;
+	}
+
+	#rzc-chaxun .change-information .upload-results .results-show .th-yqhmc {
+		width: 20%;
+	}
+
+	#rzc-chaxun .change-information .upload-results .results-show .th-tzlx {
+		width: 6%;
+	}
+
+	#rzc-chaxun .actived {
+		background: url("./src/modules/rzc/img/collect.png");
+		background-position: -3px 0;
+	}
+
+	#rzc-chaxun .nav .open>a,
+	.nav .open>a:hover,
+	.nav .open>a:focus {
+		background-color: transparent!important;
+		color: #fff;
+	}
+
+	#rzc-chaxun .subject-content .upload-results .results-show .tb-xz {
+		line-height: 0px;
+	}
+
+	#rzc-chaxun .drlsb {
+		width: 100%;
+		height: 55px;
+		background: none;
+		margin-top: 16px;
+		-webkit-box-sizing: border-box;
+		text-align: center;
+	}
+
+	#rzc-chaxun .drlsb .bttn {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/rzc/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		border: none;
+		display: inline-block;
+	}
+
+	#rzc-chaxun .drlsb .bttn:hover {
+		background: url('./src/modules/rzc/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#rzc-chaxun .drlsb .up {
+		margin-left: 60px;
+		display: inline-block;
+	}
+
+	#rzc-chaxun .no {
+		height: 85px;
+		width: 100%;
+		text-align: center;
+		color: #fff;
+		font-size: 14px;
+		line-height: 85px;
+		background: url('./src/modules/rzc/img/xiaotu_03.png');
+	}
+
+	#rzc-chaxun .change-information .upload-results .results-show caption .r-dele {
+		width: 7%;
+		height: 33px;
+		background: #848484;
+		float: right;
+		font-size: 14px;
+		line-height: 31px;
+		color: #fff;
+		border: none;
+		border-radius: 16px;
+		margin-right: 5%;
+		margin-left: 2%;
+		margin-top: 9px;
+	}
+
+	/**
+		*	时间插件样式
+		**/
+	.datetimepicker thead tr:first-child th.prev{
+		background: url("./src/modules/rzc/img/arrowleft1.png")  no-repeat;
+		background-position:center;
+
+	}
+	.datetimepicker thead tr:first-child th.next{
+		background: url("./src/modules/rzc/img/arrowright1.png") no-repeat;
+		background-position:center;
+	}
+	.dropdown-menu, .elfinder-button-menu, .elfinder-contextmenu{
+		margin-top: 36px;
+	}
+</style>
