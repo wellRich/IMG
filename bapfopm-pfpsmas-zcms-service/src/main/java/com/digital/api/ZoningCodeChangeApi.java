@@ -75,6 +75,23 @@ public interface ZoningCodeChangeApi {
      */
     List<ZCCRequest> findWritableZCCRequests(String levelCode);
 
+    /**
+     * 获取指定区划下的指定级次的区划
+     * @param assigningCodes  若干目标级次
+     * @param ownZoning 登录用户所属区划
+     * @return 预览数据列表
+     */
+    List<PreviewDataInfo> findByAssigningCodesAndRootZoning(String ownZoning, String assigningCodes);
+
+
+    /**
+     * 尝试将预览数据集合转化成层次结构
+     * @param previewDataInfos 区划预览集合
+     * @param parentAssCode 父节点区划级次
+     * @return 层次结构
+     */
+    Map[] getTowLevelTree(Collection<PreviewDataInfo> previewDataInfos, String parentAssCode);
+
 
     /**
      * 根据区划代码查询区划预览数据

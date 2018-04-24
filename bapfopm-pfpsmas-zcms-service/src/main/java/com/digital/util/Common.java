@@ -167,6 +167,31 @@ public class Common {
         return assigningCode;
     }
 
+    /**
+     * 获取本级区划
+     * @param zoningCode 区划代码
+     * @return String
+     */
+    public String getOwnZoningCode (String zoningCode){
+        String assigningCode = getAssigningCode(zoningCode);
+        if(assigningCode.equals("")){
+            return "";
+        }else if(assigningCode.equals("1")){
+            return zoningCode.substring(0, 2);
+        }else if(assigningCode.equals("2")){
+            return zoningCode.substring(2, 4);
+        }else if(assigningCode.equals("3")){
+            return zoningCode.substring(4, 6);
+        }else if(assigningCode.equals("4")){
+            return zoningCode.substring(6, 9);
+        }else if(assigningCode.equals("5")){
+            return zoningCode.substring(9, 12);
+        }else if(assigningCode.equals("6")){
+            return zoningCode.substring(12);
+        }else {
+            return "";
+        }
+    }
 
     /**
      * 检测原区划代码是否与现区划代码相同
