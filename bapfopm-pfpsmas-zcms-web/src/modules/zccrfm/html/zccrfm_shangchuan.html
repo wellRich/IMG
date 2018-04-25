@@ -1,0 +1,524 @@
+
+<div id="zccrfm-shangchuan" ms-controller="zccrfm_shangchuan" data-router="#!/zccrfm/zccrfm_shangchuan">
+<!-- <div class="sc-nav">
+	<a ms-repeat-el="data.navbar" class="qydmsc-a" ms-href="{{el.routerPath}}">
+		<img ms-src={{el.imgPath}} class="ico3" alt="" />
+		<span>{{$index+1}}.{{el.name}}</span>
+	</a>
+</div> -->
+<div class="cursor">
+	<div class="c-q">
+		<span class="c-query">导入文件</span>
+		<div class="main-top">
+			<div class="top1">{{data.fileName}}</div>
+			<input type="button" value="浏览" class="liu">
+			<form id="form">
+				<input type="file" class="upload-file" id="upload_file" name="file" ms-on-change="getFileName()">
+			</form>
+		</div>
+		<input type="button" value="上传" class="r-query" ms-on-click="sendFile()" />
+		<input type="button" value="重置" class="r-query" />
+	</div>
+</div>
+<div class="drlsb">
+	<input type="button" value="导入" class="bttn" ms-on-click="deleteUploadFile()">
+</div>
+<!-- 进度条 -->
+<!-- 
+	<div class="barline" id="probar">
+		<div id="percent"></div>
+		<div id="line" w="100"></div>
+		<div id="msg"></div>
+	</div>
+	<script language="javascript">
+		function processerbar(time) {
+			document.getElementById('probar').style.display = "block";
+			$("#line").each(function (i, item) {
+				var a = parseInt($(item).attr("w"));
+				$(item).animate({
+					width: a + "%"
+				}, time);
+			});
+			var si = window.setInterval(
+				function () {
+					a = $("#line").width();
+					b = (a / 200 * 100).toFixed(0);
+					document.getElementById('percent').innerHTML = b + "%";
+					document.getElementById('percent').style.left = a - 12 + "px";
+					document.getElementById('msg').innerHTML = "上传中";
+					if (document.getElementById('percent').innerHTML == "100%") {
+						clearInterval(si);
+						document.getElementById('msg').innerHTML = "&nbsp;&nbsp;成功";
+					}
+				}, 70);
+		};
+	</script> 
+-->
+</div>
+<!-- 提示框 上传成功-->
+<!-- <div class="mask"></div> -->
+<!-- <div class="dialog">
+	<div class="dialog-top">
+		<span><em>提示</em></span>
+	</div>
+	<div class="dialog-bottom">
+		<div class="dialog-bottom-text">
+				<span class="span-big"><i></i>文件上传成功</span>
+		</div>
+		<div class="dialog-bottom-button">
+			<input type="button" class="button" value="完成" />
+		</div>
+	</div>
+</div> -->
+
+<!-- 提示框 导入-->
+<!-- <div class="mask"></div> -->
+<!-- <div class="dialog">
+	<div class="dialog-top">
+		<span><em>提示</em></span>
+	</div>
+	<div class="dialog-bottom">
+		<div class="dialog-bottom-text">
+				<span class="span-big"><i></i>想好了吗?确定要导入吗?</span>
+		</div>
+		<div class="dialog-bottom-button">
+			<input type="button" class="button" value="确认导入" />
+			<input type="button" class="button" value="我再看看" />
+		</div>
+	</div>
+</div> -->
+<style lang="less">
+	.mask{
+		width: 100%;
+		height: 100%;
+		background: url('./src/modules/zccrfm/img/zhezhao.png');
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 290;
+	}
+
+	.dialog{
+		width: 800px;
+		height: 500px;
+		position: relative;
+		left: 50%;
+		transform: translate(-50%, -70%);
+		z-index: 300;
+	}
+
+	.dialog .dialog-top{
+		width: 100px;
+		height: 100px;
+		background: url('./src/modules/zccrfm/img/prompt.png');
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%);
+		z-index: 301;
+	}
+
+	.dialog .dialog-top span{
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		text-align: center;
+		line-height: 100px;
+		font-size: 18px;
+		font-weight: bolder;
+	}
+
+	.dialog .dialog-bottom{
+		width: 773px;
+		height: 423px;
+		background: url('./src/modules/zccrfm/img/dialog.png');
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -49%);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text{
+		width: 100%;
+		position: absolute;
+		top: 100px;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text i{
+		width: 22px;
+		height: 29px;
+		display: inline-block;
+		background:	url('./src/modules/zccrfm/img/prompt-picture.png') no-repeat;
+		margin-right: 30px;	
+		transform: translateY(7px);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text .span-big{
+		width: 100%;
+		display: inline-block;
+		text-align: center;
+		font-size: 18px; 
+		font-weight: bolder;
+
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-text .span-small{
+		width: 100%;
+		padding-top: 20px;
+		display: inline-block;
+		text-align: center;
+		font-size: 14px; 
+		color: #c1c1c1;
+		transform: translateX(26px);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button{
+		width: 304px;
+		height: 40px;
+		position: absolute;
+		top: 232px;
+		left: 50%;
+		transform: translate(-50%);
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button .button{
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/zccrfm/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		border: none;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button .button:hover{
+		background: url('./src/modules/zccrfm/img/button-hover.png') no-repeat; 
+		background-size: 100% 100%;
+	}
+
+	.dialog .dialog-bottom .dialog-bottom-button :nth-child(1){
+		margin-right: 60px;
+	}
+
+	#zccrfm-shangchuan {
+		width: 100%;
+		height: auto;
+		z-index: 0;
+	}
+
+	#zccrfm-shangchuan a {
+		text-decoration: none;
+	}
+
+	#zccrfm-shangchuan .sc-nav {
+		width: 94%;
+		height: 54px;
+		background: none;
+		margin-left: 6%;
+		padding-top: 20px;
+	}
+
+	#zccrfm-shangchuan .sc-nav .qydmsc-a {
+		width: 15%;
+		height: 32px;
+		display: inline-block;
+		line-height: 32px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		margin-left: -10px;
+		position: relative;
+
+	}
+
+	#zccrfm-shangchuan .sc-nav .qydmsc-a span {
+		width: 100%;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+		z-index: 1;
+	}
+
+	#zccrfm-shangchuan .sc-nav .qydmsc-a .ico3 {
+		width: 100%;
+		height: 32px;
+		display: inline-block;
+		position: absolute;
+		left: 0;
+	}
+
+	#zccrfm-shangchuan .cursor {
+		width: 100%;
+		height: 40px;
+		margin-top: 20px;
+	}
+
+	#zccrfm-shangchuan .cursor .c-q {
+		width: 93%;
+		margin: 0px 3% 0px 3%;
+		text-align: center;
+	}
+
+	#zccrfm-shangchuan .cursor .c-query {
+		line-height: 40px;
+		font-size: 18px;
+		color: #ffffff;
+		display: inline-block;
+		float: left;
+		padding-left: 6%;
+	}
+
+	#zccrfm-shangchuan .cursor .main-top {
+		width: 50%;
+		height: 40px;
+		margin-left: 20px;
+		float: left;
+		position: relative;
+	}
+
+	#zccrfm-shangchuan .cursor .top1 {
+		width: 85%;
+		height: 40px;
+		background: url('./src/modules/zccrfm/img/input-long.png') no-repeat;
+		background-size: cover;
+		border-right: none;
+		float: left;
+		color: #558487;
+		font-size: 14px;
+		font-style: italic;
+		line-height: 37px;
+		text-align: left;
+		padding-left: 20px;
+	}
+
+	#zccrfm-shangchuan .cursor .liu {
+		width: 15%;
+		height: 40px;
+		background: url('./src/modules/zccrfm/img/button-black.png') no-repeat;
+		background-size: 100% 110%;
+		line-height: 37px;
+		font-size: 16px;
+		color: #fff;
+		text-align: center;
+		z-index: 1;
+		display: inline-block;
+		position: absolute;
+		right: 4px;
+		border: none;
+	}
+
+	#zccrfm-shangchuan .cursor .upload-file {
+		width: 15%;
+		width: 0%\9;
+		height: 40px;
+		float: left;
+		border: 1px solid #03ccce;
+		line-height: 51px;
+		font-size: 16px;
+		color: #ffffff;
+		text-align: center;
+		z-index: 1;
+		line-height: 40px;
+		position: absolute;
+		right: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	#zccrfm-shangchuan .cursor .cq-input {
+		width: 15%;
+		height: 40px;
+		margin-left: 50px;
+		border: 1px solid #00FFFF;
+	}
+
+	#zccrfm-shangchuan .cursor .r-query {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/zccrfm/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		line-height: 37px;
+		font-size: 16px;
+		color: #ffffff;
+		display: inline-block;
+		text-align: center;
+		-webkit-box-sizing: border-box;
+		margin-left: 30px;
+		border: none;
+	}
+
+	#zccrfm-shangchuan .cursor .r-query:hover {
+		background: url('./src/modules/zccrfm/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#zccrfm-shangchuan .subject-content {
+		width: 94%;
+		height: auto;
+		background: none;
+		margin: 20px 3% 0px 3%;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show {
+		width: 100%;
+		text-align: center;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show caption {
+		height: 50px;
+		font-size: 16px;
+		color: #fff;
+		line-height: 50px;
+		padding-left: 2%;
+		text-align: left;
+		background: url('./src/modules/zccrfm/img/form-title_03.png');
+		background-size: cover;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show caption .upload-show {
+		width: 15%;
+		float: left;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show caption .r-uploaded {
+		width: 7%;
+		height: 33px;
+		background: url('./src/modules/zccrfm/img/little-button.png') no-repeat;
+		background-size: 100% 100%;
+		float: right;
+		font-size: 14px;
+		line-height: 31px;
+		color: #fff;
+		border: none;
+		border-radius: 16px;
+		margin-top: 9px;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show caption .r-uploaded:hover {
+		background: url('./src/modules/zccrfm/img/little-button-hover.png') no-repeat;
+		background-size: 100% 100%;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show caption .r-dele {
+		width: 7%;
+		height: 33px;
+		background: #848484;
+		float: right;
+		font-size: 14px;
+		line-height: 31px;
+		color: #fff;
+		border: none;
+		border-radius: 16px;
+		margin-right: 5%;
+		margin-left: 2%;
+		margin-top: 9px;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show .tb-xz {
+		width: 15%;
+		height: 30px;
+		font-size: 14px;
+		color: #fff;
+		text-align: center;
+		background: url('./src/modules/zccrfm/img/tu1.png') no-repeat;
+		border-color: transparent;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show .ico4 {
+		width: 12px;
+		height: 12px;
+		background: url('./src/modules/zccrfm/img/ludian.png') no-repeat;
+		display: inline-block;
+	}
+
+	#zccrfm-shangchuan .paging {
+		width: 97%;
+		height: 40px;
+		background: none;
+		margin-top: 16px;
+	}
+
+	#zccrfm-shangchuan .paging>ul {
+		margin: 0 0;
+		float: right;
+	}
+
+	#zccrfm-shangchuan .paging>ul a {
+		border: none;
+		color: #fff;
+	}
+
+	#zccrfm-shangchuan .paging .pagination .previous>a:first-child {
+		color: #fff;
+		border: none;
+		background-color: #19313e;
+	}
+
+	#zccrfm-shangchuan .paging .pagination .next>a:last-child {
+		color: #fff;
+		border: none;
+		background-color: #19313e;
+	}
+
+
+	#zccrfm-shangchuan .paging .pagination>li>a:hover {
+		background-color: #19313e;
+	}
+
+	#zccrfm-shangchuan .drlsb {
+		width: 100%;
+		height: 55px;
+		background: none;
+		margin-top: 16px;
+		-webkit-box-sizing: border-box;
+		text-align: center;
+	}
+
+	#zccrfm-shangchuan .drlsb .bttn {
+		width: 120px;
+		height: 40px;
+		background: url('./src/modules/zccrfm/img/button.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+		font-size: 16px;
+		color: #fff;
+		line-height: 37px;
+		border: 1px solid #4d91a4;
+		margin-right: 35px;
+		border: none;
+	}
+
+	#zccrfm-shangchuan .drlsb .bttn:hover {
+		background: url('./src/modules/zccrfm/img/button-hover.png') no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+
+	#zccrfm-shangchuan table,
+	tr,
+	td,
+	tbody {
+		border: none;
+	}
+
+	#zccrfm-shangchuan .subject-content .upload-results .results-show .tb-xz {
+		line-height: 0px;
+	}
+
+	#zccrfm-shangchuan .abig {
+		width: 120px;
+		height: 40px;
+		display: inline-block;
+		cursor: pointer;
+	}
+
+	#zccrfm-shangchuan .no {
+		height: 85px;
+		width: 100%;
+		text-align: center;
+		color: #fff;
+		font-size: 14px;
+		line-height: 85px;
+		background: url('./src/modules/zccrfm/img/xiaotu_03.png');
+	}
+</style>
+
