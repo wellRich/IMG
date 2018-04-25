@@ -85,15 +85,6 @@ public interface ZoningCodeChangeApi {
      */
     List<PreviewDataInfo> findByAssigningCodesAndRootZoning(String ownZoning, String superiorZoningCode, String assigningCodes);
 
-        /**
-         * 将指定区划预览数据的上级与上级拼成两级的树形结构，
-         * 数据范围限定在登录用户所属的区划的子孙区划中
-         * @param ownZoningCode 登录用户所属区划代码
-         * @param originalZoningCode 操作区划的原区划代码
-         * @return 层次结构
-         */
-    List<Map> getTowLevelTree(String ownZoningCode, String originalZoningCode);
-
 
     /**
      * 根据区划代码查询区划预览数据
