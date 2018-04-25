@@ -42,10 +42,10 @@ import static com.sun.deploy.cache.Cache.exists;
 public class ImportFormalTableApiImpl implements ImportFormalTableApi {
     private static final Logger logger = LoggerFactory.getLogger(ImportFormalTableApiImpl.class);
 
-    @Value("${zoningCode.path}")
+    //@Value("${zoningCode.path}")
     private String releasePath;
 
-    @Value("${zip.path}")
+    //@Value("${zip.path}")
     private String zipPath;
 
     @Autowired

@@ -222,14 +222,21 @@ public class ZoningChangeController extends BaseController {
     }
 
     //获取迁移时，待选择的区划目标，是二级树结构
-    @RequestMapping(value = "/getTowLevelTree", method = RequestMethod.GET)
+    @RequestMapping(value = "/findByAssigningCodesAndRootZoning", method = RequestMethod.GET)
     @ResponseBody
-    public Object getTowLevelTree(@Param(value = "originalZoningCode") String originalZoningCode, @Param(value = "ownZoningCode")String ownZoningCode) {
+    public Object findByAssigningCodesAndRootZoning(@Param(value = "originalZoningCode") String originalZoningCode, @Param(value = "ownZoningCode")String ownZoningCode) {
         try {
-            List<Map> da = zoningCodeChangeApi.getTowLevelTree(ownZoningCode, originalZoningCode);
-            log.info("controller.getTowLevelTree.data----------------> " + da);
-            log.info("controller.getTowLevelTree.dataJSON----------------> " + JSONHelper.toJSON(da, new TypeToken<List<Map>>(){}.getType()));
-            return da;
+            int originalAssigningCode = Integer.valueOf(Common.getAssigningCode(originalZoningCode));
+            String grandfatherAssCode = String.valueOf(originalAssigningCode - 2);
+            String parentAssCode = String.valueOf(originalAssigningCode - 1);
+            String superiorZoningCode = Common.getSuperiorZoningCode(originalZoningCode);
+
+            //1 取得区划预览集合
+            List<PreviewDataInfo> previewDataInfos = zoningCodeChangeApi.findByAssigningCodesAndRootZoning(ownZoningCode, superiorZoningCode,grandfatherAssCode + "," + parentAssCode);
+
+            log.info("controller.getTowLevelTree.data----------------> " + previewDataInfos);
+            log.info("controller.getTowLevelTree.dataJSON----------------> " + JSONHelper.toJSON(previewDataInfos, new TypeToken<List<PreviewDataInfo>>(){}.getType()));
+            return  new RtnData(Constants.RTN_CODE_SUCCESS, Constants.RTN_MESSAGE_SUCCESS, previewDataInfos).toString();
         } catch (Exception ex) {
             log.error("getTowLevelTree -------> " + ex.getMessage());
             return new RtnData(Constants.RTN_CODE_ERROR, Constants.RTN_MESSAGE_ERROR).toString();

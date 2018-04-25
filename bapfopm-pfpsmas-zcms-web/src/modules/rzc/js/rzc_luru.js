@@ -348,16 +348,12 @@ define(['avalon', 'jquery', 'zTreeCheck', 'zTreeSearch', 'bootstrap', 'ajaxConfi
                         var assigningCode = ZC.getAssigningCode(checkedZoningCode),
 
                             //2 通过级次代码获取兄弟区划
-                            getOwnZoningCode = ZC.getOwnZoningCode,
                             brothers = ZC.getZoningByAssCode(assigningCode).filter(function (e) {
                                 return e.zoningCode !== checkedZoningCode;
                             }).map(function (e) {
-                                return ZC.translateZoningData(e, getOwnZoningCode);/*{
-                                    id: e.index,
-                                    divisionName: e.divisionName,
-                                    name: e.divisionName + ZC.getOwnZoningCode(e.zoningCode),
-                                    zoningCode: e.zoningCode
-                                }*/
+                                return ZC.translateZoningData(e);
+                            }).sort(function(a, b) {
+                                return a["ownCode"] - b["ownCode"];
                             });
 
 
@@ -688,30 +684,14 @@ define(['avalon', 'jquery', 'zTreeCheck', 'zTreeSearch', 'bootstrap', 'ajaxConfi
             url: 'http://' + ip + ':' + port + '/zoningChangeManager/getBrothersZoning?zoningCode=' + zoningCode,
             type: 'GET',
             success: function(da) {
-                var getOwnZoningCode = ZC.getOwnZoningCode;
+                var translateZoningData = ZC.translateZoningData;
                 ZC.buildZTree(JSON.parse(da).responseData.map(function (e) {
-                    return ZC.translateZoningData(e, getOwnZoningCode)
+                    return translateZoningData(e)
                 }));
             }
         })
     }
 
-    /**
-     * 获取上级区划接口
-     * @param 区划代码 zoningCode
-     */
-    function getUnclesZoning(zoningCode) {
-        $.ajax({
-            url: 'http://' + ip + ':' + port + '/zoningChangeManager/getUnclesZoning?zoningCode=' + zoningCode,
-            type: 'GET',
-            success: function(da) {
-                var getOwnZoningCode = ZC.getOwnZoningCode;
-                ZC.buildZTree(JSON.parse(da).responseData.map(function (e) {
-                    return ZC.translateZoningData(e, getOwnZoningCode)
-                }));
-            }
-        })
-    }
 
 
     /**
@@ -842,21 +822,69 @@ define(['avalon', 'jquery', 'zTreeCheck', 'zTreeSearch', 'bootstrap', 'ajaxConfi
 
     ZC.getTowLevelTree = function (originalZoningCode) {
         $.ajax({
-            url: 'http://' + ip + ':' + port + '/zoningChangeManager/getTowLevelTree?originalZoningCode=' + originalZoningCode + "&ownZoningCode=" + rzc_luru_vm.data.zoningCode,
+            url: 'http://' + ip + ':' + port + '/zoningChangeManager/findByAssigningCodesAndRootZoning?originalZoningCode=' + originalZoningCode + "&ownZoningCode=" + rzc_luru_vm.data.zoningCode,
             type: 'GET',
             success: function(da) {
-                console.log("getTowLevelTree-----------> ", da);
-                ZC.buildZTree(da);
+                var source = JSON.parse(da)['responseData'],
+                    treeData = [],
+                    grandPaes = {},
+                    farthers = {},
+                    assigningcode = Number(ZC.getAssigningCode(originalZoningCode)),
+                    grandPaAssCode = assigningcode - 2 + "",
+                    fartherAssCode = assigningcode - 1 + "",
+                    translate = ZC.translateZoningData;
+
+                     //1 装起来
+                    source.forEach(function(e) {
+                        if(e['assigningCode'] === grandPaAssCode ){
+                            grandPaes[e['zoningCode']] = translate(e);
+                        }else{
+                            var superiorZoningCode = e['superiorZoningCode'];
+                            if(farthers[superiorZoningCode]){
+                                farthers[superiorZoningCode].push(translate(e));
+                            }else{
+                                farthers[superiorZoningCode] = [translate(e)];
+                            }
+                        }
+                    });
+
+                     //2 各找各爹
+                     for(var info in farthers){
+
+                        //2.1 获取祖父
+                        var grandPa = translate(grandPaes[info]);
+                        if(grandPa){
+                            grandPa["chkDisabled"] = true;
+                            grandPa["children"] = farthers[info].sort(function(a, b) {
+                                return a['ownCode'] - b['ownCode'];
+                            });
+                            treeData.push(grandPa);
+                        }
+
+                     }
+                console.log("getTowLevelTree-----------> ", treeData);
+                ZC.buildZTree(treeData);
             }
         })
     };
 
-    ZC.translateZoningData = function(e, getOwnZoningCode) {
-        return {
-            name: e.divisionName + " " + getOwnZoningCode(e.zoningCode),
-            divisionName: e.divisionName,
-            id: e.index,
-            zoningCode: e.zoningCode
+    /**
+     * 将区划预览数据转化成ztree需要的格式
+     * @param  {obj} e   区划预览数据
+     * @return {obj}     {ownCode: 本级区划部分，name:拼凑出的标题，id: index, zoningCode: zoningCode, divisionName: divisionName}
+     */
+    ZC.translateZoningData = function(e) {
+        if (e) {
+            var ownCode = ZC.getOwnZoningCode(e.zoningCode);
+            return {
+                ownCode: Number(ownCode),
+                name: e.divisionName + " " + ownCode,
+                divisionName: e.divisionName,
+                id: e.index,
+                zoningCode: e.zoningCode
+            }
+        } else {
+            return null;
         }
     };
 

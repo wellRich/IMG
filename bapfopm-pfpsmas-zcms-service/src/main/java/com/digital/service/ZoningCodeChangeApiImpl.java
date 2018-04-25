@@ -603,12 +603,12 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
 
 
     /**
-     *  查询区划预览，包括上级、上级，排除父级，限定在指定根区划的子孙区划
+     *  查询若干级次的区划预览数据，限定在指定根区划的子孙区划
      * @param ownZoning 登录用户所属区划
      * @param assigningCodes  若干目标级次
      * @return
      */
-    private List<PreviewDataInfo> findByAssigningCodesAndRootZoning(String ownZoning, String superiorZoningCode, String assigningCodes) {
+    public List<PreviewDataInfo> findByAssigningCodesAndRootZoning(String ownZoning, String superiorZoningCode, String assigningCodes) {
         return previewDataInfoMapper.seek(new QueryReq("assigningCode", "index,zoningCode,levelCode,divisionName,assigningCode,superiorZoningCode") {{
             addFilter("levelCode", Common.getLevelCode(ownZoning) + "%", QueryFilter.OPR_LIKE);
             if (!"".equals(assigningCodes) && assigningCodes != null) {
@@ -638,12 +638,6 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
     public List<Map> getTowLevelTree(String ownZoningCode, String originalZoningCode) {
         log.info("getTowLevelTree.originalZoningCode----------> " + originalZoningCode);
         log.info("getTowLevelTree.ownZoningCode----------> " + ownZoningCode);
-        Comparator<Map> comparator = new Comparator<Map>(){
-            @Override
-            public int compare(Map o1, Map o2) {
-                return o1.get("zoningCode").toString().compareTo(o2.get("zoningCode").toString());
-            }
-        };
 
         List<Map> result = new ArrayList<>();
         try {
@@ -690,8 +684,6 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
                 if (father != null) {
                     Map<String, Object> cell = toMap(father);
                     cell.put("chkDisabled", true);
-                    Collections.sort(v, comparator);
-                    //v.sort((a, b) -> Integer.valueOf(a.get("zoningCode").toString()) - Integer.valueOf(b.get("zoningCode").toString()));
                     cell.put("children", v);
                     result.add(cell);
                 }
@@ -702,79 +694,7 @@ public class ZoningCodeChangeApiImpl implements ZoningCodeChangeApi {
         }
         return result;
     }
-    /*public Map[] getTowLevelTree(String ownZoningCode, String originalZoningCode) {
-        Map<String, Map> tempContainer = new HashMap();
-        try {
-            int originalAssigningCode = Integer.valueOf(Common.getAssigningCode(originalZoningCode));
-            String grandfatherAssCode = String.valueOf(originalAssigningCode - 2);
-            String parentAssCode = String.valueOf(originalAssigningCode - 1);
-            List<PreviewDataInfo> previewDataInfos = findByAssigningCodesAndRootZoning(ownZoningCode, grandfatherAssCode + "," + parentAssCode);
 
-            String superiorCode, zoningCode;
-            for (PreviewDataInfo info: previewDataInfos){
-                zoningCode = info.getZoningCode();
-                
-                //处理父级
-                if(zoningCode.equals(grandfatherAssCode)){
-                    
-                    //子级为它添加了占位，填充占位
-                    if(tempContainer.containsKey(zoningCode)){
-                        tempContainer.get(zoningCode).putAll(new HashMap(){{
-                            put("id", info.getIndex());
-                            put("name", info.getDivisionName());
-                            put("zoningCode", info.getZoningCode());
-                            put("ownCode", info.getLevelCode().replace(Common.getLevelCode(info.getSuperiorZoningCode()), ""));
-                            put("divisionName", info.getDivisionName());
-                        }});
-                    }else {
-                        tempContainer.put(zoningCode, new HashMap(){{
-                            put("id", info.getIndex());
-                            put("name", info.getDivisionName());
-                            put("zoningCode", info.getZoningCode());
-                            put("ownCode", info.getLevelCode().replace(Common.getLevelCode(info.getSuperiorZoningCode()), ""));
-                            put("divisionName", info.getDivisionName());
-                            put("children", new ArrayList<Map>());
-                        }});
-                    }
-                }
-                
-                //处理子级 
-                else {
-                    superiorCode = info.getSuperiorZoningCode();
-                    
-                    //map中已经存在父级，把子级自身添加到children中
-                    if(tempContainer.containsKey(superiorCode)){
-                        ((List)(tempContainer.get(superiorCode).get("children"))).add(new HashMap(){{
-                            put("id", info.getIndex());
-                            put("name", info.getDivisionName());
-                            put("zoningCode", info.getZoningCode());
-                            put("ownCode", info.getLevelCode().replace(Common.getLevelCode(info.getSuperiorZoningCode()), ""));
-                            put("divisionName", info.getDivisionName());
-                        }});
-                    }
-                    
-                    //map中无父级，添加占位，并将自身添加到
-                    else {
-                        tempContainer.put(superiorCode, new HashMap(){{
-                            put("children", new ArrayList<Map>(){{
-                                put("id", info.getIndex());
-                                put("name", info.getDivisionName());
-                                put("zoningCode", info.getZoningCode());
-                                put("ownCode", info.getLevelCode().replace(Common.getLevelCode(info.getSuperiorZoningCode()), ""));
-                                put("divisionName", info.getDivisionName());
-                            }});
-                        }});
-                    }
-                    
-                }
-            }
-        }catch (Exception ex){
-            log.error("findByAssigningCodesAndRootZoning.error---> " + ex.getLocalizedMessage());
-            ex.printStackTrace();
-        }
-
-        return tempContainer.values().toArray(new Map[tempContainer.size()]);
-    }*/
 
     /**
      * 删除指定对变更照组序号的变更对照明细

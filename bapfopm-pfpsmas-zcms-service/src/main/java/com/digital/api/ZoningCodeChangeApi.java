@@ -78,12 +78,20 @@ public interface ZoningCodeChangeApi {
 
 
     /**
-     * 将指定区划预览数据的上级与上级拼成两级的树形结构，
-     * 数据范围限定在登录用户所属的区划的子孙区划中
-     * @param ownZoningCode 登录用户所属区划代码
-     * @param originalZoningCode 操作区划的原区划代码
-     * @return 层次结构
+     *  查询若干级次的区划预览数据，限定在指定根区划的子孙区划
+     * @param ownZoning 登录用户所属区划
+     * @param assigningCodes  若干目标级次
+     * @return
      */
+    List<PreviewDataInfo> findByAssigningCodesAndRootZoning(String ownZoning, String superiorZoningCode, String assigningCodes);
+
+        /**
+         * 将指定区划预览数据的上级与上级拼成两级的树形结构，
+         * 数据范围限定在登录用户所属的区划的子孙区划中
+         * @param ownZoningCode 登录用户所属区划代码
+         * @param originalZoningCode 操作区划的原区划代码
+         * @return 层次结构
+         */
     List<Map> getTowLevelTree(String ownZoningCode, String originalZoningCode);
 
 
