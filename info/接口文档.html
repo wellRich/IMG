@@ -2217,7 +2217,43 @@ function openct(e) {
 </tbody>
 </table>
 <p><strong>responseData结构：</strong></p>
-<p><code>[{&quot;total&quot;: 8,&quot;zoningName&quot;: &quot;370000000000000&quot;,&quot;zoningName&quot;: &quot;济南市中区&quot;,&quot;confirmed&quot;: 7,&quot;zoningCode&quot;: &quot;370000000000000&quot;}]</code></p>
+<table>
+<thead>
+<tr>
+	<th>序号</th>
+	<th>属性</th>
+	<th>数据类型</th>
+	<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>total</td>
+	<td>number</td>
+	<td>国家未审核的申请单</td>
+</tr>
+<tr>
+	<td>2</td>
+	<td>notConfirmed</td>
+	<td>number</td>
+	<td>省级未确认的申请单总数</td>
+</tr>
+<tr>
+	<td>3</td>
+	<td>zoningName</td>
+	<td>string</td>
+	<td>对应的省级区划名称</td>
+</tr>
+<tr>
+	<td>4</td>
+	<td>zoningCode</td>
+	<td>string</td>
+	<td>对应的省级区划代码</td>
+</tr>
+</tbody>
+</table>
+<p><code>[{&quot;total&quot;: 8,&quot;zoningName&quot;: &quot;370000000000000&quot;,&quot;zoningName&quot;: &quot;济南市中区&quot;,&quot;notConfirmed&quot;: 7,&quot;zoningCode&quot;: &quot;370000000000000&quot;}]</code></p>
 <h2>8.2 服务名称：国家审核初始化界面下部分，统计存在未提交的申请单的省份，展示它们的区划代码及区划名称</h2>
 <h3>8.2.1 服务访问地址:</h3>
 <p>IP:8251/zoningChangeManager/findNoSubmittedProvinces</p>
@@ -2262,7 +2298,7 @@ function openct(e) {
 </table>
 <p><strong>responseData结构：</strong></p>
 <p><code>[{zoningName：省级区划名称，zoningCode: 省级区划代码}]</code></p>
-<h2>8.3 服务名称：国家若干省的申请单</h2>
+<h2>8.3 服务名称：国家审核若干省的申请单</h2>
 <h3>8.3.1 服务访问地址:</h3>
 <p>IP:8251/zoningChangeManager/nationalCheckProvinces</p>
 <h3>8.3.2 服务方法</h3>
@@ -2316,7 +2352,7 @@ function openct(e) {
 </tr>
 </tbody>
 </table>
-<h2>8.4 服务名称：国家若干申请单</h2>
+<h2>8.4 服务名称：国家审核若干申请单</h2>
 <h3>8.4.1 服务访问地址:</h3>
 <p>IP:8251/zoningChangeManager/nationalCheck</p>
 <h3>8.4.2 服务方法</h3>
@@ -2691,6 +2727,14 @@ function openct(e) {
 	<td>否</td>
 	<td>申请单状态</td>
 	<td>无</td>
+</tr>
+<tr>
+	<td>3</td>
+	<td>zoningCode</td>
+	<td>string</td>
+	<td>是</td>
+	<td>指定省级的区划代码</td>
+	<td>&nbsp;</td>
 </tr>
 </tbody>
 </table>
