@@ -567,13 +567,6 @@ function openct(e) {
 </thead>
 <tbody>
 <tr>
-	<td>zoningCode</td>
-	<td>String</td>
-	<td>是</td>
-	<td>区划代码，后期可以从session中取得</td>
-	<td>370102000000000</td>
-</tr>
-<tr>
 	<td>pageSize</td>
 	<td>number</td>
 	<td>否</td>
@@ -1217,12 +1210,6 @@ function openct(e) {
 	<td>是</td>
 	<td>变更对照明细</td>
 </tr>
-<tr>
-	<td>zoningCode</td>
-	<td>String</td>
-	<td>是</td>
-	<td>区划代码</td>
-</tr>
 </tbody>
 </table>
 <p><strong>group的结构：</strong></p>
@@ -1743,13 +1730,6 @@ function openct(e) {
 </thead>
 <tbody>
 <tr>
-	<td>zoningCode</td>
-	<td>String</td>
-	<td>是</td>
-	<td>区划代码</td>
-	<td>370102000000000</td>
-</tr>
-<tr>
 	<td>pageSize</td>
 	<td>number</td>
 	<td>否</td>
@@ -1920,13 +1900,6 @@ function openct(e) {
 </tr>
 </thead>
 <tbody>
-<tr>
-	<td>zoningCode</td>
-	<td>String</td>
-	<td>是</td>
-	<td>区划代码</td>
-	<td>370000000000000</td>
-</tr>
 <tr>
 	<td>pageSize</td>
 	<td>number</td>
@@ -2736,6 +2709,30 @@ function openct(e) {
 	<td>指定省级的区划代码</td>
 	<td>&nbsp;</td>
 </tr>
+<tr>
+	<td>4</td>
+	<td>pageSize</td>
+	<td>number</td>
+	<td>否</td>
+	<td>区划名称</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>5</td>
+	<td>pageIndex</td>
+	<td>Integer</td>
+	<td>是</td>
+	<td>页数</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>6</td>
+	<td>total</td>
+	<td>Integer</td>
+	<td>是</td>
+	<td>总数</td>
+	<td>0</td>
+</tr>
 </tbody>
 </table>
 <h3>9.5.4 响应</h3>
@@ -2799,7 +2796,7 @@ function openct(e) {
 	<td>pageSize</td>
 	<td>number</td>
 	<td>否</td>
-	<td>区划名称</td>
+	<td>每页数量</td>
 	<td>5</td>
 </tr>
 <tr>
