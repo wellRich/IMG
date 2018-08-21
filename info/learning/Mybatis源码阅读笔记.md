@@ -56,17 +56,67 @@ It creates the SQL that will be passed to the database out of the input paramete
 > 不必关注，实验性质的
 
 
+
 # SqlSession
 
 # MapperStatemet
+    public final class MappedStatement {
+
+    	private String resource; //来源，一般为文件名或者是注解的类名
+	    private Configuration configuration; //Mybatis的全局唯一Configuration
+	    private String id; //标志符，可以用于缓存
+	    private Integer fetchSize; //每次需要查询的行数（可选）
+	    private Integer timeout;//超时时间
+	    private StatementType statementType;//语句类型，决定最后将使用Statement, PreparedStatement还是CallableStatement进行查询
+	    private ResultSetType resultSetType;//结果集的读取类型，与java.sql.ResultSet中的类型对应。
+	    private SqlSource sqlSource;//Mybatis中的sqlSource，保存了初次解析的结果
+	    private Cache cache;//缓存空间
+	    private ParameterMap parameterMap;//保存了方法参数与sql语句中的参数对应关系
+	    private List<ResultMap> resultMaps;//可选，定义结果集与Java类型中的字段映射关系
+	    private boolean flushCacheRequired;//是否立即写入
+	    private boolean useCache;//是否使用缓存
+	    private boolean resultOrdered;//可选，默认为false
+	    private SqlCommandType sqlCommandType;//Sql执行类型（增、删、改、查）
+	    private KeyGenerator keyGenerator;//可选，键生成器
+	    private String[] keyProperties;//可选，作为键的属性
+	    private String[] keyColumns;//可选，键的列
+	    private boolean hasNestedResultMaps;//是否有嵌套的映射关系
+	    private String databaseId;//数据库的id
+	    private Log statementLog;//logger
+	    private LanguageDriver lang;//解析器
+	    private String[] resultSets;//可选，数据集的名称
+    }
 
 # Executor 执行器
 
 #  缓存
 
-## 一级缓存
+## 一级缓存，默认开启的
+
+> 一级缓存作用域是SqlSession范围内的，在一个SqlSession生命周期内，同样的查询只会执行一次查询，       
+> session提交、回滚，都会清空Cache
+
+    public abstract class BaseExecutor implements Executor {
+      private static final Log log = LogFactory.getLog(BaseExecutor.class);
+
+      protected Transaction transaction;
+      protected Executor wrapper;
+
+      protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
+      
+      //SqlSession范围的缓存
+      protected PerpetualCache localCache;
+      
+      //SqlSession范围的参数的缓存
+      protected PerpetualCache localOutputParameterCache;
+      protected Configuration configuration;
+
+     ......
+    }
 
 
+## 二级缓存，可配置是否开启
 
-## 二级缓存
-
+> **Mapper范围：**二级缓存对象是来自MappedStatement实例的缓存Cache，这个缓存是在注册Mapper接口类时创建的，以mapper的命名空间作为id，所以说缓存是mapper范围内的;  
+> **序列化：** 二级缓存需要查询结果映射的pojo对象实现java.io.Serializable接口实现序列化和反序列化操作  
+> **不安全：**跨Mapper的话，如果某个
