@@ -119,4 +119,8 @@ It creates the SQL that will be passed to the database out of the input paramete
 
 > **Mapper范围：**二级缓存对象是来自MappedStatement实例的缓存Cache，这个缓存是在注册Mapper接口类时创建的，以mapper的命名空间作为id，所以说缓存是mapper范围内的;  
 > **序列化：** 二级缓存需要查询结果映射的pojo对象实现java.io.Serializable接口实现序列化和反序列化操作  
-> **不安全：**跨Mapper的话，如果某个
+> **局限性：**如果跨Mapper的话，会有脏读，多表操作更不能使用，不建议使用二级缓存
+
+
+# 插件
+使用jdk代理包装SqlSession的四大对象（Executor、StatementHandler、ParameterHandler、ResultHandler），在它们执行指定（在Plugin实现类上使用@Intercepts注解指定）方法时，会被拦截，我们可以在此时修改原有的运行逻辑
