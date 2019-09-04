@@ -36,7 +36,7 @@ width:960px;
 - **编程思想**：熟悉面向对象，理解面对接口、面对切面的编程思想，有阅读spring的aop实现源码；
 - **设计模式**：掌握常用的几种设计模式；
 - **函数式编程**：掌握java8的lambda表达式、流式处理数据；
-- **JVM**：对JAVA虚拟机有涉猎，了解堆与栈的作用，有过JVM调优经验；
+- **JVM**：对JAVA虚拟机有涉猎，了解堆与栈的作用，有JVM调优经验；
 
 
 ### 开发框架
@@ -44,13 +44,15 @@ width:960px;
 - **ORM**：MyBatis、Hibernate；
 
 
-### 数据库及其工具
-- **数据库**：常用MySQL、Oracle，能做基本的SQL调优，另外还使用Redis做分布式缓存，mongodb做文件存储；
-- **工具**：Navicat 、PL/SQL Developer、Kellte；
+### 数据库
+- **关系型数据库**：常用MySQL、Oracle，能做基本的SQL调优；
+- **NoSQL数据库**：redis，结合spring框架使用redis实现分布式缓存、session共享，有应对缓存穿透、缓存击穿、缓存雪崩的经验；
+
+### 网络
+- **网络协议**：了解tcp与http协议；
 
 
-### 版本控制
-- 用过SVN，目前使用Git，会用常见的git命令；
+
 
 
 
@@ -60,7 +62,7 @@ width:960px;
 
 <div class="viss">
 <table >
-<caption style="text-align:left">项目一</caption>
+<caption style="text-align:left"><i class="fa fa-product-hunt" aria-hidden="true"></i> <B>项目一</B></caption>
 <tr><th style="width:20%;">项目名称</th><th>人口计划生育信息管理系统</th></tr>
 <tr >
 <td class="first">技术框架</td><td class="content">SpringBoot + Mybatis + MySQL + Quartz + Redis + Echarts + Bootstrap + HTML5 plus + Mui</td>
@@ -70,7 +72,7 @@ width:960px;
 <td class="first">项目简介</td><td class="content">1、采集全国的生育登记信息与出生信息</br>2、对采集来的数据进行统计分析，借助Echarts、SmartBI生成各类可视化图表数据，给人口专家提供资料</br>3、项目地址：https://hlht.padis.net.cn</td>
 </tr>
 <tr>
-<td class="first">职责</td><td class="content">1、任开发组长，制定开发计划、分配开发任务</br>2、负责后台接口的开发，阅读组员提交的代码</br>3、使用定时调度调用存储过程整理采集的数据</br>3、为提高查询速度，优化sql、使用了redis做缓存，并定时调度主动刷新缓存</br></td>
+<td class="first">职责</td><td class="content">1、任开发组长，制定开发计划、分配开发任务</br>2、负责后台接口的开发，阅读组员提交的代码</br>3、使用echarts实现数据可视化</br>4、使用定时调度调用存储过程整理采集的数据</br>5、为提高查询速度，优化sql、使用了redis做缓存，并利用定时调度主动刷新缓存</br></td>
 </tr>
 </table>
 </div>
@@ -78,10 +80,10 @@ width:960px;
  
 <div class="viss">
 <table>
+<caption style="text-align:left"><i class="fa fa-product-hunt" aria-hidden="true"></i> <B>项目二</B></caption>
 <tr><th style="width:20%;">项目名称</th><th>行政区划信息管理系统</th></tr>
 <td class="first">技术框架</td><td  class="content">SpringBoot + Mybatis + MySQL + Redis + React</td>
 </tr>
-
 <tr>
 <td class="first">项目简介</td><td class="content">维护全国的行政区划信息</td>
 </tr>
@@ -94,6 +96,7 @@ width:960px;
 
 <div class="viss">
 <table >
+<caption style="text-align:left"><i class="fa fa-product-hunt" aria-hidden="true"></i> <B>项目三</B></caption>
 <tr><th style="width:20%;">项目名称</th><th>婴幼儿照护信息管理系统</th></tr>
 <tr>
 <td class="first">技术框架</td><td class="content">SpringBoot + Mybatis + MySQL + Redis + WebSocket + React+ HTML5 plus + Mui</td>
@@ -103,7 +106,7 @@ width:960px;
 <td class="first">项目简介</td><td class="content">全国婴幼儿照护服务机构的备案管理、日常信息采集、信息公示，有PC端与移动端</td>
 </tr>
 <tr>
-<td class="first">职责</td><td class="content">1、任开发组长，制定开发计划、分配开发任务</br>2、主要负责后台接口的开发，前端忙不过来时，承担了部分pc端后台页面的开发</td>
+<td class="first">职责</td><td class="content">1、任开发组长，制定开发计划、分配开发任务</br>2、负责主要模块的接口开发，前端忙不过来时，承担了部分pc端后台页面的开发</td>
 </tr>
 </table>
 </div>
@@ -113,6 +116,7 @@ width:960px;
 
 <div class="viss">
 <table >
+<caption style="text-align:left"><i class="fa fa-product-hunt" aria-hidden="true"></i> <B>项目一</B></caption>
 <tr><th style="width:20%;">项目名称</th><th>合众风险管理信息系统</th></tr>
 <tr>
 <td class="first">技术框架</td><td class="content">Grails + MySQL + Quartz + Echarts + Handsonetable Bootstrap</td>
@@ -133,6 +137,7 @@ width:960px;
 
 <div class="viss">
 <table >
+<caption style="text-align:left"><i class="fa fa-product-hunt" aria-hidden="true"></i> <B>项目二</B></caption>
 <tr><th style="width:20%;">项目名称</th><th>数据分析系统</th></tr>
 <tr>
 <td class="first">技术框架</td><td class="content">Grails + Quartz + JasperReport + DynamicJasper + jQuery + EasyUi</td>
